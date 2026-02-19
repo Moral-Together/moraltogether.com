@@ -21,6 +21,14 @@
 
 <body>
 
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <h1 class="loader-logo">MoralTogether</h1>
+            <div class="loader-anim"></div>
+        </div>
+    </div>
+
     <!-- Premium Texture Overlay -->
     <div class="noise-overlay"></div>
 
@@ -35,6 +43,11 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">MoralTogether</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">בית</a></li> <!-- Added Home Link -->
                 <li><a href="#about" class="nav-link">אודות</a></li>
@@ -42,7 +55,7 @@
                 <li><a href="#activities" class="nav-link">פעילויות</a></li>
                 <li><a href="#team" class="nav-link">הצוות</a></li>
                 <li><a href="#gallery" class="nav-link">גלריה</a></li>
-                <li><a href="#contact" class="nav-link nav-cta">יצירת קשר</a></li>
+                <li><a href="#contact" class="nav-link">יצירת קשר</a></li>
             </ul>
         </div>
     </nav>
@@ -58,6 +71,13 @@
                 <a href="#about" class="btn btn-secondary">קראו עוד</a>
             </div>
         </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <div class="scroll-arrow"></div>
+            <div class="scroll-arrow"></div>
+        </div>
     </header>
 
     <!-- About Section -->
@@ -70,6 +90,9 @@
                     <div class="about-text-column">
                         <p class="lead-text">הארגון הוקם מתוך תפיסה פשוטה אך עמוקה: <br>כאשר כוחות טובים מתחברים — נוצר
                             אקו־סיסטם חזק שמסוגל להשפיע באמת.</p>
+                        <p>מטרתנו היא לשמש ערוץ תקשורת מחבר בין גופים, עמותות, יוזמות וארגונים הפעילים בישראל — ליצור
+                            מרחב של שיתוף, סנכרון ושיתופי פעולה, ולהעצים את ההשפעה המצטברת של העשייה החברתית והקהילתית.
+                        </p>
                         <p>אנחנו פועלים כדי לחבר בין אנשים וארגונים שפועלים למען החברה, להנגיש מידע, לעודד שיח משתף,
                             וליצור תשתית של היכרות, אמון ופעולה משותפת.</p>
                         <p>הליבה שלנו היא <strong>חיזוק הרוח</strong>. אנחנו מאמינים שמורל חיובי הוא כוח מניע — ליחידים,
@@ -146,6 +169,8 @@
                         <h3>MoralForGood</h3>
                         <p>האפליקציה מאפשרת לכל משתמש להיות חלק מרשת של טוב: להציע עזרה, לבקש סיוע, לשתף יוזמות ולפרסם
                             פעילויות.</p>
+                        <p>MoralForGood נבנתה מתוך ההבנה שכאשר מחברים נקודות של רצון טוב — נוצר כוח קהילתי אמיתי. היא
+                            מרכזת מידע, מחברת בין גורמים משלימים, ומאפשרת יצירת שיתופי פעולה מקומיים וארציים.</p>
                         <ul class="feature-checklist">
                             <li>חיבור בין צרכים למשאבים בזמן אמת</li>
                             <li>מיפוי יכולות וצרכים וחיבור בין גורמים משלימים</li>
@@ -176,13 +201,14 @@
 
                         <div class="tag-cloud">
                             <span class="tag">קשר משפטי</span>
-                            <span class="tag">ערוץ הוותיקים</span>
-                            <span class="tag">יזמות ישראל-סין</span>
-                            <span class="tag">יזמות חדשה</span>
+                            <span class="tag">מורל ערוץ הוותיקים</span>
+                            <span class="tag">יזמות בין ישראל לסין</span>
+                            <span class="tag">יזמות בעידן החדש</span>
                             <span class="tag">מנהיגות הורית</span>
-                            <span class="tag">לחיות נכון</span>
+                            <span class="tag">לחיות במידה הנכונה</span>
                             <span class="tag">מורל השכונות</span>
                             <span class="tag">מורל הספורט</span>
+                            <span class="tag">מורל אומנות הבמה</span>
                         </div>
                     </div>
                 </div>
@@ -216,10 +242,28 @@
         <div class="container reveal">
             <h2 class="text-center" style="font-size: 2rem; margin-bottom: 30px; opacity: 0.8;">שותפויות</h2>
             <div class="partners-grid">
-                <div class="partner-logo">לוגו שותף</div>
-                <div class="partner-logo">לוגו שותף</div>
-                <div class="partner-logo">לוגו שותף</div>
-                <div class="partner-logo">לוגו שותף</div>
+                <div class="partner-card">
+                    <i class="fas fa-university partner-icon"></i>
+                    <span>אקדמיה</span>
+                </div>
+                <div class="partner-card">
+                    <i class="fas fa-landmark partner-icon"></i>
+                    <span>מגזר ציבורי</span>
+                </div>
+                <div class="partner-card">
+                    <i class="fas fa-briefcase partner-icon"></i>
+                    <span>מגזר עסקי</span>
+                </div>
+                <div class="partner-card">
+                    <i class="fas fa-hands-helping partner-icon"></i>
+                    <span>עמותות</span>
+                </div>
+            </div>
+
+            <div class="cta-banner reveal" style="margin-top: 50px; text-align: center;">
+                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;">הצטרפו למעגל ההשפעה
+                    והשותפות</p>
+                <a href="#contact" class="btn btn-secondary">להצטרפות כשותף</a>
             </div>
         </div>
     </section>
@@ -228,11 +272,95 @@
     <section id="gallery" class="section gallery-section">
         <div class="container reveal">
             <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;">גלריית תמונות</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item item-1"></div>
-                <div class="gallery-item item-2"></div>
-                <div class="gallery-item item-3"></div>
-                <div class="gallery-item item-4"></div>
+            <div class="gallery-marquee-container">
+                <div class="gallery-marquee">
+                    <div class="gallery-scroll">
+                        <!-- Set 1 -->
+                        <div class="gallery-card card-1">
+                            <div class="overlay">
+                                <h4>חיבורים</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-2">
+                            <div class="overlay">
+                                <h4>קהילה</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-3">
+                            <div class="overlay">
+                                <h4>יזמות</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-4">
+                            <div class="overlay">
+                                <h4>תקווה</h4>
+                            </div>
+                        </div>
+                        <!-- Set 2 -->
+                        <div class="gallery-card card-1">
+                            <div class="overlay">
+                                <h4>חיבורים</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-2">
+                            <div class="overlay">
+                                <h4>קהילה</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-3">
+                            <div class="overlay">
+                                <h4>יזמות</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-4">
+                            <div class="overlay">
+                                <h4>תקווה</h4>
+                            </div>
+                        </div>
+                        <!-- Set 3 -->
+                        <div class="gallery-card card-1">
+                            <div class="overlay">
+                                <h4>חיבורים</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-2">
+                            <div class="overlay">
+                                <h4>קהילה</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-3">
+                            <div class="overlay">
+                                <h4>יזמות</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-4">
+                            <div class="overlay">
+                                <h4>תקווה</h4>
+                            </div>
+                        </div>
+                        <!-- Set 4 -->
+                        <div class="gallery-card card-1">
+                            <div class="overlay">
+                                <h4>חיבורים</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-2">
+                            <div class="overlay">
+                                <h4>קהילה</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-3">
+                            <div class="overlay">
+                                <h4>יזמות</h4>
+                            </div>
+                        </div>
+                        <div class="gallery-card card-4">
+                            <div class="overlay">
+                                <h4>תקווה</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -248,12 +376,46 @@
                     <a href="mailto:info@moraltogether.com" class="btn btn-primary">שלחו מייל</a>
                     <a href="#" class="btn btn-secondary">WhatsApp</a>
                 </div>
-                <div style="margin-top: 60px; color: var(--text-muted); font-size: 0.9rem;">
+                <div class="footer-copyright-text" style="display: none;">
                     &copy; 2026 MoralTogether. כל הזכויות שמורות.
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Detailed Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>MoralTogether</h3>
+                    <p>אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים, יוזמות וארגונים ליצירת מציאות של שפע
+                        ותקווה.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>ניווט מהיר</h4>
+                    <ul>
+                        <li><a href="#home">בית</a></li>
+                        <li><a href="#about">אודות</a></li>
+                        <li><a href="#vision">חזון</a></li>
+                        <li><a href="#activities">פעילויות</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>עקבו אחרינו</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 MoralTogether. כל הזכויות שמורות.
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
