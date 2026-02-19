@@ -143,3 +143,5 @@ This ensures 100% reliability across all devices and connection speeds.
 ## 📄 License
 All rights reserved © 2026 **MoralTogether**.
 Designed & Developed with ❤️ for Israeli Society.
+
+Developed by [D371L](https://github.com/D371L).
