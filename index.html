@@ -1,246 +1,261 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoralTogether - מחברים כוחות טובים</title>
-    <meta name="description" content="MoralTogether - הארגון שמחבר בין גופים, עמותות ויוזמות חברתיות ליצירת אקו-סיסטם של שפע ותקווה.">
-    
+    <meta name="description"
+        content="MoralTogether - הארגון שמחבר בין גופים, עמותות ויוזמות חברתיות ליצירת אקו-סיסטם של שפע ותקווה.">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
+
+    <!-- Premium Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Animated Background -->
+    <div class="background-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">MoralTogether</a>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+        <div class="nav-container">
+            <a href="#home" class="logo">MoralTogether</a>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="#about" class="nav-link">אודות</a></li>
-                <li class="nav-item"><a href="#vision" class="nav-link">החזון</a></li>
-                <li class="nav-item"><a href="#activities" class="nav-link">הפעילויות</a></li>
-                <li class="nav-item"><a href="#team" class="nav-link">הצוות</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link btn-featured">יצירת קשר</a></li>
+                <li><a href="#home" class="nav-link">בית</a></li> <!-- Added Home Link -->
+                <li><a href="#about" class="nav-link">אודות</a></li>
+                <li><a href="#vision" class="nav-link">חזון</a></li>
+                <li><a href="#activities" class="nav-link">פעילויות</a></li>
+                <li><a href="#team" class="nav-link">הצוות</a></li>
+                <li><a href="#gallery" class="nav-link">גלריה</a></li>
+                <li><a href="#contact" class="nav-link nav-cta">יצירת קשר</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content container">
-            <h1 class="hero-title fade-in">כוחות טובים <br><span class="highlight">מתחברים</span></h1>
-            <p class="hero-subtitle fade-in-delay">אקו־סיסטם חזק של עשייה חברתית, שיתוף ותקווה.</p>
-            <div class="hero-buttons fade-in-delay-2">
-                <a href="#about" class="btn btn-primary">קראו עוד</a>
-                <a href="#contact" class="btn btn-secondary">הצטרפו אלינו</a>
+    <header class="hero" id="home"> <!-- Added ID 'home' -->
+        <div class="container hero-content">
+            <h1 class="shimmer-text reveal">כוחות טובים <br> מתחברים.</h1>
+            <p class="reveal" style="transition-delay: 0.1s;">אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים,
+                יוזמות וארגונים ליצירת מציאות של שפע ותקווה.</p>
+            <div class="btn-group reveal" style="transition-delay: 0.2s;">
+                <a href="#activities" class="btn btn-primary">הצטרפו לתנועה</a>
+                <a href="#about" class="btn btn-secondary">קראו עוד</a>
             </div>
-        </div>
-        <div class="scroll-down">
-            <span>גלו עוד</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
         </div>
     </header>
 
     <!-- About Section -->
-    <section id="about" class="section about-section">
+    <section id="about" class="bento-section">
         <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">מי אנחנו?</h2>
-                <div class="divider"></div>
-            </div>
-            
-            <div class="about-grid">
-                <div class="about-text-content">
-                    <p class="lead-text">הארגון הוקם מתוך תפיסה פשוטה אך עמוקה: <strong>כאשר כוחות טובים מתחברים — נוצר אקו־סיסטם חזק שמסוגל להשפיע באמת.</strong></p>
-                    <p>מטרתנו היא לשמש ערוץ תקשורת מחבר בין גופים, עמותות, יוזמות וארגונים הפעילים בישראל — ליצור מרחב של שיתוף, סנכרון ושיתופי פעולה, ולהעצים את ההשפעה המצטברת של העשייה החברתית והקהילתית.</p>
-                    <p>אנחנו פועלים כדי לחבר בין אנשים וארגונים שפועלים למען החברה, להנגיש מידע, לעודד שיח משתף, וליצור תשתית של היכרות, אמון ופעולה משותפת.</p>
-                    
-                    <div class="core-values box-highlight">
-                        <h3>הליבה שלנו היא חיזוק הרוח</h3>
-                        <p>אנחנו מאמינים שמורל חיובי הוא כוח מניע — ליחידים, לקהילות ולמערכות שלמות.</p>
+            <div class="reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 30px;">הסיפור שלנו</h2>
+
+                <div class="about-content-layout">
+                    <div class="about-text-column">
+                        <p class="lead-text">הארגון הוקם מתוך תפיסה פשוטה אך עמוקה: <br>כאשר כוחות טובים מתחברים — נוצר
+                            אקו־סיסטם חזק שמסוגל להשפיע באמת.</p>
+                        <p>אנחנו פועלים כדי לחבר בין אנשים וארגונים שפועלים למען החברה, להנגיש מידע, לעודד שיח משתף,
+                            וליצור תשתית של היכרות, אמון ופעולה משותפת.</p>
+                        <p>הליבה שלנו היא <strong>חיזוק הרוח</strong>. אנחנו מאמינים שמורל חיובי הוא כוח מניע — ליחידים,
+                            לקהילות ולמערכות שלמות. לכן נקודת המבט שלנו תמיד מכוונת לטוב הקיים.</p>
+
+                        <div class="about-quote">
+                            "זהו בית לרשת של עשייה. מקום שבו יוזמות נפגשות, כוחות מתחברים, והטוב מקבל תהודה."
+                        </div>
+                    </div>
+
+                    <!-- Values Grid (Jewel Box Style) -->
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <span class="value-icon"><i class="fas fa-project-diagram"></i></span>
+                            <h4>חיבורים</h4>
+                            <p>מדגישים חיבורים במקום פערים</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon"><i class="fas fa-book-open"></i></span>
+                            <h4>שיתוף ידע</h4>
+                            <p>משתפים ידע במקום להתחרות עליו</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon"><i class="fas fa-hammer"></i></span>
+                            <h4>עשייה</h4>
+                            <p>מחזקים עשייה במקום רק לדבר</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon"><i class="fas fa-sun"></i></span>
+                            <h4>תודעה חיובית</h4>
+                            <p>מטפחים תודעה חיובית כבסיס לפעולה</p>
+                        </div>
                     </div>
                 </div>
-                <div class="about-features">
-                    <div class="feature-card">
-                        <div class="icon">✨</div>
-                        <h4>חיבורים</h4>
-                        <p>מדגישים חיבורים במקום פערים</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon">📚</div>
-                        <h4>שיתוף ידע</h4>
-                        <p>משתפים ידע במקום להתחרות עליו</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon">💪</div>
-                        <h4>עשייה</h4>
-                        <p>מחזקים עשייה במקום רק לדבר עליה</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="icon">🌱</div>
-                        <h4>תודעה חיובית</h4>
-                        <p>מטפחים תודעה חיובית כבסיס לפעולה אפקטיבית</p>
-                    </div>
-                </div>
+
             </div>
-            <p class="text-center end-note">זהו בית לרשת של עשייה. מקום שבו יוזמות נפגשות, כוחות מתחברים, והטוב מקבל תהודה.</p>
         </div>
     </section>
 
     <!-- Vision Section -->
-    <section id="vision" class="section vision-section dark-theme">
+    <section id="vision" class="vision-section">
+        <div class="vision-glow"></div>
         <div class="container">
-            <div class="vision-content">
-                <h2 class="section-title text-light">החזון שלנו</h2>
-                <p class="vision-lead">לשמש כארגון השפע המאורגן לעם.</p>
-                <div class="vision-text">
-                    <p>לפעול כצומת מחבר, חיובי ומעצים, שמרכז, מנגיש ומחבר בין אנשים, יוזמות, עמותות וגופים פעילים בישראל. אנו שואפים ליצור אקו־סיסטם חי של נתינה, שותפות וערבות הדדית, שבו משאבים, ידע, הזדמנויות ורוח טובה זורמים למקום שבו הם נדרשים באמת.</p>
-                    <p>דרך חיבורים חכמים, תקשורת בונה ומבט אופטימי על המציאות – נחזק מורל, נבליט עשייה טובה, ונגדיל את תחושת המסוגלות והתקווה בחברה הישראלית.</p>
+            <div class="vision-content-wrapper reveal">
+                <h2 class="text-center" style="margin-bottom: 40px; color: var(--secondary-color);">החזון</h2>
+                <div class="vision-text text-center">
+                    "לשמש כארגון <strong>השפע המאורגן לעם</strong> – לפעול כצומת מחבר, חיובי ומעצים."
                 </div>
-                <div class="vision-quote">
-                    <blockquote>"המטרה שלנו היא להפוך שפע מפוזר לכוח מאורגן שפועל לטובת הכלל."</blockquote>
+                <div class="vision-detailed-text">
+                    <p>אנו שואפים ליצור אקו־סיסטם חי של נתינה, שותפות וערבות הדדית, שבו משאבים, ידע, הזדמנויות ורוח טובה
+                        זורמים למקום שבו הם נדרשים באמת.</p>
+                    <p>דרך חיבורים חכמים, תקשורת בונה ומבט אופטימי על המציאות – נחזק מורל, נבליט עשייה טובה, ונגדיל את
+                        תחושת המסוגלות והתקווה בחברה הישראלית. המטרה שלנו היא להפוך שפע מפוזר לכוח מאורגן שפועל לטובת
+                        הכלל.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Activities Section -->
-    <section id="activities" class="section activities-section">
+    <!-- Activities - Modern 3 Column Layout -->
+    <section id="activities" class="bento-section">
         <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">הפעילויות שלנו</h2>
-                <div class="divider"></div>
-            </div>
+            <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 10px;">הפעילויות שלנו</h2>
+            <p class="reveal" style="margin-bottom: 40px; color: var(--text-muted);">הכלים שלנו ליצירת מציאות טובה יותר
+            </p>
 
-            <div class="activities-grid">
-                <!-- Activity 1: MoralForGood App -->
-                <div class="activity-card featured-activity">
-                    <div class="card-image app-bg"></div>
-                    <div class="card-content">
+            <div class="bento-grid reveal">
+
+                <!-- Card 1: MoralForGood App -->
+                <div class="bento-card card-app">
+                    <div class="bento-content">
+                        <span class="bento-icon"><i class="fas fa-mobile-alt"></i></span>
+                        <span class="subtitle">קהילה דיגיטלית</span>
                         <h3>MoralForGood</h3>
-                        <p class="subtitle">אפליקציה קהילתית לחיבורים חיוביים</p>
-                        <p>מרחב חי של שיתוף, עזרה הדדית וחיזוק רוח חיובית. האפליקציה מאפשרת לכל משתמש להיות חלק מרשת של טוב: להציע עזרה, לבקש סיוע, לשתף יוזמות ולפרסם פעילויות.</p>
-                        <ul class="features-list">
+                        <p>האפליקציה מאפשרת לכל משתמש להיות חלק מרשת של טוב: להציע עזרה, לבקש סיוע, לשתף יוזמות ולפרסם
+                            פעילויות.</p>
+                        <ul class="feature-checklist">
                             <li>חיבור בין צרכים למשאבים בזמן אמת</li>
-                            <li>כלים קהילתיים חכמים למיפוי יכולות</li>
-                            <li>יצירת שיתופי פעולה מקומיים וארציים</li>
+                            <li>מיפוי יכולות וצרכים וחיבור בין גורמים משלימים</li>
+                            <li>מרחב דיגיטלי שמתרגם רוח טובה לפעולה</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Activity 2: Radio M1 -->
-                <div class="activity-card">
-                    <div class="card-icon">🎙️</div>
-                    <div class="card-content">
+                <!-- Card 2: Radio M1 -->
+                <div class="bento-card card-radio">
+                    <div class="bento-content">
+                        <span class="bento-icon"><i class="fas fa-microphone-alt"></i></span>
+                        <span class="subtitle">ערוץ הרדיו</span>
                         <h3>רדיו M1</h3>
-                        <p>ערוץ רדיו הפועל ללא הפסקה ומשדר תכנים חיוביים, מוזיקה מעצימה ושיח מקרב לבבות.</p>
+                        <p>ערוץ רדיו הפועל ללא הפסקה ומשדר תכנים חיוביים. מוזיקה שמרימה את הרוח ושיח מחבר בין אנשים
+                            ותרבויות.</p>
+                        <p style="margin-top: 15px;">המקום שבו המוזיקה פוגשת את הנשמה והמילים יוצרות חיבור.</p>
                     </div>
                 </div>
 
-                <!-- Activity 3: Moral TV Podcast -->
-                <div class="activity-card">
-                    <div class="card-icon">📺</div>
-                    <div class="card-content">
-                        <h3>Moral TV - פודקאסט</h3>
-                        <p>ערוץ פודקאסטים רב־תוכני בנושאי קהילה, חברה, איכות חיים, תרבות וכלכלה.</p>
-                        <div class="podcast-list">
+                <!-- Card 3: Moral TV -->
+                <div class="bento-card card-tv">
+                    <div class="bento-content">
+                        <span class="bento-icon"><i class="fas fa-tv"></i></span>
+                        <span class="subtitle">ערוץ תוכן ופודקאסטים</span>
+                        <h3>Moral TV</h3>
+                        <p>ערוץ פודקאסטים רב־תוכני שמנגיש ידע חשוב לכולם במגוון נושאים חברתיים ותרבותיים.</p>
+
+                        <div class="tag-cloud">
                             <span class="tag">קשר משפטי</span>
-                            <span class="tag">מורל ערוץ הוותיקים</span>
-                            <span class="tag">יזמות בין ישראל לסין</span>
-                            <span class="tag">יזמות בעידן החדש</span>
+                            <span class="tag">ערוץ הוותיקים</span>
+                            <span class="tag">יזמות ישראל-סין</span>
+                            <span class="tag">יזמות חדשה</span>
                             <span class="tag">מנהיגות הורית</span>
-                            <span class="tag">לחיות במידה הנכונה</span>
+                            <span class="tag">לחיות נכון</span>
                             <span class="tag">מורל השכונות</span>
                             <span class="tag">מורל הספורט</span>
-                            <span class="tag">מורל אומנות הבמה</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="section team-section bg-light">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">הצוות שלנו</h2>
-                <div class="divider"></div>
-            </div>
-            
+    <section id="team" class="section team-section">
+        <div class="container reveal">
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 50px;">הצוות שלנו</h2>
             <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-image-placeholder">DH</div>
-                    <div class="member-info">
-                        <h3>דודי חיים</h3>
-                        <p class="role">מייסד ויזם הארגון</p>
-                    </div>
+                <div class="team-card">
+                    <div class="member-photo">DH</div>
+                    <h3>דודי חיים</h3>
+                    <p class="role">מייסד ויזם הארגון</p>
                 </div>
-                <!-- Additional team members can be added here -->
+                <!-- Placeholder for more team members -->
+                <div class="team-card placeholder">
+                    <div class="member-photo"><i class="fas fa-plus"></i></div>
+                    <h3>הצטרפו אלינו</h3>
+                    <p class="role">אנחנו מתרחבים</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnerships -->
+    <section id="partners" class="section partners-section">
+        <div class="container reveal">
+            <h2 class="text-center" style="font-size: 2rem; margin-bottom: 30px; opacity: 0.8;">שותפויות</h2>
+            <div class="partners-grid">
+                <div class="partner-logo">לוגו שותף</div>
+                <div class="partner-logo">לוגו שותף</div>
+                <div class="partner-logo">לוגו שותף</div>
+                <div class="partner-logo">לוגו שותף</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container reveal">
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;">גלריית תמונות</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item item-1"></div>
+                <div class="gallery-item item-2"></div>
+                <div class="gallery-item item-3"></div>
+                <div class="gallery-item item-4"></div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact-section dark-theme">
+    <section id="contact" class="contact-section">
         <div class="container">
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <h2 class="section-title text-light">יצירת קשר</h2>
-                    <p>נשמח לשמוע מכם, לשתף פעולה ולחבר כוחות.</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <span class="icon">📧</span>
-                            <span>info@moraltogether.com</span> <!-- Placeholder email -->
-                        </div>
-                        <!-- Add more contact details if user provides them -->
-                    </div>
+            <div class="contact-container reveal">
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">בואו נדבר</h2>
+                <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);">יש לכם רעיון? רוצים לשתף
+                    פעולה? אנחנו כאן.</p>
+                <div class="btn-group">
+                    <a href="mailto:info@moraltogether.com" class="btn btn-primary">שלחו מייל</a>
+                    <a href="#" class="btn btn-secondary">WhatsApp</a>
                 </div>
-                <!-- Simple form placeholder -->
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="שם מלא" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="אימייל" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="הודעה..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">שלח הודעה</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">MoralTogether</div>
-                <div class="footer-links">
-                    <a href="#about">אודות</a>
-                    <a href="#vision">חזון</a>
-                    <a href="#activities">פעילויות</a>
-                    <a href="#contact">צור קשר</a>
-                </div>
-                <div class="copyright">
+                <div style="margin-top: 60px; color: var(--text-muted); font-size: 0.9rem;">
                     &copy; 2026 MoralTogether. כל הזכויות שמורות.
                 </div>
             </div>
         </div>
-    </footer>
+    </section>
 
     <script src="script.js"></script>
 </body>
+
 </html>
