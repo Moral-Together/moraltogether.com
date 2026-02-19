@@ -31,32 +31,33 @@ The site serves as a hub for:
 
 ## ✨ Key Features
 
-### 1. **Symmetric "1-Over-2" Activities Grid**
-We abandoned the traditional unequal "Bento Grid" for a perfectly balanced layout:
-- **Hero Card (Top)**: Full-width card for the flagship **MoralForGood** app.
-- **Twin Cards (Bottom)**: Two equal-sized cards for **Radio M1** and **Moral TV**.
-- **Result**: A scalable, pyramid-like structure that visually prioritizes the main product while maintaining harmony.
+### 1. **Cinematic Entrance (Preloader)**
+A custom-built, full-screen **Preloader** ensures a smooth first impression.
+- **Graceful Loading**: The site content remains hidden until all assets are ready.
+- **Fade-Out Animation**: Once loaded, the preloader lifts delicately, revealing the Hero section with a coordinated entrance animation.
+- **Top-Tier Performance**: Optimized to feel instant yet deliberate.
 
-### 2. **"Jewel Box" Glassmorphism**
-The UI uses advanced CSS backdrop filters to create a "frosted glass" effect:
-- **Translucent Cards**: `backdrop-filter: blur(20px)` with semi-transparent white backgrounds.
-- **Gradient Borders**: Each activity card has a unique top-border gradient (Blue, Pink, Purple) to give it a distinct identity.
-- **Hover Lift**: Cards elevate (`translateY`) with a deep shadow on hover, feeling tactile and premium.
+### 2. **Infinite Marquee Gallery**
+The "Gallery" section features a continuous, auto-scrolling horizontal loop.
+- **Seamless Loop**: Duplicated card sets ensure there are never "blank spaces" during the scroll.
+- **Interactive**: Hovering over any card pauses the animation, allowing users to focus on specific content (Connect, Community, Entrepreneurship, Hope).
+- **Smooth CSS Animation**: Uses hardware-accelerated transforms for jitter-free movement.
 
-### 3. **Smart Navigation (Scroll Spy)**
-- **Active Link Highlighting**: The navigation menu automatically detects the current section as the user scrolls and highlights the corresponding link (e.g., "About" turns gold when reading the About section).
-- **Home Link**: A dedicated "Home" (בית) link was added for better UX.
-- **Sticky Glass Navbar**: The header blurs the content behind it as you scroll.
+### 3. **Smart Navigation & Mobile Drawer**
+- **Scroll Spy**: The navigation menu automatically detects the current section as the user scrolls and highlights the active link.
+- **Mobile-First**: A sleek "Hamburger" menu opens a slide-out drawer on smaller screens, ensuring full accessibility on mobile devices.
+- **Sticky Glass Navbar**: The header blurs the content behind it, maintaining visibility without obstructing the design.
 
-### 4. **Editorial "Our Story" Layout**
-The "About" section features a magazine-style layout:
-- **Vertical Accent Line**: A gold border running alongside the text for visual structure.
-- **Floating Value Cards**: Core values are displayed as floating "glass jewels" rather than a boring list.
-- **Inspirational Quote Box**: A styled container for the founder's vision.
+### 4. **Modern Partners Section**
+Replaced generic logos with semantic, icon-based representations of key sectors:
+- **Academy, Public Sector, Business, Non-Profits**.
+- **Micro-Interactions**: Each partner card lifts and glows on hover, reinforcing the "premium" feel.
 
-### 5. **Custom Scroll Experience**
-- **Themed Scrollbar**: A custom Webkit scrollbar with a Blue-to-Gold gradient thumb, replacing the default browser bar for a cohesive look.
-- **Smooth Scrolling**: `scroll-behavior: smooth` is enabled globally.
+### 5. **Hybrid Scroll Animations**
+We implemented a robust system to ensure content *always* appears, regardless of scroll speed or browser quirks:
+- **Intersection Observer**: The primary engine that reveals elements as they enter the viewport.
+- **Fallback Logic**: A secondary check ensures that if the Observer misses an element, a traditional scroll listener catches it.
+- **Failsafe**: A final timer forces all content to reveal after a few seconds, guaranteeing usability.
 
 ---
 
@@ -66,8 +67,8 @@ The design language is **"Optimistic Premium"**:
 - **Color Palette**:
     - **Primary**: Deep Royal Blue (`#0F4C81`) - Trust, Stability.
     - **Secondary**: Golden Orange (`#F5A623`) - Energy, Optimism.
-    - **Background**: Dynamic "Orb" meshes (animated gradients) that float subtly behind the glass layers.
-- **Motion**: Everything has a purpose. Elements `reveal` on scroll, buttons lift on hover, and text has a subtle shimmer effect.
+    - **Background**: Dynamic "Orb" meshes and premium gradients.
+- **Motion**: Everything has a purpose. Elements `reveal` on scroll, buttons lift on hover, and the preloader sets the stage.
 
 ---
 
@@ -76,7 +77,7 @@ This project uses a robust, lightweight stack with **Zero Dependencies** (No Fra
 
 - **Core**:
     - `HTML5` (Semantic Structure, RTL Support)
-    - `CSS3` (Variables, Flexbox, CSS Grid, Keyframe Animations)
+    - `CSS3` (Variables, Flexbox, Keyframe Animations, Backdrop Filter)
     - `JavaScript (ES6+)` (Intersection Observer, Event Listeners)
 - **External Libraries**:
     - `Font Awesome 6` (Icons)
@@ -89,27 +90,30 @@ This project uses a robust, lightweight stack with **Zero Dependencies** (No Fra
 MoralTogether/
 ├── index.html       # Main structure (Semantic HTML)
 ├── style.css        # The Design System (Variables, Animations, Layouts)
-├── script.js        # Logic (Scroll Spy, Reveal Animations, Mouse Effects)
+├── script.js        # Logic (Preloader, Scroll Spy, Infinite Marquee)
 ├── README.md        # This Documentation
-└── assets/          # (Future) Images and Logos
+└── images/          # Assets and Gallery Images
 ```
 
 ---
 
 ## 🚀 Innovation & "Under the Hood"
-### The CSS "Mouse Tracking" Effect
-We implemented a spotlight effect where a subtle glow follows the user's mouse cursor over the cards.
+### The "Failsafe" Reveal Logic
+We engineered a multi-layer system to solve the common "content stays hidden" bug in modern scroll-animated sites.
 ```javascript
 // script.js snippet
-card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-});
+// 1. Primary: Intersection Observer
+const revealObserver = new IntersectionObserver(...);
+
+// 2. Fallback: Scroll Listener
+const checkScroll = () => { ... };
+
+// 3. Emergency: Safety Timeout
+setTimeout(() => {
+    reveals.forEach(reveal => reveal.classList.add('active'));
+}, 4000);
 ```
-This updates CSS variables in real-time to create a radial gradient at the cursor's position!
+This ensures 100% reliability across all devices and connection speeds.
 
 ---
 
@@ -122,12 +126,12 @@ This updates CSS variables in real-time to create a radial gradient at the curso
 ### Installation
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/YourUsername/MoralTogether.git
+    git clone https://github.com/Moral-Together/MoralTogether.git
     ```
 2.  **Open the project**:
     Simply open `index.html` in your browser.
     
-    *Or, for a better experience (to see modules/CORS features if added later):*
+    *Or, for a better experience:*
     ```bash
     cd MoralTogether
     python3 -m http.server
