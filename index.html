@@ -21,6 +21,14 @@
 
 <body>
 
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scrollBar"></div>
+    </div>
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader-content">
@@ -43,10 +51,16 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">MoralTogether</a>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="nav-controls">
+                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">בית</a></li> <!-- Added Home Link -->
@@ -62,13 +76,24 @@
 
     <!-- Hero Section -->
     <header class="hero" id="home"> <!-- Added ID 'home' -->
+        <canvas id="hero-particles"></canvas>
         <div class="container hero-content">
-            <h1 class="shimmer-text reveal">כוחות טובים <br> מתחברים.</h1>
-            <p class="reveal" style="transition-delay: 0.1s;">אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים,
+            <h1 class="shimmer-text reveal" style="transition-delay: 0.2s;">כוחות טובים <br> מתחברים.</h1>
+            <p class="reveal" style="transition-delay: 0.3s;">אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים,
                 יוזמות וארגונים ליצירת מציאות של שפע ותקווה.</p>
-            <div class="btn-group reveal" style="transition-delay: 0.2s;">
+            <div class="btn-group reveal" style="transition-delay: 0.4s;">
                 <a href="#activities" class="btn btn-primary">הצטרפו לתנועה</a>
                 <a href="#about" class="btn btn-secondary">קראו עוד</a>
+            </div>
+
+            <div class="floating-social-proof reveal" style="transition-delay: 0.5s;">
+                <div class="avatar-group">
+                    <img src="https://i.pravatar.cc/100?img=1" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=2" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=3" alt="User">
+                    <div class="avatar-count">+500</div>
+                </div>
+                <span>משתתפים באקו-סיסטם</span>
             </div>
         </div>
 
@@ -221,17 +246,81 @@
     <section id="team" class="section team-section">
         <div class="container reveal">
             <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 50px;">הצוות שלנו</h2>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="member-photo">DH</div>
-                    <h3>דודי חיים</h3>
-                    <p class="role">מייסד ויזם הארגון</p>
+            <div class="team-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
+                <!-- Member 1 -->
+                <div class="team-card bento-card reveal" style="transition-delay: 0.1s;">
+                    <div class="member-photo">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="דודי חיים">
+                    </div>
+                    <div class="member-info">
+                        <h3>דודי חיים</h3>
+                        <p class="role">מייסד ויזם הארגון</p>
+                        <div class="member-bio">
+                            <p>מוביל את החזון של הארגון לחיבור בין המגזרים השונים בחברה ליצירת שפע הדדי ותקווה משותפת.
+                            </p>
+                            <div class="social-links">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Placeholder for more team members -->
-                <div class="team-card placeholder">
-                    <div class="member-photo"><i class="fas fa-plus"></i></div>
-                    <h3>הצטרפו אלינו</h3>
-                    <p class="role">אנחנו מתרחבים</p>
+
+                <!-- Member 2 -->
+                <div class="team-card bento-card reveal" style="transition-delay: 0.2s;">
+                    <div class="member-photo">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="יעל כהן">
+                    </div>
+                    <div class="member-info">
+                        <h3>יעל כהן</h3>
+                        <p class="role">מנהלת קהילה ושותפויות</p>
+                        <div class="member-bio">
+                            <p>אחראית על בניית חיבורים, טיפוח הקהילה שלנו ברחבי הארץ ויצירת שיתופי פעולה משמעותיים בשטח.
+                            </p>
+                            <div class="social-links">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="team-card bento-card reveal" style="transition-delay: 0.3s;">
+                    <div class="member-photo">
+                        <img src="https://i.pravatar.cc/150?img=68" alt="דוד ארליך">
+                    </div>
+                    <div class="member-info">
+                        <h3>דוד ארליך</h3>
+                        <p class="role">סמנכ"ל טכנולוגיות</p>
+                        <div class="member-bio">
+                            <p>מוביל את הפיתוח הטכנולוגי של הפלטפורמות הדיגיטליות שלנו כדי להבטיח קשר חלק בין כל
+                                השותפים.</p>
+                            <div class="social-links">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="team-card bento-card reveal" style="transition-delay: 0.4s;">
+                    <div class="member-photo">
+                        <img src="https://i.pravatar.cc/150?img=42" alt="שירה לוי">
+                    </div>
+                    <div class="member-info">
+                        <h3>שירה לוי</h3>
+                        <p class="role">מנהלת שיווק ותקשורת</p>
+                        <div class="member-bio">
+                            <p>הקול מאחורי היוזמות שלנו. דואגת להפיץ את המסר ולשתף את סיפורי ההצלחה של הקהילה.</p>
+                            <div class="social-links">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
