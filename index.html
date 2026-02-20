@@ -4,9 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoralTogether - מחברים כוחות טובים</title>
+    <title>MoralTogether - מחברים כוחות טובים | אקו-סיסטם של הרמוניה חברתית</title>
+
+    <!-- Основное SEO -->
     <meta name="description"
-        content="MoralTogether - הארגון שמחבר בין גופים, עמותות ויוזמות חברתיות ליצירת אקו-סיסטם של שפע ותקווה.">
+        content="MoralTogether - הארגון שמחבר בין גופים, עמותות ויוזמות חברתיות ליצירת אקו-סיסטם של שפע ותקווה. הצטרפו אלינו לעשות טוב יחד.">
+    <meta name="keywords"
+        content="MoralTogether, קהילה, התנדבות, תרומה לקהילה, שיתופי פעולה חברתיים, יזמות חברתית, אקו-סיסטם, חיבורים">
+    <meta name="author" content="MoralTogether Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moraltogether.org/">
+
+    <!-- Favicon (Базовые + Apple Touch) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph / Facebook / WhatsApp (Превью) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moraltogether.org/">
+    <meta property="og:title" content="MoralTogether - מחברים כוחות טובים">
+    <meta property="og:description"
+        content="הארגון שמחבר בין גופים, עמותות ויוזמות חברתיות ליצירת אקו-סיסטם של שפע ותקווה. המקום שבו כוחות טובים מתחברים.">
+    <!-- Изображение, которое будет показываться при отправке ссылки -->
+    <meta property="og:image" content="https://moraltogether.org/images/og-image.jpg">
+    <meta property="og:locale" content="he_IL">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://moraltogether.org/">
+    <meta name="twitter:title" content="MoralTogether - מחברים כוחות טובים">
+    <meta name="twitter:description" content="הארגון שמחבר בין יזמים וארגונים למען מציאות של שפע ותקווה.">
+    <meta name="twitter:image" content="https://moraltogether.org/images/twitter-card.jpg">
+
+    <!-- Schema.org (JSON-LD Microdata for Google) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "MoralTogether",
+      "url": "https://moraltogether.org",
+      "logo": "https://moraltogether.org/images/logo.png",
+      "description": "ארגון חברתי הפועל לחיבור בין המגזרים השונים בחברה ליצירת שפע הדדי ותקווה משותפת.",
+      "sameAs": [
+        "https://www.facebook.com/moraltogether",
+        "https://www.linkedin.com/company/moraltogether"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+972-50-0000000",
+        "contactType": "customer support",
+        "email": "hello@moraltogether.org",
+        "availableLanguage": ["Hebrew", "English"]
+      }
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,8 +104,8 @@
             <a href="#home" class="logo">MoralTogether</a>
             <div class="nav-controls">
                 <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
                 </button>
                 <div class="hamburger">
                     <span></span>
@@ -78,7 +129,7 @@
     <header class="hero" id="home"> <!-- Added ID 'home' -->
         <canvas id="hero-particles"></canvas>
         <div class="container hero-content">
-            <h1 class="shimmer-text reveal" style="transition-delay: 0.2s;">כוחות טובים <br> מתחברים.</h1>
+            <h1 class="shimmer-text reveal" style="transition-delay: 0.1s;">כוחות טובים <br> מתחברים.</h1>
             <p class="reveal" style="transition-delay: 0.3s;">אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים,
                 יוזמות וארגונים ליצירת מציאות של שפע ותקווה.</p>
             <div class="btn-group reveal" style="transition-delay: 0.4s;">
@@ -131,22 +182,22 @@
                     <!-- Values Grid (Jewel Box Style) -->
                     <div class="values-grid">
                         <div class="value-card">
-                            <span class="value-icon"><i class="fas fa-project-diagram"></i></span>
+                            <span class="value-icon"><i class="fas fa-project-diagram" aria-hidden="true"></i></span>
                             <h4>חיבורים</h4>
                             <p>מדגישים חיבורים במקום פערים</p>
                         </div>
                         <div class="value-card">
-                            <span class="value-icon"><i class="fas fa-book-open"></i></span>
+                            <span class="value-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
                             <h4>שיתוף ידע</h4>
                             <p>משתפים ידע במקום להתחרות עליו</p>
                         </div>
                         <div class="value-card">
-                            <span class="value-icon"><i class="fas fa-hammer"></i></span>
+                            <span class="value-icon"><i class="fas fa-hammer" aria-hidden="true"></i></span>
                             <h4>עשייה</h4>
                             <p>מחזקים עשייה במקום רק לדבר</p>
                         </div>
                         <div class="value-card">
-                            <span class="value-icon"><i class="fas fa-sun"></i></span>
+                            <span class="value-icon"><i class="fas fa-sun" aria-hidden="true"></i></span>
                             <h4>תודעה חיובית</h4>
                             <p>מטפחים תודעה חיובית כבסיס לפעולה</p>
                         </div>
@@ -189,7 +240,7 @@
                 <!-- Card 1: MoralForGood App -->
                 <div class="bento-card card-app">
                     <div class="bento-content">
-                        <span class="bento-icon"><i class="fas fa-mobile-alt"></i></span>
+                        <span class="bento-icon"><i class="fas fa-mobile-alt" aria-hidden="true"></i></span>
                         <span class="subtitle">קהילה דיגיטלית</span>
                         <h3>MoralForGood</h3>
                         <p>האפליקציה מאפשרת לכל משתמש להיות חלק מרשת של טוב: להציע עזרה, לבקש סיוע, לשתף יוזמות ולפרסם
@@ -207,7 +258,7 @@
                 <!-- Card 2: Radio M1 -->
                 <div class="bento-card card-radio">
                     <div class="bento-content">
-                        <span class="bento-icon"><i class="fas fa-microphone-alt"></i></span>
+                        <span class="bento-icon"><i class="fas fa-microphone-alt" aria-hidden="true"></i></span>
                         <span class="subtitle">ערוץ הרדיו</span>
                         <h3>רדיו M1</h3>
                         <p>ערוץ רדיו הפועל ללא הפסקה ומשדר תכנים חיוביים. מוזיקה שמרימה את הרוח ושיח מחבר בין אנשים
@@ -219,7 +270,7 @@
                 <!-- Card 3: Moral TV -->
                 <div class="bento-card card-tv">
                     <div class="bento-content">
-                        <span class="bento-icon"><i class="fas fa-tv"></i></span>
+                        <span class="bento-icon"><i class="fas fa-tv" aria-hidden="true"></i></span>
                         <span class="subtitle">ערוץ תוכן ופודקאסטים</span>
                         <h3>Moral TV</h3>
                         <p>ערוץ פודקאסטים רב־תוכני שמנגיש ידע חשוב לכולם במגוון נושאים חברתיים ותרבותיים.</p>
@@ -251,7 +302,7 @@
                 <!-- Member 1 -->
                 <div class="team-card bento-card reveal" style="transition-delay: 0.1s;">
                     <div class="member-photo">
-                        <img src="https://i.pravatar.cc/150?img=11" alt="דודי חיים">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="דודי חיים" loading="lazy">
                     </div>
                     <div class="member-info">
                         <h3>דודי חיים</h3>
@@ -260,8 +311,9 @@
                             <p>מוביל את החזון של הארגון לחיבור בין המגזרים השונים בחברה ליצירת שפע הדדי ותקווה משותפת.
                             </p>
                             <div class="social-links">
-                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"
+                                        aria-hidden="true"></i></a>
+                                <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
@@ -270,7 +322,7 @@
                 <!-- Member 2 -->
                 <div class="team-card bento-card reveal" style="transition-delay: 0.2s;">
                     <div class="member-photo">
-                        <img src="https://i.pravatar.cc/150?img=5" alt="יעל כהן">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="יעל כהן" loading="lazy">
                     </div>
                     <div class="member-info">
                         <h3>יעל כהן</h3>
@@ -279,8 +331,9 @@
                             <p>אחראית על בניית חיבורים, טיפוח הקהילה שלנו ברחבי הארץ ויצירת שיתופי פעולה משמעותיים בשטח.
                             </p>
                             <div class="social-links">
-                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"
+                                        aria-hidden="true"></i></a>
+                                <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
@@ -289,7 +342,7 @@
                 <!-- Member 3 -->
                 <div class="team-card bento-card reveal" style="transition-delay: 0.3s;">
                     <div class="member-photo">
-                        <img src="https://i.pravatar.cc/150?img=68" alt="דוד ארליך">
+                        <img src="https://i.pravatar.cc/150?img=68" alt="דוד ארליך" loading="lazy">
                     </div>
                     <div class="member-info">
                         <h3>דוד ארליך</h3>
@@ -298,8 +351,9 @@
                             <p>מוביל את הפיתוח הטכנולוגי של הפלטפורמות הדיגיטליות שלנו כדי להבטיח קשר חלק בין כל
                                 השותפים.</p>
                             <div class="social-links">
-                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"
+                                        aria-hidden="true"></i></a>
+                                <a href="#" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
@@ -308,7 +362,7 @@
                 <!-- Member 4 -->
                 <div class="team-card bento-card reveal" style="transition-delay: 0.4s;">
                     <div class="member-photo">
-                        <img src="https://i.pravatar.cc/150?img=42" alt="שירה לוי">
+                        <img src="https://i.pravatar.cc/150?img=42" alt="שירה לוי" loading="lazy">
                     </div>
                     <div class="member-info">
                         <h3>שירה לוי</h3>
@@ -316,8 +370,9 @@
                         <div class="member-bio">
                             <p>הקול מאחורי היוזמות שלנו. דואגת להפיץ את המסר ולשתף את סיפורי ההצלחה של הקהילה.</p>
                             <div class="social-links">
-                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"
+                                        aria-hidden="true"></i></a>
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
@@ -330,22 +385,50 @@
     <section id="partners" class="section partners-section">
         <div class="container reveal">
             <h2 class="text-center" style="font-size: 2rem; margin-bottom: 30px; opacity: 0.8;">שותפויות</h2>
-            <div class="partners-grid">
-                <div class="partner-card">
-                    <i class="fas fa-university partner-icon"></i>
-                    <span>אקדמיה</span>
+            <div class="partners-logo-grid">
+                <!-- Partner 1 -->
+                <div class="partner-logo-card reveal" style="transition-delay: 0.1s;">
+                    <div class="partner-logo-box">
+                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+1&font=montserrat"
+                            alt="Harvard University" loading="lazy">
+                    </div>
+                    <div class="pl-content">
+                        <h3>אקדמיה</h3>
+                        <p>מחקר אקדמי מוביל.</p>
+                    </div>
                 </div>
-                <div class="partner-card">
-                    <i class="fas fa-landmark partner-icon"></i>
-                    <span>מגזר ציבורי</span>
+                <!-- Partner 2 -->
+                <div class="partner-logo-card reveal" style="transition-delay: 0.2s;">
+                    <div class="partner-logo-box">
+                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+2&font=montserrat"
+                            alt="World Health Organization" loading="lazy">
+                    </div>
+                    <div class="pl-content">
+                        <h3>מגזר ציבורי</h3>
+                        <p>שיתוף פעולה עם רשויות.</p>
+                    </div>
                 </div>
-                <div class="partner-card">
-                    <i class="fas fa-briefcase partner-icon"></i>
-                    <span>מגזר עסקי</span>
+                <!-- Partner 3 -->
+                <div class="partner-logo-card reveal" style="transition-delay: 0.3s;">
+                    <div class="partner-logo-box">
+                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+3&font=montserrat"
+                            alt="Microsoft" loading="lazy">
+                    </div>
+                    <div class="pl-content">
+                        <h3>מגזר עסקי</h3>
+                        <p>חיבור לעסקים וחברות.</p>
+                    </div>
                 </div>
-                <div class="partner-card">
-                    <i class="fas fa-hands-helping partner-icon"></i>
-                    <span>עמותות</span>
+                <!-- Partner 4 -->
+                <div class="partner-logo-card reveal" style="transition-delay: 0.4s;">
+                    <div class="partner-logo-box">
+                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+4&font=montserrat" alt="WWF"
+                            loading="lazy">
+                    </div>
+                    <div class="pl-content">
+                        <h3>עמותות</h3>
+                        <p>תמיכה ביוזמות שטח.</p>
+                    </div>
                 </div>
             </div>
 
@@ -457,18 +540,41 @@
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
-            <div class="contact-container reveal">
-                <h2 style="font-size: 3rem; margin-bottom: 20px;">בואו נדבר</h2>
-                <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);">יש לכם רעיון? רוצים לשתף
-                    פעולה? אנחנו כאן.</p>
-                <div class="btn-group">
-                    <a href="mailto:info@moraltogether.com" class="btn btn-primary">שלחו מייל</a>
-                    <a href="#" class="btn btn-secondary">WhatsApp</a>
+            <div class="contact-bento-panel bento-card reveal">
+                <div class="contact-info">
+                    <h2 style="font-size: 3rem; margin-bottom: 20px;">בואו נדבר</h2>
+                    <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);">יש לכם רעיון? רוצים
+                        לשתף פעולה? אנחנו כאן.</p>
+                    <div class="contact-methods">
+                        <a href="mailto:info@moraltogether.org" class="contact-method-card">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <div>
+                                <span>מייל</span>
+                                <strong>info@moraltogether.org</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="contact-method-card">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            <div>
+                                <span>WhatsApp</span>
+                                <strong>+972-50-0000000</strong>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-copyright-text" style="display: none;">
-                    &copy; 2026 MoralTogether. כל הזכויות שמורות.
+                <div class="contact-visual">
+                    <!-- Decorative abstract visual -->
+                    <div class="abstract-globe">
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                        <i class="fas fa-paper-plane glow-icon" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
+
+            <!-- Glowing line before footer -->
+            <div class="footer-divider reveal"></div>
         </div>
     </section>
 
@@ -493,10 +599,10 @@
                 <div class="footer-social">
                     <h4>עקבו אחרינו</h4>
                     <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>

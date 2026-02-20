@@ -1112,56 +1112,129 @@ body.dark-mode .social-links a {
 
 /* Partners Section */
 .partners-section {
-    padding: 60px 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    background: #fafafa;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
 }
 
-.partners-grid {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    align-items: center;
+.partners-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(15, 76, 129, 0.05) 0%, transparent 60%);
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
 }
 
-.partner-card {
+.partners-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partner-logo-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 30px;
-    border-radius: 20px;
+}
+
+body.dark-mode .partner-logo-card {
+    background: rgba(30, 30, 30, 0.6);
+}
+
+/* White pillow box to always display logos cleanly regardless of theme */
+.partner-logo-box {
     background: white;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: 0.3s;
-    width: 160px;
-    cursor: pointer;
+    width: 100%;
+    height: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    padding: 10px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.4s;
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.partner-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border-color: var(--secondary-color);
+.partner-logo-box img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    transition: 0.4s;
 }
 
-.partner-icon {
-    font-size: 2.5rem;
-    color: var(--text-muted);
-    transition: 0.3s;
-}
-
-.partner-card:hover .partner-icon {
-    color: var(--primary-color);
-    transform: scale(1.1);
-}
-
-.partner-card span {
-    font-weight: 600;
+.pl-content h3 {
+    font-size: 1.3rem;
     color: var(--text-main);
-    font-size: 1rem;
+    margin-bottom: 8px;
+    transition: 0.3s;
+}
+
+body.dark-mode .pl-content h3 {
+    color: white;
+}
+
+.pl-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Hover effects with glowing border */
+.partner-logo-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: 0.4s;
+    pointer-events: none;
+}
+
+.partner-logo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(245, 166, 35, 0.1);
+}
+
+.partner-logo-card:hover::after {
+    opacity: 1;
+}
+
+.partner-logo-card:hover .partner-logo-box {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.partner-logo-card:hover .pl-content h3 {
+    color: var(--primary-color);
 }
 
 /* Gallery Section - Infinite Marquee */
@@ -1300,6 +1373,215 @@ body.dark-mode .social-links a {
     .gallery-card {
         width: 240px;
         height: 320px;
+    }
+}
+
+/* Contact Section - Premium Bento Upgrade */
+.contact-section {
+    padding: 100px 0 50px;
+    background: #fbfbfd;
+}
+
+.contact-bento-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+}
+
+.contact-info {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+body.dark-mode .contact-bento-panel {
+    background: var(--bg-glass);
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-method-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f8f9fa;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+
+body.dark-mode .contact-method-card {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-method-card:hover {
+    background: white;
+    border-color: var(--secondary-color);
+    box-shadow: 0 10px 20px rgba(245, 166, 35, 0.1);
+    transform: translateX(-5px);
+}
+
+body.dark-mode .contact-method-card:hover {
+    background: rgba(30, 30, 30, 0.9);
+}
+
+.contact-method-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    background: rgba(15, 76, 129, 0.1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.4s;
+    flex-shrink: 0;
+}
+
+.contact-method-card:hover i {
+    background: var(--primary-color);
+    color: white;
+    transform: rotate(-10deg) scale(1.1);
+}
+
+.contact-method-card div {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-method-card span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.contact-method-card strong {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    direction: ltr;
+    text-align: right;
+}
+
+/* Contact Visual Area */
+.contact-visual {
+    background: linear-gradient(135deg, var(--primary-color), #0a355c);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.abstract-globe {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.abstract-globe .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: spinGlobes 15s linear infinite;
+}
+
+.ring-1 {
+    width: 100%;
+    height: 100%;
+    border-top-color: var(--secondary-color);
+    animation-duration: 8s !important;
+}
+
+.ring-2 {
+    width: 140%;
+    height: 140%;
+    border-right-color: rgba(255, 255, 255, 0.5);
+    animation-duration: 12s !important;
+    animation-direction: reverse !important;
+}
+
+.ring-3 {
+    width: 180%;
+    height: 180%;
+    border-bottom-color: var(--secondary-color);
+    animation-duration: 20s !important;
+}
+
+.glow-icon {
+    font-size: 4rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(245, 166, 35, 0.8);
+    position: relative;
+    z-index: 2;
+    animation: floatIcon 4s ease-in-out infinite;
+}
+
+@keyframes spinGlobes {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+    width: 100%;
+    margin-top: 80px;
+    opacity: 0.5;
+    box-shadow: 0 0 20px var(--secondary-color);
+}
+
+@media (max-width: 1024px) {
+    .partners-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .contact-bento-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-visual {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .partners-logo-grid {
+        grid-template-columns: 1fr;
     }
 }
 
