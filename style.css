@@ -216,7 +216,11 @@ body {
     height: 100%;
     z-index: -1;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 50%, #fbfbfd 0%, #f0f2f5 100%);
+    background: radial-gradient(circle at 50% 50%, var(--bg-body) 0%, rgba(0, 0, 0, 0.02) 100%);
+}
+
+body.dark-mode .background-mesh {
+    background: radial-gradient(circle at 50% 50%, var(--bg-body) 0%, #051622 100%);
 }
 
 .orb {
@@ -276,6 +280,11 @@ body {
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     padding: 10px 0;
+}
+
+body.dark-mode .navbar.scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Navbar Layout */
@@ -657,10 +666,10 @@ body {
 }
 
 .value-card {
-    background: rgba(255, 255, 255, 0.65);
+    background: var(--bg-glass);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--card-border);
     padding: 30px 20px;
     border-radius: 20px;
     text-align: center;
@@ -686,6 +695,11 @@ body {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     background: rgba(255, 255, 255, 0.85);
+}
+
+body.dark-mode .value-card:hover {
+    background: rgba(30, 30, 30, 0.85);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .value-card:hover::before {
@@ -773,10 +787,10 @@ body {
 }
 
 .bento-card {
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--bg-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--card-border);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     border-radius: 24px;
     padding: 40px 30px;
@@ -850,6 +864,11 @@ body {
     transform: translateY(-15px);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
     background: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .bento-card:hover {
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 .bento-icon {
@@ -937,7 +956,7 @@ body {
 
 /* Team Section */
 .team-section {
-    background: #fbfbfd;
+    background: var(--bg-body);
     padding: 100px 0;
 }
 
@@ -1241,7 +1260,7 @@ body.dark-mode .pl-content h3 {
 .gallery-section {
     padding: 100px 0;
     overflow: hidden;
-    background: #fbfbfd;
+    background: var(--bg-body);
 }
 
 .gallery-marquee-container {
@@ -1265,12 +1284,12 @@ body.dark-mode .pl-content h3 {
 
 .gallery-marquee-container::before {
     left: 0;
-    background: linear-gradient(to right, #fbfbfd 0%, transparent 100%);
+    background: linear-gradient(to right, var(--bg-body) 0%, transparent 100%);
 }
 
 .gallery-marquee-container::after {
     right: 0;
-    background: linear-gradient(to left, #fbfbfd 0%, transparent 100%);
+    background: linear-gradient(to left, var(--bg-body) 0%, transparent 100%);
 }
 
 .gallery-marquee {
@@ -1379,7 +1398,7 @@ body.dark-mode .pl-content h3 {
 /* Contact Section - Premium Bento Upgrade */
 .contact-section {
     padding: 100px 0 50px;
-    background: #fbfbfd;
+    background: var(--bg-body);
 }
 
 .contact-bento-panel {
@@ -1388,7 +1407,11 @@ body.dark-mode .pl-content h3 {
     gap: 0;
     padding: 0;
     overflow: hidden;
-    background: white;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
 }
 
@@ -1399,9 +1422,7 @@ body.dark-mode .pl-content h3 {
     justify-content: center;
 }
 
-body.dark-mode .contact-bento-panel {
-    background: var(--bg-glass);
-}
+
 
 .contact-methods {
     display: flex;
@@ -1415,7 +1436,7 @@ body.dark-mode .contact-bento-panel {
     gap: 20px;
     padding: 20px;
     border-radius: 16px;
-    background: #f8f9fa;
+    background: rgba(15, 76, 129, 0.03);
     text-decoration: none;
     color: var(--text-main);
     transition: 0.3s;
@@ -1427,14 +1448,15 @@ body.dark-mode .contact-method-card {
 }
 
 .contact-method-card:hover {
-    background: white;
+    background: rgba(15, 76, 129, 0.06);
     border-color: var(--secondary-color);
     box-shadow: 0 10px 20px rgba(245, 166, 35, 0.1);
     transform: translateX(-5px);
 }
 
 body.dark-mode .contact-method-card:hover {
-    background: rgba(30, 30, 30, 0.9);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .contact-method-card i {
@@ -1476,7 +1498,7 @@ body.dark-mode .contact-method-card:hover {
 
 /* Contact Visual Area */
 .contact-visual {
-    background: linear-gradient(135deg, var(--primary-color), #0a355c);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     position: relative;
     display: flex;
     align-items: center;
@@ -1686,11 +1708,7 @@ body.dark-mode .contact-method-card:hover {
     font-size: 0.9rem;
 }
 
-/* Contact */
-.contact-section {
-    padding: 100px 0;
-    background: #fff;
-}
+/* Contact Section Duplicate Config Removed */
 
 .contact-container {
     background: var(--bg-body);
