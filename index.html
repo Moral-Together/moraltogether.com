@@ -83,7 +83,8 @@
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader-content">
-            <h1 class="loader-logo">MoralTogether</h1>
+            <img src="MoralTogetherLogoWhite.png" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
             <div class="loader-anim"></div>
         </div>
     </div>
@@ -101,7 +102,10 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo">MoralTogether</a>
+            <a href="#home" class="logo">
+                <img src="MoralTogetherLogoWhite.png" alt="MoralTogether Logo" class="logo-img light-logo">
+                <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="logo-img dark-logo">
+            </a>
             <div class="nav-controls">
                 <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon" aria-hidden="true"></i>
@@ -181,22 +185,22 @@
 
                     <!-- Values Grid (Jewel Box Style) -->
                     <div class="values-grid">
-                        <div class="value-card">
+                        <div class="value-card value-card-1">
                             <span class="value-icon"><i class="fas fa-project-diagram" aria-hidden="true"></i></span>
                             <h4>חיבורים</h4>
                             <p>מדגישים חיבורים במקום פערים</p>
                         </div>
-                        <div class="value-card">
+                        <div class="value-card value-card-2">
                             <span class="value-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
                             <h4>שיתוף ידע</h4>
                             <p>משתפים ידע במקום להתחרות עליו</p>
                         </div>
-                        <div class="value-card">
+                        <div class="value-card value-card-3">
                             <span class="value-icon"><i class="fas fa-hammer" aria-hidden="true"></i></span>
                             <h4>עשייה</h4>
                             <p>מחזקים עשייה במקום רק לדבר</p>
                         </div>
-                        <div class="value-card">
+                        <div class="value-card value-card-4">
                             <span class="value-icon"><i class="fas fa-sun" aria-hidden="true"></i></span>
                             <h4>תודעה חיובית</h4>
                             <p>מטפחים תודעה חיובית כבסיס לפעולה</p>
@@ -300,7 +304,7 @@
             <div class="team-grid"
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
                 <!-- Member 1 -->
-                <div class="team-card bento-card reveal" style="transition-delay: 0.1s;">
+                <div class="team-card team-card-1 bento-card reveal" style="transition-delay: 0.1s;">
                     <div class="member-photo">
                         <img src="https://i.pravatar.cc/150?img=11" alt="דודי חיים" loading="lazy">
                     </div>
@@ -320,7 +324,7 @@
                 </div>
 
                 <!-- Member 2 -->
-                <div class="team-card bento-card reveal" style="transition-delay: 0.2s;">
+                <div class="team-card team-card-2 bento-card reveal" style="transition-delay: 0.2s;">
                     <div class="member-photo">
                         <img src="https://i.pravatar.cc/150?img=5" alt="יעל כהן" loading="lazy">
                     </div>
@@ -340,7 +344,7 @@
                 </div>
 
                 <!-- Member 3 -->
-                <div class="team-card bento-card reveal" style="transition-delay: 0.3s;">
+                <div class="team-card team-card-3 bento-card reveal" style="transition-delay: 0.3s;">
                     <div class="member-photo">
                         <img src="https://i.pravatar.cc/150?img=68" alt="דוד ארליך" loading="lazy">
                     </div>
@@ -360,7 +364,7 @@
                 </div>
 
                 <!-- Member 4 -->
-                <div class="team-card bento-card reveal" style="transition-delay: 0.4s;">
+                <div class="team-card team-card-4 bento-card reveal" style="transition-delay: 0.4s;">
                     <div class="member-photo">
                         <img src="https://i.pravatar.cc/150?img=42" alt="שירה לוי" loading="lazy">
                     </div>
@@ -546,15 +550,15 @@
                     <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);">יש לכם רעיון? רוצים
                         לשתף פעולה? אנחנו כאן.</p>
                     <div class="contact-methods">
-                        <a href="mailto:info@moraltogether.org" class="contact-method-card">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <a href="mailto:info@moraltogether.org" class="contact-method-card contact-mail-card">
+                            <i class="fas fa-envelope contact-icon" aria-hidden="true"></i>
                             <div>
                                 <span>מייל</span>
                                 <strong>info@moraltogether.org</strong>
                             </div>
                         </a>
-                        <a href="#" class="contact-method-card">
-                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        <a href="#" class="contact-method-card contact-whatsapp-card">
+                            <i class="fab fa-whatsapp contact-icon" aria-hidden="true"></i>
                             <div>
                                 <span>WhatsApp</span>
                                 <strong>+972-50-0000000</strong>
@@ -583,7 +587,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>MoralTogether</h3>
+                    <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="footer-logo">
                     <p>אקו־סיסטם חזק שמסוגל להשפיע באמת. אנחנו מחברים בין אנשים, יוזמות וארגונים ליצירת מציאות של שפע
                         ותקווה.</p>
                 </div>
