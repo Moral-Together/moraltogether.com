@@ -701,10 +701,14 @@ body.dark-mode .value-card:hover {
     font-size: 2rem;
     margin-bottom: 15px;
     display: inline-block;
+}
+
+.value-icon i {
     background: linear-gradient(135deg, #e55b27 0%, #f9b80c 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .value-card h4 {
@@ -2012,7 +2016,7 @@ body.dark-mode .light-logo {
     border-top: 4px solid #dd2a7b;
 }
 
-.value-card-1 .value-icon {
+.value-card-1 .value-icon i {
     background: linear-gradient(135deg, #dd2a7b 0%, #a71d6a 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -2027,7 +2031,7 @@ body.dark-mode .light-logo {
     border-top: 4px solid #e47525;
 }
 
-.value-card-2 .value-icon {
+.value-card-2 .value-icon i {
     background: linear-gradient(135deg, #e47525 0%, #e1681f 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -2042,7 +2046,7 @@ body.dark-mode .light-logo {
     border-top: 4px solid #f9b80c;
 }
 
-.value-card-3 .value-icon {
+.value-card-3 .value-icon i {
     background: linear-gradient(135deg, #f9b80c 0%, #fea033 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -2057,7 +2061,7 @@ body.dark-mode .light-logo {
     border-top: 4px solid #4bb578;
 }
 
-.value-card-4 .value-icon {
+.value-card-4 .value-icon i {
     background: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -2478,22 +2482,23 @@ body.dark-mode .about-quote {
     box-shadow: 0 0 20px rgba(255, 45, 120, 0.08);
 }
 
-/* Value icons neon */
-body.dark-mode .value-card-1 .value-icon {
-    background: linear-gradient(135deg, #ff2d78, #ff6ba8);
-    filter: drop-shadow(0 0 8px rgba(255, 45, 120, 0.5));
+/* Value cards — dark mode looks like light theme */
+body.dark-mode .value-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
-body.dark-mode .value-card-2 .value-icon {
-    background: linear-gradient(135deg, #ff7c00, #ffad00);
-    filter: drop-shadow(0 0 8px rgba(255, 124, 0, 0.5));
+
+body.dark-mode .value-card h4 {
+    color: #002b64;
 }
-body.dark-mode .value-card-3 .value-icon {
-    background: linear-gradient(135deg, #00ffb3, #00c8ff);
-    filter: drop-shadow(0 0 8px rgba(0, 255, 179, 0.5));
+
+body.dark-mode .value-card p {
+    color: rgba(30, 40, 70, 0.75);
 }
-body.dark-mode .value-card-4 .value-icon {
-    background: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
-    filter: drop-shadow(0 0 10px rgba(249, 184, 12, 0.75));
+
+body.dark-mode .value-card:hover {
+    background: rgba(255, 255, 255, 0.96);
 }
 
 /* Role text in team cards */
