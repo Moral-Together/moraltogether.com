@@ -2743,6 +2743,16 @@ body.dark-mode .hero-text-panel > p {
     text-shadow: 0 1px 8px rgba(0,0,0,0.60);
 }
 
+/* "Unite" centered under "Good Forces" */
+.hero-text-panel .shimmer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.hero-text-panel .shimmer-text .unite-line {
+    align-self: center;
+}
+
 /* Buttons */
 .hero-text-panel .btn-group { justify-content: flex-start; }
 
