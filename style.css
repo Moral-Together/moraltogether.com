@@ -2661,7 +2661,43 @@ body.dark-mode .hero-overlay {
 
 
 /* ============================================================
-   HERO TEXT PANEL — glassmorphism card, left-aligned
+   HERO LAYOUT — two-column grid
+   ============================================================ */
+.hero-layout {
+    display: grid;
+    grid-template-columns: 48% 52%;
+    gap: 48px;
+    align-items: center;
+}
+
+/* ============================================================
+   HERO CANVAS WRAP — dark glass panel, right column
+   ============================================================ */
+.hero-canvas-wrap {
+    position: relative;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(5, 10, 30, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+body.dark-mode .hero-canvas-wrap {
+    background: rgba(3, 5, 20, 0.70);
+    border-color: rgba(0, 200, 255, 0.08);
+}
+
+#hero-orbit-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================================
+   HERO TEXT PANEL — subtle glassmorphism card, left-aligned
    ============================================================ */
 .hero-text-panel {
     position: relative;
@@ -2672,20 +2708,20 @@ body.dark-mode .hero-overlay {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* Frosted glass card */
-    background: rgba(255, 255, 255, 0.28);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-    border: 1px solid rgba(255, 255, 255, 0.45);
+    /* Subtle frosted glass */
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
     border-radius: 24px;
     padding: 48px 44px 44px;
-    box-shadow: 0 8px 40px rgba(0, 20, 80, 0.10);
+    box-shadow: 0 4px 24px rgba(0, 20, 80, 0.06);
 }
 
 body.dark-mode .hero-text-panel {
-    background: rgba(4, 8, 28, 0.68);
-    border-color: rgba(0, 200, 255, 0.14);
-    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0,200,255,0.06);
+    background: rgba(4, 8, 28, 0.38);
+    border-color: rgba(0, 200, 255, 0.10);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.30);
 }
 
 /* Title — light mode: dark navy on white glass */
@@ -2749,6 +2785,17 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+@media (max-width: 1024px) {
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .hero-canvas-wrap {
+        height: 360px;
+        order: -1;
+    }
+}
+
 @media (max-width: 900px) {
     .hero-text-panel {
         max-width: 100%;
@@ -2762,4 +2809,5 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 @media (max-width: 768px) {
     .hero-text-panel .shimmer-text { font-size: 2.6rem; }
     .hero-text-panel > p { font-size: 1rem !important; }
+    .hero-canvas-wrap { height: 280px; }
 }

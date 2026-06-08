@@ -133,12 +133,14 @@
         <!-- Subtle vignette overlay -->
         <div class="hero-overlay"></div>
 
-        <!-- Text -->
-        <div class="container">
+        <!-- Split: text left, orbital animation right -->
+        <div class="container hero-layout">
+
+            <!-- Left: subtle glass text -->
             <div class="hero-text-panel">
                 <h1 class="shimmer-text reveal">Good Forces<br>Unite.</h1>
-                <p class="reveal" style="transition-delay: 0.3s;">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
-                <div class="btn-group reveal" style="transition-delay: 0.4s;">
+                <p class="reveal" style="transition-delay: 0.2s;">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                <div class="btn-group reveal" style="transition-delay: 0.35s;">
                     <a href="#activities" class="btn btn-primary">Join the Organization</a>
                     <a href="#about" class="btn btn-secondary">Learn More</a>
                 </div>
@@ -152,6 +154,12 @@
                     <span>participants in our ecosystem</span>
                 </div>
             </div>
+
+            <!-- Right: orbital sparks canvas -->
+            <div class="hero-canvas-wrap reveal" style="transition-delay: 0.15s;">
+                <canvas id="hero-orbit-canvas"></canvas>
+            </div>
+
         </div>
 
         <div class="scroll-indicator">
