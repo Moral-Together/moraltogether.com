@@ -2521,34 +2521,13 @@ body.dark-mode .feature-checklist li::before {
 
 
 /* ============================================================
-   HERO — FULL-SCREEN SPHERE + CENTERED TEXT
+   HERO — OVERFLOW HIDDEN (shared by all hero variants)
    ============================================================ */
 .hero {
     overflow: hidden;
 }
 
-.hero #network-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    display: block;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        ellipse 60% 55% at 50% 50%,
-        rgba(3, 8, 16, 0.0) 0%,
-        rgba(3, 8, 16, 0.45) 60%,
-        rgba(3, 8, 16, 0.82) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-}
+/* .hero-overlay — defined in image-banner section below */
 
 .hero-content-center {
     position: relative;
@@ -2644,71 +2623,74 @@ body.dark-mode .hero-content-center .shimmer-text {
     will-change: transform;
 }
 
-/* Both images stacked; only the matching one is visible */
+/* Both layers stacked — background-image on div, opacity switches theme */
 .hero-img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    transition: opacity 0.8s ease;
+    background-size: cover;
+    background-position: center center;
+    transition: opacity 1s ease;
     animation: heroBanner 28s ease-in-out infinite;
-    user-select: none;
-    pointer-events: none;
 }
 
-.hero-img-light { opacity: 1; animation-delay: 0s; }
-.hero-img-dark  { opacity: 0; animation-delay: 0s; }
+.hero-img-light {
+    background-image: url('images/hero-light.png');
+    opacity: 1;
+}
+.hero-img-dark {
+    background-image: url('images/hero-dark.png');
+    opacity: 0;
+}
 
+/* Dark mode — swap which layer is visible */
 body.dark-mode .hero-img-light { opacity: 0; }
 body.dark-mode .hero-img-dark  { opacity: 1; }
 
 /* Ken Burns: slow zoom + drift */
 @keyframes heroBanner {
     0%   { transform: scale(1.00) translate(0%,    0%);   }
-    25%  { transform: scale(1.05) translate(-0.8%, -0.4%); }
-    50%  { transform: scale(1.08) translate(-1.5%, 0.5%); }
-    75%  { transform: scale(1.05) translate(-0.5%, -0.8%); }
+    25%  { transform: scale(1.05) translate(-1.0%, -0.5%); }
+    50%  { transform: scale(1.08) translate(-1.8%, 0.6%);  }
+    75%  { transform: scale(1.05) translate(-0.6%, -1.0%); }
     100% { transform: scale(1.00) translate(0%,    0%);   }
 }
 
-/* Gradient overlay — left panel for text + top/bottom vignette */
+/* Gradient overlay — enough contrast for text, image still clearly visible */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    /* Light mode: white fade on left + subtle vignettes */
+    /* Light mode: soft white gradient left side only */
     background:
         linear-gradient(to right,
-            rgba(250,252,255,0.90) 0%,
-            rgba(245,250,255,0.72) 28%,
-            rgba(240,248,255,0.35) 50%,
-            transparent 68%
+            rgba(255,255,255,0.72) 0%,
+            rgba(255,255,255,0.48) 22%,
+            rgba(255,255,255,0.15) 42%,
+            transparent 60%
         ),
         linear-gradient(to bottom,
-            rgba(0,0,0,0.18) 0%,
-            transparent 18%,
-            transparent 75%,
-            rgba(0,0,0,0.22) 100%
+            rgba(0,0,0,0.12) 0%,
+            transparent 15%,
+            transparent 80%,
+            rgba(0,0,0,0.15) 100%
         );
 }
 
-/* Dark mode overlay — dark fade on left */
+/* Dark mode overlay */
 body.dark-mode .hero-overlay {
     background:
         linear-gradient(to right,
-            rgba(4,6,18,0.92) 0%,
-            rgba(4,6,18,0.75) 28%,
-            rgba(4,6,18,0.30) 50%,
-            transparent 68%
+            rgba(3,5,15,0.80) 0%,
+            rgba(3,5,15,0.55) 22%,
+            rgba(3,5,15,0.18) 42%,
+            transparent 60%
         ),
         linear-gradient(to bottom,
-            rgba(0,0,0,0.35) 0%,
-            transparent 18%,
-            transparent 75%,
-            rgba(0,0,0,0.45) 100%
+            rgba(0,0,0,0.25) 0%,
+            transparent 15%,
+            transparent 80%,
+            rgba(0,0,0,0.30) 100%
         );
 }
 
@@ -2720,7 +2702,7 @@ body.dark-mode .hero::after {
     z-index: 1;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 40% 50% at 68% 42%, rgba(0,200,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 68% 42%, rgba(0,200,255,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 30% 40% at 80% 62%, rgba(255,45,120,0.06) 0%, transparent 55%);
     animation: heroGlow 9s ease-in-out infinite alternate;
 }
