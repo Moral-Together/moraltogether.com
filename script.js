@@ -132,5 +132,102 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Hero floating dots ---
+    const dotsCanvas = document.getElementById('hero-dots-canvas');
+    if (dotsCanvas) {
+        const dctx = dotsCanvas.getContext('2d');
+        const DOT_COUNT = 55;
+        const MAX_DIST = 140;
+        const SPEED = 0.28;
+        let dW, dH, textZone;
+        const dots = [];
+
+        function dotsResize() {
+            dW = dotsCanvas.offsetWidth;
+            dH = dotsCanvas.offsetHeight;
+            dotsCanvas.width  = dW;
+            dotsCanvas.height = dH;
+            // zone occupied by text panel (left ~45%, full height)
+            textZone = { x: 0, y: 0, w: dW * 0.46, h: dH };
+        }
+
+        function makeDotsOutsideText() {
+            dots.length = 0;
+            for (let i = 0; i < DOT_COUNT; i++) {
+                let x, y;
+                // place dots only in right 55% OR upper/lower strips
+                do {
+                    x = Math.random() * dW;
+                    y = Math.random() * dH;
+                } while (x < textZone.w && y > dH * 0.15 && y < dH * 0.85);
+
+                const angle = Math.random() * Math.PI * 2;
+                dots.push({
+                    x, y,
+                    vx: Math.cos(angle) * SPEED * (0.5 + Math.random() * 0.8),
+                    vy: Math.sin(angle) * SPEED * (0.5 + Math.random() * 0.8),
+                    r: 1.5 + Math.random() * 2,
+                });
+            }
+        }
+
+        dotsResize();
+        makeDotsOutsideText();
+        window.addEventListener('resize', () => { dotsResize(); makeDotsOutsideText(); });
+
+        function getDotColors() {
+            const dark = document.body.classList.contains('dark-mode');
+            return {
+                dot:  dark ? 'rgba(0, 200, 255, 0.65)' : 'rgba(0, 80, 200, 0.35)',
+                line: dark ? 'rgba(0, 200, 255, '       : 'rgba(0, 80, 200, ',
+            };
+        }
+
+        function dotsTick() {
+            dctx.clearRect(0, 0, dW, dH);
+            const col = getDotColors();
+
+            dots.forEach(d => {
+                // bounce off edges
+                if (d.x < 0 || d.x > dW) d.vx *= -1;
+                if (d.y < 0 || d.y > dH) d.vy *= -1;
+                // gently steer away from text zone
+                if (d.x < textZone.w && d.y > dH * 0.15 && d.y < dH * 0.85) {
+                    d.vx += 0.012;
+                }
+                d.x += d.vx;
+                d.y += d.vy;
+            });
+
+            // draw lines between close dots
+            for (let i = 0; i < dots.length; i++) {
+                for (let j = i + 1; j < dots.length; j++) {
+                    const dx = dots[i].x - dots[j].x;
+                    const dy = dots[i].y - dots[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MAX_DIST) {
+                        const alpha = (1 - dist / MAX_DIST) * 0.35;
+                        dctx.beginPath();
+                        dctx.moveTo(dots[i].x, dots[i].y);
+                        dctx.lineTo(dots[j].x, dots[j].y);
+                        dctx.strokeStyle = col.line + alpha + ')';
+                        dctx.lineWidth = 0.8;
+                        dctx.stroke();
+                    }
+                }
+            }
+
+            // draw dots
+            dots.forEach(d => {
+                dctx.beginPath();
+                dctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                dctx.fillStyle = col.dot;
+                dctx.fill();
+            });
+
+            requestAnimationFrame(dotsTick);
+        }
+        requestAnimationFrame(dotsTick);
+    }
 
 });
