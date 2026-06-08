@@ -2661,42 +2661,6 @@ body.dark-mode .hero-overlay {
 
 
 /* ============================================================
-   HERO LAYOUT — two-column grid
-   ============================================================ */
-.hero-layout {
-    display: grid;
-    grid-template-columns: 48% 52%;
-    gap: 48px;
-    align-items: center;
-}
-
-/* ============================================================
-   HERO CANVAS WRAP — dark glass panel, right column
-   ============================================================ */
-.hero-canvas-wrap {
-    position: relative;
-    height: 480px;
-    border-radius: 20px;
-    overflow: hidden;
-    background: rgba(5, 10, 30, 0.55);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-body.dark-mode .hero-canvas-wrap {
-    background: rgba(3, 5, 20, 0.70);
-    border-color: rgba(0, 200, 255, 0.08);
-}
-
-#hero-orbit-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* ============================================================
    HERO TEXT PANEL — subtle glassmorphism card, left-aligned
    ============================================================ */
 .hero-text-panel {
@@ -2785,17 +2749,6 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
-    .hero-layout {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-    .hero-canvas-wrap {
-        height: 360px;
-        order: -1;
-    }
-}
-
 @media (max-width: 900px) {
     .hero-text-panel {
         max-width: 100%;
@@ -2809,5 +2762,4 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 @media (max-width: 768px) {
     .hero-text-panel .shimmer-text { font-size: 2.6rem; }
     .hero-text-panel > p { font-size: 1rem !important; }
-    .hero-canvas-wrap { height: 280px; }
 }
