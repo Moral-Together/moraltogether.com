@@ -12,20 +12,20 @@
     --spotlight-color: rgba(144, 181, 179, 0.15);
 
     --font-heading: 'Rubik', sans-serif;
-    --font-body: 'Heebo', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 body.dark-mode {
-    --primary-color: #90b5b3;
-    --primary-dark: #2c5282;
-    --secondary-color: #f9b80c;
-    --accent-color: #002b64;
-    --text-main: #f5f5f7;
-    --text-muted: #a1a1a6;
-    --bg-body: #000000;
-    --bg-glass: rgba(30, 30, 30, 0.65);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --spotlight-color: rgba(255, 255, 255, 0.05);
+    --primary-color: #00c8ff;
+    --primary-dark: #0088bb;
+    --secondary-color: #ff2d78;
+    --accent-color: #00ffb3;
+    --text-main: #e8e8ff;
+    --text-muted: #7878a0;
+    --bg-body: #07070f;
+    --bg-glass: rgba(10, 10, 25, 0.85);
+    --card-border: rgba(0, 200, 255, 0.1);
+    --spotlight-color: rgba(0, 200, 255, 0.05);
 }
 
 /* Custom Cursor */
@@ -68,7 +68,7 @@ body.dark-mode {
 .scroll-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(to left, #002b64, #dd2a7b, #e47525, #f9b80c, #4bb578, #90b5b3);
+    background: linear-gradient(to right, #002b64, #dd2a7b, #e47525, #f9b80c, #4bb578, #90b5b3);
     transition: width 0.1s ease-out;
 }
 
@@ -144,8 +144,7 @@ body {
     font-family: var(--font-body);
     color: var(--text-main);
     background-color: var(--bg-body);
-    line-height: 1.7;
-    direction: rtl;
+    line-height: 1.8;
     margin: 0;
     overflow-x: hidden;
 }
@@ -295,8 +294,6 @@ body.dark-mode .navbar.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: row-reverse;
-    /* Logo Left, Menu Right */
 }
 
 .logo {
@@ -371,8 +368,7 @@ body.dark-mode .navbar.scrolled {
     width: 0;
     height: 2px;
     bottom: 0;
-    right: 0;
-    /* RTL underline start */
+    left: 0;
     background-color: var(--secondary-color);
     transition: width 0.3s ease-in-out;
 }
@@ -402,10 +398,10 @@ body.dark-mode .navbar.scrolled {
 .hero {
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     position: relative;
-    padding-top: 15vh;
-    padding-bottom: 15vh;
+    padding-top: 80px;
+    padding-bottom: 60px;
 }
 
 .container {
@@ -426,15 +422,7 @@ body.dark-mode .navbar.scrolled {
     z-index: 1;
 }
 
-#hero-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-}
+/* #hero-particles removed — replaced by #network-canvas in .hero-network */
 
 .shimmer-text {
     font-family: 'Rubik', sans-serif;
@@ -486,8 +474,7 @@ body.dark-mode .navbar.scrolled {
     height: 40px;
     border-radius: 50%;
     border: 3px solid var(--bg-body);
-    margin-left: -15px;
-    /* RTL overlapping */
+    margin-right: -15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -503,7 +490,7 @@ body.dark-mode .navbar.scrolled {
     font-weight: 700;
     font-size: 0.8rem;
     border: 3px solid var(--bg-body);
-    margin-left: -15px;
+    margin-right: -15px;
     z-index: 1;
 }
 
@@ -922,7 +909,7 @@ body.dark-mode .bento-card:hover {
 
 .feature-checklist li {
     font-size: 0.95rem;
-    padding-right: 25px;
+    padding-left: 25px;
     margin-bottom: 12px;
     color: #555;
     position: relative;
@@ -931,7 +918,7 @@ body.dark-mode .bento-card:hover {
 .feature-checklist li::before {
     content: '✓';
     position: absolute;
-    right: 0;
+    left: 0;
     color: var(--accent-color);
     font-weight: bold;
 }
@@ -1038,8 +1025,11 @@ body.dark-mode .member-info h3 {
 }
 
 .member-info .role {
-    color: var(--text-muted);
-    font-weight: 500;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
     margin-bottom: 15px;
 }
 
@@ -1455,7 +1445,7 @@ body.dark-mode .contact-method-card {
     background: rgba(0, 43, 100, 0.06);
     border-color: var(--secondary-color);
     box-shadow: 0 10px 20px rgba(229, 91, 39, 0.1);
-    transform: translateX(-5px);
+    transform: translateX(5px);
 }
 
 body.dark-mode .contact-method-card:hover {
@@ -1497,7 +1487,7 @@ body.dark-mode .contact-method-card:hover {
     font-size: 1.1rem;
     color: var(--primary-color);
     direction: ltr;
-    text-align: right;
+    text-align: left;
 }
 
 /* Contact Visual Area */
@@ -1654,7 +1644,7 @@ body.dark-mode .contact-method-card:hover {
     content: '';
     position: absolute;
     bottom: 0;
-    right: 0;
+    left: 0;
     width: 30px;
     height: 2px;
     background: var(--secondary-color);
@@ -1678,7 +1668,7 @@ body.dark-mode .contact-method-card:hover {
 
 .footer-links a:hover {
     color: var(--secondary-color);
-    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .social-icons {
@@ -1819,7 +1809,7 @@ body.dark-mode .contact-method-card:hover {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -100%;
+        left: -100%;
         width: 75%;
         height: 100vh;
         background: rgba(255, 255, 255, 0.98);
@@ -1829,12 +1819,12 @@ body.dark-mode .contact-method-card:hover {
         align-items: center;
         gap: 30px;
         transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
         z-index: 1000;
     }
 
     .nav-menu.active {
-        right: 0;
+        left: 0;
     }
 
     .hamburger {
@@ -2068,7 +2058,7 @@ body.dark-mode .light-logo {
 }
 
 .value-card-4 .value-icon {
-    background: linear-gradient(135deg, #4bb578 0%, #3caf70 100%);
+    background: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2210,4 +2200,424 @@ body.dark-mode .contact-whatsapp-card:hover {
         font-size: 1rem;
         word-break: break-all;
     }
+}
+
+/* ============================================================
+   HERO SPLIT LAYOUT
+   ============================================================ */
+.hero-split {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-text {
+    text-align: left;
+}
+
+.hero-text .shimmer-text {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.hero-text p {
+    font-size: 1.35rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.hero-text .btn-group {
+    justify-content: flex-start;
+}
+
+.hero-text .floating-social-proof {
+    margin-top: 50px;
+    display: inline-flex;
+}
+
+.hero-network {
+    position: relative;
+    height: 520px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 50px rgba(0, 43, 100, 0.08);
+}
+
+#network-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 1024px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .hero-text {
+        text-align: center;
+    }
+    .hero-text .shimmer-text {
+        text-align: center;
+    }
+    .hero-text p {
+        text-align: center;
+    }
+    .hero-text .btn-group {
+        justify-content: center;
+    }
+    .hero-network {
+        height: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-network {
+        height: 280px;
+    }
+}
+
+/* ============================================================
+   NAVBAR TOP ACCENT
+   ============================================================ */
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.navbar.scrolled::before {
+    opacity: 1;
+}
+
+/* ============================================================
+   HERO BADGE
+   ============================================================ */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    background: rgba(0, 43, 100, 0.07);
+    border: 1px solid rgba(0, 43, 100, 0.18);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 28px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+body.dark-mode .hero-badge {
+    background: rgba(0, 200, 255, 0.07);
+    border-color: rgba(0, 200, 255, 0.25);
+    color: #00c8ff;
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.1);
+}
+
+/* ============================================================
+   HERO NETWORK CANVAS — always dark background
+   ============================================================ */
+.hero-network {
+    background: linear-gradient(135deg, #030a1a 0%, #0a1830 60%, #030a1a 100%) !important;
+    border-color: rgba(0, 80, 150, 0.35) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 0 80px rgba(0, 43, 100, 0.08) !important;
+}
+
+body.dark-mode .hero-network {
+    border-color: rgba(0, 200, 255, 0.25) !important;
+    box-shadow: 0 0 50px rgba(0, 200, 255, 0.12), 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* ============================================================
+   DARK MODE — NEON GLOW EFFECTS
+   ============================================================ */
+
+/* Shimmer text neon */
+body.dark-mode .shimmer-text {
+    background: linear-gradient(110deg, #00c8ff 10%, #ff2d78 40%, #00ffb3 70%, #00c8ff 100%);
+    background-size: 200% auto;
+    filter: drop-shadow(0 0 24px rgba(0, 200, 255, 0.35));
+}
+
+/* Neon orbs */
+body.dark-mode .orb-1 { background: rgba(0, 200, 255, 0.12); }
+body.dark-mode .orb-2 { background: rgba(255, 45, 120, 0.12); }
+body.dark-mode .orb-3 { background: rgba(0, 255, 179, 0.08); }
+
+/* Scroll progress bar neon */
+body.dark-mode .scroll-progress-bar {
+    background: linear-gradient(to right, #00c8ff, #ff2d78, #00ffb3);
+    box-shadow: 0 0 8px rgba(0, 200, 255, 0.7);
+}
+
+/* Scrollbar neon */
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00c8ff, #ff2d78, #00ffb3);
+}
+
+/* Buttons neon */
+body.dark-mode .btn-primary {
+    background: linear-gradient(135deg, #0088bb, #00c8ff);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.35), 0 10px 30px rgba(0, 200, 255, 0.15);
+}
+
+body.dark-mode .btn-primary:hover {
+    box-shadow: 0 0 40px rgba(0, 200, 255, 0.55), 0 20px 40px rgba(0, 200, 255, 0.25);
+}
+
+body.dark-mode .btn-secondary {
+    background: rgba(0, 200, 255, 0.08);
+    border: 1px solid rgba(0, 200, 255, 0.3);
+    color: #00c8ff;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: rgba(0, 200, 255, 0.15);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.25);
+}
+
+/* Cards neon glow on hover */
+body.dark-mode .bento-card:hover {
+    border-color: rgba(0, 200, 255, 0.3) !important;
+    box-shadow: 0 0 30px rgba(0, 200, 255, 0.12), 0 30px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+body.dark-mode .value-card:hover {
+    border-color: rgba(0, 200, 255, 0.25) !important;
+}
+
+body.dark-mode .team-card:hover {
+    border-color: rgba(0, 200, 255, 0.25) !important;
+}
+
+/* Navbar neon top accent */
+body.dark-mode .navbar::before {
+    background: linear-gradient(to right, #00c8ff, #ff2d78, #00ffb3);
+}
+
+body.dark-mode .navbar.scrolled {
+    background: rgba(7, 7, 15, 0.9);
+    border-bottom: 1px solid rgba(0, 200, 255, 0.12);
+}
+
+/* Vision section */
+body.dark-mode .vision-section {
+    background: #04040e;
+}
+
+body.dark-mode .vision-text strong {
+    color: #ff2d78;
+    text-shadow: 0 0 20px rgba(255, 45, 120, 0.4);
+}
+
+/* Footer neon */
+body.dark-mode .site-footer {
+    background: #04040e;
+    border-top: 1px solid rgba(0, 200, 255, 0.1);
+}
+
+/* Contact visual area neon */
+body.dark-mode .contact-visual {
+    background: linear-gradient(135deg, #04040e, #0a0a1e);
+}
+
+body.dark-mode .glow-icon {
+    text-shadow: 0 0 30px rgba(255, 45, 120, 0.8), 0 0 60px rgba(255, 45, 120, 0.4);
+    color: #ff2d78;
+}
+
+/* Floating social proof */
+body.dark-mode .floating-social-proof {
+    border-color: rgba(0, 200, 255, 0.2);
+    background: rgba(0, 200, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.08);
+}
+
+/* Tag cloud neon */
+body.dark-mode .tag {
+    background: rgba(0, 200, 255, 0.08);
+    color: #00c8ff;
+    border: 1px solid rgba(0, 200, 255, 0.15);
+}
+
+body.dark-mode .tag:hover {
+    background: rgba(0, 200, 255, 0.2);
+    box-shadow: 0 0 12px rgba(0, 200, 255, 0.3);
+}
+
+/* About quote neon */
+body.dark-mode .about-quote {
+    background: rgba(255, 45, 120, 0.06);
+    border-left-color: #ff2d78;
+    box-shadow: 0 0 20px rgba(255, 45, 120, 0.08);
+}
+
+/* Value icons neon */
+body.dark-mode .value-card-1 .value-icon {
+    background: linear-gradient(135deg, #ff2d78, #ff6ba8);
+    filter: drop-shadow(0 0 8px rgba(255, 45, 120, 0.5));
+}
+body.dark-mode .value-card-2 .value-icon {
+    background: linear-gradient(135deg, #ff7c00, #ffad00);
+    filter: drop-shadow(0 0 8px rgba(255, 124, 0, 0.5));
+}
+body.dark-mode .value-card-3 .value-icon {
+    background: linear-gradient(135deg, #00ffb3, #00c8ff);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 179, 0.5));
+}
+body.dark-mode .value-card-4 .value-icon {
+    background: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
+    filter: drop-shadow(0 0 10px rgba(249, 184, 12, 0.75));
+}
+
+/* Role text in team cards */
+body.dark-mode .member-info .role {
+    color: #00ffb3;
+    text-shadow: 0 0 12px rgba(0, 255, 179, 0.4);
+}
+
+/* Partner cards */
+body.dark-mode .partner-logo-card:hover::after {
+    background: linear-gradient(135deg, #ff2d78, #00c8ff);
+}
+
+/* Custom cursor */
+body.dark-mode .custom-cursor {
+    border-color: #00c8ff;
+    box-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+}
+
+/* Feature checklist */
+body.dark-mode .feature-checklist li::before {
+    color: #00ffb3;
+    text-shadow: 0 0 8px rgba(0, 255, 179, 0.6);
+}
+
+
+/* ============================================================
+   HERO — FULL-SCREEN SPHERE + CENTERED TEXT
+   ============================================================ */
+.hero {
+    overflow: hidden;
+}
+
+.hero #network-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 60% 55% at 50% 50%,
+        rgba(3, 8, 16, 0.0) 0%,
+        rgba(3, 8, 16, 0.45) 60%,
+        rgba(3, 8, 16, 0.82) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hero text: always bright on dark canvas background */
+.hero-content-center .shimmer-text {
+    background: linear-gradient(110deg, #ffffff 0%, #a8e8ff 30%, #ffffff 55%, #b8f0e8 80%, #ffffff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 22px rgba(0, 200, 255, 0.25));
+}
+
+body.dark-mode .hero-content-center .shimmer-text {
+    background: linear-gradient(110deg, #00c8ff 5%, #ffffff 32%, #ff2d78 58%, #00ffb3 82%, #00c8ff 100%);
+    background-size: 200% auto;
+    filter: drop-shadow(0 0 32px rgba(0, 200, 255, 0.55));
+}
+
+.hero-content-center > p {
+    color: rgba(200, 215, 255, 0.85) !important;
+    font-size: 1.25rem;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content-center .btn-group {
+    justify-content: center;
+}
+
+.hero-content-center .floating-social-proof {
+    background: rgba(0, 200, 255, 0.06) !important;
+    border-color: rgba(0, 200, 255, 0.2) !important;
+    color: rgba(200, 215, 255, 0.85);
+    margin-top: 40px;
+}
+
+.hero-content-center .floating-social-proof span {
+    color: rgba(200, 215, 255, 0.75) !important;
+}
+
+/* Scroll indicator stays above canvas */
+.hero .scroll-indicator {
+    z-index: 2;
+}
+
+/* Sun border matches icon */
+.value-card-4 {
+    border-top-color: #f9b80c !important;
+}
+
+@media (max-width: 768px) {
+    .hero-content-center .shimmer-text {
+        font-size: 2.8rem;
+    }
+    .hero-content-center > p {
+        font-size: 1.05rem !important;
+    }
+}
+
+/* Hero scroll arrow — always visible on dark canvas */
+.hero .scroll-arrow {
+    border-color: rgba(160, 200, 255, 0.55);
 }
