@@ -2671,7 +2671,7 @@ body.dark-mode .hero-overlay {
 
 
 /* ============================================================
-   HERO TEXT PANEL — no card, text floats over image
+   HERO TEXT PANEL — blurred haze behind text, no card
    ============================================================ */
 .hero-text-panel {
     position: relative;
@@ -2682,7 +2682,35 @@ body.dark-mode .hero-overlay {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0;
+    padding: 20px 0;
+}
+
+/* Soft elliptical haze blob behind the text */
+.hero-text-panel::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130%;
+    height: 130%;
+    background: radial-gradient(ellipse at center,
+        rgba(230, 240, 255, 0.72) 0%,
+        rgba(220, 235, 255, 0.38) 45%,
+        transparent 72%
+    );
+    filter: blur(32px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.dark-mode .hero-text-panel::before {
+    background: radial-gradient(ellipse at center,
+        rgba(4, 10, 35, 0.82) 0%,
+        rgba(4, 10, 35, 0.50) 45%,
+        transparent 72%
+    );
+    filter: blur(36px);
 }
 
 /* Title — light mode: dark navy */
