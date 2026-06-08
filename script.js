@@ -132,29 +132,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Hero floating dots ---
+    // --- Hero comet dots ---
     const dotsCanvas = document.getElementById('hero-dots-canvas');
     if (dotsCanvas) {
         const dctx = dotsCanvas.getContext('2d');
-        const DOT_COUNT = 60;
-        const SPEED = 0.30;
+        const DOT_COUNT  = 18;
+        const TRAIL_LEN  = 28;
+        const SPEED      = 0.55;
 
-        const NEON_COLORS  = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c','#ffffff'];
-        const LIGHT_COLORS = ['#0077cc','#e8003d','#00aa66','#7b2fbe','#e06000','#c49000','#0055aa'];
+        const NEON_COLORS  = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c'];
+        const LIGHT_COLORS = ['#0088ee','#e8003d','#00aa55','#8833cc','#e06800','#cc9900'];
 
         let dW, dH, textZone;
-        const dots = [];
+        const comets = [];
 
         function dotsResize() {
             dW = dotsCanvas.offsetWidth;
             dH = dotsCanvas.offsetHeight;
             dotsCanvas.width  = dW;
             dotsCanvas.height = dH;
-            textZone = { w: dW * 0.46, hMin: dH * 0.15, hMax: dH * 0.85 };
+            textZone = { w: dW * 0.46, hMin: dH * 0.12, hMax: dH * 0.88 };
         }
 
-        function initDots() {
-            dots.length = 0;
+        function initComets() {
+            comets.length = 0;
             for (let i = 0; i < DOT_COUNT; i++) {
                 let x, y;
                 do {
@@ -163,56 +164,89 @@ document.addEventListener('DOMContentLoaded', () => {
                 } while (x < textZone.w && y > textZone.hMin && y < textZone.hMax);
 
                 const angle = Math.random() * Math.PI * 2;
-                const speed = SPEED * (0.4 + Math.random() * 0.9);
-                dots.push({
+                const speed = SPEED * (0.5 + Math.random() * 0.8);
+                // pre-fill trail at starting position
+                const trail = [];
+                for (let t = 0; t < TRAIL_LEN; t++) trail.push({ x, y });
+
+                comets.push({
                     x, y,
                     vx: Math.cos(angle) * speed,
                     vy: Math.sin(angle) * speed,
-                    r: 2 + Math.random() * 2.5,
-                    colorIdx: Math.floor(Math.random() * NEON_COLORS.length),
+                    r: 2 + Math.random() * 1.5,
+                    colorIdx: i % NEON_COLORS.length,
+                    trail,
                 });
             }
         }
 
         dotsResize();
-        initDots();
-        window.addEventListener('resize', () => { dotsResize(); initDots(); });
+        initComets();
+        window.addEventListener('resize', () => { dotsResize(); initComets(); });
 
-        function dotsTick() {
+        function hexToRgb(hex) {
+            const r = parseInt(hex.slice(1,3),16);
+            const g = parseInt(hex.slice(3,5),16);
+            const b = parseInt(hex.slice(5,7),16);
+            return `${r},${g},${b}`;
+        }
+
+        function cometsTick() {
             dctx.clearRect(0, 0, dW, dH);
             const dark = document.body.classList.contains('dark-mode');
             const palette = dark ? NEON_COLORS : LIGHT_COLORS;
 
-            dots.forEach(d => {
-                if (d.x < 0 || d.x > dW) d.vx *= -1;
-                if (d.y < 0 || d.y > dH) d.vy *= -1;
-                // push out of text zone
-                if (d.x < textZone.w && d.y > textZone.hMin && d.y < textZone.hMax) {
-                    d.vx += 0.015;
+            comets.forEach(c => {
+                // bounce + steer away from text zone
+                if (c.x < 0 || c.x > dW) c.vx *= -1;
+                if (c.y < 0 || c.y > dH) c.vy *= -1;
+                if (c.x < textZone.w && c.y > textZone.hMin && c.y < textZone.hMax) {
+                    c.vx += 0.02;
                 }
-                d.x += d.vx;
-                d.y += d.vy;
+                c.x += c.vx;
+                c.y += c.vy;
 
-                const color = palette[d.colorIdx];
-                // soft glow halo
-                const grd = dctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 3.5);
-                grd.addColorStop(0, color + (dark ? 'cc' : '99'));
-                grd.addColorStop(1, color + '00');
+                // update trail
+                c.trail.push({ x: c.x, y: c.y });
+                if (c.trail.length > TRAIL_LEN) c.trail.shift();
+
+                const color = palette[c.colorIdx];
+                const rgb = hexToRgb(color);
+
+                // draw trail — tapers in width and fades in alpha
+                for (let t = 1; t < c.trail.length; t++) {
+                    const progress = t / c.trail.length;       // 0=tail, 1=head
+                    const alpha    = progress * progress * (dark ? 0.75 : 0.55);
+                    const width    = progress * c.r * 1.8;
+
+                    dctx.beginPath();
+                    dctx.moveTo(c.trail[t - 1].x, c.trail[t - 1].y);
+                    dctx.lineTo(c.trail[t].x,     c.trail[t].y);
+                    dctx.strokeStyle = `rgba(${rgb},${alpha})`;
+                    dctx.lineWidth   = Math.max(0.3, width);
+                    dctx.lineCap     = 'round';
+                    dctx.stroke();
+                }
+
+                // glowing head
+                const grd = dctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r * 4);
+                grd.addColorStop(0, `rgba(${rgb},${dark ? 0.9 : 0.7})`);
+                grd.addColorStop(1, `rgba(${rgb},0)`);
                 dctx.beginPath();
-                dctx.arc(d.x, d.y, d.r * 3.5, 0, Math.PI * 2);
+                dctx.arc(c.x, c.y, c.r * 4, 0, Math.PI * 2);
                 dctx.fillStyle = grd;
                 dctx.fill();
 
-                // solid dot core
+                // solid core
                 dctx.beginPath();
-                dctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                dctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
                 dctx.fillStyle = color;
                 dctx.fill();
             });
 
-            requestAnimationFrame(dotsTick);
+            requestAnimationFrame(cometsTick);
         }
-        requestAnimationFrame(dotsTick);
+        requestAnimationFrame(cometsTick);
     }
 
 });
