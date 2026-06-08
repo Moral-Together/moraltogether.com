@@ -136,9 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const dotsCanvas = document.getElementById('hero-dots-canvas');
     if (dotsCanvas) {
         const dctx = dotsCanvas.getContext('2d');
-        const DOT_COUNT = 55;
-        const MAX_DIST = 140;
-        const SPEED = 0.28;
+        const DOT_COUNT = 60;
+        const SPEED = 0.30;
+
+        const NEON_COLORS  = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c','#ffffff'];
+        const LIGHT_COLORS = ['#0077cc','#e8003d','#00aa66','#7b2fbe','#e06000','#c49000','#0055aa'];
+
         let dW, dH, textZone;
         const dots = [];
 
@@ -147,81 +150,63 @@ document.addEventListener('DOMContentLoaded', () => {
             dH = dotsCanvas.offsetHeight;
             dotsCanvas.width  = dW;
             dotsCanvas.height = dH;
-            // zone occupied by text panel (left ~45%, full height)
-            textZone = { x: 0, y: 0, w: dW * 0.46, h: dH };
+            textZone = { w: dW * 0.46, hMin: dH * 0.15, hMax: dH * 0.85 };
         }
 
-        function makeDotsOutsideText() {
+        function initDots() {
             dots.length = 0;
             for (let i = 0; i < DOT_COUNT; i++) {
                 let x, y;
-                // place dots only in right 55% OR upper/lower strips
                 do {
                     x = Math.random() * dW;
                     y = Math.random() * dH;
-                } while (x < textZone.w && y > dH * 0.15 && y < dH * 0.85);
+                } while (x < textZone.w && y > textZone.hMin && y < textZone.hMax);
 
                 const angle = Math.random() * Math.PI * 2;
+                const speed = SPEED * (0.4 + Math.random() * 0.9);
                 dots.push({
                     x, y,
-                    vx: Math.cos(angle) * SPEED * (0.5 + Math.random() * 0.8),
-                    vy: Math.sin(angle) * SPEED * (0.5 + Math.random() * 0.8),
-                    r: 1.5 + Math.random() * 2,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    r: 2 + Math.random() * 2.5,
+                    colorIdx: Math.floor(Math.random() * NEON_COLORS.length),
                 });
             }
         }
 
         dotsResize();
-        makeDotsOutsideText();
-        window.addEventListener('resize', () => { dotsResize(); makeDotsOutsideText(); });
-
-        function getDotColors() {
-            const dark = document.body.classList.contains('dark-mode');
-            return {
-                dot:  dark ? 'rgba(0, 200, 255, 0.65)' : 'rgba(0, 80, 200, 0.35)',
-                line: dark ? 'rgba(0, 200, 255, '       : 'rgba(0, 80, 200, ',
-            };
-        }
+        initDots();
+        window.addEventListener('resize', () => { dotsResize(); initDots(); });
 
         function dotsTick() {
             dctx.clearRect(0, 0, dW, dH);
-            const col = getDotColors();
+            const dark = document.body.classList.contains('dark-mode');
+            const palette = dark ? NEON_COLORS : LIGHT_COLORS;
 
             dots.forEach(d => {
-                // bounce off edges
                 if (d.x < 0 || d.x > dW) d.vx *= -1;
                 if (d.y < 0 || d.y > dH) d.vy *= -1;
-                // gently steer away from text zone
-                if (d.x < textZone.w && d.y > dH * 0.15 && d.y < dH * 0.85) {
-                    d.vx += 0.012;
+                // push out of text zone
+                if (d.x < textZone.w && d.y > textZone.hMin && d.y < textZone.hMax) {
+                    d.vx += 0.015;
                 }
                 d.x += d.vx;
                 d.y += d.vy;
-            });
 
-            // draw lines between close dots
-            for (let i = 0; i < dots.length; i++) {
-                for (let j = i + 1; j < dots.length; j++) {
-                    const dx = dots[i].x - dots[j].x;
-                    const dy = dots[i].y - dots[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < MAX_DIST) {
-                        const alpha = (1 - dist / MAX_DIST) * 0.35;
-                        dctx.beginPath();
-                        dctx.moveTo(dots[i].x, dots[i].y);
-                        dctx.lineTo(dots[j].x, dots[j].y);
-                        dctx.strokeStyle = col.line + alpha + ')';
-                        dctx.lineWidth = 0.8;
-                        dctx.stroke();
-                    }
-                }
-            }
+                const color = palette[d.colorIdx];
+                // soft glow halo
+                const grd = dctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 3.5);
+                grd.addColorStop(0, color + (dark ? 'cc' : '99'));
+                grd.addColorStop(1, color + '00');
+                dctx.beginPath();
+                dctx.arc(d.x, d.y, d.r * 3.5, 0, Math.PI * 2);
+                dctx.fillStyle = grd;
+                dctx.fill();
 
-            // draw dots
-            dots.forEach(d => {
+                // solid dot core
                 dctx.beginPath();
                 dctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-                dctx.fillStyle = col.dot;
+                dctx.fillStyle = color;
                 dctx.fill();
             });
 
