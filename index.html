@@ -122,27 +122,38 @@
         </div>
     </nav>
 
-    <!-- Hero Section — Full-screen sphere + centered text -->
+    <!-- Hero Section — Image banner (dark/light) + animated overlay -->
     <header class="hero" id="home">
-        <canvas id="network-canvas"></canvas>
+        <!-- Background images -->
+        <div class="hero-bg">
+            <div class="hero-bg-inner">
+                <img class="hero-img hero-img-light" src="images/hero-light.png" alt="">
+                <img class="hero-img hero-img-dark"  src="images/hero-dark.png"  alt="">
+            </div>
+        </div>
+
+        <!-- Gradient overlay for text readability -->
         <div class="hero-overlay"></div>
 
-        <div class="container hero-content-center">
-            <div class="hero-badge reveal"><span class="badge-dot"></span>Social Impact Ecosystem</div>
-            <h1 class="shimmer-text reveal" style="transition-delay: 0.1s;">Good Forces<br>Unite.</h1>
-            <p class="reveal" style="transition-delay: 0.3s;">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
-            <div class="btn-group reveal" style="transition-delay: 0.4s;">
-                <a href="#activities" class="btn btn-primary">Join the Organization</a>
-                <a href="#about" class="btn btn-secondary">Learn More</a>
-            </div>
-            <div class="floating-social-proof reveal" style="transition-delay: 0.5s;">
-                <div class="avatar-group">
-                    <img src="https://i.pravatar.cc/100?img=1" alt="Member">
-                    <img src="https://i.pravatar.cc/100?img=2" alt="Member">
-                    <img src="https://i.pravatar.cc/100?img=3" alt="Member">
-                    <div class="avatar-count">+500</div>
+        <!-- Text panel — left-aligned -->
+        <div class="container">
+            <div class="hero-text-panel">
+                <div class="hero-badge reveal"><span class="badge-dot"></span>Social Impact Ecosystem</div>
+                <h1 class="shimmer-text reveal" style="transition-delay: 0.1s;">Good Forces<br>Unite.</h1>
+                <p class="reveal" style="transition-delay: 0.3s;">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                <div class="btn-group reveal" style="transition-delay: 0.4s;">
+                    <a href="#activities" class="btn btn-primary">Join the Organization</a>
+                    <a href="#about" class="btn btn-secondary">Learn More</a>
                 </div>
-                <span>participants in our ecosystem</span>
+                <div class="floating-social-proof reveal" style="transition-delay: 0.5s;">
+                    <div class="avatar-group">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Member">
+                        <img src="https://i.pravatar.cc/100?img=2" alt="Member">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Member">
+                        <div class="avatar-count">+500</div>
+                    </div>
+                    <span>participants in our ecosystem</span>
+                </div>
             </div>
         </div>
 
