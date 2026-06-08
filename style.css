@@ -2482,23 +2482,84 @@ body.dark-mode .about-quote {
     box-shadow: 0 0 20px rgba(255, 45, 120, 0.08);
 }
 
-/* Value cards — dark mode looks like light theme */
+/* Value cards — dark mode: dark glass with neon glow */
 body.dark-mode .value-card {
-    background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    background: rgba(6, 8, 28, 0.80);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40);
 }
 
 body.dark-mode .value-card h4 {
-    color: #002b64;
+    color: #e8f0ff;
 }
 
 body.dark-mode .value-card p {
-    color: rgba(30, 40, 70, 0.75);
+    color: rgba(180, 200, 240, 0.72);
 }
 
 body.dark-mode .value-card:hover {
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(8, 12, 40, 0.90);
+}
+
+/* Neon top border + glow per card */
+body.dark-mode .value-card-1 {
+    border-top: 2px solid #ff2d78;
+    box-shadow: 0 -2px 12px rgba(255, 45, 120, 0.45), 0 8px 32px rgba(0,0,0,0.45);
+}
+body.dark-mode .value-card-1 .value-icon i {
+    background: linear-gradient(135deg, #ff2d78, #ff6ba8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(255, 45, 120, 0.8));
+}
+body.dark-mode .value-card-1:hover {
+    box-shadow: 0 -2px 18px rgba(255, 45, 120, 0.65), 0 16px 48px rgba(255,45,120,0.18);
+}
+
+body.dark-mode .value-card-2 {
+    border-top: 2px solid #ff9500;
+    box-shadow: 0 -2px 12px rgba(255, 149, 0, 0.45), 0 8px 32px rgba(0,0,0,0.45);
+}
+body.dark-mode .value-card-2 .value-icon i {
+    background: linear-gradient(135deg, #ff9500, #ffcc44);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(255, 149, 0, 0.8));
+}
+body.dark-mode .value-card-2:hover {
+    box-shadow: 0 -2px 18px rgba(255, 149, 0, 0.65), 0 16px 48px rgba(255,149,0,0.18);
+}
+
+body.dark-mode .value-card-3 {
+    border-top: 2px solid #00ffb3;
+    box-shadow: 0 -2px 12px rgba(0, 255, 179, 0.40), 0 8px 32px rgba(0,0,0,0.45);
+}
+body.dark-mode .value-card-3 .value-icon i {
+    background: linear-gradient(135deg, #00ffb3, #00c8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 179, 0.8));
+}
+body.dark-mode .value-card-3:hover {
+    box-shadow: 0 -2px 18px rgba(0, 255, 179, 0.60), 0 16px 48px rgba(0,255,179,0.15);
+}
+
+body.dark-mode .value-card-4 {
+    border-top: 2px solid #f9b80c;
+    box-shadow: 0 -2px 12px rgba(249, 184, 12, 0.45), 0 8px 32px rgba(0,0,0,0.45);
+}
+body.dark-mode .value-card-4 .value-icon i {
+    background: linear-gradient(135deg, #f9b80c, #ffdd00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 6px rgba(249, 184, 12, 0.85));
+}
+body.dark-mode .value-card-4:hover {
+    box-shadow: 0 -2px 18px rgba(249, 184, 12, 0.65), 0 16px 48px rgba(249,184,12,0.18);
 }
 
 /* Role text in team cards */
