@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Reveal Animation on Scroll (Hybrid: Observer + Fallback) ---
+    // --- Reveal on Scroll ---
     const reveals = document.querySelectorAll('.reveal');
-
-    // 1. Intersection Observer
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -11,230 +9,116 @@ document.addEventListener('DOMContentLoaded', () => {
                 observer.unobserve(entry.target);
             }
         });
-    }, {
-        root: null,
-        threshold: 0.1,
-        rootMargin: "0px"
-    });
+    }, { root: null, threshold: 0.1 });
+    reveals.forEach(r => revealObserver.observe(r));
 
-    reveals.forEach(reveal => {
-        revealObserver.observe(reveal);
-    });
-
-    // 2. Fallback Scroll Listener (for older browsers or edge cases)
     const checkScroll = () => {
-        const triggerBottom = window.innerHeight * 0.9; // Trigger at 90% view height
-        reveals.forEach(reveal => {
-            const boxTop = reveal.getBoundingClientRect().top;
-            if (boxTop < triggerBottom) {
-                reveal.classList.add('active');
-            }
-        });
+        const trigger = window.innerHeight * 0.9;
+        reveals.forEach(r => { if (r.getBoundingClientRect().top < trigger) r.classList.add('active'); });
     };
     window.addEventListener('scroll', checkScroll);
-    checkScroll(); // Check once on load
-
-    // 3. Safety Timeout (Force show after 4s)
-    setTimeout(() => {
-        reveals.forEach(reveal => reveal.classList.add('active'));
-    }, 4000);
+    checkScroll();
+    setTimeout(() => reveals.forEach(r => r.classList.add('active')), 4000);
 
     // --- Custom Cursor ---
     const cursor = document.querySelector('.custom-cursor');
-    document.addEventListener('mousemove', (e) => {
-        if (cursor) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        }
+    document.addEventListener('mousemove', e => {
+        if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
     });
-
-    // Add hover effect to links and buttons
-    const hoverElements = document.querySelectorAll('a, button, .bento-card');
-    hoverElements.forEach(el => {
+    document.querySelectorAll('a, button, .bento-card').forEach(el => {
         el.addEventListener('mouseenter', () => cursor?.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor?.classList.remove('hover'));
     });
 
-    // --- Scroll Progress Bar & Parallax Background ---
+    // --- Scroll Progress Bar + Orb Parallax ---
     const scrollBar = document.getElementById('scrollBar');
     const orbs = document.querySelectorAll('.orb');
-
     window.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-
-        // Progress Bar
+        const st = document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollBar) {
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercentage = (scrollTop / scrollHeight) * 100;
-            scrollBar.style.width = scrollPercentage + '%';
+            const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            scrollBar.style.width = ((st / sh) * 100) + '%';
         }
+        orbs.forEach((orb, i) => { orb.style.transform = `translateY(${st * (i + 1) * 0.15}px)`; });
+    });
 
-        // Parallax Orbs (subtle movement inverse to scroll)
-        orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 0.15; // Different speeds for depth
-            orb.style.transform = `translateY(${scrollTop * speed}px)`;
+    // --- Magnetic Buttons + Ripple ---
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const r = btn.getBoundingClientRect();
+            btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.3}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+        btn.addEventListener('click', function(e) {
+            const r = this.getBoundingClientRect();
+            const rpl = document.createElement('span');
+            rpl.classList.add('ripple');
+            rpl.style.left = `${e.clientX - r.left}px`;
+            rpl.style.top = `${e.clientY - r.top}px`;
+            this.appendChild(rpl);
+            setTimeout(() => rpl.remove(), 600);
         });
     });
 
-    // --- Magnetic Buttons & Ripple Effect ---
-    const magneticButtons = document.querySelectorAll('.btn');
-    magneticButtons.forEach(btn => {
-        // Magnetic Hover
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0px, 0px)';
-        });
-
-        // Ripple Effect
-        btn.addEventListener('click', function (e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-
-            this.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
+    // --- Dark Mode ---
+    const darkToggle = document.getElementById('darkModeToggle');
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+    darkToggle?.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     });
 
-    // --- Dark Mode Toggle ---
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const body = document.body;
-
-    // Check saved preference
-    if (localStorage.getItem('theme') === 'dark') {
-        body.classList.add('dark-mode');
-    }
-
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-
-            // Save preference
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        });
-    }
-
-    // --- Navbar Scroll Effect ---
+    // --- Navbar Scroll ---
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
 
-    // --- Active Link Highlighter (Scroll Spy) ---
+    // --- Scroll Spy ---
     const sections = document.querySelectorAll('section, header');
     const navLinks = document.querySelectorAll('.nav-link');
-
-    const setActiveLink = () => {
+    const setActive = () => {
         let current = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            // -150 offset to trigger active state slightly before the section hits top
-            if (pageYOffset >= (sectionTop - 250)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        // Special case: If at bottom of page, activate Contact
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-            current = 'contact';
-        }
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
+        sections.forEach(s => { if (pageYOffset >= s.offsetTop - 250) current = s.getAttribute('id'); });
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) current = 'contact';
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href').includes(current)));
     };
+    window.addEventListener('scroll', setActive);
+    setActive();
 
-    window.addEventListener('scroll', setActiveLink);
-    setActiveLink(); // Run on load
-
-    // --- Spotlight & 3D Tilt Effect for Cards ---
-    const cards = document.querySelectorAll('.bento-card');
-    cards.forEach(card => {
+    // --- Bento Card 3D Tilt + Spotlight ---
+    document.querySelectorAll('.bento-card').forEach(card => {
         card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            // Spotlight variables
+            const r = card.getBoundingClientRect();
+            const x = e.clientX - r.left, y = e.clientY - r.top;
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
-
-            // 3D Tilt calculation
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -5; // Limit to 5 degrees
-            const rotateY = ((x - centerX) / centerX) * 5;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            card.style.transform = `perspective(1000px) rotateX(${((y - r.height/2) / (r.height/2)) * -5}deg) rotateY(${((x - r.width/2) / (r.width/2)) * 5}deg) translateY(-10px)`;
         });
-
         card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
-            // Reset transition specifically for leave to be smooth
-            card.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, background 0.4s';
+            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) translateY(0)`;
+            card.style.transition = 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s ease, background 0.4s';
         });
-
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'transform 0.1s ease'; // Fast transition while hovering to follow mouse closely
-        });
+        card.addEventListener('mouseenter', () => { card.style.transition = 'transform 0.1s ease'; });
     });
 
-    // --- Mobile Menu Toggle ---
+    // --- Mobile Menu ---
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-    }
-
-    // Close menu when link is clicked
-    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-        if (hamburger.classList.contains('active')) {
+    hamburger?.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    navLinks.forEach(n => n.addEventListener('click', () => {
+        if (hamburger?.classList.contains('active')) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
         }
     }));
 
-    // --- Scroll Indicator Click ---
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    if (scrollIndicator) {
-        scrollIndicator.style.cursor = 'pointer';
-        scrollIndicator.addEventListener('click', () => {
-            const aboutSection = document.querySelector('#about');
-            if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+    // --- Scroll Indicator ---
+    const scrollInd = document.querySelector('.scroll-indicator');
+    if (scrollInd) {
+        scrollInd.style.cursor = 'pointer';
+        scrollInd.addEventListener('click', () => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }));
     }
 
     // --- Preloader ---
@@ -243,146 +127,216 @@ document.addEventListener('DOMContentLoaded', () => {
         if (preloader) {
             setTimeout(() => {
                 preloader.classList.add('fade-out');
-                // Force hero text animation once preloader is gone
                 document.body.classList.add('loaded');
             }, 800);
         }
     });
 
-    // --- Hero Particles Constellation ---
-    const canvas = document.getElementById('hero-particles');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        const particleCount = window.innerWidth < 768 ? 40 : 80;
+    // ============================================================
+    // 3D NEURAL SPHERE — Full-hero canvas
+    // ============================================================
+    const networkCanvas = document.getElementById('network-canvas');
+    if (networkCanvas) {
+        const ctx = networkCanvas.getContext('2d');
+        let w, h, cx, cy;
 
-        let mouse = { x: null, y: null, radius: 150 };
+        const SECTOR_COLORS  = ['#00c8ff', '#ff2d78', '#00ffb3', '#ff9500', '#bf5af2', '#f9b80c'];
+        const SECTOR_LABELS  = ['NGOs', 'Business', 'Community', 'Gov', 'Academia', 'Media'];
+        const NODE_COUNT     = 110;
+        const K_NEAREST      = 3;   // connections per node
+        const PULSE_COUNT    = 32;
 
-        function resizeCanvas() {
-            width = canvas.width = canvas.offsetWidth;
-            height = canvas.height = canvas.offsetHeight;
+        let rotY = 0, rotX = 0.22;
+        let sphNodes, connections, pulses;
+
+        // --- Fibonacci sphere ---
+        function buildSphere(n, r) {
+            const phi = Math.PI * (Math.sqrt(5) - 1);
+            return Array.from({ length: n }, (_, i) => {
+                const y      = 1 - (i / (n - 1)) * 2;
+                const radius = Math.sqrt(1 - y * y);
+                const theta  = phi * i;
+                const ci     = i % SECTOR_COLORS.length;
+                return {
+                    ox:    Math.cos(theta) * radius * r,
+                    oy:    y * r,
+                    oz:    Math.sin(theta) * radius * r,
+                    color: SECTOR_COLORS[ci],
+                    label: i < SECTOR_LABELS.length ? SECTOR_LABELS[i] : '',
+                    size:  i < SECTOR_LABELS.length ? 9 : 4.5,
+                };
+            });
         }
 
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
-        });
-        resizeCanvas();
-
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            hero.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - rect.left;
-                mouse.y = e.clientY - rect.top;
+        // --- K-nearest-neighbor connections ---
+        function buildConnections(pts) {
+            const seen = new Set(), result = [];
+            pts.forEach((p, i) => {
+                const nearest = pts
+                    .map((q, j) => {
+                        if (j === i) return { j, d: Infinity };
+                        const dx = p.ox - q.ox, dy = p.oy - q.oy, dz = p.oz - q.oz;
+                        return { j, d: dx*dx + dy*dy + dz*dz };
+                    })
+                    .sort((a, b) => a.d - b.d)
+                    .slice(0, K_NEAREST);
+                nearest.forEach(({ j }) => {
+                    const key = `${Math.min(i,j)}-${Math.max(i,j)}`;
+                    if (!seen.has(key)) { seen.add(key); result.push([i, j]); }
+                });
             });
-            hero.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
+            return result;
         }
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.density = (Math.random() * 30) + 1;
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
-            }
-            draw() {
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                ctx.fillStyle = isDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(15, 76, 129, 0.4)';
+        function init() {
+            const r = Math.min(w, h) * (w < 600 ? 0.3 : 0.34);
+            sphNodes    = buildSphere(NODE_COUNT, r);
+            connections = buildConnections(sphNodes);
+            pulses = Array.from({ length: Math.min(PULSE_COUNT, connections.length) }, (_, i) => ({
+                ci:    i % connections.length,
+                t:     i / PULSE_COUNT,
+                speed: 0.003 + (i % 5) * 0.0014,
+                fwd:   i % 2 === 0,
+            }));
+        }
+
+        function resize() {
+            w = networkCanvas.width  = window.innerWidth;
+            h = networkCanvas.height = networkCanvas.parentElement.clientHeight || window.innerHeight;
+            cx = w / 2; cy = h / 2;
+            init();
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // --- 3D transform + perspective ---
+        function project(ox, oy, oz) {
+            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+            const x1 = ox * cosY + oz * sinY;
+            const z1 = -ox * sinY + oz * cosY;
+            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+            const y2 = oy * cosX - z1 * sinX;
+            const z2 = oy * sinX + z1 * cosX;
+            const fov = 650;
+            const sc  = fov / (fov + z2);
+            return { px: cx + x1 * sc, py: cy + y2 * sc, z: z2, sc };
+        }
+
+        // Depth alpha: 0 at far back, 1 at front
+        function depthAlpha(z) {
+            const r = Math.min(w, h) * (w < 600 ? 0.3 : 0.34);
+            return Math.max(0, (z + r) / (2 * r));
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+
+            // --- Dark cosmic background ---
+            const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h));
+            bg.addColorStop(0,   '#0d1a2e');
+            bg.addColorStop(0.5, '#07101e');
+            bg.addColorStop(1,   '#030810');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, w, h);
+
+            // Auto-rotation
+            rotY += 0.0025;
+
+            // --- Project all nodes ---
+            const proj = sphNodes.map(n => {
+                const { px, py, z, sc } = project(n.ox, n.oy, n.oz);
+                return { ...n, px, py, z, sc };
+            });
+
+            // Central sphere glow
+            const r = Math.min(w, h) * (w < 600 ? 0.3 : 0.34);
+            const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 0.6);
+            cg.addColorStop(0, 'rgba(0,200,255,0.07)');
+            cg.addColorStop(1, 'transparent');
+            ctx.beginPath();
+            ctx.arc(cx, cy, r * 0.6, 0, Math.PI * 2);
+            ctx.fillStyle = cg;
+            ctx.fill();
+
+            // --- Connections ---
+            connections.forEach(([i, j]) => {
+                const a = proj[i], b = proj[j];
+                const da = Math.min(depthAlpha(a.z), depthAlpha(b.z));
+                if (da < 0.08) return;
+                const alpha = da * 0.22;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
+                ctx.moveTo(a.px, a.py);
+                ctx.lineTo(b.px, b.py);
+                ctx.strokeStyle = `rgba(0,200,255,${alpha})`;
+                ctx.lineWidth = 0.7;
+                ctx.stroke();
+            });
+
+            // --- Pulse dots ---
+            pulses.forEach(p => {
+                p.t += p.speed;
+                if (p.t > 1) p.t = 0;
+                const [i, j] = connections[p.ci];
+                const a = proj[i], b = proj[j];
+                const t = p.fwd ? p.t : 1 - p.t;
+                const px = a.px + (b.px - a.px) * t;
+                const py = a.py + (b.py - a.py) * t;
+                const pz = a.z  + (b.z  - a.z)  * t;
+                const da = depthAlpha(pz);
+                if (da < 0.15) return;
+                // Halo
+                ctx.beginPath();
+                ctx.arc(px, py, 6 * da, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,200,255,${da * 0.12})`;
                 ctx.fill();
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                // Dot
+                ctx.beginPath();
+                ctx.arc(px, py, 2.2 * da, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,200,255,${da * 0.9})`;
+                ctx.fill();
+            });
 
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+            // --- Nodes: back → front ---
+            proj.slice().sort((a, b) => a.z - b.z).forEach(p => {
+                const da = depthAlpha(p.z);
+                if (da < 0.06) return;
+                const s = p.size * p.sc;
 
-                // Mouse repel logic
-                if (mouse.x != null && mouse.y != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < mouse.radius) {
-                        let forceDirectionX = dx / distance;
-                        let forceDirectionY = dy / distance;
-                        let force = (mouse.radius - distance) / mouse.radius;
-                        let directionX = forceDirectionX * force * this.density;
-                        let directionY = forceDirectionY * force * this.density;
-                        this.x -= directionX * 0.15;
-                        this.y -= directionY * 0.15;
-                    }
-                }
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
-            const isDarkMode = document.body.classList.contains('dark-mode');
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                // Connect particles
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 110) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = isDarkMode
-                            ? `rgba(255, 255, 255, ${0.3 - distance / 366})`
-                            : `rgba(15, 76, 129, ${0.25 - distance / 440})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
+                // Glow for visible nodes
+                if (da > 0.35) {
+                    const gr = ctx.createRadialGradient(p.px, p.py, 0, p.px, p.py, s * 3.5);
+                    const hex = Math.round(da * 70).toString(16).padStart(2, '0');
+                    gr.addColorStop(0, p.color + hex);
+                    gr.addColorStop(1, 'transparent');
+                    ctx.beginPath();
+                    ctx.arc(p.px, p.py, s * 3.5, 0, Math.PI * 2);
+                    ctx.fillStyle = gr;
+                    ctx.fill();
                 }
 
-                // Connect to mouse
-                if (mouse.x != null && mouse.y != null) {
-                    const mDx = particles[i].x - mouse.x;
-                    const mDy = particles[i].y - mouse.y;
-                    const mDistance = Math.sqrt(mDx * mDx + mDy * mDy);
-                    if (mDistance < 150) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = isDarkMode
-                            ? `rgba(248, 231, 28, ${0.5 - mDistance / 300})`
-                            : `rgba(245, 166, 35, ${0.5 - mDistance / 300})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
+                // Node fill
+                const fillAlpha = Math.round(da * 255).toString(16).padStart(2, '0');
+                ctx.beginPath();
+                ctx.arc(p.px, p.py, Math.max(0.8, s), 0, Math.PI * 2);
+                ctx.fillStyle = p.color + fillAlpha;
+                ctx.fill();
+
+                // Sector label (front-facing named nodes only)
+                if (p.label && da > 0.6) {
+                    const la = (da - 0.6) / 0.4;
+                    const fs = Math.max(9, Math.round(10 * p.sc));
+                    ctx.font = `600 ${fs}px Inter, sans-serif`;
+                    ctx.fillStyle = `rgba(210,230,255,${la * 0.9})`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(p.label, p.px, p.py + s + 5 * p.sc);
                 }
-            }
-            requestAnimationFrame(animateParticles);
+            });
+
+            requestAnimationFrame(draw);
         }
 
-        initParticles();
-        animateParticles();
+        draw();
     }
 
 });
