@@ -2917,12 +2917,19 @@ body.dark-mode .hero-text-panel::before {
 
 /* Title — light mode: dark navy */
 .hero-text-panel .shimmer-text {
-    background: linear-gradient(110deg, #001040 10%, #003a8c 50%, #001040 90%);
+    background: linear-gradient(110deg,
+        #e0197a 0%,
+        #7b2d8b 22%,
+        #1a3a8c 40%,
+        #0e9898 57%,
+        #4caf50 72%,
+        #f06000 90%
+    );
     background-size: 200% auto;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    filter: drop-shadow(0 2px 8px rgba(255,255,255,0.30));
+    filter: drop-shadow(0 2px 10px rgba(255,255,255,0.25));
 }
 
 /* Title — dark mode: neon shimmer */
