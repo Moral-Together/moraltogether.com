@@ -862,23 +862,118 @@ body.dark-mode .value-card:hover {
 }
 
 body.dark-mode .bento-card:hover {
-    background: rgba(30, 30, 30, 0.9);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    background: rgba(8, 12, 40, 0.95);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode bento cards — dark glass base */
+body.dark-mode .bento-card {
+    background: rgba(6, 8, 28, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* card-app — cyan */
+body.dark-mode .card-app {
+    box-shadow: 0 -3px 16px rgba(0, 200, 255, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-app::after {
+    background: linear-gradient(90deg, #00c8ff, #00ffb3);
+    box-shadow: 0 0 14px rgba(0, 200, 255, 0.70);
+}
+body.dark-mode .card-app .bento-icon i {
+    background: linear-gradient(135deg, #00c8ff, #00ffb3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.90));
+    animation: icon-float 3s ease-in-out infinite;
+}
+body.dark-mode .card-app:hover {
+    box-shadow: 0 -3px 24px rgba(0, 200, 255, 0.65), 0 24px 60px rgba(0,200,255,0.18);
+}
+
+/* card-radio — pink */
+body.dark-mode .card-radio {
+    box-shadow: 0 -3px 16px rgba(255, 45, 120, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-radio::after {
+    background: linear-gradient(90deg, #ff2d78, #ff6ba8);
+    box-shadow: 0 0 14px rgba(255, 45, 120, 0.70);
+}
+body.dark-mode .card-radio .bento-icon i {
+    background: linear-gradient(135deg, #ff2d78, #ff6ba8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(255, 45, 120, 0.90));
+    animation: icon-pulse 2.2s ease-in-out infinite;
+}
+body.dark-mode .card-radio:hover {
+    box-shadow: 0 -3px 24px rgba(255, 45, 120, 0.65), 0 24px 60px rgba(255,45,120,0.18);
+}
+
+/* card-tv — purple */
+body.dark-mode .card-tv {
+    box-shadow: 0 -3px 16px rgba(191, 90, 242, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-tv::after {
+    background: linear-gradient(90deg, #bf5af2, #ff2d78);
+    box-shadow: 0 0 14px rgba(191, 90, 242, 0.70);
+}
+body.dark-mode .card-tv .bento-icon i {
+    background: linear-gradient(135deg, #bf5af2, #e07aff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(191, 90, 242, 0.90));
+    animation: icon-swing 2.8s ease-in-out infinite;
+}
+body.dark-mode .card-tv:hover {
+    box-shadow: 0 -3px 24px rgba(191, 90, 242, 0.65), 0 24px 60px rgba(191,90,242,0.18);
+}
+
+/* Dark mode card text */
+body.dark-mode .bento-content h3 {
+    color: #e8f0ff;
+}
+body.dark-mode .bento-content p {
+    color: rgba(180, 200, 240, 0.75);
+}
+body.dark-mode .bento-content .subtitle {
+    color: rgba(140, 170, 220, 0.70);
 }
 
 .bento-icon {
     font-size: 3.5rem;
     margin-bottom: 25px;
     display: inline-block;
+    transition: transform 0.4s ease;
+}
+
+.bento-icon i {
     background: linear-gradient(135deg, #002b64 0%, #90b5b3 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: transform 0.4s ease;
+    display: inline-block;
 }
 
 .bento-card:hover .bento-icon {
     transform: scale(1.1) rotate(5deg);
+}
+
+/* Icon animations */
+@keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+}
+@keyframes icon-pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.18); }
+}
+@keyframes icon-swing {
+    0%, 100% { transform: rotate(-8deg); }
+    50%       { transform: rotate(8deg); }
 }
 
 .bento-content h3 {
@@ -2406,11 +2501,6 @@ body.dark-mode .btn-secondary:hover {
     box-shadow: 0 0 20px rgba(0, 200, 255, 0.25);
 }
 
-/* Cards neon glow on hover */
-body.dark-mode .bento-card:hover {
-    border-color: rgba(0, 200, 255, 0.3) !important;
-    box-shadow: 0 0 30px rgba(0, 200, 255, 0.12), 0 30px 60px rgba(0, 0, 0, 0.6) !important;
-}
 
 body.dark-mode .value-card:hover {
     border-color: rgba(0, 200, 255, 0.25) !important;
