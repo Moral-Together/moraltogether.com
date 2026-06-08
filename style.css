@@ -2929,6 +2929,8 @@ body.dark-mode .hero-text-panel::before {
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.70);
+    paint-order: stroke fill;
     filter: drop-shadow(0 2px 10px rgba(255,255,255,0.25));
 }
 
@@ -2936,6 +2938,8 @@ body.dark-mode .hero-text-panel::before {
 body.dark-mode .hero-text-panel .shimmer-text {
     background: linear-gradient(110deg, #00c8ff 5%, #ffffff 38%, #ff2d78 62%, #00ffb3 85%, #00c8ff 100%);
     background-size: 200% auto;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.45);
+    paint-order: stroke fill;
     filter: drop-shadow(0 0 28px rgba(0, 200, 255, 0.50));
 }
 
