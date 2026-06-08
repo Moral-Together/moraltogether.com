@@ -106,7 +106,8 @@ body.dark-mode .theme-toggle .fa-moon {
 
 body.dark-mode .theme-toggle .fa-sun {
     display: block;
-    color: var(--secondary-color);
+    color: #f9b80c;
+    filter: drop-shadow(0 0 6px rgba(249, 184, 12, 0.70));
 }
 
 /* Custom Scrollbar */
