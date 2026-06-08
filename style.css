@@ -2605,220 +2605,142 @@ body.dark-mode .hero-content-center .shimmer-text {
    HERO — IMAGE BANNER (dark / light themes)
    ============================================================ */
 
-/* Background image container */
+/* Static background image container */
 .hero-bg {
     position: absolute;
     inset: 0;
-    overflow: hidden;
     z-index: 0;
+    overflow: hidden;
 }
 
-/* Inner wrapper receives parallax translateY via JS */
-.hero-bg-inner {
-    position: absolute;
-    top: -120px;
-    left: 0;
-    right: 0;
-    bottom: -120px;   /* extra room so parallax doesn't show gaps */
-    will-change: transform;
-}
-
-/* Both layers stacked — background-image on div, opacity switches theme */
+/* Two image layers — only one visible per theme */
 .hero-img {
     position: absolute;
     inset: 0;
     background-size: cover;
     background-position: center center;
     transition: opacity 1s ease;
-    animation: heroBanner 28s ease-in-out infinite;
 }
 
 .hero-img-light {
-    background-image: url('images/hero-light.png');
+    background-image: url("images/hero-light.png");
     opacity: 1;
 }
 .hero-img-dark {
-    background-image: url('images/hero-dark.png');
+    background-image: url("images/hero-dark.png");
     opacity: 0;
 }
 
-/* Dark mode — swap which layer is visible */
 body.dark-mode .hero-img-light { opacity: 0; }
 body.dark-mode .hero-img-dark  { opacity: 1; }
 
-/* Ken Burns: slow zoom + drift */
-@keyframes heroBanner {
-    0%   { transform: scale(1.00) translate(0%,    0%);   }
-    25%  { transform: scale(1.05) translate(-1.0%, -0.5%); }
-    50%  { transform: scale(1.08) translate(-1.8%, 0.6%);  }
-    75%  { transform: scale(1.05) translate(-0.6%, -1.0%); }
-    100% { transform: scale(1.00) translate(0%,    0%);   }
-}
-
-/* Gradient overlay — enough contrast for text, image still clearly visible */
+/* Subtle vignette — edges darker so rings & text pop */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    /* Light mode: soft white gradient left side only */
-    background:
-        linear-gradient(to right,
-            rgba(255,255,255,0.72) 0%,
-            rgba(255,255,255,0.48) 22%,
-            rgba(255,255,255,0.15) 42%,
-            transparent 60%
-        ),
-        linear-gradient(to bottom,
-            rgba(0,0,0,0.12) 0%,
-            transparent 15%,
-            transparent 80%,
-            rgba(0,0,0,0.15) 100%
-        );
+    background: radial-gradient(
+        ellipse 75% 80% at 50% 50%,
+        rgba(0, 0, 0, 0.12) 0%,
+        rgba(0, 0, 0, 0.55) 100%
+    );
 }
 
-/* Dark mode overlay */
 body.dark-mode .hero-overlay {
-    background:
-        linear-gradient(to right,
-            rgba(3,5,15,0.80) 0%,
-            rgba(3,5,15,0.55) 22%,
-            rgba(3,5,15,0.18) 42%,
-            transparent 60%
-        ),
-        linear-gradient(to bottom,
-            rgba(0,0,0,0.25) 0%,
-            transparent 15%,
-            transparent 80%,
-            rgba(0,0,0,0.30) 100%
-        );
+    background: radial-gradient(
+        ellipse 75% 80% at 50% 50%,
+        rgba(0, 0, 10, 0.25) 0%,
+        rgba(0, 0, 10, 0.72) 100%
+    );
 }
 
-/* Animated neon pulse over dark hero image */
-body.dark-mode .hero::after {
-    content: '';
+/* Animation canvas — spinning rings + sparks */
+#hero-anim-canvas {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    background:
-        radial-gradient(ellipse 40% 50% at 68% 42%, rgba(0,200,255,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 40% at 80% 62%, rgba(255,45,120,0.06) 0%, transparent 55%);
-    animation: heroGlow 9s ease-in-out infinite alternate;
-}
-
-@keyframes heroGlow {
-    0%   { opacity: 0.5; }
-    100% { opacity: 1.0; }
 }
 
 /* ============================================================
-   HERO TEXT PANEL — left-aligned over gradient
+   HERO TEXT PANEL — centered over animation
    ============================================================ */
 .hero-text-panel {
     position: relative;
-    z-index: 2;
-    max-width: 540px;
-    text-align: left;
+    z-index: 3;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
 
-/* Shimmer text — dark navy in light mode (readable on white overlay) */
+/* Title — white shimmer, always readable on image */
 .hero-text-panel .shimmer-text {
-    background: linear-gradient(110deg, #001840 10%, #003a80 45%, #001840 80%);
+    background: linear-gradient(110deg, #ffffff 5%, #cceeff 30%, #ffffff 55%, #ffe8b0 78%, #ffffff 100%);
     background-size: 200% auto;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    filter: none;
+    filter: drop-shadow(0 2px 18px rgba(0,0,0,0.55));
 }
 
-/* Shimmer text — neon in dark mode */
 body.dark-mode .hero-text-panel .shimmer-text {
     background: linear-gradient(110deg, #00c8ff 5%, #ffffff 35%, #ff2d78 58%, #00ffb3 82%, #00c8ff 100%);
     background-size: 200% auto;
-    filter: drop-shadow(0 0 28px rgba(0,200,255,0.5));
+    filter: drop-shadow(0 0 28px rgba(0,200,255,0.55));
 }
 
-/* Paragraph */
+/* Subtitle */
 .hero-text-panel > p {
-    color: rgba(0, 25, 70, 0.82) !important;
+    color: rgba(255, 255, 255, 0.92) !important;
     font-size: 1.2rem;
-    text-shadow: none;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.65), 0 0 40px rgba(0,0,0,0.4);
 }
 
-body.dark-mode .hero-text-panel > p {
-    color: rgba(200,218,255,0.92) !important;
-    text-shadow: 0 1px 10px rgba(0,0,0,0.5);
-}
+/* Buttons centered */
+.hero-text-panel .btn-group { justify-content: center; }
 
-/* Btn group left-aligned */
-.hero-text-panel .btn-group {
-    justify-content: flex-start;
-}
-
-/* Social proof in light mode */
+/* Social proof — glass look on image */
 .hero-text-panel .floating-social-proof {
+    background: rgba(255,255,255,0.12) !important;
+    border-color: rgba(255,255,255,0.28) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     margin-top: 40px;
-    background: rgba(255,255,255,0.55) !important;
-    border-color: rgba(0,43,100,0.18) !important;
+}
+
+.hero-text-panel .floating-social-proof span {
+    color: rgba(255,255,255,0.82) !important;
+}
+
+/* Hero badge — glass */
+.hero-text-panel .hero-badge {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.32);
+    color: rgba(255,255,255,0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
-.hero-text-panel .floating-social-proof span {
-    color: rgba(0,25,70,0.75) !important;
-}
-
-body.dark-mode .hero-text-panel .floating-social-proof {
-    background: rgba(0,200,255,0.06) !important;
-    border-color: rgba(0,200,255,0.22) !important;
-}
-
-body.dark-mode .hero-text-panel .floating-social-proof span {
-    color: rgba(200,218,255,0.78) !important;
-}
-
-/* Hero badge in light mode */
-.hero-text-panel .hero-badge {
-    background: rgba(255,255,255,0.6);
-    border-color: rgba(0,43,100,0.22);
-    backdrop-filter: blur(8px);
-}
-
 body.dark-mode .hero-text-panel .hero-badge {
-    background: rgba(0,200,255,0.08);
-    border-color: rgba(0,200,255,0.28);
+    background: rgba(0,200,255,0.12);
+    border-color: rgba(0,200,255,0.38);
     color: #00c8ff;
-    box-shadow: 0 0 20px rgba(0,200,255,0.12);
 }
 
-/* Scroll indicator always visible */
+/* Scroll indicator visible above canvas */
 .hero .scroll-indicator { z-index: 3; }
-.hero .scroll-arrow { border-color: rgba(0,43,100,0.5); }
-body.dark-mode .hero .scroll-arrow { border-color: rgba(150,200,255,0.55); }
+.hero .scroll-arrow { border-color: rgba(255,255,255,0.55); }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 900px) {
-    .hero-text-panel {
-        max-width: 100%;
-        text-align: center;
-        align-items: center;
-    }
-    .hero-text-panel .btn-group { justify-content: center; }
-    .hero-overlay {
-        background:
-            rgba(250,252,255,0.70),
-            linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 20%);
-    }
-    body.dark-mode .hero-overlay {
-        background:
-            rgba(4,6,18,0.72),
-            linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%);
-    }
+@media (max-width: 768px) {
     .hero-text-panel .shimmer-text { font-size: 3rem; }
+    .hero-text-panel > p { font-size: 1rem !important; }
 }

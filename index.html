@@ -122,20 +122,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section — Image banner (dark/light) + animated overlay -->
+    <!-- Hero Section — Static image + rings/sparks animation + centered text -->
     <header class="hero" id="home">
-        <!-- Background images: two layers, CSS switches via opacity -->
+        <!-- Static background images (light / dark) -->
         <div class="hero-bg">
-            <div class="hero-bg-inner">
-                <div class="hero-img hero-img-light"></div>
-                <div class="hero-img hero-img-dark"></div>
-            </div>
+            <div class="hero-img hero-img-light"></div>
+            <div class="hero-img hero-img-dark"></div>
         </div>
 
-        <!-- Gradient overlay for text readability -->
+        <!-- Subtle vignette overlay -->
         <div class="hero-overlay"></div>
 
-        <!-- Text panel — left-aligned -->
+        <!-- Spinning rings + running sparks animation canvas -->
+        <canvas id="hero-anim-canvas"></canvas>
+
+        <!-- Centered text -->
         <div class="container">
             <div class="hero-text-panel">
                 <div class="hero-badge reveal"><span class="badge-dot"></span>Social Impact Ecosystem</div>
