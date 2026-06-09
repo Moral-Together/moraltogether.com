@@ -20,15 +20,91 @@ document.addEventListener('DOMContentLoaded', () => {
     checkScroll();
     setTimeout(() => reveals.forEach(r => r.classList.add('active')), 4000);
 
-    // --- Custom Cursor ---
-    const cursor = document.querySelector('.custom-cursor');
-    document.addEventListener('mousemove', e => {
-        if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
-    });
-    document.querySelectorAll('a, button, .bento-card').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor?.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor?.classList.remove('hover'));
-    });
+    // --- Comet Cursor ---
+    const cometCanvas = document.getElementById('comet-cursor-canvas');
+    if (cometCanvas && window.innerWidth > 768) {
+        const cc = cometCanvas.getContext('2d');
+        const TRAIL = 32;
+        const NEON   = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c'];
+        const BRIGHT = ['#0088ee','#e8003d','#00aa55','#8833cc','#e06800','#cc9900'];
+
+        let cW, cH;
+        const trail = [];
+        let colorIdx = 0;
+        let mouse = { x: -999, y: -999 };
+
+        function resizeComet() {
+            cW = window.innerWidth;
+            cH = window.innerHeight;
+            cometCanvas.width  = cW;
+            cometCanvas.height = cH;
+        }
+        resizeComet();
+        window.addEventListener('resize', resizeComet);
+
+        document.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            trail.push({ x: e.clientX, y: e.clientY });
+            if (trail.length > TRAIL) trail.shift();
+        });
+
+        // shift color every ~60 moves
+        let moveCount = 0;
+        document.addEventListener('mousemove', () => {
+            if (++moveCount % 60 === 0) colorIdx = (colorIdx + 1) % NEON.length;
+        });
+
+        function hexToRgb(hex) {
+            return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+        }
+
+        function cometFrame() {
+            cc.clearRect(0, 0, cW, cH);
+            if (trail.length < 2) { requestAnimationFrame(cometFrame); return; }
+
+            const dark = document.body.classList.contains('dark-mode');
+            const palette = dark ? NEON : BRIGHT;
+            const color = palette[colorIdx % palette.length];
+            const [r, g, b] = hexToRgb(color);
+
+            // draw trail segments — taper width and alpha from tail to head
+            for (let i = 1; i < trail.length; i++) {
+                const progress = i / trail.length;
+                const alpha = progress * progress * (dark ? 0.85 : 0.70);
+                const width = progress * 4;
+
+                cc.beginPath();
+                cc.moveTo(trail[i - 1].x, trail[i - 1].y);
+                cc.lineTo(trail[i].x, trail[i].y);
+                cc.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+                cc.lineWidth = Math.max(0.3, width);
+                cc.lineCap = 'round';
+                cc.lineJoin = 'round';
+                cc.stroke();
+            }
+
+            // glowing head
+            const hx = mouse.x, hy = mouse.y;
+            const grd = cc.createRadialGradient(hx, hy, 0, hx, hy, 14);
+            grd.addColorStop(0, `rgba(${r},${g},${b},${dark ? 1 : 0.85})`);
+            grd.addColorStop(0.4, `rgba(${r},${g},${b},0.4)`);
+            grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+            cc.beginPath();
+            cc.arc(hx, hy, 14, 0, Math.PI * 2);
+            cc.fillStyle = grd;
+            cc.fill();
+
+            // solid core dot
+            cc.beginPath();
+            cc.arc(hx, hy, 3, 0, Math.PI * 2);
+            cc.fillStyle = `rgba(${r},${g},${b},1)`;
+            cc.fill();
+
+            requestAnimationFrame(cometFrame);
+        }
+        cometFrame();
+    }
 
     // --- Scroll Progress Bar + Orb Parallax ---
     const scrollBar = document.getElementById('scrollBar');

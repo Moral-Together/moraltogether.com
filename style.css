@@ -30,28 +30,24 @@ body.dark-mode {
 
 /* Custom Cursor */
 .custom-cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--secondary-color);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    display: none;
 }
 
-.custom-cursor.hover {
-    width: 40px;
-    height: 40px;
-    background-color: rgba(229, 91, 39, 0.1);
+/* Comet cursor canvas */
+#comet-cursor-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99999;
 }
 
 @media (max-width: 768px) {
-    .custom-cursor {
-        display: none;
-    }
+    #comet-cursor-canvas { display: none; }
 }
+
+* { cursor: none !important; }
 
 /* Scroll Progress Bar */
 .scroll-progress-container {
@@ -2700,10 +2696,6 @@ body.dark-mode .partner-logo-card:hover::after {
 }
 
 /* Custom cursor */
-body.dark-mode .custom-cursor {
-    border-color: #00c8ff;
-    box-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
-}
 
 /* Feature checklist */
 body.dark-mode .feature-checklist li::before {
