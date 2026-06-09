@@ -42,11 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
         resizeComet();
         window.addEventListener('resize', resizeComet);
 
+        const MAX_TRAIL_PX = 200; // max visual length in pixels
+
         document.addEventListener('mousemove', e => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
             trail.push({ x: e.clientX, y: e.clientY });
             if (trail.length > TRAIL) trail.shift();
+
+            // trim by total pixel length so fast moves don't stretch the tail
+            let total = 0;
+            for (let i = trail.length - 1; i > 0; i--) {
+                const dx = trail[i].x - trail[i - 1].x;
+                const dy = trail[i].y - trail[i - 1].y;
+                total += Math.sqrt(dx * dx + dy * dy);
+                if (total > MAX_TRAIL_PX) {
+                    trail.splice(0, i);
+                    break;
+                }
+            }
         });
 
         // shift color every ~60 moves
