@@ -2908,6 +2908,7 @@ body.dark-mode .hero-content-center .shimmer-text {
     transition: opacity 1s ease;
 }
 
+/* Desktop (≥ 1200px) — landscape images */
 .hero-img-light {
     background-image: url("images/hero-light.png");
     opacity: 1;
@@ -2919,6 +2920,26 @@ body.dark-mode .hero-content-center .shimmer-text {
 
 body.dark-mode .hero-img-light { opacity: 0; }
 body.dark-mode .hero-img-dark  { opacity: 1; }
+
+/* Tablet (769px – 1199px) — use hero-tablet-dark; light falls back to desktop */
+@media (max-width: 1199px) and (min-width: 769px) {
+    .hero-img-dark {
+        background-image: url("images/hero-tablet-dark.png");
+        background-position: center top;
+    }
+}
+
+/* Mobile (≤ 768px) — portrait images, focal area at top-center */
+@media (max-width: 768px) {
+    .hero-img-light {
+        background-image: url("images/hero-mobile-light.png");
+        background-position: center top;
+    }
+    .hero-img-dark {
+        background-image: url("images/hero-mobile-dark.png");
+        background-position: center top;
+    }
+}
 
 /* Overlay: left-side gradient for text readability, light vignette */
 .hero-overlay {
