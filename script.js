@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cometCanvas = document.getElementById('comet-cursor-canvas');
     if (cometCanvas && window.innerWidth > 768) {
         const cc = cometCanvas.getContext('2d');
-        const TRAIL = 32;
+        const TRAIL = 48;
         const NEON   = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c'];
         const BRIGHT = ['#0088ee','#e8003d','#00aa55','#8833cc','#e06800','#cc9900'];
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 1; i < trail.length; i++) {
                 const progress = i / trail.length;
                 const alpha = progress * progress * (dark ? 0.85 : 0.70);
-                const width = progress * 4;
+                const width = progress * 9;
 
                 cc.beginPath();
                 cc.moveTo(trail[i - 1].x, trail[i - 1].y);
@@ -86,18 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // glowing head
             const hx = mouse.x, hy = mouse.y;
-            const grd = cc.createRadialGradient(hx, hy, 0, hx, hy, 14);
+            const grd = cc.createRadialGradient(hx, hy, 0, hx, hy, 28);
             grd.addColorStop(0, `rgba(${r},${g},${b},${dark ? 1 : 0.85})`);
             grd.addColorStop(0.4, `rgba(${r},${g},${b},0.4)`);
             grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
             cc.beginPath();
-            cc.arc(hx, hy, 14, 0, Math.PI * 2);
+            cc.arc(hx, hy, 28, 0, Math.PI * 2);
             cc.fillStyle = grd;
             cc.fill();
 
             // solid core dot
             cc.beginPath();
-            cc.arc(hx, hy, 3, 0, Math.PI * 2);
+            cc.arc(hx, hy, 6, 0, Math.PI * 2);
             cc.fillStyle = `rgba(${r},${g},${b},1)`;
             cc.fill();
 
