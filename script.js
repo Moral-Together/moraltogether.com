@@ -82,21 +82,48 @@ document.addEventListener('DOMContentLoaded', () => {
             const color = palette[colorIdx % palette.length];
             const [r, g, b] = hexToRgb(color);
 
-            // draw trail segments — taper width and alpha from tail to head
-            for (let i = 1; i < trail.length; i++) {
-                const progress = i / trail.length;
-                const alpha = progress * progress * (dark ? 0.85 : 0.70);
-                const width = progress * 9;
+            // build filled comet shape — left & right edges tapering to tail point
+            const MAX_HALF_W = 9;
+            const left = [], right = [];
 
-                cc.beginPath();
-                cc.moveTo(trail[i - 1].x, trail[i - 1].y);
-                cc.lineTo(trail[i].x, trail[i].y);
-                cc.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
-                cc.lineWidth = Math.max(0.3, width);
-                cc.lineCap = 'round';
-                cc.lineJoin = 'round';
-                cc.stroke();
+            for (let i = 0; i < trail.length; i++) {
+                const progress = i / (trail.length - 1); // 0=tail, 1=head
+                const halfW = progress * MAX_HALF_W;
+
+                // perpendicular normal at this point
+                let nx, ny;
+                if (i < trail.length - 1) {
+                    const dx = trail[i + 1].x - trail[i].x;
+                    const dy = trail[i + 1].y - trail[i].y;
+                    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+                    nx = -dy / len; ny = dx / len;
+                } else {
+                    const dx = trail[i].x - trail[i - 1].x;
+                    const dy = trail[i].y - trail[i - 1].y;
+                    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+                    nx = -dy / len; ny = dx / len;
+                }
+
+                left.push({ x: trail[i].x + nx * halfW, y: trail[i].y + ny * halfW });
+                right.push({ x: trail[i].x - nx * halfW, y: trail[i].y - ny * halfW });
             }
+
+            // closed filled path: tail point → left edge → right edge back
+            cc.beginPath();
+            cc.moveTo(trail[0].x, trail[0].y);
+            for (let i = 0; i < left.length; i++)  cc.lineTo(left[i].x,  left[i].y);
+            for (let i = right.length - 1; i >= 0; i--) cc.lineTo(right[i].x, right[i].y);
+            cc.closePath();
+
+            // gradient along the trail axis: transparent at tail, solid at head
+            const tx = trail[0].x, ty = trail[0].y;
+            const hxg = trail[trail.length - 1].x, hyg = trail[trail.length - 1].y;
+            const fillGrd = cc.createLinearGradient(tx, ty, hxg, hyg);
+            fillGrd.addColorStop(0,   `rgba(${r},${g},${b},0)`);
+            fillGrd.addColorStop(0.5, `rgba(${r},${g},${b},${dark ? 0.55 : 0.45})`);
+            fillGrd.addColorStop(1,   `rgba(${r},${g},${b},${dark ? 0.90 : 0.78})`);
+            cc.fillStyle = fillGrd;
+            cc.fill();
 
             // glowing head
             const hx = mouse.x, hy = mouse.y;
