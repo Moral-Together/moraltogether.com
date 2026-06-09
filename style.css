@@ -1719,30 +1719,49 @@ body.dark-mode .contact-method-card:hover {
 .abstract-globe .ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 3px solid transparent;
     animation: spinGlobes 15s linear infinite;
 }
 
 .ring-1 {
-    width: 100%;
-    height: 100%;
-    border-top-color: var(--secondary-color);
+    width: 100%; height: 100%;
+    border-top-color: #e0197a;
+    border-bottom-color: #7b2d8b;
     animation-duration: 8s !important;
 }
 
 .ring-2 {
-    width: 140%;
-    height: 140%;
-    border-right-color: rgba(255, 255, 255, 0.5);
-    animation-duration: 12s !important;
+    width: 150%; height: 150%;
+    border-left-color: #0e9898;
+    border-right-color: #4caf50;
+    animation-duration: 13s !important;
     animation-direction: reverse !important;
 }
 
 .ring-3 {
-    width: 180%;
-    height: 180%;
-    border-bottom-color: var(--secondary-color);
+    width: 210%; height: 210%;
+    border-top-color: #f06000;
+    border-bottom-color: #f9b80c;
     animation-duration: 20s !important;
+}
+
+/* Dark mode — neon rings with glow */
+body.dark-mode .ring-1 {
+    border-top-color: #00c8ff;
+    border-bottom-color: #bf5af2;
+    filter: drop-shadow(0 0 5px rgba(0, 200, 255, 0.70));
+}
+
+body.dark-mode .ring-2 {
+    border-left-color: #ff2d78;
+    border-right-color: #00ffb3;
+    filter: drop-shadow(0 0 5px rgba(255, 45, 120, 0.65));
+}
+
+body.dark-mode .ring-3 {
+    border-top-color: #ff9500;
+    border-bottom-color: #f9b80c;
+    filter: drop-shadow(0 0 5px rgba(249, 184, 12, 0.60));
 }
 
 .glow-icon {
