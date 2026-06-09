@@ -2638,6 +2638,16 @@ body.dark-mode .site-footer {
     border-top: 1px solid rgba(0, 200, 255, 0.1);
 }
 
+/* Contact panel — dark mode: visible against bg */
+body.dark-mode .contact-bento-panel {
+    background: rgba(10, 14, 40, 0.90);
+    border: 1px solid rgba(0, 200, 255, 0.18);
+    box-shadow:
+        0 0 0 1px rgba(0,200,255,0.08),
+        0 -2px 20px rgba(0, 200, 255, 0.20),
+        0 20px 60px rgba(0, 0, 0, 0.60);
+}
+
 /* Contact visual area neon */
 body.dark-mode .contact-visual {
     background: linear-gradient(135deg, #04040e, #0a0a1e);
