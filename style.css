@@ -2233,27 +2233,27 @@ body.dark-mode .value-card-4:hover {
 }
 
 .team-card-2 {
-    border-top: 4px solid #7b2d8b;
-}
-
-.team-card-2:hover {
-    box-shadow: 0 20px 40px rgba(123, 45, 139, 0.15);
-}
-
-.team-card-2:hover .member-photo {
-    border-color: #7b2d8b;
-}
-
-.team-card-3 {
     border-top: 4px solid #0e9898;
 }
 
-.team-card-3:hover {
+.team-card-2:hover {
     box-shadow: 0 20px 40px rgba(14, 152, 152, 0.15);
 }
 
-.team-card-3:hover .member-photo {
+.team-card-2:hover .member-photo {
     border-color: #0e9898;
+}
+
+.team-card-3 {
+    border-top: 4px solid #7b2d8b;
+}
+
+.team-card-3:hover {
+    box-shadow: 0 20px 40px rgba(123, 45, 139, 0.15);
+}
+
+.team-card-3:hover .member-photo {
+    border-color: #7b2d8b;
 }
 
 .team-card-4 {
@@ -2273,11 +2273,11 @@ body.dark-mode .team-card-1:hover {
 }
 
 body.dark-mode .team-card-2:hover {
-    box-shadow: 0 20px 40px rgba(123, 45, 139, 0.35);
+    box-shadow: 0 20px 40px rgba(14, 152, 152, 0.35);
 }
 
 body.dark-mode .team-card-3:hover {
-    box-shadow: 0 20px 40px rgba(14, 152, 152, 0.35);
+    box-shadow: 0 20px 40px rgba(123, 45, 139, 0.35);
 }
 
 body.dark-mode .team-card-4:hover {
