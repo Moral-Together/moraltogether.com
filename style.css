@@ -2945,9 +2945,12 @@ body.dark-mode .hero-text-panel .shimmer-text {
 
 /* Subtitle — light mode */
 .hero-text-panel > p {
-    color: rgba(0, 20, 70, 0.88) !important;
+    color: #ffffff !important;
     font-size: 1.15rem;
-    text-shadow: 0 1px 6px rgba(255,255,255,0.50);
+    font-weight: 500;
+    text-shadow:
+        0 1px 3px rgba(0,0,0,0.85),
+        0 3px 14px rgba(0,0,0,0.55);
 }
 
 /* Subtitle — dark mode */
