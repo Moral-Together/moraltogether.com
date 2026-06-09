@@ -2945,18 +2945,25 @@ body.dark-mode .hero-text-panel .shimmer-text {
 
 /* Subtitle — light mode */
 .hero-text-panel > p {
-    color: #ffffff !important;
+    color: rgba(10, 20, 60, 0.92) !important;
     font-size: 1.15rem;
     font-weight: 500;
-    text-shadow:
-        0 1px 3px rgba(0,0,0,0.85),
-        0 3px 14px rgba(0,0,0,0.55);
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.52);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 10px 16px;
 }
 
 /* Subtitle — dark mode */
 body.dark-mode .hero-text-panel > p {
     color: rgba(210, 230, 255, 0.92) !important;
     text-shadow: 0 1px 8px rgba(0,0,0,0.60);
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
 }
 
 /* "Unite" centered under "Good Forces" */
