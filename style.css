@@ -1728,6 +1728,7 @@ body.dark-mode .contact-method-card:hover {
     border-top-color: #e0197a;
     border-bottom-color: #7b2d8b;
     animation-duration: 8s !important;
+    filter: drop-shadow(0 0 4px rgba(224, 25, 122, 0.55));
 }
 
 .ring-2 {
@@ -1736,6 +1737,7 @@ body.dark-mode .contact-method-card:hover {
     border-right-color: #4caf50;
     animation-duration: 13s !important;
     animation-direction: reverse !important;
+    filter: drop-shadow(0 0 4px rgba(14, 152, 152, 0.55));
 }
 
 .ring-3 {
@@ -1743,6 +1745,7 @@ body.dark-mode .contact-method-card:hover {
     border-top-color: #f06000;
     border-bottom-color: #f9b80c;
     animation-duration: 20s !important;
+    filter: drop-shadow(0 0 4px rgba(240, 96, 0, 0.55));
 }
 
 /* Dark mode — neon rings with glow */
