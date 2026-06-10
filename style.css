@@ -1494,22 +1494,21 @@ body.dark-mode .folder-card-4:hover .folder-inner {
     width: 88px;
     height: 88px;
     border-radius: 50%;
-    background: rgba(0, 43, 100, 0.08);
+    background-color: rgba(0, 43, 100, 0.06);
+    background-image: url('MoralTogetherLogoWhite.png');
+    background-size: auto 82%;
+    background-position: 4px center;
+    background-repeat: no-repeat;
     border: 2px solid rgba(0, 43, 100, 0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: var(--primary-color);
     box-shadow: 0 0 24px rgba(0, 43, 100, 0.12), 0 0 48px rgba(0, 43, 100, 0.06);
     animation: center-pulse 3s ease-in-out infinite;
     backdrop-filter: blur(8px);
 }
 
 body.dark-mode .orbit-center-ring {
-    background: rgba(0, 200, 255, 0.08);
+    background-color: rgba(0, 200, 255, 0.08);
+    background-image: url('MoralTogetherLogoBlack.png');
     border-color: rgba(0, 200, 255, 0.45);
-    color: #00c8ff;
     box-shadow: 0 0 24px rgba(0, 200, 255, 0.25), 0 0 50px rgba(0, 200, 255, 0.10);
 }
 
