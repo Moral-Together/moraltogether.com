@@ -366,4 +366,61 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(cometsTick);
     }
 
+    // Gallery Modal
+    const GALLERY_IMAGES = [
+        { src: 'images/connect.png', title: 'Connections' },
+        { src: 'images/nature.png',  title: 'Community' },
+        { src: 'images/urban.png',   title: 'Entrepreneurship' },
+        { src: 'images/art.png',     title: 'Hope' },
+    ];
+
+    const modal       = document.getElementById('galleryModal');
+    const modalImg    = document.getElementById('galleryModalImg');
+    const modalTitle  = document.getElementById('galleryModalTitle');
+    const modalClose  = modal.querySelector('.gallery-modal-close');
+    const modalPrev   = modal.querySelector('.gallery-modal-prev');
+    const modalNext   = modal.querySelector('.gallery-modal-next');
+    const backdrop    = modal.querySelector('.gallery-modal-backdrop');
+    const galleryScroll = document.querySelector('.gallery-scroll');
+    let currentIndex  = 0;
+
+    function openModal(index) {
+        currentIndex = index;
+        modalImg.src = GALLERY_IMAGES[currentIndex].src;
+        modalImg.alt = GALLERY_IMAGES[currentIndex].title;
+        modalTitle.textContent = GALLERY_IMAGES[currentIndex].title;
+        modal.classList.add('is-open');
+        if (galleryScroll) galleryScroll.style.animationPlayState = 'paused';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('is-open');
+        if (galleryScroll) galleryScroll.style.animationPlayState = '';
+        document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+        currentIndex = (currentIndex + dir + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+        modalImg.src = GALLERY_IMAGES[currentIndex].src;
+        modalImg.alt = GALLERY_IMAGES[currentIndex].title;
+        modalTitle.textContent = GALLERY_IMAGES[currentIndex].title;
+    }
+
+    document.querySelectorAll('.gallery-card').forEach(card => {
+        card.addEventListener('click', () => openModal(parseInt(card.dataset.index, 10)));
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+    modalPrev.addEventListener('click', () => navigate(-1));
+    modalNext.addEventListener('click', () => navigate(1));
+
+    document.addEventListener('keydown', e => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'ArrowLeft')  navigate(-1);
+        if (e.key === 'ArrowRight') navigate(1);
+        if (e.key === 'Escape')     closeModal();
+    });
+
 });
