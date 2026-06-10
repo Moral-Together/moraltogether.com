@@ -956,6 +956,11 @@ body.dark-mode .value-card:hover {
 .card-tv {
     box-shadow: 0 -2px 14px rgba(191, 90, 242, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
+.card-tv .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
 .card-tv .bento-icon i {
     background: linear-gradient(135deg, #bf5af2, #e07aff);
     -webkit-background-clip: text;
