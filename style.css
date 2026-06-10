@@ -2417,11 +2417,13 @@ body.loaded .reveal {
     display: none;
 }
 
-body.dark-mode .dark-logo {
+body.dark-mode .dark-logo,
+html.dark-mode-early .dark-logo {
     display: block;
 }
 
-body.dark-mode .light-logo {
+body.dark-mode .light-logo,
+html.dark-mode-early .light-logo {
     display: none;
 }
 
