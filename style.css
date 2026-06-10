@@ -3042,11 +3042,13 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
         background-image: url("images/Background_Light_tablet.png");
         background-size: contain;
         background-position: center center;
+        background-repeat: no-repeat;
     }
     .hero-img-dark {
         background-image: url("images/Background_Black_tablet.png");
         background-size: contain;
         background-position: center center;
+        background-repeat: no-repeat;
     }
 }
 
