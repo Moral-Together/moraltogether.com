@@ -1516,6 +1516,7 @@ body.dark-mode .orbit-center-ring {
     width: auto;
     flex-shrink: 0;
     display: block;
+    margin-left: -8px;
 }
 
 .orbit-center-label {
@@ -1539,6 +1540,14 @@ body:not(.dark-mode) .orbit-node[data-index="2"] { --node-color: #00897b; --node
 body:not(.dark-mode) .orbit-node[data-index="3"] { --node-color: #c2185b; --node-bg: rgba(194,24,91,0.10); }
 body:not(.dark-mode) .orbit-node[data-index="4"] { --node-color: #7b1fa2; --node-bg: rgba(123,31,162,0.10); }
 body:not(.dark-mode) .orbit-node[data-index="5"] { --node-color: #f57f17; --node-bg: rgba(245,127,23,0.10); }
+
+/* Dark mode — soft non-neon colors */
+body.dark-mode .orbit-node[data-index="0"] { --node-color: #5ab8e0; --node-bg: rgba(90,184,224,0.10); }
+body.dark-mode .orbit-node[data-index="1"] { --node-color: #d4845a; --node-bg: rgba(212,132,90,0.10); }
+body.dark-mode .orbit-node[data-index="2"] { --node-color: #4dbfa8; --node-bg: rgba(77,191,168,0.10); }
+body.dark-mode .orbit-node[data-index="3"] { --node-color: #d96080; --node-bg: rgba(217,96,128,0.10); }
+body.dark-mode .orbit-node[data-index="4"] { --node-color: #a07ad4; --node-bg: rgba(160,122,212,0.10); }
+body.dark-mode .orbit-node[data-index="5"] { --node-color: #d4a840; --node-bg: rgba(212,168,64,0.10); }
 
 .orbit-node {
     position: absolute;
