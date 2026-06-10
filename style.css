@@ -3040,15 +3040,13 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
 @media (max-width: 1199px) and (min-width: 769px) {
     .hero-img-light {
         background-image: url("images/Background_Light_tablet.png");
-        background-size: contain;
-        background-position: center center;
-        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center top;
     }
     .hero-img-dark {
         background-image: url("images/Background_Black_tablet.png");
-        background-size: contain;
-        background-position: center center;
-        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center top;
     }
 }
 
@@ -3250,4 +3248,50 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 @media (max-width: 768px) {
     .hero-text-panel .shimmer-text { font-size: 2.6rem; }
     .hero-text-panel > p { font-size: 1rem !important; }
+}
+
+/* ============================================================
+   TABLET HERO — image on top, text block below
+   ============================================================ */
+@media (max-width: 1199px) and (min-width: 769px) {
+    .hero {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: auto;
+        height: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .hero-bg {
+        position: relative;
+        height: 440px;
+        flex-shrink: 0;
+    }
+    .hero-overlay,
+    #hero-dots-canvas,
+    .hero .scroll-indicator {
+        display: none;
+    }
+    .hero .container {
+        position: relative;
+        background: var(--bg-body);
+        padding-top: 44px;
+        padding-bottom: 54px;
+    }
+    .hero-text-panel {
+        max-width: 680px;
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+        padding: 0;
+    }
+    .hero-text-panel::before {
+        display: none;
+    }
+    .hero-text-panel .shimmer-text {
+        align-items: center;
+    }
+    .hero-text-panel .btn-group {
+        justify-content: center;
+    }
 }
