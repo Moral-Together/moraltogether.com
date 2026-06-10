@@ -3040,11 +3040,13 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
 @media (max-width: 1199px) and (min-width: 769px) {
     .hero-img-light {
         background-image: url("images/Background_Light_tablet.png");
-        background-position: center top;
+        background-size: contain;
+        background-position: center center;
     }
     .hero-img-dark {
         background-image: url("images/Background_Black_tablet.png");
-        background-position: center top;
+        background-size: contain;
+        background-position: center center;
     }
 }
 
