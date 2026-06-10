@@ -426,22 +426,22 @@
             <div class="gallery-marquee-container">
                 <div class="gallery-marquee">
                     <div class="gallery-scroll">
-                        <div class="gallery-card card-1"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4"><div class="overlay"><h4>Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
                     </div>
                 </div>
             </div>
@@ -523,6 +523,18 @@
         Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
             rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
             Hamedia</a>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true">
+        <div class="gallery-modal-backdrop"></div>
+        <button class="gallery-modal-close" aria-label="Close"><span>✕</span></button>
+        <button class="gallery-modal-arrow gallery-modal-prev" aria-label="Previous">&#8249;</button>
+        <div class="gallery-modal-content">
+            <img id="galleryModalImg" src="" alt="">
+            <p id="galleryModalTitle" class="gallery-modal-title"></p>
+        </div>
+        <button class="gallery-modal-arrow gallery-modal-next" aria-label="Next">&#8250;</button>
     </div>
 
     <script src="script.js"></script>
