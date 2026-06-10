@@ -368,6 +368,20 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(cometsTick);
     }
 
+    // Orbital Network — hover highlight
+    document.querySelectorAll('.orbit-node').forEach(node => {
+        const idx = node.dataset.index;
+        const line = document.querySelector(`.orbit-line[data-index="${idx}"]`);
+        node.addEventListener('mouseenter', () => {
+            node.classList.add('is-active');
+            if (line) line.classList.add('is-active');
+        });
+        node.addEventListener('mouseleave', () => {
+            node.classList.remove('is-active');
+            if (line) line.classList.remove('is-active');
+        });
+    });
+
     // Gallery Modal
     const GALLERY_IMAGES = [
         { src: 'images/connect.png', title: 'Connections' },

@@ -373,47 +373,53 @@
     <!-- Partnerships -->
     <section id="partners" class="section partners-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2rem; margin-bottom: 30px; opacity: 0.8;">Partnerships</h2>
-            <div class="partners-logo-grid">
-                <div class="partner-logo-card reveal" style="transition-delay: 0.1s;">
-                    <div class="partner-logo-box">
-                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+1&font=montserrat" alt="Academic Partner" loading="lazy">
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 10px;">Partnerships</h2>
+            <p class="text-center" style="color: var(--text-muted); margin-bottom: 50px;">Building bridges across sectors</p>
+
+            <div class="orbit-network">
+                <svg class="orbit-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <line class="orbit-line" data-index="0" x1="300" y1="300" x2="300" y2="90"  style="--line-color:#00c8ff"/>
+                    <line class="orbit-line" data-index="1" x1="300" y1="300" x2="482" y2="195" style="--line-color:#f06000"/>
+                    <line class="orbit-line" data-index="2" x1="300" y1="300" x2="482" y2="405" style="--line-color:#00ffb3"/>
+                    <line class="orbit-line" data-index="3" x1="300" y1="300" x2="300" y2="510" style="--line-color:#ff2d78"/>
+                    <line class="orbit-line" data-index="4" x1="300" y1="300" x2="118" y2="405" style="--line-color:#bf5af2"/>
+                    <line class="orbit-line" data-index="5" x1="300" y1="300" x2="118" y2="195" style="--line-color:#ffd60a"/>
+                </svg>
+
+                <div class="orbit-center">
+                    <div class="orbit-center-ring">
+                        <i class="fas fa-circle-nodes" aria-hidden="true"></i>
                     </div>
-                    <div class="pl-content">
-                        <h3>Academia</h3>
-                        <p>Leading academic research.</p>
-                    </div>
+                    <span class="orbit-center-label">MoralTogether</span>
                 </div>
-                <div class="partner-logo-card reveal" style="transition-delay: 0.2s;">
-                    <div class="partner-logo-box">
-                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+2&font=montserrat" alt="Public Sector Partner" loading="lazy">
-                    </div>
-                    <div class="pl-content">
-                        <h3>Public Sector</h3>
-                        <p>Collaboration with authorities.</p>
-                    </div>
+
+                <div class="orbit-node" data-index="0" style="left:50%;top:15%;--node-color:#00c8ff;--node-bg:rgba(0,200,255,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Academia</span>
                 </div>
-                <div class="partner-logo-card reveal" style="transition-delay: 0.3s;">
-                    <div class="partner-logo-box">
-                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+3&font=montserrat" alt="Business Partner" loading="lazy">
-                    </div>
-                    <div class="pl-content">
-                        <h3>Business Sector</h3>
-                        <p>Connection to businesses and companies.</p>
-                    </div>
+                <div class="orbit-node" data-index="1" style="left:80.3%;top:32.5%;--node-color:#f06000;--node-bg:rgba(240,96,0,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Business</span>
                 </div>
-                <div class="partner-logo-card reveal" style="transition-delay: 0.4s;">
-                    <div class="partner-logo-box">
-                        <img src="https://placehold.co/300x120/f8f9fa/a0a0a0?text=LOGO+4&font=montserrat" alt="Nonprofit Partner" loading="lazy">
-                    </div>
-                    <div class="pl-content">
-                        <h3>Nonprofits</h3>
-                        <p>Support for grassroots initiatives.</p>
-                    </div>
+                <div class="orbit-node" data-index="2" style="left:80.3%;top:67.5%;--node-color:#00ffb3;--node-bg:rgba(0,255,179,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-hand-holding-heart" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Nonprofits</span>
+                </div>
+                <div class="orbit-node" data-index="3" style="left:50%;top:85%;--node-color:#ff2d78;--node-bg:rgba(255,45,120,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-landmark" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Public Sector</span>
+                </div>
+                <div class="orbit-node" data-index="4" style="left:19.7%;top:67.5%;--node-color:#bf5af2;--node-bg:rgba(191,90,242,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-broadcast-tower" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Media</span>
+                </div>
+                <div class="orbit-node" data-index="5" style="left:19.7%;top:32.5%;--node-color:#ffd60a;--node-bg:rgba(255,214,10,0.1)">
+                    <div class="orbit-node-circle"><i class="fas fa-users" aria-hidden="true"></i></div>
+                    <span class="orbit-node-label">Community</span>
                 </div>
             </div>
 
-            <div class="cta-banner reveal" style="margin-top: 50px; text-align: center;">
+            <div class="cta-banner reveal" style="margin-top: 40px; text-align: center;">
                 <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;">Join the circle of influence and partnership</p>
                 <a href="#contact" class="btn btn-secondary">Become a Partner</a>
             </div>
