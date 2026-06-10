@@ -1516,7 +1516,7 @@ body.dark-mode .orbit-center-ring {
     width: auto;
     flex-shrink: 0;
     display: block;
-    margin-left: -8px;
+    margin-left: -22px;
 }
 
 .orbit-center-label {
@@ -1533,21 +1533,13 @@ body.dark-mode .orbit-center-ring {
     50%       { transform: scale(1.06); }
 }
 
-/* Light mode — saturated logo-matched colors */
-body:not(.dark-mode) .orbit-node[data-index="0"] { --node-color: #0288d1; --node-bg: rgba(2,136,209,0.10); }
-body:not(.dark-mode) .orbit-node[data-index="1"] { --node-color: #e65100; --node-bg: rgba(230,81,0,0.10); }
-body:not(.dark-mode) .orbit-node[data-index="2"] { --node-color: #00897b; --node-bg: rgba(0,137,123,0.10); }
-body:not(.dark-mode) .orbit-node[data-index="3"] { --node-color: #c2185b; --node-bg: rgba(194,24,91,0.10); }
-body:not(.dark-mode) .orbit-node[data-index="4"] { --node-color: #7b1fa2; --node-bg: rgba(123,31,162,0.10); }
-body:not(.dark-mode) .orbit-node[data-index="5"] { --node-color: #f57f17; --node-bg: rgba(245,127,23,0.10); }
-
-/* Dark mode — soft non-neon colors */
-body.dark-mode .orbit-node[data-index="0"] { --node-color: #5ab8e0; --node-bg: rgba(90,184,224,0.10); }
-body.dark-mode .orbit-node[data-index="1"] { --node-color: #d4845a; --node-bg: rgba(212,132,90,0.10); }
-body.dark-mode .orbit-node[data-index="2"] { --node-color: #4dbfa8; --node-bg: rgba(77,191,168,0.10); }
-body.dark-mode .orbit-node[data-index="3"] { --node-color: #d96080; --node-bg: rgba(217,96,128,0.10); }
-body.dark-mode .orbit-node[data-index="4"] { --node-color: #a07ad4; --node-bg: rgba(160,122,212,0.10); }
-body.dark-mode .orbit-node[data-index="5"] { --node-color: #d4a840; --node-bg: rgba(212,168,64,0.10); }
+/* Logo-matched colors — both themes */
+.orbit-node[data-index="0"] { --node-color: #1e8ec8; --node-bg: rgba(30,142,200,0.10); }
+.orbit-node[data-index="1"] { --node-color: #e84c1c; --node-bg: rgba(232,76,28,0.10); }
+.orbit-node[data-index="2"] { --node-color: #38b56a; --node-bg: rgba(56,181,106,0.10); }
+.orbit-node[data-index="3"] { --node-color: #d62060; --node-bg: rgba(214,32,96,0.10); }
+.orbit-node[data-index="4"] { --node-color: #9c27b0; --node-bg: rgba(156,39,176,0.10); }
+.orbit-node[data-index="5"] { --node-color: #f4a31e; --node-bg: rgba(244,163,30,0.10); }
 
 .orbit-node {
     position: absolute;
