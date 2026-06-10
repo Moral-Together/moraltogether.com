@@ -2101,6 +2101,22 @@ body.dark-mode .ring-3 {
     transform: translateY(-3px);
 }
 
+.social-icon--facebook { background: #1877F2; }
+.social-icon--facebook:hover { background: #0f5bbf; }
+
+.social-icon--instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+.social-icon--instagram:hover {
+    background: linear-gradient(45deg, #e0831e, #d55a30, #c41e38, #b81d5a, #a91377);
+}
+
+.social-icon--linkedin { background: #0A66C2; }
+.social-icon--linkedin:hover { background: #084f97; }
+
+.social-icon--youtube { background: #FF0000; }
+.social-icon--youtube:hover { background: #cc0000; }
+
 .footer-bottom {
     text-align: center;
     padding-top: 30px;
