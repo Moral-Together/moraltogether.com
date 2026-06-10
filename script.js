@@ -182,7 +182,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
     darkToggle?.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        const isDark = document.body.classList.contains('dark-mode');
+        document.documentElement.classList.toggle('dark-mode-early', isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 
     // --- Navbar Scroll ---
