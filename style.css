@@ -928,6 +928,11 @@ body.dark-mode .value-card:hover {
 .card-radio {
     box-shadow: 0 -2px 14px rgba(255, 45, 120, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
+.card-radio .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
 .card-radio .bento-icon i {
     background: linear-gradient(135deg, #ff2d78, #ff6ba8);
     -webkit-background-clip: text;
