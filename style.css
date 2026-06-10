@@ -908,12 +908,10 @@ body.dark-mode .value-card:hover {
 .card-app {
     box-shadow: 0 -2px 14px rgba(0, 200, 255, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
-.card-app .bento-icon i {
-    background: linear-gradient(135deg, #00c8ff, #00ffb3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 6px rgba(0, 200, 255, 0.70));
+.card-app .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 0 6px rgba(0, 200, 255, 0.50));
     animation: icon-float 3s ease-in-out infinite;
 }
 .card-app:hover {
@@ -991,13 +989,8 @@ body.dark-mode .card-app::after {
     background: linear-gradient(90deg, #00c8ff, #00ffb3);
     box-shadow: 0 0 14px rgba(0, 200, 255, 0.70);
 }
-body.dark-mode .card-app .bento-icon i {
-    background: linear-gradient(135deg, #00c8ff, #00ffb3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.90));
-    animation: icon-float 3s ease-in-out infinite;
+body.dark-mode .card-app .bento-icon .bento-logo-img {
+    filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.85)) drop-shadow(0 0 20px rgba(0, 200, 255, 0.40));
 }
 body.dark-mode .card-app:hover {
     box-shadow: 0 -3px 24px rgba(0, 200, 255, 0.65), 0 24px 60px rgba(0,200,255,0.18);
