@@ -20,132 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkScroll();
     setTimeout(() => reveals.forEach(r => r.classList.add('active')), 4000);
 
-    // --- Comet Cursor ---
-    const cometCanvas = document.getElementById('comet-cursor-canvas');
-    if (cometCanvas && window.innerWidth > 768) {
-        const cc = cometCanvas.getContext('2d');
-        const TRAIL = 48;
-        const NEON   = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c'];
-        const BRIGHT = ['#0088ee','#e8003d','#00aa55','#8833cc','#e06800','#cc9900'];
-
-        let cW, cH;
-        const trail = [];
-        let colorIdx = 0;
-        let mouse = { x: -999, y: -999 };
-
-        function resizeComet() {
-            cW = window.innerWidth;
-            cH = window.innerHeight;
-            cometCanvas.width  = cW;
-            cometCanvas.height = cH;
-        }
-        resizeComet();
-        window.addEventListener('resize', resizeComet);
-
-        const MAX_TRAIL_PX = 200; // max visual length in pixels
-
-        document.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            trail.push({ x: e.clientX, y: e.clientY });
-            if (trail.length > TRAIL) trail.shift();
-
-            // trim by total pixel length so fast moves don't stretch the tail
-            let total = 0;
-            for (let i = trail.length - 1; i > 0; i--) {
-                const dx = trail[i].x - trail[i - 1].x;
-                const dy = trail[i].y - trail[i - 1].y;
-                total += Math.sqrt(dx * dx + dy * dy);
-                if (total > MAX_TRAIL_PX) {
-                    trail.splice(0, i);
-                    break;
-                }
-            }
-        });
-
-        // shift color every ~60 moves
-        let moveCount = 0;
-        document.addEventListener('mousemove', () => {
-            if (++moveCount % 60 === 0) colorIdx = (colorIdx + 1) % NEON.length;
-        });
-
-        function hexToRgb(hex) {
-            return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
-        }
-
-        function cometFrame() {
-            cc.clearRect(0, 0, cW, cH);
-            if (trail.length < 2) { requestAnimationFrame(cometFrame); return; }
-
-            const dark = document.body.classList.contains('dark-mode');
-            const palette = dark ? NEON : BRIGHT;
-            const color = palette[colorIdx % palette.length];
-            const [r, g, b] = hexToRgb(color);
-
-            // build filled comet shape — left & right edges tapering to tail point
-            const MAX_HALF_W = 9;
-            const left = [], right = [];
-
-            for (let i = 0; i < trail.length; i++) {
-                const progress = i / (trail.length - 1); // 0=tail, 1=head
-                const halfW = progress * MAX_HALF_W;
-
-                // perpendicular normal at this point
-                let nx, ny;
-                if (i < trail.length - 1) {
-                    const dx = trail[i + 1].x - trail[i].x;
-                    const dy = trail[i + 1].y - trail[i].y;
-                    const len = Math.sqrt(dx * dx + dy * dy) || 1;
-                    nx = -dy / len; ny = dx / len;
-                } else {
-                    const dx = trail[i].x - trail[i - 1].x;
-                    const dy = trail[i].y - trail[i - 1].y;
-                    const len = Math.sqrt(dx * dx + dy * dy) || 1;
-                    nx = -dy / len; ny = dx / len;
-                }
-
-                left.push({ x: trail[i].x + nx * halfW, y: trail[i].y + ny * halfW });
-                right.push({ x: trail[i].x - nx * halfW, y: trail[i].y - ny * halfW });
-            }
-
-            // closed filled path: tail point → left edge → right edge back
-            cc.beginPath();
-            cc.moveTo(trail[0].x, trail[0].y);
-            for (let i = 0; i < left.length; i++)  cc.lineTo(left[i].x,  left[i].y);
-            for (let i = right.length - 1; i >= 0; i--) cc.lineTo(right[i].x, right[i].y);
-            cc.closePath();
-
-            // gradient along the trail axis: transparent at tail, solid at head
-            const tx = trail[0].x, ty = trail[0].y;
-            const hxg = trail[trail.length - 1].x, hyg = trail[trail.length - 1].y;
-            const fillGrd = cc.createLinearGradient(tx, ty, hxg, hyg);
-            fillGrd.addColorStop(0,   `rgba(${r},${g},${b},0)`);
-            fillGrd.addColorStop(0.5, `rgba(${r},${g},${b},${dark ? 0.55 : 0.45})`);
-            fillGrd.addColorStop(1,   `rgba(${r},${g},${b},${dark ? 0.90 : 0.78})`);
-            cc.fillStyle = fillGrd;
-            cc.fill();
-
-            // glowing head
-            const hx = mouse.x, hy = mouse.y;
-            const grd = cc.createRadialGradient(hx, hy, 0, hx, hy, 28);
-            grd.addColorStop(0, `rgba(${r},${g},${b},${dark ? 1 : 0.85})`);
-            grd.addColorStop(0.4, `rgba(${r},${g},${b},0.4)`);
-            grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
-            cc.beginPath();
-            cc.arc(hx, hy, 28, 0, Math.PI * 2);
-            cc.fillStyle = grd;
-            cc.fill();
-
-            // solid core dot
-            cc.beginPath();
-            cc.arc(hx, hy, 6, 0, Math.PI * 2);
-            cc.fillStyle = `rgba(${r},${g},${b},1)`;
-            cc.fill();
-
-            requestAnimationFrame(cometFrame);
-        }
-        cometFrame();
-    }
 
     // --- Scroll Progress Bar + Orb Parallax ---
     const scrollBar = document.getElementById('scrollBar');
@@ -185,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = document.body.classList.contains('dark-mode');
         document.documentElement.classList.toggle('dark-mode-early', isDark);
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.dispatchEvent(new Event('themeChanged'));
     });
 
     // --- Navbar Scroll ---
@@ -232,6 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.remove('active');
         }
     }));
+
+    // --- Folder cards: tap-to-open on touch/mobile ---
+    const folderCards = document.querySelectorAll('.folder-card');
+    folderCards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (window.innerWidth > 1024) return;
+            const isOpen = card.classList.contains('open');
+            folderCards.forEach(c => c.classList.remove('open'));
+            if (!isOpen) card.classList.add('open');
+        });
+    });
 
     // --- Scroll Indicator ---
     const scrollInd = document.querySelector('.scroll-indicator');
@@ -368,19 +254,228 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(cometsTick);
     }
 
-    // Orbital Network — hover highlight
-    document.querySelectorAll('.orbit-node').forEach(node => {
-        const idx = node.dataset.index;
-        const line = document.querySelector(`.orbit-line[data-index="${idx}"]`);
-        node.addEventListener('mouseenter', () => {
-            node.classList.add('is-active');
-            if (line) line.classList.add('is-active');
-        });
-        node.addEventListener('mouseleave', () => {
-            node.classList.remove('is-active');
-            if (line) line.classList.remove('is-active');
-        });
-    });
+    // ── Vision Network Canvas ──────────────────────────────────────
+    (function initVisionNetwork() {
+        const canvas = document.getElementById('vision-network-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        const SECTORS = [
+            { label: 'Academia',      color: '#1e8ec8', emoji: '🎓' },
+            { label: 'Business',      color: '#e84c1c', emoji: '💼' },
+            { label: 'Nonprofits',    color: '#38b56a', emoji: '🤝' },
+            { label: 'Public Sector', color: '#d62060', emoji: '🏛️' },
+            { label: 'Media',         color: '#9c27b0', emoji: '📡' },
+            { label: 'Community',     color: '#f4a31e', emoji: '🏘️' },
+        ];
+
+        let W, H, cx, cy, radius;
+        let pulses = [];
+        let raf = null;
+
+        // Preload center logo
+        const logoImg = new Image();
+        logoImg.src = 'images/Favicon MoralTogether.png';
+        logoImg.onload = () => { if (!raf) draw(); };
+
+        function resize() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr  = window.devicePixelRatio || 1;
+            W = rect.width;
+            H = rect.height;
+            canvas.width  = W * dpr;
+            canvas.height = H * dpr;
+            ctx.scale(dpr, dpr);
+            cx = W / 2;
+            cy = H / 2;
+            radius = Math.min(W, H) * 0.36;
+        }
+
+        function nodePos(i) {
+            const angle = (i / SECTORS.length) * Math.PI * 2 - Math.PI / 2;
+            return {
+                x: cx + radius * Math.cos(angle),
+                y: cy + radius * Math.sin(angle),
+            };
+        }
+
+        function isDark() {
+            return document.body.classList.contains('dark-mode');
+        }
+
+        function initPulses() {
+            pulses = SECTORS.map((s, i) => ({
+                idx: i,
+                t: i / SECTORS.length,
+                speed: 0.0028 + Math.random() * 0.001,
+            }));
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            const dark = isDark();
+
+            const textColor = dark ? 'rgba(200,230,255,0.85)' : 'rgba(0,30,80,0.85)';
+            const centerBg  = dark ? '#0d1a2e' : '#002b64';
+            const lineBase  = dark ? 'rgba(0,200,255,0.20)' : 'rgba(0,43,100,0.18)';
+            const hubGlow   = dark ? 'rgba(0,200,255,0.5)' : 'rgba(0,43,100,0.3)';
+
+            // Connection lines
+            SECTORS.forEach((s, i) => {
+                const p = nodePos(i);
+                ctx.save();
+                ctx.strokeStyle = lineBase;
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([5, 7]);
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+                ctx.restore();
+            });
+
+            // Pulse dots
+            pulses.forEach(pulse => {
+                const p  = nodePos(pulse.idx);
+                const px = cx + (p.x - cx) * pulse.t;
+                const py = cy + (p.y - cy) * pulse.t;
+                const col = SECTORS[pulse.idx].color;
+                ctx.save();
+                ctx.shadowBlur = dark ? 10 : 6;
+                ctx.shadowColor = col;
+                ctx.fillStyle = col;
+                ctx.beginPath();
+                ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            // Sector nodes
+            const nodeR = Math.min(W, H) * 0.072;
+            const emojiSize = Math.max(14, Math.min(22, nodeR * 0.9));
+            SECTORS.forEach((s, i) => {
+                const p = nodePos(i);
+
+                // Glow ring
+                ctx.save();
+                ctx.shadowBlur = dark ? 18 : 10;
+                ctx.shadowColor = s.color;
+                const grad = ctx.createRadialGradient(p.x, p.y, nodeR * 0.3, p.x, p.y, nodeR);
+                grad.addColorStop(0, s.color + 'cc');
+                grad.addColorStop(1, s.color + '22');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, nodeR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Inner circle
+                ctx.save();
+                ctx.fillStyle = dark ? '#0d1a2e' : '#ffffff';
+                ctx.strokeStyle = s.color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, nodeR * 0.62, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+
+                // Emoji icon
+                ctx.save();
+                ctx.font = `${emojiSize}px serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(s.emoji, p.x, p.y);
+                ctx.restore();
+
+                // Label below node
+                const fontSize = Math.max(9, Math.min(13, W * 0.028));
+                ctx.save();
+                ctx.font = `600 ${fontSize}px 'Rubik', sans-serif`;
+                ctx.fillStyle = textColor;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                const words = s.label.split(' ');
+                if (words.length === 1) {
+                    ctx.fillText(s.label, p.x, p.y + nodeR * 1.38);
+                } else {
+                    ctx.fillText(words[0], p.x, p.y + nodeR * 1.28);
+                    ctx.fillText(words[1], p.x, p.y + nodeR * 1.28 + fontSize * 1.2);
+                }
+                ctx.restore();
+            });
+
+            // Center hub glow
+            const hubR = Math.min(W, H) * 0.115;
+            const hubGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, hubR * 1.6);
+            hubGrad.addColorStop(0, dark ? 'rgba(0,200,255,0.22)' : 'rgba(0,43,100,0.14)');
+            hubGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = hubGrad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, hubR * 1.6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Center circle
+            ctx.save();
+            ctx.shadowBlur = dark ? 24 : 12;
+            ctx.shadowColor = hubGlow;
+            ctx.fillStyle = centerBg;
+            ctx.strokeStyle = dark ? 'rgba(0,200,255,0.5)' : 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(cx, cy, hubR, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+
+            // Center logo image (clipped to circle)
+            if (logoImg.complete && logoImg.naturalWidth) {
+                const pad   = hubR * 0.22;
+                const imgR  = hubR - pad;
+                const imgD  = imgR * 2;
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(cx, cy, imgR, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.drawImage(logoImg, cx - imgR, cy - imgR, imgD, imgD);
+                ctx.restore();
+            } else {
+                // Fallback text if image not yet loaded
+                const hubFontSize = Math.max(9, Math.min(12, W * 0.027));
+                ctx.save();
+                ctx.font = `700 ${hubFontSize}px 'Rubik', sans-serif`;
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Moral', cx, cy - hubFontSize * 0.55);
+                ctx.fillText('Together', cx, cy + hubFontSize * 0.65);
+                ctx.restore();
+            }
+        }
+
+        function tick() {
+            pulses.forEach(p => {
+                p.t += p.speed;
+                if (p.t > 1) p.t = 0;
+            });
+            draw();
+            raf = requestAnimationFrame(tick);
+        }
+
+        function start() { if (!raf) raf = requestAnimationFrame(tick); }
+        function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+        const observer = new IntersectionObserver(entries => {
+            entries[0].isIntersecting ? start() : stop();
+        }, { threshold: 0.1 });
+
+        resize();
+        initPulses();
+        observer.observe(canvas);
+
+        window.addEventListener('resize', () => { resize(); draw(); });
+        document.addEventListener('themeChanged', () => draw());
+    })();
 
     // Gallery Modal
     const GALLERY_IMAGES = [

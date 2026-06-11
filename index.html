@@ -17,8 +17,9 @@
     <link rel="canonical" href="https://moraltogether.org/">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="images/Favicon MoralTogether.png">
+    <link rel="shortcut icon" type="image/png" href="images/Favicon MoralTogether.png">
+    <link rel="apple-touch-icon" href="images/Favicon MoralTogether.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -72,7 +73,6 @@
 <body>
 
     <div class="custom-cursor"></div>
-    <canvas id="comet-cursor-canvas"></canvas>
 
     <div class="scroll-progress-container">
         <div class="scroll-progress-bar" id="scrollBar"></div>
@@ -212,23 +212,21 @@
 
     <!-- Vision Section -->
     <section id="vision" class="vision-section">
-        <div class="vision-glow"></div>
         <div class="container">
             <div class="vision-split reveal">
 
-                <!-- Left: vertical line + quote -->
                 <div class="vision-left">
-                    <span class="vision-label">Our Vision</span>
-                    <div class="vision-quote-wrap">
-                        <div class="vision-vline"></div>
-                        <h2 class="vision-quote">To serve as the organization of <span class="vision-highlight">organized abundance for the people</span> — to act as a connecting, positive, and empowering junction.</h2>
-                    </div>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Our Vision</h2>
+                    <p class="vision-quote">
+                        To serve as the organization of
+                        <span class="vision-highlight">organized abundance for the people</span>
+                        — to act as a connecting, positive, and empowering junction.
+                    </p>
+                    <p class="vision-body">We aspire to create a living ecosystem of giving, partnership, and mutual solidarity, where resources, knowledge, opportunities, and goodwill flow to where they are truly needed. Through smart connections and an optimistic perspective — we strengthen morale and increase the sense of capability and hope in society.</p>
                 </div>
 
-                <!-- Right: detail text -->
-                <div class="vision-right">
-                    <p>We aspire to create a living ecosystem of giving, partnership, and mutual solidarity, where resources, knowledge, opportunities, and goodwill flow to where they are truly needed.</p>
-                    <p>Through smart connections, constructive communication, and an optimistic perspective on reality — we strengthen morale, highlight good deeds, and increase the sense of capability and hope in society. Our goal is to turn dispersed abundance into an organized force that works for the common good.</p>
+                <div class="vision-canvas-wrap">
+                    <canvas id="vision-network-canvas"></canvas>
                 </div>
 
             </div>
@@ -376,56 +374,57 @@
             <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 10px;">Partnerships</h2>
             <p class="text-center" style="color: var(--text-muted); margin-bottom: 50px;">Building bridges across sectors</p>
 
-            <div class="orbit-network">
-                <svg class="orbit-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                    <line class="orbit-line" data-index="0" x1="300" y1="300" x2="300" y2="90"  style="--line-color:#00c8ff"/>
-                    <line class="orbit-line" data-index="1" x1="300" y1="300" x2="482" y2="195" style="--line-color:#f06000"/>
-                    <line class="orbit-line" data-index="2" x1="300" y1="300" x2="482" y2="405" style="--line-color:#00ffb3"/>
-                    <line class="orbit-line" data-index="3" x1="300" y1="300" x2="300" y2="510" style="--line-color:#ff2d78"/>
-                    <line class="orbit-line" data-index="4" x1="300" y1="300" x2="118" y2="405" style="--line-color:#bf5af2"/>
-                    <line class="orbit-line" data-index="5" x1="300" y1="300" x2="118" y2="195" style="--line-color:#ffd60a"/>
-                </svg>
+    </div>
 
-                <div class="orbit-center">
-                    <div class="orbit-center-ring">
-                        <img src="MoralTogetherLogoWhite.png" class="orbit-emblem light-logo" alt="">
-                        <img src="MoralTogetherLogoBlack.png" class="orbit-emblem dark-logo" alt="">
-                    </div>
-                    <span class="orbit-center-label">MoralTogether</span>
-                </div>
-
-                <div class="orbit-node" data-index="0" style="left:50%;top:15%;--node-color:#00c8ff;--node-bg:rgba(0,200,255,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Academia</span>
-                </div>
-                <div class="orbit-node" data-index="1" style="left:80.3%;top:32.5%;--node-color:#f06000;--node-bg:rgba(240,96,0,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Business</span>
-                </div>
-                <div class="orbit-node" data-index="2" style="left:80.3%;top:67.5%;--node-color:#00ffb3;--node-bg:rgba(0,255,179,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-hand-holding-heart" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Nonprofits</span>
-                </div>
-                <div class="orbit-node" data-index="3" style="left:50%;top:85%;--node-color:#ff2d78;--node-bg:rgba(255,45,120,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-landmark" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Public Sector</span>
-                </div>
-                <div class="orbit-node" data-index="4" style="left:19.7%;top:67.5%;--node-color:#bf5af2;--node-bg:rgba(191,90,242,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-broadcast-tower" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Media</span>
-                </div>
-                <div class="orbit-node" data-index="5" style="left:19.7%;top:32.5%;--node-color:#ffd60a;--node-bg:rgba(255,214,10,0.1)">
-                    <div class="orbit-node-circle"><i class="fas fa-users" aria-hidden="true"></i></div>
-                    <span class="orbit-node-label">Community</span>
-                </div>
-            </div>
-
-            <div class="cta-banner reveal" style="margin-top: 40px; text-align: center;">
-                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;">Join the circle of influence and partnership</p>
-                <a href="#contact" class="btn btn-secondary">Become a Partner</a>
-            </div>
+    <div class="partners-marquee-wrap">
+        <div class="partners-track partners-track--left">
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Tel+Aviv+Uni&font=montserrat" alt="Tel Aviv University" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Hebrew+Uni&font=montserrat" alt="Hebrew University" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Technion&font=montserrat" alt="Technion" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Ben+Gurion+Uni&font=montserrat" alt="Ben Gurion University" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=JDC+Israel&font=montserrat" alt="JDC Israel" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Jewish+Agency&font=montserrat" alt="Jewish Agency" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Peres+Center&font=montserrat" alt="Peres Center" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=JNF&font=montserrat" alt="JNF" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Tel+Aviv+Uni&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Hebrew+Uni&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Technion&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Ben+Gurion+Uni&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=JDC+Israel&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Jewish+Agency&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Peres+Center&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=JNF&font=montserrat" alt="" loading="lazy"></div>
         </div>
-    </section>
+    </div>
+
+    <div class="partners-marquee-wrap">
+        <div class="partners-track partners-track--right">
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Bank+HaPoalim&font=montserrat" alt="Bank HaPoalim" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Azrieli+Group&font=montserrat" alt="Azrieli Group" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Rothschild+Found&font=montserrat" alt="Rothschild Foundation" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Van+Leer+Inst&font=montserrat" alt="Van Leer Institute" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Yad+Hanadiv&font=montserrat" alt="Yad Hanadiv" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=IDB+Group&font=montserrat" alt="IDB Group" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Education+Min&font=montserrat" alt="Ministry of Education" loading="lazy"></div>
+            <div class="partners-logo-card"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Innovation+Auth&font=montserrat" alt="Innovation Authority" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Bank+HaPoalim&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Azrieli+Group&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Rothschild+Found&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Van+Leer+Inst&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Yad+Hanadiv&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=IDB+Group&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Education+Min&font=montserrat" alt="" loading="lazy"></div>
+            <div class="partners-logo-card" aria-hidden="true"><img src="https://placehold.co/160x54/eef0f4/555c6b?text=Innovation+Auth&font=montserrat" alt="" loading="lazy"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="cta-banner reveal" style="margin-top: 48px; text-align: center;">
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;">Join the circle of influence and partnership</p>
+            <a href="#contact" class="btn btn-secondary">Become a Partner</a>
+        </div>
+    </div>
+</section>
 
     <!-- Gallery -->
     <section id="gallery" class="section gallery-section">
@@ -546,6 +545,25 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- TEMP: hero tablet variant picker — remove after choosing -->
+    <div id="variant-picker">
+        <div id="variant-picker-label">Планшет фон</div>
+        <button onclick="setHeroVariant('a')" title="Frosted glass">A</button>
+        <button onclick="setHeroVariant('b')" title="Мягкий brand">B</button>
+        <button onclick="setHeroVariant('c')" title="Deep navy">C</button>
+        <button onclick="setHeroVariant('d')" title="Navy→Orange (текущий)">D</button>
+    </div>
+    <script>
+    function setHeroVariant(v) {
+        document.body.className = document.body.className.replace(/\bhero-v-\w+\b/g, '').trim();
+        document.body.classList.add('hero-v-' + v);
+        document.querySelectorAll('#variant-picker button').forEach(b => b.classList.remove('vp-active'));
+        document.querySelector('#variant-picker button[onclick*=\'' + v + '\']').classList.add('vp-active');
+        localStorage.setItem('heroVariant', v);
+    }
+    (function(){ const v = localStorage.getItem('heroVariant') || 'd'; setHeroVariant(v); })();
+    </script>
 </body>
 
 </html>
