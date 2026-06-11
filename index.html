@@ -546,24 +546,6 @@
 
     <script src="script.js"></script>
 
-    <!-- TEMP: hero tablet variant picker — remove after choosing -->
-    <div id="variant-picker">
-        <div id="variant-picker-label">Планшет фон</div>
-        <button onclick="setHeroVariant('a')" title="Frosted glass">A</button>
-        <button onclick="setHeroVariant('b')" title="Мягкий brand">B</button>
-        <button onclick="setHeroVariant('c')" title="Deep navy">C</button>
-        <button onclick="setHeroVariant('d')" title="Navy→Orange (текущий)">D</button>
-    </div>
-    <script>
-    function setHeroVariant(v) {
-        document.body.className = document.body.className.replace(/\bhero-v-\w+\b/g, '').trim();
-        document.body.classList.add('hero-v-' + v);
-        document.querySelectorAll('#variant-picker button').forEach(b => b.classList.remove('vp-active'));
-        document.querySelector('#variant-picker button[onclick*=\'' + v + '\']').classList.add('vp-active');
-        localStorage.setItem('heroVariant', v);
-    }
-    (function(){ const v = localStorage.getItem('heroVariant') || 'd'; setHeroVariant(v); })();
-    </script>
 </body>
 
 </html>
