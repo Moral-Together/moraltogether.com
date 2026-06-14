@@ -1,5 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- i18n Language Engine ---
+    const RTL_LANGS = ['he'];
+
+    function applyLanguage(lang) {
+        const t = TRANSLATIONS[lang];
+        if (!t) return;
+
+        // Set html lang + dir
+        const html = document.documentElement;
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', RTL_LANGS.includes(lang) ? 'rtl' : 'ltr');
+
+        // Translate text nodes
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+
+        // Translate innerHTML (preserves inner spans like vision-highlight)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+
+        // Update <title>
+        if (t.meta_title) document.title = t.meta_title;
+
+        // Update meta description
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc && t.meta_description) metaDesc.setAttribute('content', t.meta_description);
+
+        // Update active button
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+
+        // Save to localStorage
+        localStorage.setItem('lang', lang);
+
+        // Notify canvas renderers to redraw with new language
+        document.dispatchEvent(new CustomEvent('langChanged'));
+    }
+
+    // Wire up buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+    });
+
+    // Restore saved language (default: 'en')
+    const savedLang = localStorage.getItem('lang') || 'en';
+    applyLanguage(savedLang);
+
     // --- Reveal on Scroll ---
     const reveals = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -261,12 +313,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
 
         const SECTORS = [
-            { label: 'Academia',      color: '#1e8ec8', emoji: '🎓' },
-            { label: 'Business',      color: '#e84c1c', emoji: '💼' },
-            { label: 'Nonprofits',    color: '#38b56a', emoji: '🤝' },
-            { label: 'Public Sector', color: '#d62060', emoji: '🏛️' },
-            { label: 'Media',         color: '#9c27b0', emoji: '📡' },
-            { label: 'Community',     color: '#f4a31e', emoji: '🏘️' },
+            { key: 'sector_academia', color: '#1e8ec8', emoji: '🎓' },
+            { key: 'sector_business', color: '#e84c1c', emoji: '💼' },
+            { key: 'sector_nonprofits', color: '#38b56a', emoji: '🤝' },
+            { key: 'sector_public',   color: '#d62060', emoji: '🏛️' },
+            { key: 'sector_media',    color: '#9c27b0', emoji: '📡' },
+            { key: 'sector_community',color: '#f4a31e', emoji: '🏘️' },
         ];
 
         let W, H, cx, cy, radius;
@@ -390,17 +442,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Label below node
                 const fontSize = Math.max(9, Math.min(13, W * 0.028));
+                const curLang = document.documentElement.getAttribute('lang') || 'en';
+                const label = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[curLang]?.[s.key]) || s.key.replace('sector_', '');
                 ctx.save();
                 ctx.font = `600 ${fontSize}px 'Rubik', sans-serif`;
                 ctx.fillStyle = textColor;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                const words = s.label.split(' ');
+                const words = label.split(' ');
                 if (words.length === 1) {
-                    ctx.fillText(s.label, p.x, p.y + nodeR * 1.38);
+                    ctx.fillText(label, p.x, p.y + nodeR * 1.38);
                 } else {
                     ctx.fillText(words[0], p.x, p.y + nodeR * 1.28);
-                    ctx.fillText(words[1], p.x, p.y + nodeR * 1.28 + fontSize * 1.2);
+                    ctx.fillText(words.slice(1).join(' '), p.x, p.y + nodeR * 1.28 + fontSize * 1.2);
                 }
                 ctx.restore();
             });
@@ -475,6 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('resize', () => { resize(); draw(); });
         document.addEventListener('themeChanged', () => draw());
+        document.addEventListener('langChanged', () => draw());
     })();
 
     // Gallery Modal
