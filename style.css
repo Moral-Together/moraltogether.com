@@ -57,6 +57,9 @@ body.dark-mode {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-shrink: 0;
+    min-width: 48px;
+    justify-content: flex-end;
 }
 
 /* Language Switcher */
@@ -329,6 +332,8 @@ body.dark-mode .navbar.scrolled {
     display: flex;
     align-items: center;
     text-decoration: none;
+    flex-shrink: 0;
+    min-width: 48px;
 }
 
 .logo-img {
@@ -344,6 +349,8 @@ body.dark-mode .navbar.scrolled {
     padding: 0;
     margin: 0;
     z-index: 1000;
+    flex: 1;
+    justify-content: center;
 }
 
 .hamburger {
