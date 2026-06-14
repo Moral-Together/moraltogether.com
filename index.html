@@ -67,7 +67,6 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="rtl.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -96,12 +95,21 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" dir="ltr">
         <div class="nav-container">
             <a href="#home" class="logo">
                 <img src="MoralTogetherLogoWhite.png" alt="MoralTogether Logo" class="logo-img light-logo">
                 <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="logo-img dark-logo">
             </a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="#team" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+            </ul>
             <div class="nav-controls">
                 <div class="lang-switcher">
                     <button class="lang-btn active" data-lang="en">EN</button>
@@ -118,15 +126,6 @@
                     <span></span>
                 </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link" data-i18n="nav_home">Home</a></li>
-                <li><a href="#about" class="nav-link" data-i18n="nav_about">About</a></li>
-                <li><a href="#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
-                <li><a href="#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
-                <li><a href="#team" class="nav-link" data-i18n="nav_team">Team</a></li>
-                <li><a href="#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
-                <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
-            </ul>
         </div>
     </nav>
 

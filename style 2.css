@@ -33,6 +33,8 @@ body.dark-mode {
     display: none;
 }
 
+/* Comet cursor canvas */
+
 /* Scroll Progress Bar */
 .scroll-progress-container {
     position: fixed;
@@ -56,59 +58,7 @@ body.dark-mode {
 .nav-controls {
     display: flex;
     align-items: center;
-    gap: 16px;
-    flex-shrink: 0;
-    min-width: 48px;
-    justify-content: flex-end;
-}
-
-/* Language Switcher */
-.lang-switcher {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(0, 43, 100, 0.07);
-    border-radius: 20px;
-    padding: 3px;
-}
-
-body.dark-mode .lang-switcher {
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.lang-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: var(--text-muted);
-    padding: 4px 9px;
-    border-radius: 16px;
-    transition: background 0.18s, color 0.18s;
-    line-height: 1;
-}
-
-.lang-btn:hover {
-    color: var(--primary-color);
-    background: rgba(0, 43, 100, 0.08);
-}
-
-.lang-btn.active {
-    background: var(--primary-color);
-    color: #fff;
-}
-
-body.dark-mode .lang-btn.active {
-    background: var(--primary-color);
-    color: #07070f;
-}
-
-body.dark-mode .lang-btn:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.10);
-    color: var(--primary-color);
+    gap: 20px;
 }
 
 .theme-toggle {
@@ -161,6 +111,7 @@ body.dark-mode .theme-toggle .fa-sun {
     background: linear-gradient(180deg, #b82366, #c2611e, #d49c09, #3f9965, #7a9c9a, #001f4a);
 }
 
+/* ... (Keep existing resets, animations) ... */
 *,
 *::before,
 *::after {
@@ -332,8 +283,6 @@ body.dark-mode .navbar.scrolled {
     display: flex;
     align-items: center;
     text-decoration: none;
-    flex-shrink: 0;
-    min-width: 48px;
 }
 
 .logo-img {
@@ -349,8 +298,6 @@ body.dark-mode .navbar.scrolled {
     padding: 0;
     margin: 0;
     z-index: 1000;
-    flex: 1;
-    justify-content: center;
 }
 
 .hamburger {
@@ -415,6 +362,21 @@ body.dark-mode .navbar.scrolled {
     left: 0;
 }
 
+.nav-cta {
+    padding: 8px 20px;
+    background: var(--primary-color);
+    color: white !important;
+    border-radius: 100px;
+    box-shadow: 0 4px 15px rgba(0, 43, 100, 0.3);
+}
+
+.nav-cta:hover::after,
+.nav-cta.active::after {
+    width: 0;
+}
+
+/* No underline for CTA button */
+
 /* Hero - Lifted Higher */
 .hero {
     min-height: 100vh;
@@ -431,6 +393,19 @@ body.dark-mode .navbar.scrolled {
     padding: 0 24px;
     width: 100%;
 }
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* #hero-particles removed — replaced by #network-canvas in .hero-network */
 
 .shimmer-text {
     font-family: 'Rubik', sans-serif;
@@ -733,8 +708,12 @@ body.dark-mode .value-card:hover {
     margin: 0;
 }
 
+/* Expanded Vision Section */
 /* ============================================================
-   VISION SECTION
+   VISION SECTION — left accent + vertical neon line (variant 3)
+   ============================================================ */
+/* ============================================================
+   VISION — SPLIT + NETWORK CANVAS
    ============================================================ */
 .vision-section {
     background: var(--bg-body);
@@ -1616,6 +1595,8 @@ body.dark-mode .partners-logo-card:hover {
     }
 
     100% {
+        transform: translateX(50%);
+        /* Moves right because of RTL direction context issues or just standard marquee logic. For RTL usually goes right-to-left actually. Let's assume standard LTR logic for transform first then adjust if needed. Actually in RTL mode, translate positive X moves RIGHT. Negative moves LEFT. We want it to move continuously. */
         transform: translateX(-50%);
     }
 }
@@ -2127,6 +2108,15 @@ body.dark-mode .ring-3 {
     font-size: 0.9rem;
 }
 
+/* Contact Section Duplicate Config Removed */
+
+.contact-container {
+    background: var(--bg-body);
+    border-radius: 40px;
+    padding: 60px;
+    text-align: center;
+}
+
 /* Text Center Helper */
 .text-center {
     text-align: center;
@@ -2136,16 +2126,6 @@ body.dark-mode .ring-3 {
 @media (max-width: 1024px) {
     .bento-grid {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .lang-switcher {
-        gap: 2px;
-        padding: 2px;
-    }
-
-    .lang-btn {
-        font-size: 0.65rem;
-        padding: 3px 7px;
     }
 
     .hamburger {
@@ -2193,6 +2173,10 @@ body.dark-mode .ring-3 {
     .shimmer-text {
         font-size: 4rem;
         letter-spacing: -1px;
+    }
+
+    .hero-content {
+        padding: 0 20px;
     }
 
     .about-content-layout {
@@ -2286,6 +2270,13 @@ body.dark-mode .ring-3 {
         padding: 60px 0;
     }
 
+    .contact-container {
+        padding: 40px 20px;
+    }
+
+    .contact-container h2 {
+        font-size: 2.2rem !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2308,6 +2299,11 @@ body.dark-mode .ring-3 {
 
     .bento-icon {
         font-size: 2.5rem;
+    }
+
+    .partner-card {
+        width: 140px;
+        padding: 20px;
     }
 
     .about-quote {
@@ -2563,6 +2559,90 @@ body.dark-mode .contact-whatsapp-card:hover {
 }
 
 /* ============================================================
+   HERO SPLIT LAYOUT
+   ============================================================ */
+.hero-split {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-text {
+    text-align: left;
+}
+
+.hero-text .shimmer-text {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.hero-text p {
+    font-size: 1.35rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.hero-text .btn-group {
+    justify-content: flex-start;
+}
+
+.hero-text .floating-social-proof {
+    margin-top: 50px;
+    display: inline-flex;
+}
+
+.hero-network {
+    position: relative;
+    height: 520px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 20px 50px rgba(0, 43, 100, 0.08);
+}
+
+#network-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 1024px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .hero-text {
+        text-align: center;
+    }
+    .hero-text .shimmer-text {
+        text-align: center;
+    }
+    .hero-text p {
+        text-align: center;
+    }
+    .hero-text .btn-group {
+        justify-content: center;
+    }
+    .hero-network {
+        height: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-network {
+        height: 280px;
+    }
+}
+
+/* ============================================================
    NAVBAR TOP ACCENT
    ============================================================ */
 .navbar::before {
@@ -2579,6 +2659,55 @@ body.dark-mode .contact-whatsapp-card:hover {
 
 .navbar.scrolled::before {
     opacity: 1;
+}
+
+/* ============================================================
+   HERO BADGE
+   ============================================================ */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    background: rgba(0, 43, 100, 0.07);
+    border: 1px solid rgba(0, 43, 100, 0.18);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 28px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+body.dark-mode .hero-badge {
+    background: rgba(0, 200, 255, 0.07);
+    border-color: rgba(0, 200, 255, 0.25);
+    color: #00c8ff;
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.1);
+}
+
+/* ============================================================
+   HERO NETWORK CANVAS — always dark background
+   ============================================================ */
+.hero-network {
+    background: linear-gradient(135deg, #030a1a 0%, #0a1830 60%, #030a1a 100%) !important;
+    border-color: rgba(0, 80, 150, 0.35) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 0 80px rgba(0, 43, 100, 0.08) !important;
+}
+
+body.dark-mode .hero-network {
+    border-color: rgba(0, 200, 255, 0.25) !important;
+    box-shadow: 0 0 50px rgba(0, 200, 255, 0.12), 0 20px 60px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* ============================================================
@@ -2777,6 +2906,8 @@ body.dark-mode .value-card-4:hover {
     box-shadow: 0 -2px 18px rgba(249, 184, 12, 0.65), 0 16px 48px rgba(249,184,12,0.18);
 }
 
+/* Custom cursor */
+
 /* Feature checklist */
 body.dark-mode .feature-checklist li::before {
     color: #00ffb3;
@@ -2792,6 +2923,78 @@ body.dark-mode .feature-checklist li::before {
 }
 
 /* .hero-overlay — defined in image-banner section below */
+
+.hero-content-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hero text: always bright on dark canvas background */
+.hero-content-center .shimmer-text {
+    background: linear-gradient(110deg, #ffffff 0%, #a8e8ff 30%, #ffffff 55%, #b8f0e8 80%, #ffffff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 22px rgba(0, 200, 255, 0.25));
+}
+
+body.dark-mode .hero-content-center .shimmer-text {
+    background: linear-gradient(110deg, #00c8ff 5%, #ffffff 32%, #ff2d78 58%, #00ffb3 82%, #00c8ff 100%);
+    background-size: 200% auto;
+    filter: drop-shadow(0 0 32px rgba(0, 200, 255, 0.55));
+}
+
+.hero-content-center > p {
+    color: rgba(200, 215, 255, 0.85) !important;
+    font-size: 1.25rem;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content-center .btn-group {
+    justify-content: center;
+}
+
+.hero-content-center .floating-social-proof {
+    background: rgba(0, 200, 255, 0.06) !important;
+    border-color: rgba(0, 200, 255, 0.2) !important;
+    color: rgba(200, 215, 255, 0.85);
+    margin-top: 40px;
+}
+
+.hero-content-center .floating-social-proof span {
+    color: rgba(200, 215, 255, 0.75) !important;
+}
+
+/* Scroll indicator stays above canvas */
+.hero .scroll-indicator {
+    z-index: 2;
+}
+
+/* Sun border matches icon */
+.value-card-4 {
+    border-top-color: #f9b80c !important;
+}
+
+@media (max-width: 768px) {
+    .hero-content-center .shimmer-text {
+        font-size: 2.8rem;
+    }
+    .hero-content-center > p {
+        font-size: 1.05rem !important;
+    }
+}
+
+/* Hero scroll arrow — always visible on dark canvas */
+.hero .scroll-arrow {
+    border-color: rgba(160, 200, 255, 0.55);
+}
 
 /* ============================================================
    HERO — IMAGE BANNER (dark / light themes)
