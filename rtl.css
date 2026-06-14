@@ -1,0 +1,161 @@
+/* ============================================================
+   RTL overrides — applied when <html dir="rtl"> (Hebrew)
+   ============================================================ */
+
+/* --- Hero overlay: mirror horizontal gradient --- */
+[dir="rtl"] .hero-overlay {
+    background:
+        linear-gradient(to left,
+            rgba(255,255,255,0.82) 0%,
+            rgba(255,255,255,0.55) 38%,
+            rgba(255,255,255,0.10) 60%,
+            transparent 75%
+        ),
+        linear-gradient(to bottom,
+            rgba(0,0,0,0.08) 0%,
+            transparent 15%,
+            transparent 82%,
+            rgba(0,0,0,0.12) 100%
+        );
+}
+
+body.dark-mode[dir="rtl"] .hero-overlay,
+[dir="rtl"] body.dark-mode .hero-overlay {
+    background:
+        linear-gradient(to left,
+            rgba(4,6,20,0.72) 0%,
+            rgba(4,6,20,0.40) 45%,
+            transparent 70%
+        ),
+        linear-gradient(to bottom,
+            rgba(0,0,0,0.20) 0%,
+            transparent 15%,
+            transparent 82%,
+            rgba(0,0,0,0.15) 100%
+        );
+}
+
+/* --- Hero text panel: right-aligned on desktop --- */
+[dir="rtl"] .hero-text-panel {
+    text-align: right;
+    align-items: flex-end;
+}
+
+/* --- Mobile / Tablet nav menu: slide from right --- */
+@media (max-width: 1024px) {
+    [dir="rtl"] .nav-menu {
+        left: auto;
+        right: -100%;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    [dir="rtl"] .nav-menu.active {
+        right: 0;
+        left: auto;
+    }
+}
+
+/* --- About quote: border flips side --- */
+[dir="rtl"] .about-quote {
+    border-left: none;
+    border-right: 4px solid var(--secondary-color);
+    border-radius: 15px 0 0 15px;
+    padding-left: 20px;
+    padding-right: 24px;
+}
+
+/* --- Feature checklist: checkmark moves to right --- */
+[dir="rtl"] .feature-checklist li {
+    padding-left: 0;
+    padding-right: 25px;
+}
+
+[dir="rtl"] .feature-checklist li::before {
+    left: auto;
+    right: 0;
+}
+
+/* --- Folder tab: anchor to right side --- */
+[dir="rtl"] .folder-tab {
+    left: auto;
+    right: 0;
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
+    padding: 0 14px 0 20px;
+}
+
+/* --- Nav link underline: already follows text direction --- */
+
+/* --- Footer headings underline: follows text direction --- */
+[dir="rtl"] .footer-links h4::after,
+[dir="rtl"] .footer-social h4::after {
+    left: auto;
+    right: 0;
+}
+
+/* --- Value card highlight bar: flip to right --- */
+[dir="rtl"] .value-card::before {
+    left: auto;
+    right: 0;
+    border-radius: 0 12px 12px 0;
+}
+
+/* --- Bento card glow bar: flip to right --- */
+[dir="rtl"] .bento-card::before {
+    left: auto;
+    right: 0;
+}
+
+/* --- Bento card corner accent: flip --- */
+[dir="rtl"] .card-app::after,
+[dir="rtl"] .card-radio::after,
+[dir="rtl"] .card-tv::after {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+/* --- Contact method cards: icon stays left, flex handles order --- */
+
+/* --- Gallery modal arrows: swap for RTL --- */
+[dir="rtl"] .gallery-modal-prev { order: 1; }
+[dir="rtl"] .gallery-modal-next { order: -1; }
+
+/* --- Partners fade masks: flip --- */
+[dir="rtl"] .partners-marquee-wrap::before {
+    left: auto;
+    right: 0;
+    background: linear-gradient(to left, var(--bg-body), transparent);
+}
+
+[dir="rtl"] .partners-marquee-wrap::after {
+    right: auto;
+    left: 0;
+    background: linear-gradient(to right, var(--bg-body), transparent);
+}
+
+[dir="rtl"] .gallery-marquee-container::before {
+    left: auto;
+    right: 0;
+    background: linear-gradient(to left, var(--bg-body), transparent);
+}
+
+[dir="rtl"] .gallery-marquee-container::after {
+    right: auto;
+    left: 0;
+    background: linear-gradient(to right, var(--bg-body), transparent);
+}
+
+/* --- Vision section: text panel switches sides --- */
+[dir="rtl"] .vision-split {
+    direction: rtl;
+}
+
+/* --- Scroll progress bar: keep LTR (universal convention) --- */
+[dir="rtl"] .scroll-progress-container {
+    direction: ltr;
+}
+
+/* --- Developer credit: always LTR --- */
+[dir="rtl"] .developer-credit {
+    direction: ltr;
+}

@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
-    <title>MoralTogether — Uniting Good Forces | Ecosystem of Social Harmony</title>
+    <title data-i18n="meta_title">MoralTogether — Uniting Good Forces | Ecosystem of Social Harmony</title>
 
     <!-- SEO -->
-    <meta name="description"
+    <meta name="description" data-i18n-attr="content" data-i18n="meta_description"
         content="MoralTogether — the organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Join us to do good together.">
     <meta name="keywords"
         content="MoralTogether, community, volunteering, social collaboration, social entrepreneurship, ecosystem, connections, nonprofit">
@@ -60,13 +60,14 @@
     }
     </script>
 
-    <!-- Google Fonts: Inter + Rubik -->
+    <!-- Google Fonts: Inter + Rubik (supports Hebrew + Greek) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -102,6 +103,11 @@
                 <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="logo-img dark-logo">
             </a>
             <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="he">עב</button>
+                    <button class="lang-btn" data-lang="gr">ΕΛ</button>
+                </div>
                 <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
                     <i class="fas fa-moon" aria-hidden="true"></i>
                     <i class="fas fa-sun" aria-hidden="true"></i>
@@ -113,38 +119,34 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#vision" class="nav-link">Vision</a></li>
-                <li><a href="#activities" class="nav-link">Activities</a></li>
-                <li><a href="#team" class="nav-link">Team</a></li>
-                <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="#team" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section — Static image + rings/sparks animation + centered text -->
+    <!-- Hero Section -->
     <header class="hero" id="home">
-        <!-- Static background images (light / dark) -->
         <div class="hero-bg">
             <div class="hero-img hero-img-light"></div>
             <div class="hero-img hero-img-dark"></div>
         </div>
 
-        <!-- Subtle vignette overlay -->
         <div class="hero-overlay"></div>
-
-        <!-- Floating dots animation (behind text) -->
         <canvas id="hero-dots-canvas"></canvas>
 
         <div class="container">
             <div class="hero-text-panel">
-                <h1 class="shimmer-text reveal">Good Forces<br><span class="unite-line">Unite</span></h1>
-                <p class="reveal" style="transition-delay: 0.2s;">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                <h1 class="shimmer-text reveal"><span data-i18n="hero_title">Good Forces</span><br><span class="unite-line" data-i18n="hero_unite">Unite</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;" data-i18n="hero_subtitle">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
                 <div class="btn-group reveal" style="transition-delay: 0.35s;">
-                    <a href="#activities" class="btn btn-primary">Join the Organization</a>
-                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                    <a href="#activities" class="btn btn-primary" data-i18n="hero_btn_join">Join the Organization</a>
+                    <a href="#about" class="btn btn-secondary" data-i18n="hero_btn_learn">Learn More</a>
                 </div>
                 <div class="floating-social-proof reveal" style="transition-delay: 0.5s;">
                     <div class="avatar-group">
@@ -153,7 +155,7 @@
                         <img src="https://i.pravatar.cc/100?img=3" alt="Member">
                         <div class="avatar-count">+500</div>
                     </div>
-                    <span>participants in our ecosystem</span>
+                    <span data-i18n="hero_social_proof">participants in our ecosystem</span>
                 </div>
             </div>
         </div>
@@ -169,16 +171,16 @@
     <section id="about" class="bento-section">
         <div class="container">
             <div class="reveal">
-                <h2 style="font-size: 2.5rem; margin-bottom: 30px;">Our Story</h2>
+                <h2 style="font-size: 2.5rem; margin-bottom: 30px;" data-i18n="about_heading">Our Story</h2>
 
                 <div class="about-content-layout">
                     <div class="about-text-column">
-                        <p class="lead-text">The organization was founded on a simple yet profound belief:<br>when good forces unite — a powerful ecosystem is created that is truly capable of impact.</p>
-                        <p>Our goal is to serve as a connecting channel between organizations, nonprofits, initiatives, and groups — to create a space for sharing, synchronization, and collaboration, and to amplify the cumulative impact of social and community work.</p>
-                        <p>We work to connect people and organizations acting for society, to make information accessible, to encourage collaborative dialogue, and to build an infrastructure of mutual recognition, trust, and joint action.</p>
-                        <p>At our core is <strong>strengthening morale</strong>. We believe that positive morale is a driving force — for individuals, communities, and entire systems. That's why our perspective is always directed toward the good that exists.</p>
+                        <p class="lead-text" data-i18n="about_lead">The organization was founded on a simple yet profound belief:<br>when good forces unite — a powerful ecosystem is created that is truly capable of impact.</p>
+                        <p data-i18n="about_p1">Our goal is to serve as a connecting channel between organizations, nonprofits, initiatives, and groups — to create a space for sharing, synchronization, and collaboration, and to amplify the cumulative impact of social and community work.</p>
+                        <p data-i18n="about_p2">We work to connect people and organizations acting for society, to make information accessible, to encourage collaborative dialogue, and to build an infrastructure of mutual recognition, trust, and joint action.</p>
+                        <p data-i18n="about_p3">At our core is <strong>strengthening morale</strong>. We believe that positive morale is a driving force — for individuals, communities, and entire systems. That's why our perspective is always directed toward the good that exists.</p>
 
-                        <div class="about-quote">
+                        <div class="about-quote" data-i18n="about_quote">
                             "This is a home for a network of action. A place where initiatives meet, forces unite, and good resonates."
                         </div>
                     </div>
@@ -186,23 +188,23 @@
                     <div class="values-grid">
                         <div class="value-card value-card-1">
                             <span class="value-icon"><i class="fas fa-project-diagram" aria-hidden="true"></i></span>
-                            <h4>Connections</h4>
-                            <p>Emphasize connections instead of gaps</p>
+                            <h4 data-i18n="value1_title">Connections</h4>
+                            <p data-i18n="value1_desc">Emphasize connections instead of gaps</p>
                         </div>
                         <div class="value-card value-card-2">
                             <span class="value-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
-                            <h4>Knowledge Sharing</h4>
-                            <p>Share knowledge instead of competing for it</p>
+                            <h4 data-i18n="value2_title">Knowledge Sharing</h4>
+                            <p data-i18n="value2_desc">Share knowledge instead of competing for it</p>
                         </div>
                         <div class="value-card value-card-3">
                             <span class="value-icon"><i class="fas fa-hammer" aria-hidden="true"></i></span>
-                            <h4>Action</h4>
-                            <p>Strengthen action instead of just talking</p>
+                            <h4 data-i18n="value3_title">Action</h4>
+                            <p data-i18n="value3_desc">Strengthen action instead of just talking</p>
                         </div>
                         <div class="value-card value-card-4">
                             <span class="value-icon"><i class="fas fa-sun" aria-hidden="true"></i></span>
-                            <h4>Positive Mindset</h4>
-                            <p>Cultivate a positive mindset as the foundation for action</p>
+                            <h4 data-i18n="value4_title">Positive Mindset</h4>
+                            <p data-i18n="value4_desc">Cultivate a positive mindset as the foundation for action</p>
                         </div>
                     </div>
                 </div>
@@ -216,13 +218,13 @@
             <div class="vision-split reveal">
 
                 <div class="vision-left">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 24px;">Our Vision</h2>
-                    <p class="vision-quote">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 24px;" data-i18n="vision_heading">Our Vision</h2>
+                    <p class="vision-quote" data-i18n-html="vision_quote">
                         To serve as the organization of
                         <span class="vision-highlight">organized abundance for the people</span>
                         — to act as a connecting, positive, and empowering junction.
                     </p>
-                    <p class="vision-body">We aspire to create a living ecosystem of giving, partnership, and mutual solidarity, where resources, knowledge, opportunities, and goodwill flow to where they are truly needed. Through smart connections and an optimistic perspective — we strengthen morale and increase the sense of capability and hope in society.</p>
+                    <p class="vision-body" data-i18n="vision_body">We aspire to create a living ecosystem of giving, partnership, and mutual solidarity, where resources, knowledge, opportunities, and goodwill flow to where they are truly needed. Through smart connections and an optimistic perspective — we strengthen morale and increase the sense of capability and hope in society.</p>
                 </div>
 
                 <div class="vision-canvas-wrap">
@@ -236,22 +238,22 @@
     <!-- Activities Section -->
     <section id="activities" class="bento-section">
         <div class="container">
-            <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 10px;">Our Activities</h2>
-            <p class="reveal" style="margin-bottom: 40px; color: var(--text-muted);">Our tools for creating a better reality</p>
+            <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="activities_heading">Our Activities</h2>
+            <p class="reveal" style="margin-bottom: 40px; color: var(--text-muted);" data-i18n="activities_subtitle">Our tools for creating a better reality</p>
 
             <div class="bento-grid reveal">
 
                 <div class="bento-card card-app">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/moral-for-good-logo.png" alt="MoralForGood" class="bento-logo-img"></span>
-                        <span class="subtitle">Digital Community</span>
-                        <h3>MoralForGood</h3>
-                        <p>The app enables every user to be part of a network of good: to offer help, request assistance, share initiatives, and publish activities.</p>
-                        <p>MoralForGood was built on the understanding that when points of goodwill are connected — real community power is created. It centralizes information, connects complementary parties, and enables local and nationwide collaborations.</p>
+                        <span class="subtitle" data-i18n="app_subtitle">Digital Community</span>
+                        <h3 data-i18n="app_title">MoralForGood</h3>
+                        <p data-i18n="app_p1">The app enables every user to be part of a network of good: to offer help, request assistance, share initiatives, and publish activities.</p>
+                        <p data-i18n="app_p2">MoralForGood was built on the understanding that when points of goodwill are connected — real community power is created. It centralizes information, connects complementary parties, and enables local and nationwide collaborations.</p>
                         <ul class="feature-checklist">
-                            <li>Real-time connection of needs to resources</li>
-                            <li>Mapping of capabilities and needs, connecting complementary parties</li>
-                            <li>A digital space that translates goodwill into action</li>
+                            <li data-i18n="app_li1">Real-time connection of needs to resources</li>
+                            <li data-i18n="app_li2">Mapping of capabilities and needs, connecting complementary parties</li>
+                            <li data-i18n="app_li3">A digital space that translates goodwill into action</li>
                         </ul>
                     </div>
                 </div>
@@ -259,29 +261,29 @@
                 <div class="bento-card card-radio">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/radio-m1-logo.png" alt="Radio M1" class="bento-logo-img"></span>
-                        <span class="subtitle">Radio Channel</span>
-                        <h3>Radio M1</h3>
-                        <p>A radio channel broadcasting around the clock with positive content. Music that lifts the spirit and dialogue that connects people and cultures.</p>
-                        <p style="margin-top: 15px;">The place where music meets the soul and words create connection.</p>
+                        <span class="subtitle" data-i18n="radio_subtitle">Radio Channel</span>
+                        <h3 data-i18n="radio_title">Radio M1</h3>
+                        <p data-i18n="radio_p1">A radio channel broadcasting around the clock with positive content. Music that lifts the spirit and dialogue that connects people and cultures.</p>
+                        <p style="margin-top: 15px;" data-i18n="radio_p2">The place where music meets the soul and words create connection.</p>
                     </div>
                 </div>
 
                 <div class="bento-card card-tv">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/moral-tv-logo.png" alt="Moral TV" class="bento-logo-img"></span>
-                        <span class="subtitle">Content & Podcast Channel</span>
-                        <h3>Moral TV</h3>
-                        <p>A multi-topic podcast channel that makes important knowledge accessible to everyone across a variety of social and cultural subjects.</p>
+                        <span class="subtitle" data-i18n="tv_subtitle">Content &amp; Podcast Channel</span>
+                        <h3 data-i18n="tv_title">Moral TV</h3>
+                        <p data-i18n="tv_p1">A multi-topic podcast channel that makes important knowledge accessible to everyone across a variety of social and cultural subjects.</p>
                         <div class="tag-cloud">
-                            <span class="tag">Legal Relationships</span>
-                            <span class="tag">Veterans Channel</span>
-                            <span class="tag">Israel-China Entrepreneurship</span>
-                            <span class="tag">Entrepreneurship in the New Era</span>
-                            <span class="tag">Parental Leadership</span>
-                            <span class="tag">Living in Balance</span>
-                            <span class="tag">Neighborhood Morals</span>
-                            <span class="tag">Sports Morals</span>
-                            <span class="tag">Stage Arts Morals</span>
+                            <span class="tag" data-i18n="tag_legal">Legal Relationships</span>
+                            <span class="tag" data-i18n="tag_veterans">Veterans Channel</span>
+                            <span class="tag" data-i18n="tag_china">Israel-China Entrepreneurship</span>
+                            <span class="tag" data-i18n="tag_new_era">Entrepreneurship in the New Era</span>
+                            <span class="tag" data-i18n="tag_parental">Parental Leadership</span>
+                            <span class="tag" data-i18n="tag_balance">Living in Balance</span>
+                            <span class="tag" data-i18n="tag_neighborhood">Neighborhood Morals</span>
+                            <span class="tag" data-i18n="tag_sports">Sports Morals</span>
+                            <span class="tag" data-i18n="tag_stage">Stage Arts Morals</span>
                         </div>
                     </div>
                 </div>
@@ -293,19 +295,19 @@
     <!-- Team Section -->
     <section id="team" class="section team-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 70px;">Our Team</h2>
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 70px;" data-i18n="team_heading">Our Team</h2>
             <div class="team-grid">
 
                 <div class="folder-card folder-card-1 reveal" style="transition-delay: 0.1s;">
-                    <div class="folder-tab">Founder</div>
+                    <div class="folder-tab" data-i18n="team1_tab">Founder</div>
                     <div class="folder-flap">
                         <div class="folder-flap-shine"></div>
                         <img src="https://i.pravatar.cc/150?img=11" alt="Dudi Chaim" class="folder-avatar" loading="lazy">
-                        <span class="folder-flap-name">Dudi Chaim</span>
+                        <span class="folder-flap-name" data-i18n="team1_name">Dudi Chaim</span>
                     </div>
                     <div class="folder-inner">
-                        <p class="folder-role">Founder &amp; Organization Visionary</p>
-                        <p class="folder-bio">Leads the organization's vision of connecting different sectors of society to create mutual abundance and shared hope.</p>
+                        <p class="folder-role" data-i18n="team1_role">Founder &amp; Organization Visionary</p>
+                        <p class="folder-bio" data-i18n="team1_bio">Leads the organization's vision of connecting different sectors of society to create mutual abundance and shared hope.</p>
                         <div class="folder-social">
                             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                             <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
@@ -314,15 +316,15 @@
                 </div>
 
                 <div class="folder-card folder-card-2 reveal" style="transition-delay: 0.2s;">
-                    <div class="folder-tab">Community</div>
+                    <div class="folder-tab" data-i18n="team2_tab">Community</div>
                     <div class="folder-flap">
                         <div class="folder-flap-shine"></div>
                         <img src="https://i.pravatar.cc/150?img=5" alt="Yael Cohen" class="folder-avatar" loading="lazy">
-                        <span class="folder-flap-name">Yael Cohen</span>
+                        <span class="folder-flap-name" data-i18n="team2_name">Yael Cohen</span>
                     </div>
                     <div class="folder-inner">
-                        <p class="folder-role">Community &amp; Partnerships Manager</p>
-                        <p class="folder-bio">Responsible for building connections, nurturing our community nationwide, and creating meaningful collaborations on the ground.</p>
+                        <p class="folder-role" data-i18n="team2_role">Community &amp; Partnerships Manager</p>
+                        <p class="folder-bio" data-i18n="team2_bio">Responsible for building connections, nurturing our community nationwide, and creating meaningful collaborations on the ground.</p>
                         <div class="folder-social">
                             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                             <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
@@ -331,15 +333,15 @@
                 </div>
 
                 <div class="folder-card folder-card-3 reveal" style="transition-delay: 0.3s;">
-                    <div class="folder-tab">Technology</div>
+                    <div class="folder-tab" data-i18n="team3_tab">Technology</div>
                     <div class="folder-flap">
                         <div class="folder-flap-shine"></div>
                         <img src="https://i.pravatar.cc/150?img=68" alt="David Arlich" class="folder-avatar" loading="lazy">
-                        <span class="folder-flap-name">David Arlich</span>
+                        <span class="folder-flap-name" data-i18n="team3_name">David Arlich</span>
                     </div>
                     <div class="folder-inner">
-                        <p class="folder-role">Chief Technology Officer</p>
-                        <p class="folder-bio">Leads the technological development of our digital platforms to ensure seamless connection between all partners.</p>
+                        <p class="folder-role" data-i18n="team3_role">Chief Technology Officer</p>
+                        <p class="folder-bio" data-i18n="team3_bio">Leads the technological development of our digital platforms to ensure seamless connection between all partners.</p>
                         <div class="folder-social">
                             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                             <a href="#" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
@@ -348,15 +350,15 @@
                 </div>
 
                 <div class="folder-card folder-card-4 reveal" style="transition-delay: 0.4s;">
-                    <div class="folder-tab">Marketing</div>
+                    <div class="folder-tab" data-i18n="team4_tab">Marketing</div>
                     <div class="folder-flap">
                         <div class="folder-flap-shine"></div>
                         <img src="https://i.pravatar.cc/150?img=42" alt="Shira Levi" class="folder-avatar" loading="lazy">
-                        <span class="folder-flap-name">Shira Levi</span>
+                        <span class="folder-flap-name" data-i18n="team4_name">Shira Levi</span>
                     </div>
                     <div class="folder-inner">
-                        <p class="folder-role">Marketing &amp; Communications Manager</p>
-                        <p class="folder-bio">The voice behind our initiatives. Ensures our message spreads and shares the community's success stories.</p>
+                        <p class="folder-role" data-i18n="team4_role">Marketing &amp; Communications Manager</p>
+                        <p class="folder-bio" data-i18n="team4_bio">The voice behind our initiatives. Ensures our message spreads and shares the community's success stories.</p>
                         <div class="folder-social">
                             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                             <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
@@ -371,9 +373,8 @@
     <!-- Partnerships -->
     <section id="partners" class="section partners-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 10px;">Partnerships</h2>
-            <p class="text-center" style="color: var(--text-muted); margin-bottom: 50px;">Building bridges across sectors</p>
-
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="partners_heading">Partnerships</h2>
+            <p class="text-center" style="color: var(--text-muted); margin-bottom: 50px;" data-i18n="partners_subtitle">Building bridges across sectors</p>
     </div>
 
     <div class="partners-marquee-wrap">
@@ -420,8 +421,8 @@
 
     <div class="container">
         <div class="cta-banner reveal" style="margin-top: 48px; text-align: center;">
-            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;">Join the circle of influence and partnership</p>
-            <a href="#contact" class="btn btn-secondary">Become a Partner</a>
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;" data-i18n="partners_cta">Join the circle of influence and partnership</p>
+            <a href="#contact" class="btn btn-secondary" data-i18n="partners_btn">Become a Partner</a>
         </div>
     </div>
 </section>
@@ -429,26 +430,26 @@
     <!-- Gallery -->
     <section id="gallery" class="section gallery-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;">Photo Gallery</h2>
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</h2>
             <div class="gallery-marquee-container">
                 <div class="gallery-marquee">
                     <div class="gallery-scroll">
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4>Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4>Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4>Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4>Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
                     </div>
                 </div>
             </div>
@@ -460,20 +461,20 @@
         <div class="container">
             <div class="contact-bento-panel bento-card reveal">
                 <div class="contact-info">
-                    <h2 style="font-size: 3rem; margin-bottom: 20px;">Let's Talk</h2>
-                    <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);">Have an idea? Want to collaborate? We're here.</p>
+                    <h2 style="font-size: 3rem; margin-bottom: 20px;" data-i18n="contact_heading">Let's Talk</h2>
+                    <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);" data-i18n="contact_subtitle">Have an idea? Want to collaborate? We're here.</p>
                     <div class="contact-methods">
                         <a href="mailto:info@moraltogether.org" class="contact-method-card contact-mail-card">
                             <i class="fas fa-envelope contact-icon" aria-hidden="true"></i>
                             <div>
-                                <span>Email</span>
+                                <span data-i18n="contact_email_label">Email</span>
                                 <strong>info@moraltogether.org</strong>
                             </div>
                         </a>
                         <a href="#" class="contact-method-card contact-whatsapp-card">
                             <i class="fab fa-whatsapp contact-icon" aria-hidden="true"></i>
                             <div>
-                                <span>WhatsApp</span>
+                                <span data-i18n="contact_whatsapp_label">WhatsApp</span>
                                 <strong>+972-50-0000000</strong>
                             </div>
                         </a>
@@ -498,19 +499,19 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="footer-logo">
-                    <p>A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                    <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Quick Navigation</h4>
+                    <h4 data-i18n="footer_nav_heading">Quick Navigation</h4>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#vision">Vision</a></li>
-                        <li><a href="#activities">Activities</a></li>
+                        <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="#about" data-i18n="nav_about">About</a></li>
+                        <li><a href="#vision" data-i18n="nav_vision">Vision</a></li>
+                        <li><a href="#activities" data-i18n="nav_activities">Activities</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
-                    <h4>Follow Us</h4>
+                    <h4 data-i18n="footer_social_heading">Follow Us</h4>
                     <div class="social-icons">
                         <a href="#" class="social-icon social-icon--facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
                         <a href="#" class="social-icon social-icon--instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
@@ -519,7 +520,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom" style="margin-bottom: 20px;">
+            <div class="footer-bottom" style="margin-bottom: 20px;" data-i18n="footer_copyright">
                 &copy; 2026 MoralTogether. All rights reserved.
             </div>
         </div>
@@ -544,8 +545,8 @@
         <button class="gallery-modal-arrow gallery-modal-next" aria-label="Next">&#8250;</button>
     </div>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 
 </body>
-
 </html>
