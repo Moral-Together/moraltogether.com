@@ -1,16 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- i18n Language Engine ---
-    const RTL_LANGS = ['he'];
-
     function applyLanguage(lang) {
         const t = TRANSLATIONS[lang];
         if (!t) return;
 
-        // Set html lang + dir
-        const html = document.documentElement;
-        html.setAttribute('lang', lang);
-        html.setAttribute('dir', RTL_LANGS.includes(lang) ? 'rtl' : 'ltr');
+        // Set html lang only — layout stays LTR for all languages
+        document.documentElement.setAttribute('lang', lang);
 
         // Translate text nodes
         document.querySelectorAll('[data-i18n]').forEach(el => {
