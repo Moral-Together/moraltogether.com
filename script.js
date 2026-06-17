@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', setActive);
     setActive();
 
-    // --- Bento Card 3D Tilt + Spotlight ---
-    document.querySelectorAll('.bento-card').forEach(card => {
+    // --- Bento Card + Partner Card 3D Tilt + Spotlight ---
+    document.querySelectorAll('.bento-card, .partner-card').forEach(card => {
         card.addEventListener('mousemove', e => {
             const r = card.getBoundingClientRect();
             const x = e.clientX - r.left, y = e.clientY - r.top;
