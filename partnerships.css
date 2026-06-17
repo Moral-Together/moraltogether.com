@@ -1,0 +1,61 @@
+/* ============================================================
+   PARTNERSHIPS PAGE
+   ============================================================ */
+
+/* Hero */
+.partnerships-hero {
+    padding: 160px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.partnerships-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 43, 100, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+body.dark-mode .partnerships-hero::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
+}
+
+.partnerships-hero .shimmer-text {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.partnerships-hero > .container > p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Main content */
+.partnerships-main {
+    padding: 40px 0 100px;
+}
+
+/* Partners grid — will be populated in Phase 2 */
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+}
+
+@media (max-width: 768px) {
+    .partnerships-hero {
+        padding: 120px 0 60px;
+    }
+
+    .partnerships-hero .shimmer-text {
+        font-size: 2.6rem;
+    }
+
+    .partners-grid {
+        grid-template-columns: 1fr;
+    }
+}
