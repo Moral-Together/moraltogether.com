@@ -34,6 +34,13 @@
 
 <body>
 
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="MoralTogetherLogoWhite.png" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.png" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
+            <div class="loader-anim"></div>
+        </div>
+    </div>
     <div class="custom-cursor"></div>
 
     <!-- Navigation -->
@@ -75,8 +82,9 @@
     <!-- Hero -->
     <header class="partnerships-hero">
         <div class="container">
+            <div class="partnerships-dark-title reveal" data-i18n="nav_partnerships">Partnerships</div>
             <h1 class="shimmer-text reveal" data-i18n="nav_partnerships">Partnerships</h1>
-            <p class="reveal" data-i18n="partnerships_subtitle">Together we build a stronger ecosystem — 17 initiatives uniting for social change.</p>
+            <p class="reveal" data-i18n="partnerships_subtitle">Together we build a stronger ecosystem — 16 initiatives uniting for social change.</p>
         </div>
     </header>
 
@@ -86,14 +94,18 @@
             <div class="partners-grid reveal">
 
                 <!-- 1. Mothers & Family Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #e63946;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #e63946;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p1-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #e63946;">🌸</div>
                         <h3 class="partner-card-title" data-i18n="p1_name">Mothers &amp; Family Moral</h3>
                         <p class="partner-card-hebrew">מורל האימהות והמשפחה</p>
                         <p class="partner-card-desc" data-i18n="p1_desc">Empowering Israeli mothers and families — giving voice and meaning to those who are the backbone of Israeli society.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579740565077" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                             <a href="https://www.youtube.com/@%D7%9E%D7%95%D7%A8%D7%9C%D7%94%D7%90%D7%99%D7%9E%D7%94%D7%95%D7%AA%D7%95%D7%94%D7%9E%D7%A9%D7%A4%D7%97%D7%94/videos" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
@@ -104,44 +116,57 @@
                 </div>
 
                 <!-- 2. Neighborhoods Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #f4a31e;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #f4a31e; ">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p2-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #f4a31e;">🏘️</div>
                         <h3 class="partner-card-title" data-i18n="p2_name">Neighborhoods Moral</h3>
                         <p class="partner-card-hebrew">מורל השכונות</p>
                         <p class="partner-card-desc" data-i18n="p2_desc">A unique project mobilizing neighborhood residents to develop community security frameworks and provide civic support.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579824440833" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%A9%D7%9B%D7%95%D7%A0%D7%94/61579740565077/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=7fiI7SkkZDg" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                                <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. Young Ambassadors Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #1e8ec8;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #1e8ec8;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p3-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #1e8ec8;">⭐</div>
                         <h3 class="partner-card-title" data-i18n="p3_name">Young Ambassadors Moral</h3>
                         <p class="partner-card-hebrew">מורל שגרירים צעירים</p>
                         <p class="partner-card-desc" data-i18n="p3_desc">Nurturing the next generation as future ambassadors, bridging divides and countering the isolating effects of technology.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579768552236" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%A9%D7%92%D7%A8%D7%99%D7%A8%D7%99%D7%9D-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D/61579824440833/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. Elderly Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #f9b80c;">
+                <!-- 4. Elderly Moral (JPG) -->
+                <div class="bento-card partner-card reveal" style="--card-accent: #f9b80c;">
+                    <div class="partner-card-media">
+                        <img src="images/p4-logo.jpg" alt="Elderly Moral" class="partner-card-logo">
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #f9b80c;">💛</div>
                         <h3 class="partner-card-title" data-i18n="p4_name">Elderly Moral</h3>
                         <p class="partner-card-hebrew">מורל הוותיקים</p>
                         <p class="partner-card-desc" data-i18n="p4_desc">Returning third-age residents to the center of the social stage with meaningful employment, activities and community belonging.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579588736152" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%95%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D/61579768552236/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                         </div>
@@ -149,44 +174,62 @@
                 </div>
 
                 <!-- 5. Animals Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #38b56a;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #38b56a;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p5-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #38b56a;">🐾</div>
                         <h3 class="partner-card-title" data-i18n="p5_name">Animals Moral</h3>
                         <p class="partner-card-hebrew">מורל בעלי החיים</p>
                         <p class="partner-card-desc" data-i18n="p5_desc">Restoring responsibility and compassion toward animals to the center of community discourse.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579153906411" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%91%D7%A2%D7%9C%D7%99-%D7%94%D7%97%D7%99%D7%99%D7%9D/61579588736152/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=3DqdSxLhpTM" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                                <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 6. Stage Arts Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #9c27b0;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #9c27b0;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p6-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #9c27b0;">🎭</div>
                         <h3 class="partner-card-title" data-i18n="p6_name">Stage Arts Moral</h3>
                         <p class="partner-card-hebrew">מורל אומנות הבמה</p>
                         <p class="partner-card-desc" data-i18n="p6_desc">Born from the understanding that art is a central engine for developing human capital and strengthening the community.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579156991775" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%90%D7%95%D7%9E%D7%A0%D7%95%D7%AA-%D7%94%D7%91%D7%9E%D7%94/61579153906411/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=1U0tkFLvgY0&list=PLpDbflfCGjfx1NiJ0VjX8I0gNC0aUfNeD&index=3" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                                <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 7. Constructive Criticism Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #00897b;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #00897b;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p7-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #00897b;">🔍</div>
                         <h3 class="partner-card-title" data-i18n="p7_name">Constructive Criticism Moral</h3>
                         <p class="partner-card-hebrew">המורל לביקורת בונה</p>
                         <p class="partner-card-desc" data-i18n="p7_desc">Promoting full transparency and constructive criticism as pillars of a healthy, accountable society.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579412399105" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                         </div>
@@ -194,14 +237,18 @@
                 </div>
 
                 <!-- 8. Care & Encouragement Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #4caf50;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #4caf50;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p8-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #4caf50;">💚</div>
                         <h3 class="partner-card-title" data-i18n="p8_name">Care &amp; Encouragement Moral</h3>
                         <p class="partner-card-hebrew">המורל לאכפתיות ומעודדים</p>
                         <p class="partner-card-desc" data-i18n="p8_desc">Encouraging a culture of care and mutual encouragement across all sectors of the community.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579106534831" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                         </div>
@@ -209,58 +256,65 @@
                 </div>
 
                 <!-- 9. Law Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #1565c0;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #1565c0;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p9-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #1565c0;">⚖️</div>
                         <h3 class="partner-card-title" data-i18n="p9_name">Law Moral</h3>
                         <p class="partner-card-hebrew">מורל המשפט</p>
                         <p class="partner-card-desc" data-i18n="p9_desc">Providing legal support, mediation and guidance to individuals and organizations navigating complex legal landscapes.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579756923329" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%9E%D7%A9%D7%A4%D7%98/61579106534831/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=o9s-LO-BFsY&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                                <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 10. Sports Moral -->
-                <div class="bento-card partner-card" style="--card-accent: #ff5722;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #ff5722;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p10-logo2.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #ff5722;">🏆</div>
                         <h3 class="partner-card-title" data-i18n="p10_name">Sports Moral</h3>
                         <p class="partner-card-hebrew">מורל הספורט</p>
                         <p class="partner-card-desc" data-i18n="p10_desc">Harnessing the power of sport to build unity, discipline and community pride across Israel.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579824440833" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%A1%D7%A4%D7%95%D7%A8%D7%98/61579156991775/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=Spn1slAXC7s&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                                <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 11. Business Structure -->
-                <div class="bento-card partner-card" style="--card-accent: #546e7a;">
-                    <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #546e7a;">💼</div>
-                        <h3 class="partner-card-title" data-i18n="p11_name">Business Structure</h3>
-                        <p class="partner-card-hebrew">המבנה העסקי של הארגון</p>
-                        <p class="partner-card-desc" data-i18n="p11_desc">The organizational and commercial backbone supporting all MoralTogether initiatives through structured business operations.</p>
-                        <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579412399105" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- 12. Moral TV -->
-                <div class="bento-card partner-card" style="--card-accent: #ff2d78;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #ff2d78;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p12-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #ff2d78;">📺</div>
                         <h3 class="partner-card-title" data-i18n="p12_name">Moral TV</h3>
                         <p class="partner-card-hebrew">מורל TV</p>
                         <p class="partner-card-desc" data-i18n="p12_desc">An internet television station broadcasting positive content, community values and inspiring stories around the clock.</p>
                         <div class="partner-card-socials">
+                            <a href="https://www.facebook.com/people/Moral-tv/61579412399105/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
                             <a href="https://www.youtube.com/@MORALTV176/playlists" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
                                 <i class="fab fa-youtube"></i> YouTube
                             </a>
@@ -269,14 +323,21 @@
                 </div>
 
                 <!-- 13. M1 Radio -->
-                <div class="bento-card partner-card" style="--card-accent: #00bcd4;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #00bcd4;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p13-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #00bcd4;">📻</div>
                         <h3 class="partner-card-title" data-i18n="p13_name">M1 Radio</h3>
                         <p class="partner-card-hebrew">M1 רדיו</p>
                         <p class="partner-card-desc" data-i18n="p13_desc">A multilingual radio station broadcasting in all languages — connecting communities through music, dialogue and positive content.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.youtube.com/@-ec9lm" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
+                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="#" class="partner-social-btn partner-social-btn--youtube">
                                 <i class="fab fa-youtube"></i> YouTube
                             </a>
                         </div>
@@ -284,44 +345,50 @@
                 </div>
 
                 <!-- 14. Moral Radio -->
-                <div class="bento-card partner-card" style="--card-accent: #5c6bc0;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #5c6bc0;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p14-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #5c6bc0;">🎵</div>
                         <h3 class="partner-card-title" data-i18n="p14_name">Moral Radio</h3>
                         <p class="partner-card-hebrew">מורל רדיו</p>
                         <p class="partner-card-desc" data-i18n="p14_desc">A health and organic living radio channel promoting wellness, natural living and conscious community values.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579106534831" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 15. God's Will Ambassador -->
-                <div class="bento-card partner-card" style="--card-accent: #ffc107;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #ffc107;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p15-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #ffc107;">✡️</div>
                         <h3 class="partner-card-title" data-i18n="p15_name">God's Will Ambassador</h3>
                         <p class="partner-card-hebrew">שגריר רצון האל</p>
                         <p class="partner-card-desc" data-i18n="p15_desc">Exclusive representation of God's Will Ambassador in Israel — connecting spiritual values with meaningful social action.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61559731952682" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 16. Moral Colleges -->
-                <div class="bento-card partner-card" style="--card-accent: #6a1b9a;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #6a1b9a;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p16-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #6a1b9a;">🎓</div>
                         <h3 class="partner-card-title" data-i18n="p16_name">Moral Colleges</h3>
                         <p class="partner-card-hebrew">מורל המכללות</p>
                         <p class="partner-card-desc" data-i18n="p16_desc">Education and media training courses making professional knowledge accessible to all, empowering the next generation of communicators.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579523696560" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
+                            <a href="https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%9E%D7%9B%D7%9C%D7%9C%D7%95%D7%AA/61579756923329/" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
                                 <i class="fab fa-facebook-f"></i> Facebook
                             </a>
                         </div>
@@ -329,16 +396,17 @@
                 </div>
 
                 <!-- 17. Trust Mom -->
-                <div class="bento-card partner-card" style="--card-accent: #e91e63;">
+                <div class="bento-card partner-card reveal" style="--card-accent: #e91e63;">
+                    <div class="partner-card-media">
+                        <video autoplay loop muted playsinline class="partner-card-logo">
+                            <source src="images/p17-logo.mp4" type="video/mp4">
+                        </video>
+                    </div>
                     <div class="bento-content">
-                        <div class="partner-card-icon" style="--card-accent: #e91e63;">💝</div>
                         <h3 class="partner-card-title" data-i18n="p17_name">Trust Mom</h3>
                         <p class="partner-card-hebrew">Trust Mom — בטחי אמא</p>
                         <p class="partner-card-desc" data-i18n="p17_desc">A community platform dedicated to supporting and empowering mothers through connection, shared resources and mutual trust.</p>
                         <div class="partner-card-socials">
-                            <a href="https://www.facebook.com/profile.php?id=61579699668476" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -362,6 +430,7 @@
                         <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
                         <li><a href="index.html#vision" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
+                        <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">

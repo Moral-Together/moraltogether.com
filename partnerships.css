@@ -22,9 +22,38 @@ body.dark-mode .partnerships-hero::before {
     background: radial-gradient(ellipse at 50% 0%, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
 }
 
+/* Title only visible in light mode */
 .partnerships-hero .shimmer-text {
     font-size: 4rem;
     margin-bottom: 20px;
+}
+
+/* Dark mode: shimmer-text becomes a decorative gradient bar */
+body.dark-mode .partnerships-hero .shimmer-text {
+    filter: none;
+    font-size: 0;
+    height: 12px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 24px;
+    max-width: 480px;
+}
+
+/* Separate visible title for dark mode */
+.partnerships-dark-title {
+    display: none;
+}
+
+body.dark-mode .partnerships-dark-title {
+    display: block;
+    font-family: 'Rubik', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -2px;
+    text-shadow: 0 0 40px rgba(0, 200, 255, 0.55),
+                 0 0 80px rgba(0, 200, 255, 0.25);
+    margin-bottom: 16px;
 }
 
 .partnerships-hero > .container > p {
@@ -49,45 +78,136 @@ body.dark-mode .partnerships-hero::before {
 }
 
 /* ============================================================
-   PARTNER CARD — extends .bento-card
+   PARTNER CARD — dark media top + content below
    ============================================================ */
 .partner-card {
     min-height: auto !important;
-    padding: 32px 28px 28px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent) !important;
+    animation: partnerCardPulse 3.5s ease-in-out infinite;
+    transition: transform 0.3s ease;
 }
 
-/* Colored top accent bar — unique per card via inline var */
+@keyframes partnerCardPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 8px  color-mix(in srgb, var(--card-accent, var(--primary-color)) 25%, transparent),
+            0 4px 24px rgba(0,0,0,0.15);
+        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 28%, transparent) !important;
+    }
+    50% {
+        box-shadow:
+            0 0 22px color-mix(in srgb, var(--card-accent, var(--primary-color)) 60%, transparent),
+            0 0 45px color-mix(in srgb, var(--card-accent, var(--primary-color)) 28%, transparent),
+            0 4px 24px rgba(0,0,0,0.15);
+        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 70%, transparent) !important;
+    }
+}
+
+/* Neon top bar */
 .partner-card::after {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 4px;
+    height: 3px;
     background: var(--card-accent, var(--primary-color));
+    box-shadow: 0 0 10px var(--card-accent, var(--primary-color)),
+                0 0 22px color-mix(in srgb, var(--card-accent, var(--primary-color)) 50%, transparent);
     border-radius: 24px 24px 0 0;
+    z-index: 10;
+    animation: accentLinePulse 3.5s ease-in-out infinite;
 }
 
-/* Icon / logo area */
-.partner-card-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+/* Stagger so cards pulse in a wave */
+.partners-grid .partner-card:nth-child(3n)   { animation-delay: 0s; }
+.partners-grid .partner-card:nth-child(3n+1) { animation-delay: 1.2s; }
+.partners-grid .partner-card:nth-child(3n+2) { animation-delay: 2.4s; }
+
+.partner-card:hover {
+    transform: translateY(-6px);
+    animation-play-state: paused;
+    box-shadow:
+        0 0 30px color-mix(in srgb, var(--card-accent, var(--primary-color)) 75%, transparent),
+        0 0 55px color-mix(in srgb, var(--card-accent, var(--primary-color)) 35%, transparent),
+        0 20px 50px rgba(0,0,0,0.3);
+    border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 80%, transparent) !important;
+}
+
+/* Media block — dark bg so black video bars blend in */
+.partner-card-media {
+    width: 100%;
+    height: 220px;
+    flex-shrink: 0;
+    border-radius: 24px 24px 0 0;
+    background: #0a0a0a;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    margin-bottom: 18px;
-    background: color-mix(in srgb, var(--card-accent, var(--primary-color)) 12%, transparent);
-    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
 }
 
-.partner-card-icon img {
-    width: 48px;
-    height: 48px;
+/* Accent color glow from bottom of media block */
+.partner-card-media::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(to top,
+        color-mix(in srgb, var(--card-accent, var(--primary-color)) 22%, transparent) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* Accent line at bottom of media block — neon pulse */
+.partner-card-media::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--primary-color));
+    box-shadow: 0 0 10px var(--card-accent, var(--primary-color)),
+                0 0 22px color-mix(in srgb, var(--card-accent, var(--primary-color)) 50%, transparent);
+    animation: accentLinePulse 3.5s ease-in-out infinite;
+}
+
+@keyframes accentLinePulse {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 1; }
+}
+
+/* Logo / video element */
+.partner-card-logo {
+    max-width: 75%;
+    max-height: 170px;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+    animation: logoFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50%       { transform: translateY(-10px) scale(1.04); }
+}
+
+.partner-card-media:hover .partner-card-logo {
+    animation-duration: 2s;
+}
+
+/* Content area */
+.partner-card .bento-content {
+    padding: 22px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 /* Title */
@@ -100,13 +220,8 @@ body.dark-mode .partnerships-hero::before {
     line-height: 1.3;
 }
 
-/* Hebrew subtitle (always shown as secondary) */
 .partner-card-hebrew {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin: 0 0 14px;
-    font-weight: 500;
-    direction: rtl;
+    display: none;
 }
 
 /* Description */
@@ -115,7 +230,7 @@ body.dark-mode .partnerships-hero::before {
     line-height: 1.65;
     color: var(--text-muted);
     flex: 1;
-    margin: 0 0 22px;
+    margin: 0 0 20px;
 }
 
 /* Social buttons row */
@@ -145,6 +260,14 @@ body.dark-mode .partnerships-hero::before {
     opacity: 0.9;
 }
 
+/* Placeholder buttons (no real link yet) */
+.partner-social-btn[href="#"] {
+    background: #222;
+    color: #666;
+    cursor: default;
+    pointer-events: none;
+}
+
 .partner-social-btn--facebook {
     background: #1877f2;
     color: #fff;
@@ -162,6 +285,43 @@ body.dark-mode .partner-social-btn--facebook {
 body.dark-mode .partner-social-btn--youtube {
     box-shadow: 0 0 16px rgba(255, 0, 0, 0.3);
 }
+
+/* Dark mode — neon glow on hover */
+body.dark-mode .partner-card:hover .partner-card-media::after {
+    opacity: 1;
+    box-shadow: 0 0 14px var(--card-accent, var(--primary-color));
+}
+
+/* Light mode — soften the dark media block */
+body:not(.dark-mode) .partner-card-media {
+    background: #111827;
+}
+
+body:not(.dark-mode) .partner-card-media::before {
+    background: linear-gradient(to top,
+        color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent) 0%,
+        transparent 100%
+    );
+}
+
+/* Staggered card entrance */
+.partners-grid .partner-card:nth-child(1)  { animation-delay: 0.05s; }
+.partners-grid .partner-card:nth-child(2)  { animation-delay: 0.10s; }
+.partners-grid .partner-card:nth-child(3)  { animation-delay: 0.15s; }
+.partners-grid .partner-card:nth-child(4)  { animation-delay: 0.20s; }
+.partners-grid .partner-card:nth-child(5)  { animation-delay: 0.25s; }
+.partners-grid .partner-card:nth-child(6)  { animation-delay: 0.30s; }
+.partners-grid .partner-card:nth-child(7)  { animation-delay: 0.35s; }
+.partners-grid .partner-card:nth-child(8)  { animation-delay: 0.40s; }
+.partners-grid .partner-card:nth-child(9)  { animation-delay: 0.45s; }
+.partners-grid .partner-card:nth-child(10) { animation-delay: 0.50s; }
+.partners-grid .partner-card:nth-child(11) { animation-delay: 0.55s; }
+.partners-grid .partner-card:nth-child(12) { animation-delay: 0.60s; }
+.partners-grid .partner-card:nth-child(13) { animation-delay: 0.65s; }
+.partners-grid .partner-card:nth-child(14) { animation-delay: 0.70s; }
+.partners-grid .partner-card:nth-child(15) { animation-delay: 0.75s; }
+.partners-grid .partner-card:nth-child(16) { animation-delay: 0.80s; }
+.partners-grid .partner-card:nth-child(17) { animation-delay: 0.85s; }
 
 /* ============================================================
    RESPONSIVE
@@ -183,5 +343,29 @@ body.dark-mode .partner-social-btn--youtube {
 
     .partners-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .partner-card-media {
+        height: 180px;
+    }
+
+    .partner-card .bento-content {
+        padding: 18px 20px 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .partnerships-hero .shimmer-text {
+        font-size: 2rem;
+    }
+
+    .partner-card-media {
+        height: 160px;
+    }
+
+    .partner-social-btn {
+        padding: 7px 13px;
+        font-size: 0.74rem;
     }
 }

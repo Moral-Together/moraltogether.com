@@ -586,3 +586,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// ── Navigation transition — reuses the preloader for page-to-page navigation ──
+(function initNavTransition() {
+    document.addEventListener('click', e => {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href) return;
+        if (href.startsWith('#') || href.startsWith('http') ||
+            href.startsWith('mailto') || href.startsWith('tel')) return;
+        e.preventDefault();
+
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.remove('fade-out');
+            document.body.classList.remove('loaded');
+        }
+        setTimeout(() => { window.location.href = href; }, 100);
+    });
+})();

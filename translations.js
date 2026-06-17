@@ -4,7 +4,7 @@ const TRANSLATIONS = {
     meta_description: "MoralTogether — the organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Join us to do good together.",
     nav_home: "Home", nav_about: "About", nav_vision: "Vision",
     nav_activities: "Activities", nav_team: "Team", nav_gallery: "Gallery", nav_partnerships: "Partnerships", nav_contact: "Contact",
-    partnerships_subtitle: "Together we build a stronger ecosystem — 17 initiatives uniting for social change.",
+    partnerships_subtitle: "Together we build a stronger ecosystem — 16 initiatives uniting for social change.",
     p1_name: "Mothers &amp; Family Moral", p1_desc: "Empowering Israeli mothers and families — giving voice and meaning to those who are the backbone of Israeli society.",
     p2_name: "Neighborhoods Moral", p2_desc: "A unique project mobilizing neighborhood residents to develop community security frameworks and provide civic support.",
     p3_name: "Young Ambassadors Moral", p3_desc: "Nurturing the next generation as future ambassadors, bridging divides and countering the isolating effects of technology.",

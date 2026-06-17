@@ -1,4 +1,6 @@
-/* Theme Variables */
+
+/* ============================================================
+   Theme Variables */
 :root {
     --primary-color: #002b64;
     --primary-dark: #001a3d;
@@ -1516,38 +1518,75 @@ body.dark-mode .folder-card-4.open .folder-inner {
 }
 .partners-logo-card {
     flex-shrink: 0;
-    width: 190px;
-    height: 84px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
+    width: 160px;
+    height: 150px;
+    background: #ffffff;
+    border: 1px solid color-mix(in srgb, var(--card-accent, var(--primary-color)) 35%, transparent);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 22px;
-    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: partnerNeonPulse 3.5s ease-in-out infinite;
 }
+
+/* Neon top accent bar */
+.partners-logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--primary-color));
+    box-shadow: 0 0 10px var(--card-accent, var(--primary-color)),
+                0 0 20px color-mix(in srgb, var(--card-accent, var(--primary-color)) 50%, transparent);
+    border-radius: 16px 16px 0 0;
+    z-index: 2;
+}
+
+@keyframes partnerNeonPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 8px  color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
+            0 4px 20px rgba(0,0,0,0.4);
+        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 35%, transparent);
+    }
+    50% {
+        box-shadow:
+            0 0 18px color-mix(in srgb, var(--card-accent, var(--primary-color)) 65%, transparent),
+            0 0 35px color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
+            0 4px 20px rgba(0,0,0,0.4);
+        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 75%, transparent);
+    }
+}
+
+/* Stagger pulse so cards don't all sync */
+.partners-track .partners-logo-card:nth-child(3n)   { animation-delay: 0s; }
+.partners-track .partners-logo-card:nth-child(3n+1) { animation-delay: 1.2s; }
+.partners-track .partners-logo-card:nth-child(3n+2) { animation-delay: 2.4s; }
+
 .partners-logo-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+    box-shadow:
+        0 0 28px color-mix(in srgb, var(--card-accent, var(--primary-color)) 80%, transparent),
+        0 0 50px color-mix(in srgb, var(--card-accent, var(--primary-color)) 40%, transparent),
+        0 8px 30px rgba(0,0,0,0.5);
+    animation-play-state: paused;
 }
-body.dark-mode .partners-logo-card:hover {
-    box-shadow: 0 0 22px rgba(0,200,255,0.22);
-}
-.partners-logo-card img {
-    max-width: 100%;
-    max-height: 100%;
+
+.partners-logo-card img,
+.partners-logo-card video {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    opacity: 0.75;
-    filter: grayscale(0.15);
-    transition: opacity 0.25s, filter 0.25s;
+    opacity: 0.88;
+    transition: opacity 0.25s;
 }
-.partners-logo-card:hover img {
+.partners-logo-card:hover img,
+.partners-logo-card:hover video {
     opacity: 1;
-    filter: none;
 }
 
 /* Gallery Section - Infinite Marquee */
