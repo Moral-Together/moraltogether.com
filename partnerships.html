@@ -81,6 +81,10 @@
 
     <!-- Hero -->
     <header class="partnerships-hero">
+        <div class="hero-ring hero-ring--1" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--2" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--3" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--4" aria-hidden="true"></div>
         <div class="container">
             <div class="partnerships-dark-title reveal" data-i18n="nav_partnerships">Partnerships</div>
             <h1 class="shimmer-text reveal" data-i18n="nav_partnerships">Partnerships</h1>
@@ -105,9 +109,6 @@
                         <p class="partner-card-hebrew">מורל האימהות והמשפחה</p>
                         <p class="partner-card-desc" data-i18n="p1_desc">Empowering Israeli mothers and families — giving voice and meaning to those who are the backbone of Israeli society.</p>
                         <div class="partner-card-socials">
-                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
                             <a href="https://www.youtube.com/@%D7%9E%D7%95%D7%A8%D7%9C%D7%94%D7%90%D7%99%D7%9E%D7%94%D7%95%D7%AA%D7%95%D7%94%D7%9E%D7%A9%D7%A4%D7%97%D7%94/videos" target="_blank" rel="noopener" class="partner-social-btn partner-social-btn--youtube">
                                 <i class="fab fa-youtube"></i> YouTube
                             </a>
@@ -228,11 +229,7 @@
                         <h3 class="partner-card-title" data-i18n="p7_name">Constructive Criticism Moral</h3>
                         <p class="partner-card-hebrew">המורל לביקורת בונה</p>
                         <p class="partner-card-desc" data-i18n="p7_desc">Promoting full transparency and constructive criticism as pillars of a healthy, accountable society.</p>
-                        <div class="partner-card-socials">
-                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
-                        </div>
+                        <div class="partner-card-socials"></div>
                     </div>
                 </div>
 
@@ -247,11 +244,7 @@
                         <h3 class="partner-card-title" data-i18n="p8_name">Care &amp; Encouragement Moral</h3>
                         <p class="partner-card-hebrew">המורל לאכפתיות ומעודדים</p>
                         <p class="partner-card-desc" data-i18n="p8_desc">Encouraging a culture of care and mutual encouragement across all sectors of the community.</p>
-                        <div class="partner-card-socials">
-                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
-                        </div>
+                        <div class="partner-card-socials"></div>
                     </div>
                 </div>
 
@@ -333,14 +326,7 @@
                         <h3 class="partner-card-title" data-i18n="p13_name">M1 Radio</h3>
                         <p class="partner-card-hebrew">M1 רדיו</p>
                         <p class="partner-card-desc" data-i18n="p13_desc">A multilingual radio station broadcasting in all languages — connecting communities through music, dialogue and positive content.</p>
-                        <div class="partner-card-socials">
-                            <a href="#" class="partner-social-btn partner-social-btn--facebook">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </a>
-                            <a href="#" class="partner-social-btn partner-social-btn--youtube">
-                                <i class="fab fa-youtube"></i> YouTube
-                            </a>
-                        </div>
+                        <div class="partner-card-socials"></div>
                     </div>
                 </div>
 
@@ -415,6 +401,17 @@
         </div>
     </main>
 
+    <!-- CTA -->
+    <section class="partnerships-cta">
+        <div class="container">
+            <div class="partnerships-cta-inner reveal">
+                <h2 class="partnerships-cta-heading" data-i18n="cta_heading">Want to join the ecosystem?</h2>
+                <p class="partnerships-cta-sub" data-i18n="cta_sub">Reach out and become part of the MoralTogether network.</p>
+                <a href="index.html#contact" class="btn btn-primary" data-i18n="cta_btn">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="container">
@@ -430,7 +427,10 @@
                         <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
                         <li><a href="index.html#vision" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
+                        <li><a href="index.html#team" data-i18n="nav_team">Team</a></li>
+                        <li><a href="index.html#gallery" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
+                        <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
@@ -458,6 +458,30 @@
 
     <script src="translations.js"></script>
     <script src="script.js"></script>
+    <script>
+    (function () {
+        var twTimer = null;
+        function runTypewriter() {
+            var el = document.querySelector('.partnerships-hero [data-i18n="partnerships_subtitle"]');
+            if (!el) return;
+            clearTimeout(twTimer);
+            var text = el.textContent;
+            el.textContent = '';
+            el.classList.add('typewriter-active');
+            var i = 0;
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text[i++];
+                    twTimer = setTimeout(type, 60);
+                } else {
+                    el.classList.remove('typewriter-active');
+                }
+            }
+            type();
+        }
+        document.addEventListener('langChanged', runTypewriter);
+    })();
+    </script>
 
 </body>
 </html>
