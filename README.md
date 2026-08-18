@@ -13,6 +13,7 @@
 - [🎨 Design & UX](#-design--ux)
 - [🛠 Tech Stack](#-tech-stack)
 - [📂 Project Structure](#-project-structure)
+- [🕯️ Shabbat Mode](#️-shabbat-mode)
 - [🚀 Innovation & "Under the Hood"](#-innovation--under-the-hood)
 - [💻 Getting Started](#-getting-started)
 - [📄 License](#-license)
@@ -89,11 +90,33 @@ This project uses a robust, lightweight stack with **Zero Dependencies** (No Fra
 ```bash
 MoralTogether/
 ├── index.html       # Main structure (Semantic HTML)
+├── partnerships.html# Partner organizations and initiatives
 ├── style.css        # The Design System (Variables, Animations, Layouts)
 ├── script.js        # Logic (Preloader, Scroll Spy, Infinite Marquee)
+├── translations.js  # Copy for all three languages (EN / HE / GR)
+├── tools/           # Build-time helpers (Shabbat windows builder)
+├── docs/            # Technical specifications
 ├── README.md        # This Documentation
 └── images/          # Assets and Gallery Images
 ```
+
+---
+
+## 🕯️ Shabbat Mode
+The site closes for Shabbat at candle lighting and reopens at havdalah, using the exact times
+of each individual week — both boundaries move by more than three hours across the year, so no
+weekly schedule would do.
+
+- **Source of truth**: Hebcal for Jerusalem (`geonameid=281184`), candle lighting 40 minutes
+  before sunset (`b=40`), havdalah by nightfall (`M=on`), one request per year.
+- **Storage**: [`tools/build-shabbat.mjs`](tools/build-shabbat.mjs) turns the feed into
+  `data/shabbat.json` — Friday candle-lighting → havdalah pairs no longer than 30 hours —
+  served statically as `/api/shabbat.json`. No backend: the site runs on GitHub Pages.
+- **Refresh**: a weekly GitHub Actions run, lazy — while the next 60 days are covered it makes
+  no request at all.
+- **Scope**: Shabbat only. Jewish holidays do not close the site.
+
+Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mode.md`](docs/shabbat-mode.md).
 
 ---
 
