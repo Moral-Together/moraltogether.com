@@ -86,6 +86,21 @@ html.shabbat-closed body > *:not(.shabbat-gate) {
     margin-top: 0.6rem;
 }
 
+.shabbat-gate__tz {
+    margin: 0.9rem 0 0;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(243, 241, 234, 0.4);
+}
+
+/* Hebrew reads right to left; the numbers keep their own direction. */
+.shabbat-gate[dir="rtl"] .shabbat-gate__time,
+.shabbat-gate[dir="rtl"] .shabbat-gate__count {
+    direction: ltr;
+    display: inline-block;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .shabbat-gate {
         animation: shabbat-gate-in 420ms ease-out both;

@@ -26,24 +26,30 @@
     // also what our own browser tests run as.
     var BOTS = /bot|crawler|crawling|spider|slurp|bingpreview|facebookexternalhit|embedly|quora link preview|pinterest|vkshare|whatsapp|telegram|applebot|duckduckbot|yandex|baiduspider|ia_archiver|lighthouse|chrome-lighthouse|google page speed/i;
 
+    // The screen normally speaks through translations.js, like the rest of the site. This copy
+    // is the fallback for the case where that file did not load — the gate must never end up
+    // showing an empty screen.
     var COPY = {
         en: {
-            title: 'Closed for Shabbat',
-            body: 'The site rests from candle lighting until havdalah. We will be back right after Shabbat.',
-            opens: 'Opens at',
-            left: 'Time remaining'
+            title: 'Shabbat Shalom',
+            body: 'MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.',
+            opens: 'The site opens at',
+            left: 'Time remaining',
+            tz: 'Jerusalem time'
         },
         he: {
-            title: 'סגור בשבת',
-            body: 'האתר נח מהדלקת נרות ועד ההבדלה. נחזור מיד במוצאי שבת.',
-            opens: 'נפתח ב',
-            left: 'זמן שנותר'
+            title: 'שבת שלום',
+            body: 'מורל טוגת\'ר שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.',
+            opens: 'האתר נפתח בשעה',
+            left: 'זמן שנותר',
+            tz: 'שעון ירושלים'
         },
         gr: {
-            title: 'Κλειστά για το Σαμπάτ',
-            body: 'Η ιστοσελίδα αναπαύεται από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε αμέσως μετά.',
-            opens: 'Ανοίγει στις',
-            left: 'Υπολειπόμενος χρόνος'
+            title: 'Σαμπάτ Σαλόμ',
+            body: 'Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.',
+            opens: 'Η ιστοσελίδα ανοίγει στις',
+            left: 'Απομένει',
+            tz: 'Ώρα Ιερουσαλήμ'
         }
     };
 
@@ -53,6 +59,7 @@
         offsetMs: 0,       // clock shift for previewing a boundary; time still flows
         forced: null,      // 'closed' | 'open' when a preview pins the state
         closedUntil: null, // end of the window currently being served
+        dataSettled: false,// true once the data attempt finished, one way or another
         timer: null,
         countdown: null
     };
@@ -158,7 +165,10 @@
             if (instant >= w[0] && instant < w[1]) return w;
             if (w[0] > instant) break;
         }
-        if (state.windows.length) return null;
+        return null;
+    }
+
+    function activeFallback(instant) {
         var f = fallbackWindow(instant);
         return f && instant >= f[0] && instant < f[1] ? f : null;
     }
@@ -194,16 +204,34 @@
 
     // ---------------------------------------------------------------- screen
 
-    function copy() {
+    function currentLang() {
         var lang = 'en';
         try { lang = localStorage.getItem('lang') || 'en'; } catch (e) { /* ignore */ }
-        return COPY[lang] || COPY.en;
+        return COPY[lang] ? lang : 'en';
+    }
+
+    function copy(lang) {
+        var fallback = COPY[lang] || COPY.en;
+        var t = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang]) || null;
+        if (!t) return fallback;
+        return {
+            title: t.shabbat_title || fallback.title,
+            body: t.shabbat_body || fallback.body,
+            opens: t.shabbat_opens || fallback.opens,
+            left: t.shabbat_left || fallback.left,
+            tz: t.shabbat_tz || fallback.tz
+        };
     }
 
     function buildScreen(endInstant) {
-        var t = copy();
+        var lang = currentLang();
+        var t = copy(lang);
         var el = document.createElement('div');
         el.className = 'shabbat-gate';
+        el.setAttribute('lang', lang);
+        // The site keeps its layout LTR in every language, but this screen is nothing but
+        // text, so Hebrew reads the way it should.
+        el.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
         el.setAttribute('role', 'dialog');
         el.setAttribute('aria-modal', 'true');
         el.setAttribute('aria-label', t.title);
@@ -216,12 +244,14 @@
             + '<time class="shabbat-gate__time"></time></p>'
             + '<p class="shabbat-gate__left"><span class="shabbat-gate__label"></span> '
             + '<span class="shabbat-gate__count"></span></p>'
+            + '<p class="shabbat-gate__tz"></p>'
             + '</div>';
         el.querySelector('.shabbat-gate__title').textContent = t.title;
         el.querySelector('.shabbat-gate__body').textContent = t.body;
         el.querySelectorAll('.shabbat-gate__label')[0].textContent = t.opens;
         el.querySelectorAll('.shabbat-gate__label')[1].textContent = t.left;
         el.querySelector('.shabbat-gate__time').textContent = localTimeLabel(endInstant);
+        el.querySelector('.shabbat-gate__tz').textContent = t.tz;
         return el;
     }
 
@@ -240,10 +270,28 @@
         });
     }
 
-    function close(endInstant) {
+    // quiet: hide the content but do not draw the screen yet. Used while the real times are
+    // still in flight and only the crude fallback says we are inside Shabbat — otherwise a
+    // visitor on a Friday afternoon would see "Closed for Shabbat" flash and disappear.
+    function mark(value) {
+        document.documentElement.setAttribute('data-shabbat', value);
+    }
+
+    function close(endInstant, quiet) {
+        if (quiet) {
+            state.closedUntil = null;
+            document.documentElement.classList.add('shabbat-closed');
+            mark('pending');
+            var stale = document.querySelector('.shabbat-gate');
+            if (stale) stale.remove();
+            clearInterval(state.countdown);
+            state.countdown = null;
+            return;
+        }
         if (state.closedUntil === endInstant && document.querySelector('.shabbat-gate')) return;
         state.closedUntil = endInstant;
         document.documentElement.classList.add('shabbat-closed');
+        mark('closed');
         if (!document.body) return;   // pre-paint class is enough until the body exists
 
         var existing = document.querySelector('.shabbat-gate');
@@ -261,6 +309,7 @@
     function open() {
         state.closedUntil = null;
         document.documentElement.classList.remove('shabbat-closed');
+        mark('open');
         clearInterval(state.countdown);
         state.countdown = null;
         var screen = document.querySelector('.shabbat-gate');
@@ -280,11 +329,19 @@
         }
 
         var active = activeWindow(instant);
-        if (active) close(active[1]);
+        var quiet = false;
+
+        if (!active && !state.windows.length) {
+            active = activeFallback(instant);
+            quiet = !!active && !state.dataSettled;
+        }
+
+        if (active) close(active[1], quiet);
         else open();
 
         clearTimeout(state.timer);
         var edge = active ? active[1] : nextBoundary(instant);
+        if (quiet) edge = instant + 700;   // come back as soon as the data lands
         if (edge) {
             // Timers are unreliable over long sleeps; cap the wait and let the tick re-check.
             var wait = Math.min(edge - instant + 1000, 6 * 3600 * 1000);
@@ -296,6 +353,7 @@
 
     function adopt(windows, source) {
         if (!windows.length) return false;
+        state.dataSettled = true;
         state.windows = windows;
         writeCache(windows);
         evaluate();
@@ -326,6 +384,9 @@
                 if (!state.windows.length && window.console && console.warn) {
                     console.warn('shabbat-gate: no data at all, using the fixed fallback window');
                 }
+            })
+            .then(function () {
+                state.dataSettled = true;
                 evaluate();
             });
     }
@@ -361,6 +422,7 @@
     function start() {
         if (BOTS.test(navigator.userAgent || '')) {
             document.documentElement.classList.remove('shabbat-closed');
+            mark('open');
             return;
         }
 

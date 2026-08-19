@@ -80,7 +80,14 @@ const TRANSLATIONS = {
     contact_email_label: "Email", contact_whatsapp_label: "WhatsApp",
     footer_tagline: "A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.",
     footer_nav_heading: "Quick Navigation", footer_social_heading: "Follow Us",
-    footer_copyright: "© 2026 MoralTogether. All rights reserved."
+    footer_copyright: "© 2026 MoralTogether. All rights reserved.",
+
+    // Shabbat closing screen
+    shabbat_title: "Shabbat Shalom",
+    shabbat_body: "MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.",
+    shabbat_opens: "The site opens at",
+    shabbat_left: "Time remaining",
+    shabbat_tz: "Jerusalem time"
   },
 
   he: {
@@ -164,7 +171,14 @@ const TRANSLATIONS = {
     contact_email_label: "אימייל", contact_whatsapp_label: "וואטסאפ",
     footer_tagline: "מערכת אקולוגית עוצמתית שמסוגלת באמת להשפיע. אנחנו מחברים אנשים, יוזמות וארגונים ליצירת מציאות של שפע ותקווה.",
     footer_nav_heading: "ניווט מהיר", footer_social_heading: "עקבו אחרינו",
-    footer_copyright: "© 2026 MoralTogether. כל הזכויות שמורות."
+    footer_copyright: "© 2026 MoralTogether. כל הזכויות שמורות.",
+
+    // Shabbat closing screen
+    shabbat_title: "שבת שלום",
+    shabbat_body: "מורל טוגת'ר שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.",
+    shabbat_opens: "האתר נפתח בשעה",
+    shabbat_left: "זמן שנותר",
+    shabbat_tz: "שעון ירושלים"
   },
 
   gr: {
@@ -248,6 +262,13 @@ const TRANSLATIONS = {
     contact_email_label: "Email", contact_whatsapp_label: "WhatsApp",
     footer_tagline: "Ένα ισχυρό οικοσύστημα πραγματικά ικανό να κάνει αντίκτυπο. Συνδέουμε ανθρώπους, πρωτοβουλίες και οργανισμούς για να δημιουργήσουμε μια πραγματικότητα αφθονίας και ελπίδας.",
     footer_nav_heading: "Γρήγορη Πλοήγηση", footer_social_heading: "Ακολουθήστε μας",
-    footer_copyright: "© 2026 MoralTogether. Με επιφύλαξη παντός δικαιώματος."
+    footer_copyright: "© 2026 MoralTogether. Με επιφύλαξη παντός δικαιώματος.",
+
+    // Shabbat closing screen
+    shabbat_title: "Σαμπάτ Σαλόμ",
+    shabbat_body: "Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.",
+    shabbat_opens: "Η ιστοσελίδα ανοίγει στις",
+    shabbat_left: "Απομένει",
+    shabbat_tz: "Ώρα Ιερουσαλήμ"
   }
 };

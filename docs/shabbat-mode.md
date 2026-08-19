@@ -123,6 +123,16 @@ Three sources, in order of trust:
 A successful load is cached in `localStorage`, so after one visit the device holds exact
 times for a year even with no network.
 
+On a first-ever visit the cache is empty and only the crude fallback can answer, which would
+call a whole Friday afternoon Shabbat. So while the real times are still in flight the gate
+hides the content but does not draw the screen: a visitor at 16:00 on a Friday never sees
+"Closed for Shabbat" flash and vanish. If the data arrives and says the site is open, it simply
+appears; if the data cannot be had at all, the screen follows.
+
+The gate publishes its state on the root element as `data-shabbat`, one of `pending`, `closed`
+or `open` — useful when checking behaviour on the live site, and the anchor the browser tests
+wait on instead of guessing a delay.
+
 The verdict is applied before first paint through an inline snippet in `<head>` that reads
 the cached window and sets a class on `<html>` — the same technique the site already uses for
 the dark theme. Without it the content would flash before the gate appears.
