@@ -54,9 +54,18 @@ the request carries no holiday flags, no holiday candle lighting appears in the 
 
 ## Data file
 
-Built by [`tools/build-shabbat.mjs`](../tools/build-shabbat.mjs) into `data/shabbat.json`,
-served statically as `/api/shabbat.json`. The site runs on GitHub Pages, so there is no
-backend: the JSON file in the repository plays the role of the windows table.
+Built by [`tools/build-shabbat.mjs`](../tools/build-shabbat.mjs) into `api/shabbat.json` and
+served from that same path — `https://moraltogether.com/api/shabbat.json`. GitHub Pages
+rewrites nothing, so the file has to sit exactly where the browser asks for it; there is no
+backend and the JSON file in the repository plays the role of the windows table.
+
+Measured on the first real build (2026 + 2027): 104 windows, 10.4 KB, every window starting on
+a Friday in Jerusalem, lengths between 25 h 15 min and 25 h 24 min.
+
+One window is knowingly absent from a two-year build: the Shabbat that starts on the last
+Friday of the final year has its havdalah in the following year, so the pair cannot be closed
+yet and the builder reports it as skipped. It appears as soon as the next year is fetched,
+which the lazy refresh does about two months ahead of time.
 
 ```json
 {
@@ -130,11 +139,24 @@ Friday 15:30 → Saturday 21:00, Asia/Jerusalem
 
 Deliberately crude in the safe direction: the site would rather close too much than stay open
 during Shabbat. It is also imprecise by hours — in June real candle lighting is 19:08 — so it
-is scheduled to be replaced (see below) by an astronomical sunset computed in the browser
-from Jerusalem's coordinates: candle lighting at sunset − 40 min, havdalah at nightfall
-(8.5° below the horizon), no network and no dependencies needed. That computation also serves
-as a sanity check on the JSON: a large disagreement means the file or its parameters are
-wrong, and the safe side is taken — the earlier of the two for closing, the later for opening.
+is replaced in subtask 8 by an astronomical sunset computed in the browser from Jerusalem's
+coordinates: candle lighting at sunset − 40 min, havdalah at nightfall (8.5° below the
+horizon), no network and no dependencies needed.
+
+The equations were validated against Hebcal's own answers for all 52 Shabbats of 2026 before
+committing to this approach. Worst disagreement is one minute in both directions: candle
+lighting matched to the minute on 42 of 52 weeks, havdalah on 40 of 52, the rest differing by
+exactly one minute; mean absolute error is about half a minute.
+
+One finding changes the implementation: **the elevation must not be applied.** Hebcal reports
+Jerusalem's 786 m in the payload, and textbook practice would add a horizon-dip correction of
+0.973° for it — but computing both variants shows the no-elevation form agrees with Hebcal
+within a minute while the dip-corrected form is 4 to 6 minutes off across all 52 weeks. Hebcal
+does not use elevation here, so neither do we; otherwise the two sources would argue.
+
+The computation also serves as a sanity check on the JSON. Disagreement under 3 minutes is
+normal formula error and the file wins. Beyond that the safe side is taken: the earlier of the
+two for closing, the later for opening.
 
 ## QA
 
@@ -157,7 +179,7 @@ and keep running — only this site closes.
 
 | # | Subtask | State |
 |---|---------|-------|
-| 1 | Hebcal parser → `data/shabbat.json` | script written, not yet run |
+| 1 | Hebcal parser → `api/shabbat.json` | **done** — 104 windows for 2026–2027 |
 | 2 | GitHub Actions: weekly cron, lazy refresh, two-year coverage, failure alert | not started |
 | 3 | Client gate | not started |
 | 4 | Closing screen copy in EN / HE / GR | not started |
@@ -166,5 +188,5 @@ and keep running — only this site closes.
 | 7 | Deploy to GitHub Pages and production check | not started |
 | 8 | Astronomical sunset fallback and JSON cross-check (after launch) | not started |
 
-Nothing in this document is live yet: the site's behaviour is unchanged, and `data/shabbat.json`
-does not exist so far.
+The site's behaviour is still unchanged: the windows file exists and is served, but nothing
+reads it yet — the gate itself is subtask 3.

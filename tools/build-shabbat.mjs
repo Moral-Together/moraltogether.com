@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// Builds data/shabbat.json — the table of Shabbat closing windows the site gate reads.
+// Builds api/shabbat.json — the table of Shabbat closing windows the site gate reads.
+// The path is also the public URL: GitHub Pages rewrites nothing, so the file has to sit
+// exactly where the browser asks for it — https://moraltogether.com/api/shabbat.json.
 //
 // Source: Hebcal, Jerusalem (geonameid 281184). One request per calendar year.
 //   b=40  candle lighting 40 minutes before sunset
@@ -34,7 +36,7 @@ const readArg = (name, fallback) => {
     return i === -1 || !args[i + 1] ? fallback : args[i + 1];
 };
 
-const outPath = readArg('out', 'data/shabbat.json');
+const outPath = readArg('out', 'api/shabbat.json');
 const years = readArg('years', String(new Date().getUTCFullYear()))
     .split(',')
     .map(y => Number(y.trim()))

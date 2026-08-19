@@ -110,8 +110,8 @@ weekly schedule would do.
 - **Source of truth**: Hebcal for Jerusalem (`geonameid=281184`), candle lighting 40 minutes
   before sunset (`b=40`), havdalah by nightfall (`M=on`), one request per year.
 - **Storage**: [`tools/build-shabbat.mjs`](tools/build-shabbat.mjs) turns the feed into
-  `data/shabbat.json` — Friday candle-lighting → havdalah pairs no longer than 30 hours —
-  served statically as `/api/shabbat.json`. No backend: the site runs on GitHub Pages.
+  `api/shabbat.json` — Friday candle-lighting → havdalah pairs no longer than 30 hours —
+  served from that same path. No backend: the site runs on GitHub Pages.
 - **Refresh**: a weekly GitHub Actions run, lazy — while the next 60 days are covered it makes
   no request at all.
 - **Scope**: Shabbat only. Jewish holidays do not close the site.
