@@ -99,11 +99,18 @@ that finds nothing new produces no commit.
 
 ## Refresh policy
 
-A GitHub Actions workflow runs weekly. It first checks the coverage already in the file: if
-the next 60 days are covered, no request is made at all. Otherwise it fetches the current
-year and, when the 60-day window crosses December 31, the next year as well, keeps two years
-of coverage, and commits only when the windows actually change. A failed run raises an alert,
-since a silently broken cron is the one realistic way the data can go stale.
+.github/workflows/shabbat-windows.yml runs every Sunday at 03:17 UTC, and can be started by
+hand through `workflow_dispatch` (with a `force` input that skips the laziness check).
+
+The run is lazy: `node tools/build-shabbat.mjs --lazy 60` looks at the last window's end and,
+while the file reaches more than 60 days ahead, makes no request to Hebcal at all. Otherwise it
+fetches this year and the next — two years of coverage, so the data does not run out with the
+calendar — and the commit step fires only when the windows themselves changed.
+
+The alert is the failed run itself: GitHub mails the repository owner, and a cron that quietly
+stops working is the one realistic way this data can go stale. Verified settings: Actions
+enabled, `main` unprotected, Pages building from `main` at the root, so a bot push redeploys
+the file.
 
 ## How the client decides
 
@@ -180,7 +187,7 @@ and keep running — only this site closes.
 | # | Subtask | State |
 |---|---------|-------|
 | 1 | Hebcal parser → `api/shabbat.json` | **done** — 104 windows for 2026–2027 |
-| 2 | GitHub Actions: weekly cron, lazy refresh, two-year coverage, failure alert | not started |
+| 2 | GitHub Actions: weekly cron, lazy refresh, two-year coverage, failure alert | **done** |
 | 3 | Client gate | not started |
 | 4 | Closing screen copy in EN / HE / GR | not started |
 | 5 | Closing screen: design, countdown, scroll and media lock | not started |

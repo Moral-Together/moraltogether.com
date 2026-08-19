@@ -14,12 +14,14 @@
 // else in the feed is ignored, so holidays never close the site.
 //
 // Usage:
-//   node tools/build-shabbat.mjs                  # current year
+//   node tools/build-shabbat.mjs                  # this year and the next
+//   node tools/build-shabbat.mjs --lazy 60        # skip entirely if 60 days are covered
 //   node tools/build-shabbat.mjs --years 2026,2027
 //   node tools/build-shabbat.mjs --out /tmp/x.json
 //
-// The file is rewritten only when the windows themselves change, so a run that
-// finds nothing new leaves the repository untouched.
+// Two things keep the repository quiet. With --lazy the script makes no request at
+// all while the file already covers the horizon, and in every case the file is
+// rewritten only when the windows themselves change.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -37,12 +39,22 @@ const readArg = (name, fallback) => {
 };
 
 const outPath = readArg('out', 'api/shabbat.json');
-const years = readArg('years', String(new Date().getUTCFullYear()))
+const lazyDays = Number(readArg('lazy', '0'));
+
+// Default horizon is two years: this one and the next. Keeping the next year in the
+// file is what makes a broken cron survivable — coverage does not end with the year.
+const thisYear = Number(new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric',
+}).format(new Date()));
+
+const years = readArg('years', `${thisYear},${thisYear + 1}`)
     .split(',')
     .map(y => Number(y.trim()))
     .filter(y => Number.isInteger(y) && y > 2000 && y < 2200);
 
 if (!years.length) fail('No valid years given. Example: --years 2026,2027');
+if (!Number.isFinite(lazyDays) || lazyDays < 0) fail('--lazy takes a number of days, e.g. --lazy 60');
 
 function fail(message) {
     console.error(`build-shabbat: ${message}`);
@@ -152,6 +164,21 @@ function readExisting(path) {
 function sameWindows(a, b) {
     if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
     return a.every((w, i) => w.start === b[i].start && w.end === b[i].end);
+}
+
+// Lazy refresh: while the file still covers the horizon there is nothing to ask Hebcal.
+// The check looks at the last window's end, so a file that simply stops mid-year is
+// caught too, not only a missing one.
+if (lazyDays > 0) {
+    const covered = readExisting(outPath)?.coverage?.until;
+    const horizon = Date.now() + lazyDays * 86400000;
+    if (covered && Date.parse(covered) >= horizon) {
+        console.log(`covered: ${outPath} reaches ${covered}, more than ${lazyDays} days ahead — no request made`);
+        process.exit(0);
+    }
+    console.log(covered
+        ? `stale: ${outPath} reaches only ${covered}, less than ${lazyDays} days ahead — fetching`
+        : `missing: no usable ${outPath} — fetching`);
 }
 
 const perYear = [];

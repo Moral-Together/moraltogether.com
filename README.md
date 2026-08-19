@@ -112,8 +112,8 @@ weekly schedule would do.
 - **Storage**: [`tools/build-shabbat.mjs`](tools/build-shabbat.mjs) turns the feed into
   `api/shabbat.json` — Friday candle-lighting → havdalah pairs no longer than 30 hours —
   served from that same path. No backend: the site runs on GitHub Pages.
-- **Refresh**: a weekly GitHub Actions run, lazy — while the next 60 days are covered it makes
-  no request at all.
+- **Refresh**: [`.github/workflows/shabbat-windows.yml`](.github/workflows/shabbat-windows.yml)
+  runs weekly and is lazy — while the next 60 days are covered it makes no request at all.
 - **Scope**: Shabbat only. Jewish holidays do not close the site.
 
 Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mode.md`](docs/shabbat-mode.md).

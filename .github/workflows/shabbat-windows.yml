@@ -1,0 +1,49 @@
+name: Shabbat windows
+
+# Keeps api/shabbat.json ahead of the calendar. The run is lazy: while the file still
+# covers the next 60 days the builder makes no request to Hebcal at all and the job ends
+# in seconds. A failed run is the alert — GitHub mails the repository owner, and a cron
+# that stops working silently is the one realistic way this data can go stale.
+
+on:
+  schedule:
+    - cron: '17 3 * * 0'      # Sundays, 03:17 UTC — off the top of the hour, away from Shabbat
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Fetch even when the next 60 days are already covered'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shabbat-windows
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build the windows file
+        run: node tools/build-shabbat.mjs ${{ inputs.force == true && ' ' || '--lazy 60' }}
+
+      - name: Commit only when the windows changed
+        run: |
+          if git diff --quiet -- api/shabbat.json; then
+            echo "windows unchanged — nothing to commit"
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add api/shabbat.json
+          git commit -m 'chore: refresh Shabbat windows'
+          git push
+          echo "pushed — GitHub Pages will redeploy the file"
