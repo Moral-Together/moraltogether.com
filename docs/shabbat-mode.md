@@ -167,14 +167,15 @@ two for closing, the later for opening.
 
 ## QA
 
-Simulation happens through URL parameters, never persisted to `localStorage`:
+The gate has a preview switch for checking it on the live site: it can pin the closed state,
+pin the open state, or shift the clock so a boundary can be watched live. Nothing it does is
+persisted, so a preview never leaks into a normal visit.
 
-```
-?shabbat=on                     force the gate open state
-?shabbat=off                    force the site open
-?shabbat=2026-09-04T19:00       shift the clock to that moment — time keeps running from
-                                there, so a boundary can be watched live
-```
+The parameter itself is deliberately not written down here. This file is served by the site,
+and a page that publishes instructions for opening itself during Shabbat defeats the point of
+closing. The name and the values live with the team's internal notes; the code in
+`shabbat-gate.js` is of course readable, and that is the accepted level — obscurity, not
+protection, since the gate is a matter of respect rather than a lock.
 
 Cases to cover: one minute before and after each boundary, offline, corrupted or truncated
 JSON, stale cache, a device clock set wrong, mobile layouts, and `partnerships.html` as well

@@ -50,8 +50,8 @@
     var state = {
         windows: [],       // [[startMs, endMs], ...] ascending
         skewMs: 0,         // server clock minus device clock
-        offsetMs: 0,       // shift from ?shabbat=<ISO> — time still flows, so boundaries can be watched
-        forced: null,      // 'on' | 'off' from ?shabbat=on|off
+        offsetMs: 0,       // clock shift for previewing a boundary; time still flows
+        forced: null,      // 'closed' | 'open' when a preview pins the state
         closedUntil: null, // end of the window currently being served
         timer: null,
         countdown: null
@@ -270,10 +270,10 @@
     // ---------------------------------------------------------------- decision loop
 
     function evaluate() {
-        if (state.forced === 'off') { open(); return; }
+        if (state.forced === 'open') { open(); return; }
 
         var instant = now();
-        if (state.forced === 'on') {
+        if (state.forced === 'closed') {
             var w = activeWindow(instant);
             close(w ? w[1] : instant + 3600000);
             return;
@@ -345,11 +345,15 @@
 
     // ---------------------------------------------------------------- start
 
+    // Preview switch for checking the gate on the live site. The parameter is deliberately
+    // unremarkable and is documented outside this repository, so the site does not carry
+    // instructions for opening itself during Shabbat. It is obscurity, not protection —
+    // anyone reading this file finds it, and that is the accepted level.
     function readOverride() {
-        var match = /[?&]shabbat=([^&]+)/.exec(window.location.search);
+        var match = /[?&]mtp=([^&]+)/.exec(window.location.search);
         if (!match) return;
         var value = decodeURIComponent(match[1]);
-        if (value === 'on' || value === 'off') { state.forced = value; return; }
+        if (value === 'closed' || value === 'open') { state.forced = value; return; }
         var parsed = Date.parse(value);
         if (isFinite(parsed)) state.offsetMs = parsed - Date.now();
     }
