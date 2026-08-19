@@ -1,0 +1,98 @@
+/* Shabbat gate — draft screen. Visual polish is subtask 5; this already closes the site
+   correctly, locks the page and counts down to havdalah. */
+
+html.shabbat-closed,
+html.shabbat-closed body {
+    overflow: hidden !important;
+    height: 100%;
+    background: #0f1626;
+}
+
+/* The gate is the only thing left on the page while it is up. */
+html.shabbat-closed body > *:not(.shabbat-gate) {
+    display: none !important;
+}
+
+.shabbat-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: grid;
+    place-items: center;
+    padding: 6vw 5vw;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(245, 166, 35, 0.16), transparent 60%),
+        linear-gradient(180deg, #101a2e 0%, #0b1020 100%);
+    color: #f3f1ea;
+    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    text-align: center;
+    overscroll-behavior: contain;
+}
+
+.shabbat-gate__card {
+    max-width: 34rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.shabbat-gate__flame {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 auto 0.5rem;
+    border-radius: 50% 50% 45% 45%;
+    background: linear-gradient(180deg, #ffd479 0%, #f5a623 55%, #c2571a 100%);
+    box-shadow: 0 0 2.5rem rgba(245, 166, 35, 0.45);
+}
+
+.shabbat-gate__title {
+    margin: 0;
+    font-family: 'Rubik', Georgia, serif;
+    font-size: clamp(1.9rem, 6vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+}
+
+.shabbat-gate__body {
+    margin: 0;
+    font-size: clamp(1rem, 2.4vw, 1.12rem);
+    line-height: 1.6;
+    color: rgba(243, 241, 234, 0.78);
+}
+
+.shabbat-gate__opens,
+.shabbat-gate__left {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(243, 241, 234, 0.6);
+}
+
+.shabbat-gate__label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+}
+
+.shabbat-gate__time,
+.shabbat-gate__count {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.15rem;
+    color: #f5a623;
+    margin-inline-start: 0.35rem;
+}
+
+.shabbat-gate__opens {
+    margin-top: 0.6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .shabbat-gate {
+        animation: shabbat-gate-in 420ms ease-out both;
+    }
+}
+
+@keyframes shabbat-gate-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- Shabbat gate: decide before the first paint, from the cached windows -->
+    <script>(function(){try{var s=location.search;if(/[?&]shabbat=off/.test(s))return;if(/[?&]shabbat=on/.test(s)){document.documentElement.classList.add('shabbat-closed');return}var c=JSON.parse(localStorage.getItem('shabbat.v1')||'null'),n=Date.now(),i;if(!c||!c.w)return;for(i=0;i<c.w.length;i++){if(n>=c.w[i][0]&&n<c.w[i][1]){document.documentElement.classList.add('shabbat-closed');break}}}catch(e){}})()</script>
+    <link rel="stylesheet" href="shabbat-gate.css">
+    <script defer src="shabbat-gate.js"></script>
     <title data-i18n="meta_title">MoralTogether — Uniting Good Forces | Ecosystem of Social Harmony</title>
 
     <!-- SEO -->

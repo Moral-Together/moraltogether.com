@@ -172,7 +172,8 @@ Simulation happens through URL parameters, never persisted to `localStorage`:
 ```
 ?shabbat=on                     force the gate open state
 ?shabbat=off                    force the site open
-?shabbat=2026-09-04T19:00       evaluate as if it were that moment
+?shabbat=2026-09-04T19:00       shift the clock to that moment — time keeps running from
+                                there, so a boundary can be watched live
 ```
 
 Cases to cover: one minute before and after each boundary, offline, corrupted or truncated
@@ -188,12 +189,20 @@ and keep running — only this site closes.
 |---|---------|-------|
 | 1 | Hebcal parser → `api/shabbat.json` | **done** — 104 windows for 2026–2027 |
 | 2 | GitHub Actions: weekly cron, lazy refresh, two-year coverage, failure alert | **done** |
-| 3 | Client gate | not started |
+| 3 | Client gate | **done** — 15 browser checks pass |
 | 4 | Closing screen copy in EN / HE / GR | not started |
 | 5 | Closing screen: design, countdown, scroll and media lock | not started |
 | 6 | QA | not started |
 | 7 | Deploy to GitHub Pages and production check | not started |
 | 8 | Astronomical sunset fallback and JSON cross-check (after launch) | not started |
 
-The site's behaviour is still unchanged: the windows file exists and is served, but nothing
-reads it yet — the gate itself is subtask 3.
+The gate is live in the repository and closes both pages by the exact times; what is left for
+subtasks 4 and 5 is the wording and the look of the screen, which is still a draft.
+
+Verified in Chromium against the local build, 15 checks: open at 18:35:30 and closed at
+18:36:30 on Aug 21, still closed at 19:52 on Aug 22 and open at 19:54, scroll locked, the
+screen naming 19:53 as the opening time, `partnerships.html` closing too, Googlebot passing
+through, a primed cache closing the site with both data paths blocked, the fixed fallback
+taking over when the file is broken and Hebcal unreachable, a device clock a day off not
+leaving the site closed outside a window, and the gate lifting itself at havdalah with no
+reload.
