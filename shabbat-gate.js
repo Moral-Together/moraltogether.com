@@ -17,6 +17,7 @@
     var CACHE_MAX_AGE_MS = 400 * 24 * 3600 * 1000;   // a year plus slack
     var SAFETY_TICK_MS = 30 * 1000;                  // survives suspended timers
     var SKEW_ALERT_MS = 2 * 60 * 1000;
+    var DATA_TIMEOUT_MS = 6000;      // a hung request must not leave the screen half-drawn
 
     // Fixed fallback, used only when the file, Hebcal and the cache are all unavailable.
     var FALLBACK_OPEN = { day: 5, hour: 15, minute: 30 };   // Friday 15:30 — closes early on purpose
@@ -522,9 +523,22 @@
         }
     }
 
+    // fetch on its own waits forever; a stalled network would leave the gate in its quiet
+    // phase — content hidden, screen not drawn — for as long as the visitor is willing to look
+    // at nothing.
+    function fetchWithTimeout(url, options) {
+        var opts = options || {};
+        if (typeof AbortController === 'function') {
+            var control = new AbortController();
+            opts.signal = control.signal;
+            setTimeout(function () { control.abort(); }, DATA_TIMEOUT_MS);
+        }
+        return fetch(url, opts);
+    }
+
     function loadFromHebcal() {
         var year = jerusalemParts(now()).year;
-        return fetch(HEBCAL_URL + year, { cache: 'no-store' })
+        return fetchWithTimeout(HEBCAL_URL + year, { cache: 'no-store' })
             .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
             .then(function (payload) { adopt(parseHebcal(payload), 'hebcal'); })
             .catch(function () {
@@ -539,7 +553,7 @@
     }
 
     function loadData() {
-        return fetch(DATA_URL, { cache: 'no-cache' })
+        return fetchWithTimeout(DATA_URL, { cache: 'no-cache' })
             .then(function (r) {
                 if (!r.ok) throw new Error('HTTP ' + r.status);
                 noteSkew(r);
@@ -580,6 +594,15 @@
         state.windows = readCache();
         evaluate();
         loadData();
+
+        // Belt and braces: whatever happens to those requests, the quiet phase ends here and
+        // the screen is finished one way or the other.
+        setTimeout(function () {
+            if (!state.dataSettled) {
+                state.dataSettled = true;
+                evaluate();
+            }
+        }, DATA_TIMEOUT_MS + 500);
 
         // The screen can stand for twenty-five hours; there is no reason to decode video for a
         // tab nobody is looking at.
