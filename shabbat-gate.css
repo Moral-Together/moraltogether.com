@@ -1,113 +1,316 @@
-/* Shabbat gate — draft screen. Visual polish is subtask 5; this already closes the site
-   correctly, locks the page and counts down to havdalah. */
+/* Shabbat gate — the screen the site shows from candle lighting until havdalah.
+   Deliberately a single dusk look: this is a night screen, and it takes over the whole
+   viewport, so it does not follow the site's light theme.
+
+   Layer order inside the gate: the poster is the element's own background, the video sits
+   above it at z-index -2, the scrim above that at -1, and the words on top. The scrim has to
+   be its own layer — as a background gradient it would end up underneath the video. */
 
 html.shabbat-closed,
 html.shabbat-closed body {
     overflow: hidden !important;
     height: 100%;
-    background: #0f1626;
+    background: #070a11;
 }
 
-/* The gate is the only thing left on the page while it is up. */
+/* While the gate is up it is the only thing left on the page. */
 html.shabbat-closed body > *:not(.shabbat-gate) {
     display: none !important;
 }
 
 .shabbat-gate {
+    --gate-ink: #f4f1e8;
+    --gate-dim: rgba(244, 241, 232, 0.66);
+    --gate-faint: rgba(244, 241, 232, 0.56);
+    --gate-flame: #f0ab3d;
+    --gate-hair: rgba(244, 241, 232, 0.14);
+
     position: fixed;
     inset: 0;
     z-index: 2147483000;
     display: grid;
     place-items: center;
-    padding: 6vw 5vw;
-    background:
-        radial-gradient(circle at 50% 18%, rgba(245, 166, 35, 0.16), transparent 60%),
-        linear-gradient(180deg, #101a2e 0%, #0b1020 100%);
-    color: #f3f1ea;
-    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: max(2rem, env(safe-area-inset-top)) 1.5rem max(2rem, env(safe-area-inset-bottom));
+    color: var(--gate-ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     text-align: center;
     overscroll-behavior: contain;
+
+    background-color: #070a11;
+}
+
+/* The poster — the video's own first frame, so the swap is invisible. Its own layer, so the
+   picture can be graded without touching the words on top of it. */
+.shabbat-gate::before {
+    content: "";
+    position: absolute;
+    z-index: -3;
+    inset: 0;
+    background-image: url("images/shabbat-bg.jpg");
+    background-image: image-set(url("images/shabbat-bg.webp") type("image/webp"), url("images/shabbat-bg.jpg") type("image/jpeg"));
+    background-size: cover;
+    background-position: center 58%;
+    background-repeat: no-repeat;
+    filter: saturate(1.12) contrast(1.05) brightness(1.06);
+    pointer-events: none;
+}
+
+/* Hebrew and Greek both live in Rubik on this site; Inter has no Hebrew glyphs. */
+.shabbat-gate[lang="he"] {
+    font-family: 'Rubik', 'Arial Hebrew', 'Noto Sans Hebrew', sans-serif;
+}
+
+.shabbat-gate__video {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+    opacity: 0;
+    transition: opacity 900ms ease;
+    filter: saturate(1.12) contrast(1.05) brightness(1.06);
+    pointer-events: none;
+}
+
+.shabbat-gate__video.is-ready {
+    opacity: 1;
+}
+
+.shabbat-gate::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    /* The picture carries the screen, so it is left alone: a faint vignette at the very edges
+       is all that stays. The shade lives under the words instead. */
+    background: radial-gradient(125% 105% at 50% 46%, rgba(5, 8, 14, 0) 0%, rgba(5, 8, 14, 0.08) 62%, rgba(5, 8, 14, 0.42) 100%);
+    pointer-events: none;
 }
 
 .shabbat-gate__card {
+    position: relative;
+    z-index: 0;
     max-width: 34rem;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    align-items: center;
+    gap: 1.15rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
-.shabbat-gate__flame {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0 auto 0.5rem;
-    border-radius: 50% 50% 45% 45%;
-    background: linear-gradient(180deg, #ffd479 0%, #f5a623 55%, #c2571a 100%);
-    box-shadow: 0 0 2.5rem rgba(245, 166, 35, 0.45);
+/* The words need their own pool of shade: the tablecloth in the picture is bright, and a
+   hard-edged panel would fight it. This one has no edges at all. */
+.shabbat-gate__card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -6rem -11rem -6.5rem;
+    background: radial-gradient(closest-side at 50% 50%, rgba(4, 7, 13, 0.95) 0%, rgba(4, 7, 13, 0.88) 42%, rgba(4, 7, 13, 0.6) 70%, rgba(4, 7, 13, 0) 100%);
+    pointer-events: none;
+}
+
+.shabbat-gate__logo {
+    height: clamp(2.2rem, 6vw, 2.9rem);
+    width: auto;
+    opacity: 0.95;
 }
 
 .shabbat-gate__title {
-    margin: 0;
+    margin: 0.5rem 0 0;
     font-family: 'Rubik', Georgia, serif;
-    font-size: clamp(1.9rem, 6vw, 2.8rem);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
 }
 
 .shabbat-gate__body {
     margin: 0;
-    font-size: clamp(1rem, 2.4vw, 1.12rem);
-    line-height: 1.6;
-    color: rgba(243, 241, 234, 0.78);
+    max-width: 30rem;
+    font-size: clamp(1rem, 2.6vw, 1.08rem);
+    line-height: 1.68;
+    color: var(--gate-dim);
+    text-wrap: pretty;
 }
 
-.shabbat-gate__opens,
-.shabbat-gate__left {
-    margin: 0;
-    font-size: 0.95rem;
-    color: rgba(243, 241, 234, 0.6);
+.shabbat-gate__times {
+    margin: 1.4rem 0 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.55rem 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--gate-hair);
+    width: min(24rem, 100%);
 }
 
 .shabbat-gate__label {
+    justify-self: end;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.72rem;
+    color: var(--gate-faint);
+    white-space: nowrap;
 }
 
-.shabbat-gate__time,
-.shabbat-gate__count {
+.shabbat-gate[lang="he"] .shabbat-gate__label {
+    letter-spacing: normal;
+    font-size: 0.82rem;
+}
+
+.shabbat-gate__value {
+    justify-self: start;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.3rem;
     font-variant-numeric: tabular-nums;
-    font-size: 1.15rem;
-    color: #f5a623;
-    margin-inline-start: 0.35rem;
+    letter-spacing: -0.01em;
+    color: var(--gate-flame);
 }
 
-.shabbat-gate__opens {
-    margin-top: 0.6rem;
+/* A clock reading is always left to right, even inside Hebrew; a duration written with
+   Hebrew abbreviations follows the language. */
+.shabbat-gate__time {
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+.shabbat-gate[lang="he"] .shabbat-gate__value {
+    direction: rtl;
 }
 
 .shabbat-gate__tz {
-    margin: 0.9rem 0 0;
-    font-size: 0.74rem;
-    letter-spacing: 0.1em;
+    margin: 1.3rem 0 0;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(243, 241, 234, 0.4);
+    color: var(--gate-faint);
 }
 
-/* Hebrew reads right to left; the numbers keep their own direction. */
-.shabbat-gate[dir="rtl"] .shabbat-gate__time,
-.shabbat-gate[dir="rtl"] .shabbat-gate__count {
-    direction: ltr;
-    display: inline-block;
+.shabbat-gate[lang="he"] .shabbat-gate__tz {
+    letter-spacing: normal;
+    font-size: 0.78rem;
+}
+
+/* The site's own language switcher is hidden behind the gate, so the screen carries three
+   quiet buttons of its own. They are the only thing here a visitor can press. */
+.shabbat-gate__langs {
+    margin: 1.6rem 0 0;
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+}
+
+.shabbat-gate__lang {
+    min-width: 2.6rem;
+    padding: 0.34rem 0.6rem;
+    border: 1px solid rgba(244, 241, 232, 0.2);
+    border-radius: 2px;
+    background: rgba(7, 10, 17, 0.45);
+    color: var(--gate-faint);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.shabbat-gate__lang:hover {
+    color: var(--gate-ink);
+    border-color: rgba(244, 241, 232, 0.4);
+}
+
+.shabbat-gate__lang.is-active {
+    color: #0b0f1a;
+    background: var(--gate-flame);
+    border-color: var(--gate-flame);
+    text-shadow: none;
+}
+
+.shabbat-gate__lang:focus-visible {
+    outline: 2px solid var(--gate-flame);
+    outline-offset: 2px;
+}
+
+.shabbat-gate:focus {
+    outline: none;
+}
+
+/* A portrait screen filled by a landscape picture keeps about a quarter of its width — the
+   candles and the cup would be cropped away. So on phones a portrait still sits as a band at
+   the bottom and the words take the quiet space above it. No video on phones: iOS in low power
+   mode refuses to autoplay it at all, and it would cost a megabyte of mobile data on a screen
+   whose message is that we rest. */
+@media (orientation: portrait) and (max-width: 46rem) {
+    .shabbat-gate {
+        align-content: start;
+        padding-top: max(2.5rem, env(safe-area-inset-top));
+    }
+
+    .shabbat-gate::before {
+        /* Full width, never cropped sideways: the candles stand at 6% and 92% of the frame,
+           so even a few per cent of horizontal crop cuts them off. On a tall screen the
+           picture cannot reach the top, so a gradient carries the dark down over its edge —
+           otherwise the seam shows as a straight line. */
+        background-image:
+            linear-gradient(180deg, #070a11 0%, #070a11 14%, rgba(7, 10, 17, 0.55) 26%, rgba(7, 10, 17, 0) 38%),
+            url("images/shabbat-bg-mobile.jpg");
+        background-image:
+            linear-gradient(180deg, #070a11 0%, #070a11 14%, rgba(7, 10, 17, 0.55) 26%, rgba(7, 10, 17, 0) 38%),
+            image-set(url("images/shabbat-bg-mobile.webp") type("image/webp"), url("images/shabbat-bg-mobile.jpg") type("image/jpeg"));
+        background-size: auto, 100% auto;
+        background-position: center, center bottom;
+    }
+
+    .shabbat-gate::after {
+        background: linear-gradient(180deg, rgba(7, 10, 17, 0.88) 0%, rgba(7, 10, 17, 0.62) 22%, rgba(5, 8, 14, 0.22) 48%, rgba(5, 8, 14, 0.12) 70%, rgba(5, 8, 14, 0.45) 100%);
+    }
+
+    /* Narrow screens leave no room to step aside, so the words keep their shade — reaching
+       wider than the card, because here it also has to cover the curtains behind the lower
+       lines. */
+    .shabbat-gate__card {
+        /* On a phone the words sit right on the tablecloth; the shade alone is not enough for
+           the smallest lines. */
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+    }
+
+    .shabbat-gate__card::before {
+        inset: -3.5rem -3rem -4.5rem;
+        background: radial-gradient(closest-side at 50% 50%, rgba(4, 7, 13, 0.94) 0%, rgba(4, 7, 13, 0.88) 48%, rgba(4, 7, 13, 0.6) 76%, rgba(4, 7, 13, 0) 100%);
+    }
+}
+
+@media (max-width: 30rem) {
+    .shabbat-gate__times {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 0.15rem;
+    }
+
+    .shabbat-gate__label,
+    .shabbat-gate__value {
+        justify-self: center;
+    }
+
+    .shabbat-gate__value {
+        margin-bottom: 0.55rem;
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .shabbat-gate {
-        animation: shabbat-gate-in 420ms ease-out both;
+        animation: shabbat-gate-in 600ms ease-out both;
     }
 }
 
 @keyframes shabbat-gate-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(0.6rem); }
+    to { opacity: 1; transform: none; }
 }

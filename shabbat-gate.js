@@ -35,21 +35,24 @@
             body: 'MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.',
             opens: 'The site opens at',
             left: 'Time remaining',
-            tz: 'Jerusalem time'
+            tz: 'Jerusalem time',
+            h: 'h', m: 'min'
         },
         he: {
             title: 'שבת שלום',
             body: 'מורל טוגת\'ר שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.',
             opens: 'האתר נפתח בשעה',
             left: 'זמן שנותר',
-            tz: 'שעון ירושלים'
+            tz: 'שעון ירושלים',
+            h: 'ש׳', m: 'ד׳'
         },
         gr: {
             title: 'Σαμπάτ Σαλόμ',
             body: 'Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.',
             opens: 'Η ιστοσελίδα ανοίγει στις',
             left: 'Απομένει',
-            tz: 'Ώρα Ιερουσαλήμ'
+            tz: 'Ώρα Ιερουσαλήμ',
+            h: 'ώ', m: 'λ'
         }
     };
 
@@ -58,10 +61,12 @@
         skewMs: 0,         // server clock minus device clock
         offsetMs: 0,       // clock shift for previewing a boundary; time still flows
         forced: null,      // 'closed' | 'open' when a preview pins the state
+        previewLang: null, // language pinned by the preview, for checking all three
         closedUntil: null, // end of the window currently being served
         dataSettled: false,// true once the data attempt finished, one way or another
         timer: null,
-        countdown: null
+        countdown: null,
+        video: null
     };
 
     // ---------------------------------------------------------------- time helpers
@@ -204,10 +209,40 @@
 
     // ---------------------------------------------------------------- screen
 
+    // The site's own switcher is hidden while the gate is up, so the screen carries its own.
+    var LANG_LABELS = { en: 'EN', he: 'עב', gr: 'ΕΛ' };
+
+    function browserLang() {
+        var tags = navigator.languages || [navigator.language || ''];
+        for (var i = 0; i < tags.length; i++) {
+            var tag = String(tags[i]).toLowerCase();
+            if (tag.indexOf('he') === 0 || tag.indexOf('iw') === 0) return 'he';
+            if (tag.indexOf('el') === 0) return 'gr';
+            if (tag.indexOf('en') === 0) return 'en';
+        }
+        return null;
+    }
+
     function currentLang() {
-        var lang = 'en';
-        try { lang = localStorage.getItem('lang') || 'en'; } catch (e) { /* ignore */ }
-        return COPY[lang] ? lang : 'en';
+        if (state.previewLang) return COPY[state.previewLang] ? state.previewLang : 'en';
+
+        // The head snippet captured the stored choice before the site's own i18n engine ran:
+        // that engine writes 'en' into localStorage on every load, which would otherwise look
+        // like a deliberate choice and bury the visitor's real language.
+        var saved = window.__shabbatLang;
+        if (saved === undefined) {
+            try { saved = localStorage.getItem('lang'); } catch (e) { /* ignore */ }
+        }
+        if (saved && COPY[saved]) return saved;
+        // A first-time visitor arriving during Shabbat should be met in their own language.
+        return browserLang() || 'en';
+    }
+
+    function rememberLang(lang) {
+        state.previewLang = state.previewLang ? lang : null;
+        try { localStorage.setItem('lang', lang); } catch (e) { /* ignore */ }
+        // The site's own engine listens for this and will pick the choice up once it is open.
+        document.dispatchEvent(new CustomEvent('langChanged'));
     }
 
     function copy(lang) {
@@ -219,49 +254,161 @@
             body: t.shabbat_body || fallback.body,
             opens: t.shabbat_opens || fallback.opens,
             left: t.shabbat_left || fallback.left,
-            tz: t.shabbat_tz || fallback.tz
+            tz: t.shabbat_tz || fallback.tz,
+            h: t.shabbat_h || fallback.h,
+            m: t.shabbat_m || fallback.m
         };
     }
 
-    function buildScreen(endInstant) {
-        var lang = currentLang();
+    function applyCopy(el, lang, endInstant) {
         var t = copy(lang);
-        var el = document.createElement('div');
-        el.className = 'shabbat-gate';
         el.setAttribute('lang', lang);
         // The site keeps its layout LTR in every language, but this screen is nothing but
         // text, so Hebrew reads the way it should.
         el.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-        el.setAttribute('role', 'dialog');
-        el.setAttribute('aria-modal', 'true');
         el.setAttribute('aria-label', t.title);
-        el.innerHTML =
-            '<div class="shabbat-gate__card">'
-            + '<div class="shabbat-gate__flame" aria-hidden="true"></div>'
-            + '<h1 class="shabbat-gate__title"></h1>'
-            + '<p class="shabbat-gate__body"></p>'
-            + '<p class="shabbat-gate__opens"><span class="shabbat-gate__label"></span> '
-            + '<time class="shabbat-gate__time"></time></p>'
-            + '<p class="shabbat-gate__left"><span class="shabbat-gate__label"></span> '
-            + '<span class="shabbat-gate__count"></span></p>'
-            + '<p class="shabbat-gate__tz"></p>'
-            + '</div>';
         el.querySelector('.shabbat-gate__title').textContent = t.title;
         el.querySelector('.shabbat-gate__body').textContent = t.body;
-        el.querySelectorAll('.shabbat-gate__label')[0].textContent = t.opens;
-        el.querySelectorAll('.shabbat-gate__label')[1].textContent = t.left;
+        el.querySelector('.shabbat-gate__label--opens').textContent = t.opens;
+        el.querySelector('.shabbat-gate__label--left').textContent = t.left;
         el.querySelector('.shabbat-gate__time').textContent = localTimeLabel(endInstant);
         el.querySelector('.shabbat-gate__tz').textContent = t.tz;
+        renderCountdown(el.querySelector('.shabbat-gate__count'), endInstant, t);
+        el.querySelectorAll('.shabbat-gate__lang').forEach(function (btn) {
+            var active = btn.getAttribute('data-lang') === lang;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        return t;
+    }
+
+    function buildScreen(endInstant) {
+        var lang = currentLang();
+        var el = document.createElement('div');
+        el.className = 'shabbat-gate';
+        el.setAttribute('role', 'dialog');
+        el.setAttribute('aria-modal', 'true');
+        el.tabIndex = -1;   // aria-label is set by applyCopy, in the chosen language
+        el.innerHTML =
+            '<div class="shabbat-gate__card">'
+            + '<img class="shabbat-gate__logo" src="MoralTogetherLogoBlack.png" alt="MoralTogether">'
+            + '<h1 class="shabbat-gate__title"></h1>'
+            + '<p class="shabbat-gate__body"></p>'
+            + '<dl class="shabbat-gate__times">'
+            + '<dt class="shabbat-gate__label shabbat-gate__label--opens"></dt>'
+            + '<dd class="shabbat-gate__value"><time class="shabbat-gate__time"></time></dd>'
+            + '<dt class="shabbat-gate__label shabbat-gate__label--left"></dt>'
+            + '<dd class="shabbat-gate__value"><span class="shabbat-gate__count"></span></dd>'
+            + '</dl>'
+            + '<p class="shabbat-gate__tz"></p>'
+            + '<div class="shabbat-gate__langs" role="group">'
+            + Object.keys(LANG_LABELS).map(function (code) {
+                return '<button type="button" class="shabbat-gate__lang" data-lang="' + code + '">'
+                    + LANG_LABELS[code] + '</button>';
+            }).join('')
+            + '</div>'
+            + '</div>';
+        el.querySelectorAll('.shabbat-gate__lang').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var chosen = btn.getAttribute('data-lang');
+                rememberLang(chosen);
+                applyCopy(el, chosen, endInstant);
+                // The counter keeps its own units, so restart it with the new language.
+                startCountdown(el, endInstant);
+            });
+        });
+
+        applyCopy(el, lang, endInstant);
         return el;
     }
 
-    function renderCountdown(node, endInstant) {
+    // Hours and minutes while the wait is long, minutes and seconds in the last hour. A
+    // seconds counter ticking for twenty-five hours would be restless on a screen about rest.
+    function renderCountdown(node, endInstant, units) {
         var left = Math.max(0, endInstant - now());
         var h = Math.floor(left / 3600000);
         var m = Math.floor((left % 3600000) / 60000);
-        var s = Math.floor((left % 60000) / 1000);
-        node.textContent = (h > 0 ? h + ':' : '')
-            + (h > 0 ? String(m).padStart(2, '0') : m) + ':' + String(s).padStart(2, '0');
+        var sec = Math.floor((left % 60000) / 1000);
+        // Units, not a colon: "24:52" next to an opening time of "19:53" reads like a clock.
+        var text = h > 0
+            ? h + ' ' + units.h + ' ' + m + ' ' + units.m
+            : m + ' ' + units.m + ' ' + sec + ' s';
+        if (node.textContent !== text) node.textContent = text;
+    }
+
+    // The loop is decoration, so it only runs where it is welcome: not on a phone in portrait
+    // (the still is framed for that shape), not when the visitor asked for less motion, and not
+    // on a metered or slow connection. Everywhere else the poster is the video's own first
+    // frame, so the swap is invisible.
+    function videoWelcome() {
+        try {
+            if (window.matchMedia('(orientation: portrait) and (max-width: 46rem)').matches) return false;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+        } catch (e) { /* very old browser — keep the still */ return false; }
+
+        var net = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (net) {
+            // Data Saver is an explicit choice, so it is honoured. effectiveType is a guess
+            // Chrome makes from latency — it reports 3g on perfectly good desktop links, so
+            // only the genuinely slow tiers count here.
+            if (net.saveData) return false;
+            if (/^(slow-2g|2g)$/.test(net.effectiveType || '')) return false;
+        }
+        return true;
+    }
+
+    function addVideo(screen) {
+        if (!videoWelcome()) return;
+
+        var video = document.createElement('video');
+        video.className = 'shabbat-gate__video';
+        video.muted = true;
+        video.defaultMuted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('aria-hidden', 'true');
+        video.setAttribute('tabindex', '-1');
+        video.preload = 'auto';
+        video.innerHTML =
+            '<source src="images/shabbat-loop.webm" type="video/webm">'
+            + '<source src="images/shabbat-loop.mp4" type="video/mp4">';
+
+        video.addEventListener('canplay', function () {
+            video.classList.add('is-ready');
+        });
+        // If it cannot play at all, the poster simply stays.
+        video.addEventListener('error', function () {
+            video.remove();
+        });
+
+        screen.insertBefore(video, screen.firstChild);
+        state.video = video;
+
+        // Muted autoplay is allowed everywhere we care about, but if a browser still refuses,
+        // the first touch or click starts it. Until then the poster stands, which is fine.
+        function attempt() {
+            var started = video.play();
+            if (started && started.catch) started.catch(function () { /* keep the poster */ });
+        }
+        function onGesture() {
+            document.removeEventListener('pointerdown', onGesture);
+            document.removeEventListener('keydown', onGesture);
+            if (video.paused && !document.hidden) attempt();
+        }
+        document.addEventListener('pointerdown', onGesture, { once: true });
+        document.addEventListener('keydown', onGesture, { once: true });
+        attempt();
+    }
+
+    function startCountdown(screen, endInstant) {
+        var count = screen.querySelector('.shabbat-gate__count');
+        var units = copy(screen.getAttribute('lang') || currentLang());
+        renderCountdown(count, endInstant, units);
+        clearInterval(state.countdown);
+        state.countdown = setInterval(function () { renderCountdown(count, endInstant, units); }, 1000);
     }
 
     function pauseMedia() {
@@ -298,16 +445,16 @@
         if (existing) existing.remove();
         var screen = buildScreen(endInstant);
         document.body.appendChild(screen);
+        try { screen.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
         pauseMedia();
+        addVideo(screen);
 
-        var count = screen.querySelector('.shabbat-gate__count');
-        renderCountdown(count, endInstant);
-        clearInterval(state.countdown);
-        state.countdown = setInterval(function () { renderCountdown(count, endInstant); }, 1000);
+        startCountdown(screen, endInstant);
     }
 
     function open() {
         state.closedUntil = null;
+        state.video = null;
         document.documentElement.classList.remove('shabbat-closed');
         mark('open');
         clearInterval(state.countdown);
@@ -411,6 +558,9 @@
     // instructions for opening itself during Shabbat. It is obscurity, not protection —
     // anyone reading this file finds it, and that is the accepted level.
     function readOverride() {
+        var langMatch = /[?&]lang=(en|he|gr)\b/.exec(window.location.search);
+        if (langMatch) state.previewLang = langMatch[1];
+
         var match = /[?&]mtp=([^&]+)/.exec(window.location.search);
         if (!match) return;
         var value = decodeURIComponent(match[1]);
@@ -431,7 +581,17 @@
         evaluate();
         loadData();
 
+        // The screen can stand for twenty-five hours; there is no reason to decode video for a
+        // tab nobody is looking at.
         document.addEventListener('visibilitychange', function () {
+            if (state.video) {
+                if (document.hidden) {
+                    state.video.pause();
+                } else {
+                    var resumed = state.video.play();
+                    if (resumed && resumed.catch) resumed.catch(function () { /* ignore */ });
+                }
+            }
             if (!document.hidden) evaluate();
         });
         window.addEventListener('focus', evaluate);

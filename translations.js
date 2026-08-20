@@ -87,7 +87,8 @@ const TRANSLATIONS = {
     shabbat_body: "MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.",
     shabbat_opens: "The site opens at",
     shabbat_left: "Time remaining",
-    shabbat_tz: "Jerusalem time"
+    shabbat_tz: "Jerusalem time",
+    shabbat_h: "h", shabbat_m: "min"
   },
 
   he: {
@@ -178,7 +179,8 @@ const TRANSLATIONS = {
     shabbat_body: "מורל טוגת'ר שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.",
     shabbat_opens: "האתר נפתח בשעה",
     shabbat_left: "זמן שנותר",
-    shabbat_tz: "שעון ירושלים"
+    shabbat_tz: "שעון ירושלים",
+    shabbat_h: "ש׳", shabbat_m: "ד׳"
   },
 
   gr: {
@@ -269,6 +271,7 @@ const TRANSLATIONS = {
     shabbat_body: "Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.",
     shabbat_opens: "Η ιστοσελίδα ανοίγει στις",
     shabbat_left: "Απομένει",
-    shabbat_tz: "Ώρα Ιερουσαλήμ"
+    shabbat_tz: "Ώρα Ιερουσαλήμ",
+    shabbat_h: "ώ", shabbat_m: "λ"
   }
 };
