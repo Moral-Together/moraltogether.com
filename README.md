@@ -115,6 +115,9 @@ weekly schedule would do.
 - **Refresh**: [`.github/workflows/shabbat-windows.yml`](.github/workflows/shabbat-windows.yml)
   runs weekly and is lazy — while the next 60 days are covered it makes no request at all.
 - **Scope**: Shabbat only. Jewish holidays do not close the site.
+- **The screen**: a photograph of a Shabbat table that settles into a ten-second loop, a greeting
+  in the visitor's own language, the opening time and a live countdown. Phones get a portrait
+  still instead of the loop.
 
 Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mode.md`](docs/shabbat-mode.md).
 

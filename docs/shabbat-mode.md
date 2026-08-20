@@ -123,6 +123,11 @@ Three sources, in order of trust:
 A successful load is cached in `localStorage`, so after one visit the device holds exact
 times for a year even with no network.
 
+Both requests abort after six seconds, and a watchdog ends the waiting phase whatever the network
+does. Without them a request that never answers — a stalled connection rather than a failing one —
+left the content hidden and the screen undrawn for as long as the visitor kept looking at a blank
+page. That was found on production, on WebKit, by the QA suite.
+
 On a first-ever visit the cache is empty and only the crude fallback can answer, which would
 call a whole Friday afternoon Shabbat. So while the real times are still in flight the gate
 hides the content but does not draw the screen: a visitor at 16:00 on a Friday never sees
@@ -144,6 +149,46 @@ device was asleep.
 
 Known search engine crawlers skip the gate, so a Saturday crawl does not push pages down in
 the results.
+
+## The screen
+
+A photograph of a Shabbat table — challah under its cover, the kiddush cup, a siddur and two lit
+candles — with the logo, a greeting rather than a refusal, one line naming both edges of the
+window, the opening time, the time remaining and a note that the clock is Jerusalem's.
+
+The still is the first frame of `images/shabbat-loop.webm`, so when the loop is ready it replaces
+the picture invisibly: measured difference 3.76 of 255, with 1.5% of pixels differing by more than
+eight. The loop is 1280×720, ten seconds, 278 KB as VP9 and 345 KB as H.264.
+
+The loop stays away where it is not welcome: a portrait phone, `prefers-reduced-motion`, Data
+Saver, or a `2g`/`slow-2g` connection. Note that Chrome reports `effectiveType: 3g` on perfectly
+good desktop links, so 3g deliberately does not count — treating it as slow suppressed the video
+everywhere. The loop also pauses whenever the tab is hidden; the screen can stand for
+twenty-five hours and there is no reason to decode video nobody is watching.
+
+Phones get `images/shabbat-bg-mobile.jpg` instead, a portrait crop shown at **full width**: the
+candles stand at 6% and 92% of that frame, so any horizontal crop cuts them off. Filling a
+portrait screen with the landscape frame would keep about a quarter of its width.
+
+The picture is left vivid — `saturate(1.12) contrast(1.05) brightness(1.06)` — and the shade
+lives under the words instead: a soft edgeless pool, a faint vignette at the very edges, and a
+stronger text shadow on phones, where the lines sit directly on a bright tablecloth. The scrim is
+its own layer rather than a background gradient, or the video would cover it.
+
+The screen is deliberately always dark and does not follow the site's light theme.
+
+### Language on the screen
+
+The site's own switcher is hidden behind the gate, so the screen carries three quiet buttons —
+EN / עב / ΕΛ. A choice is written to the same `lang` key the site uses, so the site keeps it once
+it opens, and the screen re-renders in place: heading, sentence, labels, the units of the counter
+and the direction of the text. Hebrew reads right to left while clock values stay left to right.
+
+A first visit with no stored choice follows the browser: Hebrew or Greek if it asks for them,
+English otherwise. This needs the early `<head>` snippet, which captures the stored language
+**before** the site's own i18n engine runs — that engine writes `en` into `localStorage` on every
+load, which would otherwise look like a deliberate choice. The site itself still defaults to
+English; fixing that is a separate task.
 
 ## The emergency fallback
 
@@ -177,19 +222,29 @@ two for closing, the later for opening.
 
 ## QA
 
-The gate has a preview switch for checking it on the live site: it can pin the closed state,
-pin the open state, or shift the clock so a boundary can be watched live. Nothing it does is
-persisted, so a preview never leaks into a normal visit.
+Two suites live outside this repository, in the team's internal notes, because they carry the
+preview parameter this file must not publish:
 
-The parameter itself is deliberately not written down here. This file is served by the site,
-and a page that publishes instructions for opening itself during Shabbat defeats the point of
-closing. The name and the values live with the team's internal notes; the code in
-`shabbat-gate.js` is of course readable, and that is the accepted level — obscurity, not
-protection, since the gate is a matter of respect rather than a lock.
+- 36 checks on behaviour and appearance
+- 31 checks on the awkward cases, runnable against production
 
-Cases to cover: one minute before and after each boundary, offline, corrupted or truncated
-JSON, stale cache, a device clock set wrong, mobile layouts, and `partnerships.html` as well
-as the home page.
+Both drive real Google Chrome and WebKit, the engine Safari uses. What they cover: both edges of
+a window to the second; six time zones from Jerusalem to Kiritimati, all agreeing; a device clock
+two days forward, five days back and three minutes forward, each corrected against the server's
+own `Date` header; truncated, empty, malformed and hostile data, including a 40-hour window and
+one whose end precedes its start; a cache older than a year; a stalled network; the site closing
+itself while the tab sits open; the loop's conditions and its pause on a hidden tab; the language
+switcher and language detection across he-IL, el-GR and ru-RU; twelve presses of Tab never
+reaching the hidden site; and `partnerships.html` in Hebrew.
+
+Preview parameters are not written down here — see the internal notes. A page must not publish
+instructions for opening itself during Shabbat.
+
+Two lessons worth keeping. A clock cannot be faked to fast-forward this gate: an attempt to race
+through twenty-five hours at two thousand times speed failed because the gate corrected itself
+against the server, which is exactly what that correction is for. And production is slow enough
+that fixed waits in tests produce false failures; the suites wait for `data-shabbat` to settle
+instead.
 
 External services are out of scope: the M1 Radio stream and Moral TV live on their own hosts
 and keep running — only this site closes.
@@ -200,15 +255,14 @@ and keep running — only this site closes.
 |---|---------|-------|
 | 1 | Hebcal parser → `api/shabbat.json` | **done** — 104 windows for 2026–2027 |
 | 2 | GitHub Actions: weekly cron, lazy refresh, two-year coverage, failure alert | **done** |
-| 3 | Client gate | **done** — 15 browser checks pass |
-| 4 | Closing screen copy in EN / HE / GR | not started |
-| 5 | Closing screen: design, countdown, scroll and media lock | not started |
-| 6 | QA | not started |
-| 7 | Deploy to GitHub Pages and production check | not started |
+| 3 | Client gate | **done** |
+| 4 | Closing screen copy in EN / HE / GR | **done** — in `translations.js` |
+| 5 | Closing screen: photograph, loop, countdown, language switch | **done** |
+| 6 | QA | **done** — 36 + 31 checks, in Chrome and WebKit |
+| 7 | Deploy to GitHub Pages and production check | **done** |
 | 8 | Astronomical sunset fallback and JSON cross-check (after launch) | not started |
 
-The gate is live in the repository and closes both pages by the exact times; what is left for
-subtasks 4 and 5 is the wording and the look of the screen, which is still a draft.
+Everything except the astronomical fallback is live on moraltogether.com.
 
 Verified in Chromium against the local build, 15 checks: open at 18:35:30 and closed at
 18:36:30 on Aug 21, still closed at 19:52 on Aug 22 and open at 19:54, scroll locked, the
