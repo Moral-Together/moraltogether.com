@@ -54,7 +54,12 @@ Replaced generic logos with semantic, icon-based representations of key sectors:
 - **Academy, Public Sector, Business, Non-Profits**.
 - **Micro-Interactions**: Each partner card lifts and glows on hover, reinforcing the "premium" feel.
 
-### 5. **Hybrid Scroll Animations**
+### 5. **Three Languages, Chosen by the Visitor**
+The site speaks English, Hebrew and Greek, and a first visit follows the browser: Hebrew for
+`he`/`iw`, Greek for `el`, English otherwise. Only a deliberate click on the switcher is stored —
+the default is never written down, so it cannot be mistaken later for someone's decision.
+
+### 6. **Hybrid Scroll Animations**
 We implemented a robust system to ensure content *always* appears, regardless of scroll speed or browser quirks:
 - **Intersection Observer**: The primary engine that reveals elements as they enter the viewport.
 - **Fallback Logic**: A secondary check ensures that if the Observer misses an element, a traditional scroll listener catches it.

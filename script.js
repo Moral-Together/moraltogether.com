@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- i18n Language Engine ---
-    function applyLanguage(lang) {
+    // remember: only a deliberate click is stored. Writing the default on every load made a
+    // first visit look like a choice, which meant an Israeli visitor was greeted in English
+    // and nothing downstream could tell the difference.
+    function applyLanguage(lang, remember) {
         const t = TRANSLATIONS[lang];
         if (!t) return;
 
@@ -32,8 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
         });
 
-        // Save to localStorage
-        localStorage.setItem('lang', lang);
+        // Save to localStorage — only when the visitor picked this language themselves
+        if (remember) {
+            try { localStorage.setItem('lang', lang); } catch (e) { /* private mode */ }
+        }
 
         // Notify canvas renderers to redraw with new language
         document.dispatchEvent(new CustomEvent('langChanged'));
@@ -41,12 +46,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Wire up buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang'), true));
     });
 
-    // Restore saved language (default: 'en')
-    const savedLang = localStorage.getItem('lang') || 'en';
-    applyLanguage(savedLang);
+    // The language the visitor asks for, in order: what they chose here before, then what their
+    // browser requests, then English. The site speaks three languages; Hebrew answers to both
+    // 'he' and the older 'iw', Greek to 'el'.
+    function preferredLanguage() {
+        let saved = null;
+        try { saved = localStorage.getItem('lang'); } catch (e) { /* private mode */ }
+        if (saved && TRANSLATIONS[saved]) return saved;
+
+        const asked = navigator.languages || [navigator.language || ''];
+        for (const tag of asked) {
+            const code = String(tag).toLowerCase();
+            if (code.startsWith('he') || code.startsWith('iw')) return 'he';
+            if (code.startsWith('el')) return 'gr';
+            if (code.startsWith('en')) return 'en';
+        }
+        return 'en';
+    }
+
+    applyLanguage(preferredLanguage(), false);
 
     // --- Reveal on Scroll ---
     const reveals = document.querySelectorAll('.reveal');

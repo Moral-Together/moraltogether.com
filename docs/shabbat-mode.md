@@ -187,8 +187,8 @@ and the direction of the text. Hebrew reads right to left while clock values sta
 A first visit with no stored choice follows the browser: Hebrew or Greek if it asks for them,
 English otherwise. This needs the early `<head>` snippet, which captures the stored language
 **before** the site's own i18n engine runs — that engine writes `en` into `localStorage` on every
-load, which would otherwise look like a deliberate choice. The site itself still defaults to
-English; fixing that is a separate task.
+load, which would otherwise look like a deliberate choice. The site itself now follows the
+browser in the same way, and stores a language only when the visitor picks one.
 
 ## The third source: the sun itself
 
