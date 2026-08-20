@@ -118,7 +118,7 @@ Three sources, in order of trust:
 
 1. `/api/shabbat.json` — our file, a year or more ahead. The normal path.
 2. A direct Hebcal request from the browser, if the file is missing or unusable.
-3. The emergency fallback below.
+3. The sun's own position, computed in the browser — see below.
 
 A successful load is cached in `localStorage`, so after one visit the device holds exact
 times for a year even with no network.
@@ -190,35 +190,44 @@ English otherwise. This needs the early `<head>` snippet, which captures the sto
 load, which would otherwise look like a deliberate choice. The site itself still defaults to
 English; fixing that is a separate task.
 
-## The emergency fallback
+## The third source: the sun itself
 
-Used only when the JSON file, the direct Hebcal request and the cache are all unavailable at
-once — realistically a first-ever visit on a broken network:
+When the file, the direct Hebcal request and the cache are all unavailable — realistically a
+first visit on a broken network — the gate computes the times instead of guessing them. NOAA's
+solar position equations, about fifty lines, no network and no dependencies: sunset for
+Jerusalem's coordinates, candle lighting forty minutes before it, havdalah when the sun reaches
+8.5° below the horizon. Those are the same `b=40` and `M=on` that the Hebcal request asks for.
 
-```
-Friday 15:30 → Saturday 21:00, Asia/Jerusalem
-```
+**The elevation must not be applied.** Hebcal reports Jerusalem's 786 m in its payload, and
+textbook practice would add a horizon-dip correction of 0.973°. Computing both variants against a
+full year shows the no-elevation form agreeing with Hebcal within a minute, while the
+dip-corrected form is 4 to 6 minutes off every week. Hebcal does not use elevation here, so
+neither do we — otherwise the two sources would argue with each other.
 
-Deliberately crude in the safe direction: the site would rather close too much than stay open
-during Shabbat. It is also imprecise by hours — in June real candle lighting is 19:08 — so it
-is replaced in subtask 8 by an astronomical sunset computed in the browser from Jerusalem's
-coordinates: candle lighting at sunset − 40 min, havdalah at nightfall (8.5° below the
-horizon), no network and no dependencies needed.
+Measured in the browser against Hebcal's own answers, three separate years:
 
-The equations were validated against Hebcal's own answers for all 52 Shabbats of 2026 before
-committing to this approach. Worst disagreement is one minute in both directions: candle
-lighting matched to the minute on 42 of 52 weeks, havdalah on 40 of 52, the rest differing by
-exactly one minute; mean absolute error is about half a minute.
+| Year | Candle lighting, worst | Havdalah, worst | Mean |
+|---|---|---|---|
+| 2026 | 1.28 min | 0.73 min | 0.5 / 0.3 min |
+| 2027 | 1.35 min | 0.85 min | 0.6 / 0.3 min |
+| 2029 | 1.25 min | 0.80 min | 0.5 / 0.3 min |
 
-One finding changes the implementation: **the elevation must not be applied.** Hebcal reports
-Jerusalem's 786 m in the payload, and textbook practice would add a horizon-dip correction of
-0.973° for it — but computing both variants shows the no-elevation form agrees with Hebcal
-within a minute while the dip-corrected form is 4 to 6 minutes off across all 52 weeks. Hebcal
-does not use elevation here, so neither do we; otherwise the two sources would argue.
+A fixed window survives in exactly one place: a `catch` around the computation, in case it ever
+fails to produce a number. It should be unreachable, but an exception must not leave the site open
+during Shabbat.
 
-The computation also serves as a sanity check on the JSON. Disagreement under 3 minutes is
-normal formula error and the file wins. Beyond that the safe side is taken: the earlier of the
-two for closing, the later for opening.
+### A second opinion on the file
+
+The same computation checks the file it is meant to replace. A disagreement of up to three minutes
+is the formula's own error and the file wins. Beyond that the file is not trusted and the safe
+side is taken: the earlier of the two starts, the later of the two ends. It closes silently and
+says so in the console — a file whose parameters drifted, whose geonameid moved, or which was
+assembled half-way would otherwise close the site at the wrong time with nothing to show for it.
+
+A bug this found, which had been present from the first version: the fallback computed *Thursday*
+for a Saturday instant, because the weekday offset already handles Saturday and a second manual
+subtraction was applied on top. Until this was fixed, a Saturday with no data available would have
+left the site open all day.
 
 ## QA
 
@@ -260,9 +269,9 @@ and keep running — only this site closes.
 | 5 | Closing screen: photograph, loop, countdown, language switch | **done** |
 | 6 | QA | **done** — 36 + 31 checks, in Chrome and WebKit |
 | 7 | Deploy to GitHub Pages and production check | **done** |
-| 8 | Astronomical sunset fallback and JSON cross-check (after launch) | not started |
+| 8 | Astronomical sunset fallback and JSON cross-check | **done** — worst error 1.35 min over three years |
 
-Everything except the astronomical fallback is live on moraltogether.com.
+All eight subtasks are complete and live on moraltogether.com.
 
 Verified in Chromium against the local build, 15 checks: open at 18:35:30 and closed at
 18:36:30 on Aug 21, still closed at 19:52 on Aug 22 and open at 19:54, scroll locked, the

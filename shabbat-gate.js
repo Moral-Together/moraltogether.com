@@ -19,9 +19,20 @@
     var SKEW_ALERT_MS = 2 * 60 * 1000;
     var DATA_TIMEOUT_MS = 6000;      // a hung request must not leave the screen half-drawn
 
-    // Fixed fallback, used only when the file, Hebcal and the cache are all unavailable.
-    var FALLBACK_OPEN = { day: 5, hour: 15, minute: 30 };   // Friday 15:30 — closes early on purpose
-    var FALLBACK_SHUT = { day: 6, hour: 21, minute: 0 };    // Saturday 21:00 — opens late on purpose
+    // Third source, used when the file, Hebcal and the cache are all unavailable: the sun's own
+    // position, computed here. Jerusalem's coordinates; the 786 m elevation is deliberately NOT
+    // applied, because Hebcal does not apply it either and the two must not disagree.
+    var LAT = 31.76904;
+    var LON = 35.21633;
+    var ZENITH_SUNSET = 90.833;      // refraction and the sun's own radius
+    var ZENITH_NIGHTFALL = 98.5;     // 8.5 degrees below the horizon — what M=on means
+    var CANDLES_BEFORE_MIN = 40;     // b=40
+    var DISAGREEMENT_MS = 3 * 60000; // beyond this the file is not trusted
+
+    // Last resort if the computation itself cannot produce a number. Unreachable in practice,
+    // but an exception must not leave the site open during Shabbat.
+    var CRUDE_OPEN = { hour: 15, minute: 30 };
+    var CRUDE_SHUT = { hour: 21, minute: 0 };
 
     // Crawlers announce themselves; headless Chrome is deliberately absent because that is
     // also what our own browser tests run as.
@@ -152,24 +163,120 @@
         return out.sort(function (a, b) { return a[0] - b[0]; });
     }
 
-    function fallbackWindow(instant) {
+    // ---------------------------------------------------------------- the sun itself
+
+    // Julian day at 0h UT for a calendar date.
+    function julianDay(y, m, d) {
+        var a = Math.floor((14 - m) / 12);
+        var y2 = y + 4800 - a;
+        var m2 = m + 12 * a - 3;
+        return d + Math.floor((153 * m2 + 2) / 5) + 365 * y2
+            + Math.floor(y2 / 4) - Math.floor(y2 / 100) + Math.floor(y2 / 400) - 32045 - 0.5;
+    }
+
+    var rad = Math.PI / 180;
+
+    // NOAA's general solar position equations. Returns the instant in Jerusalem on that date
+    // when the sun's centre reaches the given zenith angle on its way down, or null on a day
+    // where it never does.
+    function solarEvent(year, month, day, zenith) {
+        var tzHours = tzOffsetMs(Date.UTC(year, month - 1, day, 10, 0, 0)) / 3600000;
+        var jd = julianDay(year, month, day) + (12 - tzHours) / 24;
+        var t = (jd - 2451545) / 36525;
+
+        var l0 = (280.46646 + t * (36000.76983 + 0.0003032 * t)) % 360;
+        var m = 357.52911 + t * (35999.05029 - 0.0001537 * t);
+        var ecc = 0.016708634 - t * (0.000042037 + 0.0000001267 * t);
+        var centre = Math.sin(m * rad) * (1.914602 - t * (0.004817 + 0.000014 * t))
+            + Math.sin(2 * m * rad) * (0.019993 - 0.000101 * t)
+            + Math.sin(3 * m * rad) * 0.000289;
+        var appLong = l0 + centre - 0.00569 - 0.00478 * Math.sin((125.04 - 1934.136 * t) * rad);
+        var meanObliq = 23 + (26 + (21.448 - t * (46.815 + t * (0.00059 - t * 0.001813))) / 60) / 60;
+        var obliq = meanObliq + 0.00256 * Math.cos((125.04 - 1934.136 * t) * rad);
+        var decl = Math.asin(Math.sin(obliq * rad) * Math.sin(appLong * rad)) / rad;
+
+        var varY = Math.pow(Math.tan(obliq / 2 * rad), 2);
+        var eqTime = 4 / rad * (varY * Math.sin(2 * l0 * rad)
+            - 2 * ecc * Math.sin(m * rad)
+            + 4 * ecc * varY * Math.sin(m * rad) * Math.cos(2 * l0 * rad)
+            - 0.5 * varY * varY * Math.sin(4 * l0 * rad)
+            - 1.25 * ecc * ecc * Math.sin(2 * m * rad));
+
+        var cosHa = Math.cos(zenith * rad) / (Math.cos(LAT * rad) * Math.cos(decl * rad))
+            - Math.tan(LAT * rad) * Math.tan(decl * rad);
+        if (!(Math.abs(cosHa) <= 1)) return null;
+
+        var minutes = 720 - 4 * LON - eqTime + tzHours * 60 + 4 * (Math.acos(cosHa) / rad);
+        var seconds = Math.round(minutes * 60);
+        var hh = Math.floor(seconds / 3600);
+        var mm = Math.floor((seconds % 3600) / 60);
+        // Built through jerusalemInstant so a day that changes its offset still lands right.
+        return jerusalemInstant(year, month, day, hh, mm) + (seconds % 60) * 1000;
+    }
+
+    // The Friday whose Shabbat covers this instant, as Jerusalem calendar parts.
+    function shabbatFriday(instant) {
         var p = jerusalemParts(instant);
         var midnight = jerusalemInstant(p.year, p.month, p.day, 0, 0);
-        var friday = midnight + (FALLBACK_OPEN.day - p.weekday) * 86400000;
-        // Saturday night still belongs to the window that opened on Friday.
-        if (p.weekday === 6) friday -= 86400000;
-        var fp = jerusalemParts(friday);
-        var start = jerusalemInstant(fp.year, fp.month, fp.day, FALLBACK_OPEN.hour, FALLBACK_OPEN.minute);
+        // Sunday through Friday this lands on the Friday of the same week; on a Saturday the
+        // offset is negative, which is exactly right — Saturday belongs to the window that
+        // opened the evening before. Subtracting another day here, as an earlier version did,
+        // pointed at Thursday and left the site open all Saturday whenever the data was
+        // unavailable.
+        var friday = midnight + (5 - p.weekday) * 86400000;
+        return jerusalemParts(friday);
+    }
+
+    function crudeWindow(fp) {
+        var start = jerusalemInstant(fp.year, fp.month, fp.day, CRUDE_OPEN.hour, CRUDE_OPEN.minute);
         var sp = jerusalemParts(start + 86400000);
-        var end = jerusalemInstant(sp.year, sp.month, sp.day, FALLBACK_SHUT.hour, FALLBACK_SHUT.minute);
+        var end = jerusalemInstant(sp.year, sp.month, sp.day, CRUDE_SHUT.hour, CRUDE_SHUT.minute);
         return validWindow([start, end]) ? [start, end] : null;
+    }
+
+    // Candle lighting is forty minutes before Friday's sunset; havdalah is Saturday nightfall.
+    function computedWindow(instant) {
+        var fp = shabbatFriday(instant);
+        try {
+            var sunset = solarEvent(fp.year, fp.month, fp.day, ZENITH_SUNSET);
+            var sp = jerusalemParts(jerusalemInstant(fp.year, fp.month, fp.day, 12, 0) + 86400000);
+            var nightfall = solarEvent(sp.year, sp.month, sp.day, ZENITH_NIGHTFALL);
+            if (sunset === null || nightfall === null) return crudeWindow(fp);
+            var pair = [sunset - CANDLES_BEFORE_MIN * 60000, nightfall];
+            return validWindow(pair) ? pair : crudeWindow(fp);
+        } catch (e) {
+            return crudeWindow(fp);
+        }
+    }
+
+    function fallbackWindow(instant) {
+        return computedWindow(instant);
+    }
+
+    // Second opinion on the file's own numbers. A few minutes apart is the formula's own error
+    // and the file wins; further apart means the file cannot be trusted, and then the safe side
+    // is taken — closing earlier, opening later.
+    function reconcile(window) {
+        var mine = computedWindow(window[0]);
+        if (!mine) return window;
+        var startGap = window[0] - mine[0];
+        var endGap = mine[1] - window[1];
+        if (Math.abs(startGap) <= DISAGREEMENT_MS && Math.abs(endGap) <= DISAGREEMENT_MS) return window;
+        if (window.__warned !== true && window && console && console.warn) {
+            console.warn('shabbat-gate: the file disagrees with the sun by '
+                + Math.round(startGap / 60000) + '/' + Math.round(endGap / 60000)
+                + ' min, taking the safe side');
+            window.__warned = true;
+        }
+        return [Math.min(window[0], mine[0]), Math.max(window[1], mine[1])];
     }
 
     function activeWindow(instant) {
         for (var i = 0; i < state.windows.length; i++) {
             var w = state.windows[i];
-            if (instant >= w[0] && instant < w[1]) return w;
-            if (w[0] > instant) break;
+            var checked = reconcile(w);
+            if (instant >= checked[0] && instant < checked[1]) return checked;
+            if (checked[0] > instant) break;
         }
         return null;
     }
