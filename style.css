@@ -1679,19 +1679,19 @@ body.dark-mode .folder-card-4.open .folder-inner {
 
 /* Card Backgrounds */
 .card-1 {
-    background: url('images/connect.png') center/cover no-repeat;
+    background: url('images/connect.webp') center/cover no-repeat;
 }
 
 .card-2 {
-    background: url('images/nature.png') center/cover no-repeat;
+    background: url('images/nature.webp') center/cover no-repeat;
 }
 
 .card-3 {
-    background: url('images/urban.png') center/cover no-repeat;
+    background: url('images/urban.webp') center/cover no-repeat;
 }
 
 .card-4 {
-    background: url('images/art.png') center/cover no-repeat;
+    background: url('images/art.webp') center/cover no-repeat;
 }
 
 .gallery-card .overlay {
@@ -2855,11 +2855,13 @@ body.dark-mode .feature-checklist li::before {
 
 /* Desktop (≥ 1200px) — landscape images */
 .hero-img-light {
-    background-image: url("images/Background_Light_desctop.png");
+    background-image: url("images/Background_Light_desctop.jpg");
+    background-image: image-set(url("images/Background_Light_desctop.webp") type("image/webp"), url("images/Background_Light_desctop.jpg") type("image/jpeg"));
     opacity: 1;
 }
 .hero-img-dark {
-    background-image: url("images/Background_Black_desctop.png");
+    background-image: url("images/Background_Black_desctop.jpg");
+    background-image: image-set(url("images/Background_Black_desctop.webp") type("image/webp"), url("images/Background_Black_desctop.jpg") type("image/jpeg"));
     opacity: 0;
 }
 
@@ -2869,12 +2871,14 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
 /* Tablet (1024px – 1366px) — iPad Pro portrait/landscape */
 @media (max-width: 1366px) and (min-width: 1024px) {
     .hero-img-light {
-        background-image: url("images/Background_Light_tablet.png");
+        background-image: url("images/Background_Light_tablet.jpg");
+        background-image: image-set(url("images/Background_Light_tablet.webp") type("image/webp"), url("images/Background_Light_tablet.jpg") type("image/jpeg"));
         background-size: cover;
         background-position: center center;
     }
     .hero-img-dark {
-        background-image: url("images/Background_Black_tablet.png");
+        background-image: url("images/Background_Black_tablet.jpg");
+        background-image: image-set(url("images/Background_Black_tablet.webp") type("image/webp"), url("images/Background_Black_tablet.jpg") type("image/jpeg"));
         background-size: cover;
         background-position: center center;
     }
@@ -2883,11 +2887,13 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
 /* Mobile (≤ 768px) — portrait images, focal area at top-center */
 @media (max-width: 768px) {
     .hero-img-light {
-        background-image: url("images/Background_Light_mobile.png");
+        background-image: url("images/Background_Light_mobile.jpg");
+        background-image: image-set(url("images/Background_Light_mobile.webp") type("image/webp"), url("images/Background_Light_mobile.jpg") type("image/jpeg"));
         background-position: center top;
     }
     .hero-img-dark {
-        background-image: url("images/Background_Black_mobile.png");
+        background-image: url("images/Background_Black_mobile.jpg");
+        background-image: image-set(url("images/Background_Black_mobile.webp") type("image/webp"), url("images/Background_Black_mobile.jpg") type("image/jpeg"));
         background-position: center top;
     }
 }

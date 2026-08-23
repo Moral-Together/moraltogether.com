@@ -551,10 +551,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gallery Modal
     const GALLERY_IMAGES = [
-        { src: 'images/connect.png', title: 'Connections' },
-        { src: 'images/nature.png',  title: 'Community' },
-        { src: 'images/urban.png',   title: 'Entrepreneurship' },
-        { src: 'images/art.png',     title: 'Hope' },
+        { src: 'images/connect.webp', title: 'Connections' },
+        { src: 'images/nature.webp',  title: 'Community' },
+        { src: 'images/urban.webp',   title: 'Entrepreneurship' },
+        { src: 'images/art.webp',     title: 'Hope' },
     ];
 
     const modal       = document.getElementById('galleryModal');

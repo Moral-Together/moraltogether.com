@@ -399,7 +399,7 @@
         el.tabIndex = -1;   // aria-label is set by applyCopy, in the chosen language
         el.innerHTML =
             '<div class="shabbat-gate__card">'
-            + '<img class="shabbat-gate__logo" src="MoralTogetherLogoBlack.png" alt="MoralTogether">'
+            + '<img class="shabbat-gate__logo" src="MoralTogetherLogoBlack.webp" alt="MoralTogether">'
             + '<h1 class="shabbat-gate__title"></h1>'
             + '<p class="shabbat-gate__body"></p>'
             + '<dl class="shabbat-gate__times">'
