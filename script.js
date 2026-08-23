@@ -245,15 +245,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Preloader ---
-    window.addEventListener('load', () => {
+    // It used to wait for the window load event and then sit there for another 800 ms. That
+    // meant the curtain stayed up until the very last image, font and third-party avatar had
+    // arrived — seconds after the page itself was ready to read. The document being parsed and
+    // styled is the honest moment to lift it.
+    (() => {
         const preloader = document.getElementById('preloader');
-        if (preloader) {
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                document.body.classList.add('loaded');
-            }, 800);
-        }
-    });
+        if (!preloader) return;
+        const lift = () => {
+            preloader.classList.add('fade-out');
+            document.body.classList.add('loaded');
+        };
+        // A beat, so the entrance still reads as deliberate rather than as a flicker.
+        setTimeout(lift, 150);
+        // And a floor under it, in case something above throws before this runs.
+        window.addEventListener('load', () => setTimeout(lift, 100));
+    })();
 
     // --- Hero comet dots ---
     const dotsCanvas = document.getElementById('hero-dots-canvas');
