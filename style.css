@@ -2853,50 +2853,44 @@ body.dark-mode .feature-checklist li::before {
     transition: opacity 1s ease;
 }
 
-/* Desktop (≥ 1200px) — landscape images */
-.hero-img-light {
-    background-image: url("images/Background_Light_desctop.jpg");
-    background-image: image-set(url("images/Background_Light_desctop.webp") type("image/webp"), url("images/Background_Light_desctop.jpg") type("image/jpeg"));
-    opacity: 1;
+/* Which picture belongs to which theme and breakpoint. Naming them here, and pointing at
+   them only in the two theme rules below, means the browser fetches one hero and not both:
+   an element at opacity 0 still downloads its background, so the old markup pulled the light
+   and the dark image on every visit — 9.1 MB together on a 1280 px laptop. */
+.hero-bg {
+    --hero-light: image-set(url("images/Background_Light_desctop.webp") type("image/webp"), url("images/Background_Light_desctop.jpg") type("image/jpeg"));
+    --hero-dark: image-set(url("images/Background_Black_desctop.webp") type("image/webp"), url("images/Background_Black_desctop.jpg") type("image/jpeg"));
 }
-.hero-img-dark {
-    background-image: url("images/Background_Black_desctop.jpg");
-    background-image: image-set(url("images/Background_Black_desctop.webp") type("image/webp"), url("images/Background_Black_desctop.jpg") type("image/jpeg"));
-    opacity: 0;
-}
-
-body.dark-mode .hero-img-light { opacity: 0; }
-body.dark-mode .hero-img-dark  { opacity: 1; }
 
 /* Tablet (1024px – 1366px) — iPad Pro portrait/landscape */
 @media (max-width: 1366px) and (min-width: 1024px) {
-    .hero-img-light {
-        background-image: url("images/Background_Light_tablet.jpg");
-        background-image: image-set(url("images/Background_Light_tablet.webp") type("image/webp"), url("images/Background_Light_tablet.jpg") type("image/jpeg"));
-        background-size: cover;
-        background-position: center center;
-    }
-    .hero-img-dark {
-        background-image: url("images/Background_Black_tablet.jpg");
-        background-image: image-set(url("images/Background_Black_tablet.webp") type("image/webp"), url("images/Background_Black_tablet.jpg") type("image/jpeg"));
-        background-size: cover;
-        background-position: center center;
+    .hero-bg {
+        --hero-light: image-set(url("images/Background_Light_tablet.webp") type("image/webp"), url("images/Background_Light_tablet.jpg") type("image/jpeg"));
+        --hero-dark: image-set(url("images/Background_Black_tablet.webp") type("image/webp"), url("images/Background_Black_tablet.jpg") type("image/jpeg"));
     }
 }
 
 /* Mobile (≤ 768px) — portrait images, focal area at top-center */
 @media (max-width: 768px) {
-    .hero-img-light {
-        background-image: url("images/Background_Light_mobile.jpg");
-        background-image: image-set(url("images/Background_Light_mobile.webp") type("image/webp"), url("images/Background_Light_mobile.jpg") type("image/jpeg"));
-        background-position: center top;
+    .hero-bg {
+        --hero-light: image-set(url("images/Background_Light_mobile.webp") type("image/webp"), url("images/Background_Light_mobile.jpg") type("image/jpeg"));
+        --hero-dark: image-set(url("images/Background_Black_mobile.webp") type("image/webp"), url("images/Background_Black_mobile.jpg") type("image/jpeg"));
     }
-    .hero-img-dark {
-        background-image: url("images/Background_Black_mobile.jpg");
-        background-image: image-set(url("images/Background_Black_mobile.webp") type("image/webp"), url("images/Background_Black_mobile.jpg") type("image/jpeg"));
-        background-position: center top;
-    }
+
+    .hero-img { background-position: center top; }
 }
+
+/* The theme is decided on <html> before the first paint, and the toggle keeps that class in
+   step, so gating on it means the other theme's picture is never requested until someone
+   actually switches. */
+html:not(.dark-mode-early) .hero-img-light { background-image: var(--hero-light); }
+html.dark-mode-early .hero-img-dark { background-image: var(--hero-dark); }
+
+.hero-img-light { opacity: 1; }
+.hero-img-dark { opacity: 0; }
+
+body.dark-mode .hero-img-light { opacity: 0; }
+body.dark-mode .hero-img-dark  { opacity: 1; }
 
 /* Overlay: left-side gradient for text readability, light vignette */
 .hero-overlay {
