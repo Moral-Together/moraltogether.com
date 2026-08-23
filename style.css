@@ -3212,3 +3212,34 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
         -webkit-backdrop-filter: none;
     }
 }
+
+/* Avatars drawn here rather than fetched from a stranger.
+
+   These four places used to pull faces from i.pravatar.cc — a service that returns random
+   photographs of real people. Under the names of the team, that is not a placeholder, it is a
+   misrepresentation; and it cost six third-party requests on every visit. Initials until real
+   portraits exist. */
+.folder-avatar--initials {
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #fff;
+    background: linear-gradient(140deg, #0f4c81 0%, #2c6fae 55%, #f5a623 190%);
+    user-select: none;
+}
+
+.avatar-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-body);
+    margin-right: -15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-dot--1 { background: linear-gradient(140deg, #0f4c81, #2c6fae); }
+.avatar-dot--2 { background: linear-gradient(140deg, #f5a623, #e07b39); }
+.avatar-dot--3 { background: linear-gradient(140deg, #2c8a6a, #4bb18c); }
