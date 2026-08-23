@@ -147,6 +147,55 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', setActive);
     setActive();
 
+    // --- Partner logo videos: nothing is fetched until the card is nearly in view ---
+    // The markup carries data-src and data-poster instead of src and poster, so a visit that
+    // never reaches the gallery never pays for a single logo. Thirty-one of them used to load
+    // at once, before anyone had seen them.
+    (() => {
+        const videos = document.querySelectorAll('video[loop] source[data-src]');
+        if (!videos.length) return;
+
+        const net = navigator.connection || {};
+        const stillsOnly = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            || net.saveData === true
+            || /^(slow-2g|2g)$/.test(net.effectiveType || '');
+
+        const wake = (video) => {
+            if (video.dataset.awake) return;
+            video.dataset.awake = '1';
+
+            const source = video.querySelector('source[data-src]');
+            if (!source) return;
+            if (source.dataset.poster) video.poster = source.dataset.poster;
+
+            // With less motion asked for, or on a metered line, the frame is the whole story.
+            if (stillsOnly) return;
+
+            source.src = source.dataset.src;
+            video.load();
+            const started = video.play();
+            if (started && started.catch) started.catch(() => { /* the poster stands */ });
+        };
+
+        const watcher = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    wake(video);
+                    if (video.paused && video.dataset.awake && !stillsOnly) {
+                        const resumed = video.play();
+                        if (resumed && resumed.catch) resumed.catch(() => {});
+                    }
+                } else if (!video.paused) {
+                    // Off screen it is just a decoder burning battery.
+                    video.pause();
+                }
+            });
+        }, { rootMargin: '300px 0px' });
+
+        videos.forEach((source) => watcher.observe(source.parentElement));
+    })();
+
     // --- Bento Card + Partner Card 3D Tilt + Spotlight ---
     document.querySelectorAll('.bento-card, .partner-card').forEach(card => {
         card.addEventListener('mousemove', e => {
@@ -344,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Preload center logo
         const logoImg = new Image();
-        logoImg.src = 'images/Favicon MoralTogether.png';
+        logoImg.src = 'images/favicon.png';
         logoImg.onload = () => { if (!raf) draw(); };
 
         function resize() {
