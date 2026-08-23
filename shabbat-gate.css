@@ -55,6 +55,15 @@ html.shabbat-closed body > *:not(.shabbat-gate) {
     pointer-events: none;
 }
 
+/* A wide or dense screen stretches the 1280 px frame past its resolution, so those get the
+   full-size one — 97 KB instead of 55, and only where it shows. */
+@media (min-width: 1600px), (min-resolution: 1.5dppx) {
+    .shabbat-gate::before {
+        background-image: url("images/shabbat-bg-1920.jpg");
+        background-image: image-set(url("images/shabbat-bg-1920.webp") type("image/webp"), url("images/shabbat-bg-1920.jpg") type("image/jpeg"));
+    }
+}
+
 /* Hebrew and Greek both live in Rubik on this site; Inter has no Hebrew glyphs. */
 .shabbat-gate[lang="he"] {
     font-family: 'Rubik', 'Arial Hebrew', 'Noto Sans Hebrew', sans-serif;

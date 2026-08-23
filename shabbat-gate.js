@@ -480,9 +480,16 @@
         video.setAttribute('aria-hidden', 'true');
         video.setAttribute('tabindex', '-1');
         video.preload = 'auto';
+        // Same picture in two sizes: the 1280 one is enough for a laptop, and a wide or dense
+        // screen would stretch it past its resolution.
+        var wide = false;
+        try {
+            wide = window.matchMedia('(min-width: 1600px), (min-resolution: 1.5dppx)').matches;
+        } catch (e) { /* older browser — the smaller file is the safer default */ }
+        var stem = wide ? 'images/shabbat-loop-1920' : 'images/shabbat-loop';
         video.innerHTML =
-            '<source src="images/shabbat-loop.webm" type="video/webm">'
-            + '<source src="images/shabbat-loop.mp4" type="video/mp4">';
+            '<source src="' + stem + '.webm" type="video/webm">'
+            + '<source src="' + stem + '.mp4" type="video/mp4">';
 
         video.addEventListener('canplay', function () {
             video.classList.add('is-ready');
