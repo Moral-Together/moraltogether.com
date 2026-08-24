@@ -1,0 +1,5 @@
+# The repository is the public site: everything committed here is served. Local tooling and
+# editor droppings must not become URLs.
+.DS_Store
+.claude/
+node_modules/

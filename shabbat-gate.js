@@ -319,6 +319,8 @@
 
     // The site's own switcher is hidden while the gate is up, so the screen carries its own.
     var LANG_LABELS = { en: 'EN', he: 'עב', gr: 'ΕΛ' };
+    // 'gr' is our own key; 'el' is the language tag Greek actually has.
+    var HTML_LANG = { en: 'en', he: 'he', gr: 'el' };
 
     function browserLang() {
         var tags = navigator.languages || [navigator.language || ''];
@@ -370,7 +372,7 @@
 
     function applyCopy(el, lang, endInstant) {
         var t = copy(lang);
-        el.setAttribute('lang', lang);
+        el.setAttribute('lang', HTML_LANG[lang] || lang);
         // The site keeps its layout LTR in every language, but this screen is nothing but
         // text, so Hebrew reads the way it should.
         el.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');

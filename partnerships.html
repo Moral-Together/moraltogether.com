@@ -37,6 +37,8 @@
 
 <body>
 
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
     <div id="preloader">
         <div class="loader-content">
             <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="loader-logo-img light-logo">
@@ -96,8 +98,9 @@
     </header>
 
     <!-- Partners Grid -->
-    <main class="partnerships-main">
+    <main id="main" class="partnerships-main">
         <div class="container">
+            <h2 class="visually-hidden" data-i18n="partners_grid_heading">Partner organisations</h2>
             <div class="partners-grid reveal">
 
                 <!-- 1. Mothers & Family Moral -->
@@ -402,10 +405,9 @@
 
             </div>
         </div>
-    </main>
 
-    <!-- CTA -->
-    <section class="partnerships-cta">
+        <!-- CTA -->
+        <section class="partnerships-cta">
         <div class="container">
             <div class="partnerships-cta-inner reveal">
                 <h2 class="partnerships-cta-heading" data-i18n="cta_heading">Want to join the ecosystem?</h2>
@@ -413,7 +415,8 @@
                 <a href="index.html#contact" class="btn btn-primary" data-i18n="cta_btn">Contact Us</a>
             </div>
         </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -424,7 +427,7 @@
                     <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
                 </div>
                 <div class="footer-links">
-                    <h4 data-i18n="footer_nav_heading">Quick Navigation</h4>
+                    <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
                     <ul>
                         <li><a href="index.html#home" data-i18n="nav_home">Home</a></li>
                         <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
@@ -437,12 +440,12 @@
                     </ul>
                 </div>
                 <div class="footer-social">
-                    <h4 data-i18n="footer_social_heading">Follow Us</h4>
+                    <h3 data-i18n="footer_social_heading">Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#" class="social-icon social-icon--facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--linkedin"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--youtube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--youtube" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -450,14 +453,13 @@
                 &copy; 2026 MoralTogether. All rights reserved.
             </div>
         </div>
+        <div class="developer-credit"
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                Hamedia</a>
+        </div>
     </footer>
-
-    <div class="developer-credit"
-        style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
-        Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
-            rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
-            Hamedia</a>
-    </div>
 
     <script src="translations.js"></script>
     <script src="script.js"></script>
@@ -485,6 +487,7 @@
         document.addEventListener('langChanged', runTypewriter);
     })();
     </script>
+    <script src="a11y-widget.js" defer></script>
 
 </body>
 </html>

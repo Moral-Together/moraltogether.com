@@ -2161,8 +2161,10 @@ body.dark-mode .ring-3 {
 .footer-bottom {
     text-align: center;
     padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    /* Was 0.5 white, which lands near 2.6:1 on this blue — under the 4.5:1 the standard asks
+       for. 0.82 clears it while still reading as secondary text. */
+    color: rgba(255, 255, 255, 0.82);
     font-size: 0.9rem;
 }
 
@@ -3243,3 +3245,74 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 .avatar-dot--1 { background: linear-gradient(140deg, #0f4c81, #2c6fae); }
 .avatar-dot--2 { background: linear-gradient(140deg, #f5a623, #e07b39); }
 .avatar-dot--3 { background: linear-gradient(140deg, #2c8a6a, #4bb18c); }
+
+
+/* Skip link — the first thing a keyboard finds, invisible until it has focus. */
+.skip-link {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -120%);
+    z-index: 2147483001;
+    padding: 0.75rem 1.4rem;
+    border-radius: 0 0 6px 6px;
+    background: var(--primary-color, #002b64);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+    transform: translate(-50%, 0);
+    outline: 3px solid var(--secondary-color, #e55b27);
+    outline-offset: 2px;
+}
+
+/* Stopping the motion: one switch for everything that moves on its own — the background orbs,
+   the marquee, the entrance reveals. WCAG asks for a way to pause anything that runs longer
+   than five seconds, and hovering is not a way a keyboard can use. */
+html.motion-paused *,
+html.motion-paused *::before,
+html.motion-paused *::after {
+    animation-play-state: paused !important;
+    transition-duration: 0.001ms !important;
+}
+
+.motion-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--primary-color, #002b64) 25%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.motion-toggle:hover { border-color: var(--primary-color, #002b64); }
+
+.motion-toggle:focus-visible {
+    outline: 3px solid var(--secondary-color, #e55b27);
+    outline-offset: 2px;
+}
+
+
+/* Read by a screen reader, invisible on screen — for headings that the layout conveys by
+   position and size rather than by text. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}

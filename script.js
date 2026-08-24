@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- i18n Language Engine ---
+    const HTML_LANG = { en: 'en', he: 'he', gr: 'el' };
     // remember: only a deliberate click is stored. Writing the default on every load made a
     // first visit look like a choice, which meant an Israeli visitor was greeted in English
     // and nothing downstream could tell the difference.
@@ -8,13 +9,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = TRANSLATIONS[lang];
         if (!t) return;
 
-        // Set html lang only — layout stays LTR for all languages
-        document.documentElement.setAttribute('lang', lang);
+        // The internal key for Greek is 'gr', which is a country code, not a language tag —
+        // a screen reader given lang="gr" falls back to guessing and reads Greek in the wrong
+        // voice. The real tag goes into the attribute; the key stays as it is in the code.
+        document.documentElement.setAttribute('lang', HTML_LANG[lang] || lang);
 
-        // Translate text nodes
+        // Translate text nodes. An element that names an attribute in data-i18n-attr gets the
+        // translation there instead — the gallery dialog needs a translated aria-label, and
+        // writing that string into its innerHTML deleted the dialog: the close button, the
+        // arrows, the image and the title element were all replaced by the words themselves.
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (t[key] !== undefined) el.innerHTML = t[key];
+            if (t[key] === undefined) return;
+            const attr = el.getAttribute('data-i18n-attr');
+            if (attr) el.setAttribute(attr, t[key]);
+            else el.innerHTML = t[key];
         });
 
         // Translate innerHTML (preserves inner spans like vision-highlight)
@@ -147,6 +156,50 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', setActive);
     setActive();
 
+    // --- Escape closes the mobile drawer -------------------------------------------
+    // Opening the menu with a keyboard used to be a one-way door: Escape did nothing and the
+    // only way out was to find the burger again.
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        const menu = document.querySelector('.nav-menu.active');
+        if (!menu) return;
+        menu.classList.remove('active');
+        document.querySelector('.hamburger')?.classList.remove('active');
+        document.querySelector('.hamburger')?.focus();
+    });
+
+    // --- One switch for everything that moves on its own ---------------------------
+    // The background orbs and the gallery marquee run for as long as the page is open. The
+    // standard asks for a way to stop that, and hovering is not a way a keyboard can use.
+    (() => {
+        const toggle = document.getElementById('motionToggle');
+        const label = toggle?.querySelector('[data-i18n]');
+        const asked = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let paused = false;
+        try { paused = localStorage.getItem('motion') === 'paused'; } catch (e) { /* ignore */ }
+        if (asked) paused = true;   // the system setting decides unless the visitor says otherwise
+
+        const apply = () => {
+            document.documentElement.classList.toggle('motion-paused', paused);
+            if (!toggle) return;
+            toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+            if (label) {
+                label.setAttribute('data-i18n', paused ? 'motion_start' : 'motion_stop');
+                const dict = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[document.documentElement.lang === 'el' ? 'gr' : document.documentElement.lang];
+                label.textContent = (dict && dict[paused ? 'motion_start' : 'motion_stop'])
+                    || (paused ? 'Start the motion' : 'Stop the motion');
+            }
+        };
+
+        toggle?.addEventListener('click', () => {
+            paused = !paused;
+            try { localStorage.setItem('motion', paused ? 'paused' : 'running'); } catch (e) { /* ignore */ }
+            apply();
+        });
+        apply();
+        document.addEventListener('langChanged', apply);
+    })();
+
     // --- Partner logo videos: nothing is fetched until the card is nearly in view ---
     // The markup carries data-src and data-poster instead of src and poster, so a visit that
     // never reaches the gallery never pays for a single logo. Thirty-one of them used to load
@@ -154,6 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
     (() => {
         const videos = document.querySelectorAll('video[loop] source[data-src]');
         if (!videos.length) return;
+
+        // Decoration, all of it: a screen reader announcing fifteen unnamed players helps
+        // nobody, and this has to hold before a card wakes as well as after.
+        videos.forEach((source) => {
+            const video = source.parentElement;
+            video.setAttribute('aria-hidden', 'true');
+            video.setAttribute('tabindex', '-1');
+        });
 
         const net = navigator.connection || {};
         const stillsOnly = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -616,6 +677,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal       = document.getElementById('galleryModal');
     const modalImg    = document.getElementById('galleryModalImg');
     const modalTitle  = document.getElementById('galleryModalTitle');
+    // partnerships.html has no gallery, and this block is the last thing in the handler: without
+    // the guard every visit to that page threw a TypeError before the dialog was even wired.
+    if (!modal) return;
     const modalClose  = modal.querySelector('.gallery-modal-close');
     const modalPrev   = modal.querySelector('.gallery-modal-prev');
     const modalNext   = modal.querySelector('.gallery-modal-next');

@@ -88,7 +88,11 @@ const TRANSLATIONS = {
     shabbat_opens: "The site opens at",
     shabbat_left: "Time remaining",
     shabbat_tz: "Jerusalem time",
-    shabbat_h: "h", shabbat_m: "min"
+    shabbat_h: "h", shabbat_m: "min",
+    skip_to_content: "Skip to content",
+    partners_grid_heading: "Partner organisations",
+    gallery_modal_label: "Gallery image",
+    motion_stop: "Stop the motion", motion_start: "Start the motion"
   },
 
   he: {
@@ -180,7 +184,11 @@ const TRANSLATIONS = {
     shabbat_opens: "האתר נפתח בשעה",
     shabbat_left: "זמן שנותר",
     shabbat_tz: "שעון ירושלים",
-    shabbat_h: "ש׳", shabbat_m: "ד׳"
+    shabbat_h: "ש׳", shabbat_m: "ד׳",
+    skip_to_content: "דלג לתוכן",
+    partners_grid_heading: "ארגונים שותפים",
+    gallery_modal_label: "תמונה מהגלריה",
+    motion_stop: "עצור תנועה", motion_start: "הפעל תנועה"
   },
 
   gr: {
@@ -272,6 +280,10 @@ const TRANSLATIONS = {
     shabbat_opens: "Η ιστοσελίδα ανοίγει στις",
     shabbat_left: "Απομένει",
     shabbat_tz: "Ώρα Ιερουσαλήμ",
-    shabbat_h: "ώ", shabbat_m: "λ"
+    shabbat_h: "ώ", shabbat_m: "λ",
+    skip_to_content: "Μετάβαση στο περιεχόμενο",
+    partners_grid_heading: "Συνεργαζόμενοι οργανισμοί",
+    gallery_modal_label: "Εικόνα γκαλερί",
+    motion_stop: "Διακοπή κίνησης", motion_start: "Έναρξη κίνησης"
   }
 };

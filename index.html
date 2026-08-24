@@ -73,6 +73,8 @@
 
 <body>
 
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
     <div class="custom-cursor"></div>
 
     <div class="scroll-progress-container">
@@ -131,6 +133,7 @@
         </div>
     </nav>
 
+    <main id="main">
     <!-- Hero Section -->
     <header class="hero" id="home">
         <div class="hero-bg">
@@ -189,22 +192,22 @@
                     <div class="values-grid">
                         <div class="value-card value-card-1">
                             <span class="value-icon"><i class="fas fa-project-diagram" aria-hidden="true"></i></span>
-                            <h4 data-i18n="value1_title">Connections</h4>
+                            <h3 data-i18n="value1_title">Connections</h3>
                             <p data-i18n="value1_desc">Emphasize connections instead of gaps</p>
                         </div>
                         <div class="value-card value-card-2">
                             <span class="value-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
-                            <h4 data-i18n="value2_title">Knowledge Sharing</h4>
+                            <h3 data-i18n="value2_title">Knowledge Sharing</h3>
                             <p data-i18n="value2_desc">Share knowledge instead of competing for it</p>
                         </div>
                         <div class="value-card value-card-3">
                             <span class="value-icon"><i class="fas fa-hammer" aria-hidden="true"></i></span>
-                            <h4 data-i18n="value3_title">Action</h4>
+                            <h3 data-i18n="value3_title">Action</h3>
                             <p data-i18n="value3_desc">Strengthen action instead of just talking</p>
                         </div>
                         <div class="value-card value-card-4">
                             <span class="value-icon"><i class="fas fa-sun" aria-hidden="true"></i></span>
-                            <h4 data-i18n="value4_title">Positive Mindset</h4>
+                            <h3 data-i18n="value4_title">Positive Mindset</h3>
                             <p data-i18n="value4_desc">Cultivate a positive mindset as the foundation for action</p>
                         </div>
                     </div>
@@ -445,25 +448,31 @@
     <section id="gallery" class="section gallery-section">
         <div class="container reveal">
             <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</h2>
+            <p class="text-center" style="margin-bottom: 18px;">
+                <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="false">
+                    <i class="fas fa-hammer" aria-hidden="true"></i>
+                    <span data-i18n="motion_stop">Stop the motion</span>
+                </button>
+            </p>
             <div class="gallery-marquee-container">
                 <div class="gallery-marquee">
                     <div class="gallery-scroll">
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h4 data-i18n="gallery_1">Connections</h4></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h4 data-i18n="gallery_2">Community</h4></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h4 data-i18n="gallery_3">Entrepreneurship</h4></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h4 data-i18n="gallery_4">Hope</h4></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
                     </div>
                 </div>
             </div>
@@ -507,6 +516,8 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="container">
@@ -516,7 +527,7 @@
                     <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
                 </div>
                 <div class="footer-links">
-                    <h4 data-i18n="footer_nav_heading">Quick Navigation</h4>
+                    <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
                     <ul>
                         <li><a href="#home" data-i18n="nav_home">Home</a></li>
                         <li><a href="#about" data-i18n="nav_about">About</a></li>
@@ -529,12 +540,12 @@
                     </ul>
                 </div>
                 <div class="footer-social">
-                    <h4 data-i18n="footer_social_heading">Follow Us</h4>
+                    <h3 data-i18n="footer_social_heading">Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#" class="social-icon social-icon--facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--linkedin"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon social-icon--youtube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--youtube" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -542,17 +553,17 @@
                 &copy; 2026 MoralTogether. All rights reserved.
             </div>
         </div>
+        <div class="developer-credit"
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                Hamedia</a>
+        </div>
     </footer>
 
-    <div class="developer-credit"
-        style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
-        Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
-            rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
-            Hamedia</a>
-    </div>
 
     <!-- Gallery Modal -->
-    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true">
+    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle" data-i18n-attr="aria-label" data-i18n="gallery_modal_label" aria-label="Gallery image">
         <div class="gallery-modal-backdrop"></div>
         <button class="gallery-modal-close" aria-label="Close"><span>✕</span></button>
         <button class="gallery-modal-arrow gallery-modal-prev" aria-label="Previous">&#8249;</button>
@@ -565,6 +576,7 @@
 
     <script src="translations.js"></script>
     <script src="script.js"></script>
+    <script src="a11y-widget.js" defer></script>
 
 </body>
 </html>
