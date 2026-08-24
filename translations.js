@@ -176,7 +176,7 @@ const TRANSLATIONS = {
 
     // Shabbat closing screen
     shabbat_title: "שבת שלום",
-    shabbat_body: "מורל טוגת'ר שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.",
+    shabbat_body: "MoralTogether שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.",
     shabbat_opens: "האתר נפתח בשעה",
     shabbat_left: "זמן שנותר",
     shabbat_tz: "שעון ירושלים",
