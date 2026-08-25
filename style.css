@@ -504,6 +504,13 @@ body.dark-mode .navbar.scrolled {
     z-index: 1;
 }
 
+/* In the dark theme --primary-color is a bright cyan, and white on it measures 1.96:1 against
+   a 4.5 threshold — the count is barely there. Dark type on the same cyan measures 9.7:1. The
+   accessibility widget's button already turns its glyph dark for exactly this reason. */
+body.dark-mode .avatar-count {
+    color: var(--bg-body);
+}
+
 .floating-social-proof span {
     font-size: 0.95rem;
     font-weight: 500;
