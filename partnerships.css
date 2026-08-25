@@ -332,7 +332,8 @@ body:not(.dark-mode) .partner-card-media::before {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
+/* 75em to match style.css — see the note there. */
+@media (max-width: 75em) {
     .partners-grid {
         grid-template-columns: repeat(2, 1fr);
     }

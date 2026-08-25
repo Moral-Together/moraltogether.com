@@ -42,7 +42,8 @@ body.dark-mode[dir="rtl"] .hero-overlay,
 }
 
 /* --- Mobile / Tablet nav menu: slide from right --- */
-@media (max-width: 1024px) {
+/* Must match the breakpoint in style.css, em for em — see the note there. */
+@media (max-width: 75em) {
     [dir="rtl"] .nav-menu {
         left: auto;
         right: -100%;

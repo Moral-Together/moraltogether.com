@@ -2213,7 +2213,20 @@ body.dark-mode .ring-3 {
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+/* 75em rather than 1200px, and both halves of that matter.
+ *
+ * The number: eight menu items plus the language switcher and the theme toggle need about
+ * 1150px of room. Below that they ran off the right edge, and with no horizontal scrollbar
+ * there was no way back to them. In Greek — the longest words of the three languages — the
+ * switcher and the toggle were simply unreachable on any window narrower than that, at the
+ * ordinary text size. 1024px was too generous a breakpoint for the content it was guarding.
+ *
+ * The unit: em in a media query resolves against the browser's own default font size, not
+ * against anything a stylesheet says, so it follows the reader who has turned that size up in
+ * their browser settings — which a pixel breakpoint cannot see at all. That is the mechanism
+ * WCAG 2.0 AA 1.4.4 is about. (Page zoom is a separate path and was always fine: it shrinks
+ * the viewport, so a zoomed 1280px window reports 640px and lands here anyway.) */
+@media (max-width: 75em) {
     .bento-grid {
         grid-template-columns: repeat(2, 1fr);
     }
