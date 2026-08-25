@@ -713,11 +713,14 @@ body.dark-mode .value-card:hover {
     display: inline-block;
 }
 
+/* These icons carry a gradient rather than one flat colour. They used to be Font Awesome
+   glyphs, so the gradient was clipped to the letterform with background-clip: text. They are
+   CSS masks now — icons.css paints currentColor through the shape — and against a mask that
+   same rule is fatal: it clips the background to text the <i> does not contain, so nothing is
+   painted at all and the card shows an empty 32px box. The mask already cuts the silhouette,
+   so a plain background-image is all a gradient icon needs. */
 .value-icon i {
-    background: linear-gradient(135deg, #e55b27 0%, #f9b80c 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #e55b27 0%, #f9b80c 100%);
     display: inline-block;
 }
 
@@ -2508,10 +2511,7 @@ html.dark-mode-early .light-logo {
 }
 
 .value-card-1 .value-icon i {
-    background: linear-gradient(135deg, #dd2a7b 0%, #a71d6a 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #dd2a7b 0%, #a71d6a 100%);
 }
 
 .value-card-1:hover {
@@ -2523,10 +2523,7 @@ html.dark-mode-early .light-logo {
 }
 
 .value-card-2 .value-icon i {
-    background: linear-gradient(135deg, #e47525 0%, #e1681f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #e47525 0%, #e1681f 100%);
 }
 
 .value-card-2:hover {
@@ -2538,10 +2535,7 @@ html.dark-mode-early .light-logo {
 }
 
 .value-card-3 .value-icon i {
-    background: linear-gradient(135deg, #f9b80c 0%, #fea033 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #f9b80c 0%, #fea033 100%);
 }
 
 .value-card-3:hover {
@@ -2553,10 +2547,7 @@ html.dark-mode-early .light-logo {
 }
 
 .value-card-4 .value-icon i {
-    background: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
 }
 
 .value-card-4:hover {
@@ -2792,10 +2783,7 @@ body.dark-mode .value-card-1 {
     box-shadow: 0 -2px 12px rgba(255, 45, 120, 0.45), 0 8px 32px rgba(0,0,0,0.45);
 }
 body.dark-mode .value-card-1 .value-icon i {
-    background: linear-gradient(135deg, #ff2d78, #ff6ba8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #ff2d78, #ff6ba8);
     filter: drop-shadow(0 0 6px rgba(255, 45, 120, 0.8));
 }
 body.dark-mode .value-card-1:hover {
@@ -2807,10 +2795,7 @@ body.dark-mode .value-card-2 {
     box-shadow: 0 -2px 12px rgba(255, 149, 0, 0.45), 0 8px 32px rgba(0,0,0,0.45);
 }
 body.dark-mode .value-card-2 .value-icon i {
-    background: linear-gradient(135deg, #ff9500, #ffcc44);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #ff9500, #ffcc44);
     filter: drop-shadow(0 0 6px rgba(255, 149, 0, 0.8));
 }
 body.dark-mode .value-card-2:hover {
@@ -2822,10 +2807,7 @@ body.dark-mode .value-card-3 {
     box-shadow: 0 -2px 12px rgba(0, 255, 179, 0.40), 0 8px 32px rgba(0,0,0,0.45);
 }
 body.dark-mode .value-card-3 .value-icon i {
-    background: linear-gradient(135deg, #00ffb3, #00c8ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #00ffb3, #00c8ff);
     filter: drop-shadow(0 0 6px rgba(0, 255, 179, 0.8));
 }
 body.dark-mode .value-card-3:hover {
@@ -2837,10 +2819,7 @@ body.dark-mode .value-card-4 {
     box-shadow: 0 -2px 12px rgba(249, 184, 12, 0.45), 0 8px 32px rgba(0,0,0,0.45);
 }
 body.dark-mode .value-card-4 .value-icon i {
-    background: linear-gradient(135deg, #f9b80c, #ffdd00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #f9b80c, #ffdd00);
     filter: drop-shadow(0 0 6px rgba(249, 184, 12, 0.85));
 }
 body.dark-mode .value-card-4:hover {
