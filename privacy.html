@@ -34,6 +34,7 @@
     <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
     <link rel="stylesheet" href="legal.css">
     <link rel="stylesheet" href="icons.css">
 </head>
@@ -52,7 +53,9 @@
     <div class="custom-cursor"></div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar" dir="ltr">
+    <!-- No dir here: the header follows the document, same as the other pages. Pinned to ltr,
+         the Hebrew menu read backwards — Contact first from the right, Home last. -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">

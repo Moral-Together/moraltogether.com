@@ -55,6 +55,17 @@ body.dark-mode[dir="rtl"] .hero-overlay,
     }
 }
 
+/* --- About text column: the divider between the text and the value cards ---
+   The column carries the orange rule on its own right edge. Left to right that puts it
+   between the two columns; mirrored, the column moves to the right of the grid and the rule
+   goes with it, ending up against the outer edge of the page instead of between anything. */
+[dir="rtl"] .about-text-column {
+    border-right: none;
+    border-left: 4px solid var(--secondary-color);
+    padding-right: 0;
+    padding-left: 30px;
+}
+
 /* --- About quote: border flips side --- */
 [dir="rtl"] .about-quote {
     border-left: none;
@@ -114,7 +125,30 @@ body.dark-mode[dir="rtl"] .hero-overlay,
     transform: scaleX(-1);
 }
 
-/* --- Contact method cards: icon stays left, flex handles order --- */
+/* --- Contact method cards --- */
+/* Flex puts the icon on the reading side by itself, but the coloured accent is a physical
+   border-left and stays put. It belongs where the eye starts, which is the right here. */
+[dir="rtl"] .contact-mail-card {
+    border-left: 1px solid transparent;
+    border-right: 4px solid #dd2a7b;
+}
+
+[dir="rtl"] .contact-whatsapp-card {
+    border-left: 1px solid transparent;
+    border-right: 4px solid #4bb578;
+}
+
+/* The card nudges towards the reader on hover; mirrored, that is the other way. */
+[dir="rtl"] .contact-method-card:hover {
+    transform: translateX(-5px);
+}
+
+/* The paper plane points the way a message travels, so it turns around with the text.
+   Not transform: floatIcon animates that property and would overwrite it. The scale
+   property composes with the animation instead of fighting it. */
+[dir="rtl"] .glow-icon {
+    scale: -1 1;
+}
 
 /* --- Gallery modal arrows: swap for RTL --- */
 [dir="rtl"] .gallery-modal-prev { order: 1; }

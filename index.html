@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- Direction before the first paint. script.js settles the language a moment later, but
+         a Hebrew reader would otherwise watch the whole page swing from left to right. Same
+         order of preference the engine uses: a remembered choice, then the browser's. -->
+    <script>(function(){try{var m={he:'he',iw:'he',en:'en',el:'gr',gr:'gr'},s=null;try{s=localStorage.getItem('lang')}catch(e){}
+    if(!m[s]){s=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length;i++){var t=(a[i]||'').toLowerCase().split('-')[0];if(m[t]){s=m[t];break}}}
+    if(s){document.documentElement.lang=(s==='gr'?'el':s);document.documentElement.dir=(s==='he'?'rtl':'ltr')}}catch(e){}})()</script>
     <!-- Shabbat gate: decide before the first paint, from the cached windows -->
     <script>(function(){try{window.__shabbatLang=localStorage.getItem('lang')||null;var s=location.search;if(/[?&]mtp=open/.test(s))return;if(/[?&]mtp=closed/.test(s)){document.documentElement.classList.add('shabbat-closed');return}var c=JSON.parse(localStorage.getItem('shabbat.v1')||'null'),n=Date.now(),i;if(!c||!c.w)return;for(i=0;i<c.w.length;i++){if(n>=c.w[i][0]&&n<c.w[i][1]){document.documentElement.classList.add('shabbat-closed');break}}}catch(e){}})()</script>
     <link rel="stylesheet" href="shabbat-gate.css">
@@ -68,6 +74,7 @@
     <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
     <link rel="stylesheet" href="icons.css">
 </head>
 
@@ -98,7 +105,9 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar" dir="ltr">
+    <!-- No dir here: the header follows the document. Pinned to ltr, the Hebrew menu read
+         backwards — a reader scanning from the right met Contact first and Home last. -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
                 <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">

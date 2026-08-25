@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // voice. The real tag goes into the attribute; the key stays as it is in the code.
         document.documentElement.setAttribute('lang', HTML_LANG[lang] || lang);
 
+        // Hebrew reads right to left, and until now the site did not say so — the pages were
+        // laid out left to right in every language, which the stage-1 audit called the worst
+        // barrier on the site. rtl.css hangs off this attribute.
+        document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
+
         // Translate text nodes. An element that names an attribute in data-i18n-attr gets the
         // translation there instead — the gallery dialog needs a translated aria-label, and
         // writing that string into its innerHTML deleted the dialog: the close button, the
