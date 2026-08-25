@@ -48,6 +48,7 @@
             opens: 'The site opens at',
             left: 'Time remaining',
             tz: 'Jerusalem time',
+            langs: 'Language',
             h: 'h', m: 'min'
         },
         he: {
@@ -56,6 +57,7 @@
             opens: 'האתר נפתח בשעה',
             left: 'זמן שנותר',
             tz: 'שעון ירושלים',
+            langs: 'בחירת שפה',
             h: 'ש׳', m: 'ד׳'
         },
         gr: {
@@ -64,9 +66,17 @@
             opens: 'Η ιστοσελίδα ανοίγει στις',
             left: 'Απομένει',
             tz: 'Ώρα Ιερουσαλήμ',
+            langs: 'Γλώσσα',
             h: 'ώ', m: 'λ'
         }
     };
+
+    // A language button is labelled in the language it selects, not in the language of the
+    // interface — that is how a reader who cannot read the current one finds their way out.
+    // The two-letter face ("EN", "עב", "ΕΛ") is fine to look at and useless to hear, so the
+    // accessible name is the endonym, and each button declares its own lang so a screen
+    // reader pronounces it with the right voice instead of spelling it out.
+    var LANG_NAMES = { en: 'English', he: 'עברית', gr: 'Ελληνικά' };
 
     var state = {
         windows: [],       // [[startMs, endMs], ...] ascending
@@ -365,9 +375,34 @@
             opens: t.shabbat_opens || fallback.opens,
             left: t.shabbat_left || fallback.left,
             tz: t.shabbat_tz || fallback.tz,
+            langs: t.shabbat_langs || fallback.langs,
             h: t.shabbat_h || fallback.h,
             m: t.shabbat_m || fallback.m
         };
+    }
+
+    // aria-modal="true" keeps a screen reader's virtual cursor inside the dialog, but it does
+    // nothing to Tab. Measured: the order ran EN -> עב -> ΕΛ -> "skip to content" -> the dialog,
+    // and that fourth stop is a link on the page behind the gate — a keyboard visitor tabbed
+    // straight out of a closed site into the site. So the cycle is closed by hand.
+    function trapFocus(el) {
+        el.addEventListener('keydown', function (e) {
+            if (e.key !== 'Tab') return;
+            var stops = [].slice.call(el.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])'))
+                .filter(function (n) { return n.offsetParent !== null || n === document.activeElement; });
+            if (!stops.length) { e.preventDefault(); el.focus(); return; }
+            var first = stops[0];
+            var last = stops[stops.length - 1];
+            // The dialog itself holds focus until the visitor presses Tab, so the first press
+            // has to land on the first stop rather than leaving through the end of the page.
+            if (document.activeElement === el) {
+                e.preventDefault();
+                (e.shiftKey ? last : first).focus();
+                return;
+            }
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
     }
 
     function applyCopy(el, lang, endInstant) {
@@ -384,10 +419,16 @@
         el.querySelector('.shabbat-gate__time').textContent = localTimeLabel(endInstant);
         el.querySelector('.shabbat-gate__tz').textContent = t.tz;
         renderCountdown(el.querySelector('.shabbat-gate__count'), endInstant, t);
+        // role="group" with nothing to call it is announced as an unnamed group.
+        var group = el.querySelector('.shabbat-gate__langs');
+        if (group) group.setAttribute('aria-label', t.langs);
         el.querySelectorAll('.shabbat-gate__lang').forEach(function (btn) {
-            var active = btn.getAttribute('data-lang') === lang;
+            var code = btn.getAttribute('data-lang');
+            var active = code === lang;
             btn.classList.toggle('is-active', active);
             btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+            btn.setAttribute('aria-label', LANG_NAMES[code] || code);
+            btn.setAttribute('lang', HTML_LANG[code] || code);
         });
         return t;
     }
@@ -428,6 +469,7 @@
             });
         });
 
+        trapFocus(el);
         applyCopy(el, lang, endInstant);
         return el;
     }
