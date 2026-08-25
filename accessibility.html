@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- The document holds all three languages and shows one. Choosing it before the first
+         paint keeps a Hebrew reader from seeing a screen of English first. script.js repeats
+         the same choice a moment later and drives everything else. -->
+    <script>(function(){try{var m={he:'he',iw:'he',en:'en',el:'gr',gr:'gr'},s=null;try{s=localStorage.getItem('lang')}catch(e){}
+    if(!m[s]){s=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length;i++){var t=(a[i]||'').toLowerCase().split('-')[0];if(m[t]){s=m[t];break}}}
+    if(s)document.documentElement.lang=(s==='gr'?'el':s)}catch(e){}})()</script>
+    <!-- No Shabbat gate on this page. An accessibility statement and a privacy policy are
+         documents the law requires to be reachable, so they stay open all week. -->
+    <title>Accessibility Statement | MoralTogether</title>
+
+    <!-- SEO -->
+    <meta name="description" content="The accessibility statement for the MoralTogether website — level of accessibility, what has been made accessible, known limitations and the accessibility coordinator.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moraltogether.com/accessibility.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moraltogether.com/accessibility.html">
+    <meta property="og:title" content="Accessibility Statement | MoralTogether">
+    <meta property="og:description" content="The accessibility statement for the MoralTogether website — level of accessibility, what has been made accessible, known limitations and the accessibility coordinator.">
+
+    <!-- Fonts, served from here: no third-party DNS and no third-party connection before text -->
+    <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="legal.css">
+    <link rel="stylesheet" href="icons.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
+            <div class="loader-anim"></div>
+        </div>
+    </div>
+    <div class="custom-cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" dir="ltr">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
+                <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="index.html#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="index.html#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="index.html#team" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="index.html#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="he">עב</button>
+                    <button class="lang-btn" data-lang="gr">ΕΛ</button>
+                </div>
+                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                </button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="legal-main">
+        <div class="container legal-container">
+
+        <article class="legal-doc" lang="he" dir="rtl">
+            <h1>הצהרת נגישות</h1>
+            <p class="legal-org"><strong>MoralTogether — מאחדים כוחות טובים</strong></p>
+            <p class="legal-meta">עודכן לאחרונה: 25 באוגוסט 2026<br>
+            מועד בדיקת הנגישות האחרונה: 24 באוגוסט 2026</p>
+            <h2>1. המחויבות שלנו</h2>
+            <p>אתר MoralTogether מופעל על ידי זוזים פרנסה מבורכת בתנופה בע"מ, ח.פ. 516602992, מרחוב דשנים 11, חיפה.</p>
+            <p>אנו רואים בנגישות האתר ערך מרכזי, ופועלים כדי שכל אדם — לרבות אנשים עם מוגבלות — יוכל לגלוש באתר, לקרוא על הארגון ועל היוזמות השותפות, לצפות בגלריה וליצור עמנו קשר, באופן עצמאי, נוח ושוויוני.</p>
+            <p>הנגשת האתר נעשית בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ"ח-1998, ולתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013.</p>
+            <h2>2. רמת הנגישות באתר</h2>
+            <p>אנו פועלים להנגשת האתר לרמה AA בהתאם לתקן הישראלי ת"י 5568, המבוסס על הנחיות WCAG 2.0 של ארגון W3C.</p>
+            <p>הנגשת האתר היא תהליך מתמשך, ואיננו מצהירים כי הושלם. בבדיקה שערכנו ביום 24 באוגוסט 2026 אותרו ליקויים; חלקם תוקנו וחלקם נמצאים בטיפול, והם מפורטים בגילוי מלא בסעיף 5. ליקויים שמתגלים או שמדווחים לנו מתוקנים בהקדם האפשרי.</p>
+            <h2>3. מה הונגש באתר</h2>
+            <ul>
+            <li><strong>קישור דילוג לתוכן</strong> בראש כל עמוד, המאפשר לדלג על תפריט הניווט ולהגיע ישירות לתוכן המרכזי.</li>
+            <li><strong>ניווט מלא באמצעות מקלדת</strong>, לרבות סימון מיקוד (focus) ברור וגלוי על כל רכיב אינטראקטיבי.</li>
+            <li><strong>סגירה במקש Esc</strong> של תפריט הניווט הנייד ושל חלון תצוגת התמונות בגלריה, ותיוג נכון של חלונות דו-שיח, כך שקורא מסך מכריז עליהם ועל שמם.</li>
+            <li><strong>תיוג מילולי של קישורי האייקונים</strong> ברשתות החברתיות ובאזור יצירת הקשר, כך שקורא מסך מקריא את יעד הקישור ולא את המילה "קישור" בלבד.</li>
+            <li><strong>ציון שפת העמוד</strong> בתגית <code>lang</code> בערך תקני לכל אחת משלוש שפות הממשק, כדי שקורא מסך יבחר את מנוע ההקראה הנכון.</li>
+            <li><strong>אפשרות לעצור תנועה ואנימציה</strong> באתר באמצעות בקרה ייעודית, וכן התאמה אוטומטית להגדרת מערכת ההפעלה <code>prefers-reduced-motion</code>.</li>
+            <li><strong>טקסט חלופי</strong> לכל התמונות בעלות המשמעות באתר.</li>
+            <li><strong>הסתרת סרטוני הלוגו של השותפים מקוראי מסך</strong>, כדי שלא יוכרזו כנגני מדיה ללא שם.</li>
+            <li><strong>ווידג'ט נגישות צף</strong> המאפשר להגדיל ולהקטין טקסט, להגביר ניגודיות, להדגיש קישורים, לעצור תנועה, להסתיר תמונות ולהתאים את המרווח בין השורות ובין האותיות. ההעדפות שנבחרות בו נשמרות בדפדפן שלך בלבד.</li>
+            <li><strong>זמני טעינה קצרים.</strong> משקל העמוד הראשי הופחת מ-62 מגה-בייט ל-1.2 מגה-בייט, וזמן הטעינה מ-29 שניות ל-2.6 שניות. השיפור משמעותי במיוחד בחיבורים איטיים ובמכשירים ישנים.</li>
+            <li><strong>תצוגה מותאמת</strong> למכשירים ניידים ולהגדלת הטקסט בדפדפן.</li>
+            </ul>
+            <h2>4. דפדפנים וטכנולוגיות מסייעות</h2>
+            <p>האתר נבדק בגרסאות עדכניות של Chrome, Edge, Firefox ו-Safari, במחשב ובמכשירים ניידים.</p>
+            <p>הבדיקות שהושלמו עד כה כוללות בדיקה אוטומטית בכלי axe-core בשלוש שפות הממשק ובשני מצבי התצוגה, וכן מעבר ידני מלא באמצעות מקלדת. <strong>בדיקה בקוראי מסך NVDA ו-VoiceOver טרם בוצעה</strong>, והיא מתוכננת; עם השלמתה נעדכן הצהרה זו. שימוש בדפדפנים ישנים או בגרסאות שאינן נתמכות עלול לפגוע בחוויית השימוש ובנגישות.</p>
+            <h2>5. מגבלות נגישות ידועות</h2>
+            <p>למרות מאמצינו, קיימים באתר חלקים שהנגשתם אינה מלאה. אנו מציינים זאת בשקיפות:</p>
+            <ul>
+            <li><strong>כיווניות מימין לשמאל.</strong> העמוד הראשי ועמוד השותפויות מוצגים כיום בכיווניות משמאל לימין גם כאשר שפת הממשק היא עברית. עבור קורא עברית — ובמיוחד עבור משתמש בקורא מסך — זהו החסם המשמעותי ביותר באתר, ואנו פועלים לתקנו. עמוד זה ועמוד מדיניות הפרטיות כבר מוצגים בכיווניות הנכונה.</li>
+            <li><strong>פאנל הווידג'ט אינו מדבר יוונית.</strong> ממשק ווידג'ט הנגישות זמין בעברית, באנגלית, בערבית וברוסית. גולש שבחר יוונית באתר יקבל את הפאנל באנגלית. פעולות הווידג'ט עצמן פועלות במלואן בכל שפה.</li>
+            <li><strong>מבנה כותרות ואזורי נחיתה.</strong> חלק מהמקטעים באתר אינם מסומנים כאזורי נחיתה (landmarks) בעלי שם, וקיימות קפיצות בסדר ההיררכי של הכותרות. הדבר אינו מונע גישה לתוכן, אך מקשה על ניווט מהיר בקורא מסך. בטיפול.</li>
+            <li><strong>ניגודיות צבעים מעל תמונות.</strong> ניגודיות הטקסט הרגיל באתר נמדדה ועומדת בסף ה-AA — בשולי העמוד התחתונים, למשל, 9.63:1 בתצוגה הבהירה ו-13.49:1 בכהה, מול סף של 4.5:1. עם זאת, במקומות שבהם טקסט מונח על תמונת רקע — במסך הפתיחה ובכרטיסים השקופים — כלי בדיקה אוטומטי אינו יכול לחשב יחס ניגודיות כלל, ולכן מקומות אלה טרם נמדדו אחד-אחד. המדידה הידנית מתוכננת.</li>
+            <li><strong>תכני צד שלישי.</strong> האתר מפנה בקישורים לערוצי YouTube, לעמודי Facebook ולפרופילי LinkedIn של הארגון ושל היוזמות השותפות. רמת הנגישות של אתרים אלה נקבעת על ידי מפעיליהם ואינה בשליטתנו. הקישורים נפתחים בלשונית חדשה, והדבר מסומן.</li>
+            <li><strong>עמודים ותכנים חדשים.</strong> תכנים שנוספים לאתר עשויים להיבדק ולהיות מונגשים בפער זמן קצר ממועד העלייה שלהם לאוויר.</li>
+            </ul>
+            <h2>6. פנייה בנושא נגישות — רכז הנגישות</h2>
+            <p>נתקלתם בבעיית נגישות באתר? נשמח לדעת. פנייתכם תסייע לנו לשפר את השירות לכלל המשתמשים.</p>
+            <ul>
+            <li><strong>רכז הנגישות:</strong> דוד חיים</li>
+            <li><strong>טלפון:</strong> +972-55-934-4443</li>
+            <li><strong>דואר אלקטרוני:</strong> support@moraltogether.com</li>
+            <li><strong>כתובת למשלוח דואר:</strong> דשנים 11, חיפה</li>
+            </ul>
+            <p>כדי שנוכל לטפל בפנייה במהירות, נשמח אם תפרטו את כתובת העמוד שבו נתקלתם בבעיה, תיאור התקלה, סוג המכשיר והדפדפן שבהם השתמשתם, וטכנולוגיה מסייעת אם נעשה בה שימוש.</p>
+            <p>נשיב לפנייתכם בהקדם, ולא יאוחר מ-14 ימי עסקים ממועד קבלתה, ונעדכן אתכם בדבר הטיפול.</p>
+            <h2>7. נגישות אירועים פיזיים</h2>
+            <p>ככל שיתקיימו מפגשים, כנסים או אירועים של הארגון או של היוזמות השותפות בפני קהל, סידורי הנגישות במקום נקבעים בהתאם למאפייני האולם או האתר שבו מתקיים האירוע. מומלץ לפנות אלינו מראש בפרטים שלעיל כדי לברר אילו התאמות נגישות זמינות ולתאם התאמות נדרשות.</p>
+            <h2>8. עדכון ההצהרה</h2>
+            <p>הצהרה זו נבדקת ומעודכנת מעת לעת, בעקבות שינויים באתר ובעקבות פניות המתקבלות מהמשתמשים. תאריך העדכון האחרון מופיע בראש העמוד.</p>
+        </article>
+
+        <article class="legal-doc" lang="en" dir="ltr">
+            <h1>Accessibility Statement</h1>
+            <p class="legal-org"><strong>MoralTogether — Uniting Good Forces</strong></p>
+            <p class="legal-meta">Last updated: 25 August 2026<br>
+            Date of the most recent accessibility audit: 24 August 2026</p>
+            <h2>1. Our commitment</h2>
+            <p>The MoralTogether website is operated by Zuzim Parnasa Mevorechet Bitnufa Ltd., company number 516602992, of 11 Deshanim Street, Haifa.</p>
+            <p>We regard accessibility as a core value, and we work so that every person — including people with disabilities — can browse the site, read about the organisation and its partner initiatives, view the gallery and contact us, independently, comfortably and on equal terms.</p>
+            <p>The site is made accessible in accordance with the Equal Rights for Persons with Disabilities Law, 5758-1998, and the Equal Rights for Persons with Disabilities Regulations (Service Accessibility Adjustments), 5773-2013.</p>
+            <h2>2. The site's level of accessibility</h2>
+            <p>We are working to make the site accessible to level AA of Israeli Standard IS 5568, which is based on the W3C's WCAG 2.0 guidelines.</p>
+            <p>Making the site accessible is an ongoing process, and we do not claim that it is complete. An audit carried out on 24 August 2026 found defects; some have been fixed and some are being worked on, and they are disclosed in full in section 5. Defects that we discover, or that are reported to us, are corrected as soon as we can.</p>
+            <h2>3. What has been made accessible</h2>
+            <ul>
+            <li><strong>A skip link</strong> at the top of every page, allowing a visitor to skip the navigation menu and go straight to the main content.</li>
+            <li><strong>Full keyboard navigation</strong>, including a clear and visible focus indicator on every interactive element.</li>
+            <li><strong>Escape closes</strong> the mobile navigation menu and the gallery image viewer, and dialogs are correctly labelled so that a screen reader announces them by name.</li>
+            <li><strong>Text names on icon links</strong> in the social media and contact areas, so that a screen reader reads out where the link goes rather than only the word "link".</li>
+            <li><strong>The page language</strong> is declared in the <code>lang</code> attribute with a valid tag for each of the three interface languages, so that a screen reader selects the right speech engine.</li>
+            <li><strong>A control that stops motion and animation</strong> on the site, together with automatic compliance with the operating system's <code>prefers-reduced-motion</code> setting.</li>
+            <li><strong>Alternative text</strong> on every meaningful image on the site.</li>
+            <li><strong>Partner logo videos are hidden from screen readers</strong>, so that they are not announced as unnamed media players.</li>
+            <li><strong>A floating accessibility widget</strong> that allows text to be enlarged or reduced, contrast increased, links highlighted, motion stopped, images hidden, and line and letter spacing adjusted. The preferences chosen in it are stored in your browser only.</li>
+            <li><strong>Short loading times.</strong> The weight of the home page was reduced from 62 MB to 1.2 MB, and its loading time from 29 seconds to 2.6 seconds. The improvement matters most on slow connections and older devices.</li>
+            <li><strong>A responsive layout</strong> for mobile devices and for text enlarged in the browser.</li>
+            </ul>
+            <h2>4. Browsers and assistive technologies</h2>
+            <p>The site has been tested in current versions of Chrome, Edge, Firefox and Safari, on desktop and on mobile devices.</p>
+            <p>The testing completed so far consists of automated testing with axe-core across all three interface languages and both display modes, together with a full manual keyboard pass. <strong>Testing with the NVDA and VoiceOver screen readers has not yet been carried out</strong>; it is planned, and this statement will be updated once it is done. Using older browsers, or versions that are not supported, may impair both usability and accessibility.</p>
+            <h2>5. Known accessibility limitations</h2>
+            <p>Despite our efforts, parts of the site are not fully accessible. We state this openly:</p>
+            <ul>
+            <li><strong>Right-to-left direction.</strong> The home page and the partnerships page are currently laid out left to right even when the interface language is Hebrew. For a Hebrew reader — and especially for someone using a screen reader — this is the most significant barrier on the site, and we are working to correct it. This page and the privacy policy page are already laid out in the correct direction.</li>
+            <li><strong>The widget panel does not speak Greek.</strong> The accessibility widget's interface is available in Hebrew, English, Arabic and Russian. A visitor who has chosen Greek will be given the panel in English. The widget's functions themselves work fully in every language.</li>
+            <li><strong>Heading structure and landmarks.</strong> Some sections of the site are not marked as named landmarks, and there are jumps in the heading hierarchy. This does not prevent access to content, but it makes rapid screen-reader navigation harder. Being worked on.</li>
+            <li><strong>Colour contrast over images.</strong> The contrast of ordinary text on the site has been measured and meets the AA threshold — in the lower page footer, for instance, 9.63:1 in light mode and 13.49:1 in dark, against a threshold of 4.5:1. Where text sits on a background image, however — on the opening screen and on the translucent cards — an automated tool cannot compute a contrast ratio at all, and those places have not yet been measured one by one. Manual measurement is planned.</li>
+            <li><strong>Third-party content.</strong> The site links out to YouTube channels, Facebook pages and LinkedIn profiles belonging to the organisation and its partner initiatives. The accessibility of those sites is determined by their operators and is not under our control. The links open in a new tab, and this is indicated.</li>
+            <li><strong>New pages and content.</strong> Content added to the site may be tested and made accessible a short time after it goes live.</li>
+            </ul>
+            <h2>6. Reporting an accessibility problem — the accessibility coordinator</h2>
+            <p>Did you run into an accessibility problem on the site? We would like to know. Your report helps us improve the service for everyone.</p>
+            <ul>
+            <li><strong>Accessibility coordinator:</strong> David Haim</li>
+            <li><strong>Telephone:</strong> +972-55-934-4443</li>
+            <li><strong>Email:</strong> support@moraltogether.com</li>
+            <li><strong>Postal address:</strong> 11 Deshanim Street, Haifa</li>
+            </ul>
+            <p>So that we can deal with your report quickly, please tell us the address of the page where you encountered the problem, a description of the fault, the device and browser you were using, and any assistive technology involved.</p>
+            <p>We will respond as soon as we can, and no later than 14 business days from receipt, and we will keep you informed of what is being done.</p>
+            <h2>7. Accessibility of physical events</h2>
+            <p>Where meetings, conferences or events of the organisation or its partner initiatives are held in front of an audience, accessibility arrangements at the location are determined by the characteristics of the hall or venue in which the event takes place. We recommend contacting us in advance, using the details above, to find out which accessibility adjustments are available and to arrange any that are needed.</p>
+            <h2>8. Updating this statement</h2>
+            <p>This statement is reviewed and updated from time to time, following changes to the site and following reports received from users. The date it was last updated appears at the top of the page.</p>
+        </article>
+
+        <article class="legal-doc" lang="el" dir="ltr">
+            <h1>Δήλωση Προσβασιμότητας</h1>
+            <p class="legal-org"><strong>MoralTogether — Ενώνουμε τις Καλές Δυνάμεις</strong></p>
+            <p class="legal-meta">Τελευταία ενημέρωση: 25 Αυγούστου 2026<br>
+            Ημερομηνία του πιο πρόσφατου ελέγχου προσβασιμότητας: 24 Αυγούστου 2026</p>
+            <h2>1. Η δέσμευσή μας</h2>
+            <p>Ο ιστότοπος MoralTogether λειτουργεί από την εταιρεία Zuzim Parnasa Mevorechet Bitnufa Ltd., αριθμός μητρώου 516602992, με έδρα την οδό Deshanim 11, Χάιφα.</p>
+            <p>Θεωρούμε την προσβασιμότητα θεμελιώδη αξία και εργαζόμαστε ώστε κάθε άνθρωπος — συμπεριλαμβανομένων των ατόμων με αναπηρία — να μπορεί να περιηγηθεί στον ιστότοπο, να ενημερωθεί για τον οργανισμό και τις συνεργαζόμενες πρωτοβουλίες, να δει τη συλλογή φωτογραφιών και να επικοινωνήσει μαζί μας, με αυτονομία, άνεση και ισότιμους όρους.</p>
+            <p>Η προσβασιμότητα του ιστότοπου υλοποιείται σύμφωνα με τον ισραηλινό Νόμο περί Ίσων Δικαιωμάτων για Άτομα με Αναπηρία, 5758-1998, και τους Κανονισμούς περί Ίσων Δικαιωμάτων για Άτομα με Αναπηρία (Προσαρμογές Προσβασιμότητας στην Εξυπηρέτηση), 5773-2013.</p>
+            <h2>2. Το επίπεδο προσβασιμότητας του ιστότοπου</h2>
+            <p>Εργαζόμαστε ώστε ο ιστότοπος να ανταποκρίνεται στο επίπεδο AA του ισραηλινού προτύπου IS 5568, το οποίο βασίζεται στις οδηγίες WCAG 2.0 του οργανισμού W3C.</p>
+            <p>Η προσβασιμότητα είναι διαρκής διαδικασία και δεν δηλώνουμε ότι έχει ολοκληρωθεί. Ο έλεγχος που διενεργήσαμε στις 24 Αυγούστου 2026 εντόπισε ελλείψεις· ορισμένες έχουν διορθωθεί και ορισμένες βρίσκονται υπό επεξεργασία, και παρατίθενται πλήρως στην ενότητα 5. Ελλείψεις που εντοπίζουμε ή που μας αναφέρονται διορθώνονται το συντομότερο δυνατόν.</p>
+            <h2>3. Τι έχει καταστεί προσβάσιμο</h2>
+            <ul>
+            <li><strong>Σύνδεσμος παράκαμψης προς το περιεχόμενο</strong> στην κορυφή κάθε σελίδας, που επιτρέπει την παράκαμψη του μενού πλοήγησης και τη μετάβαση απευθείας στο κύριο περιεχόμενο.</li>
+            <li><strong>Πλήρης πλοήγηση με το πληκτρολόγιο</strong>, με σαφή και ορατή ένδειξη εστίασης (focus) σε κάθε διαδραστικό στοιχείο.</li>
+            <li><strong>Κλείσιμο με το πλήκτρο Esc</strong> του μενού πλοήγησης για κινητά και του παραθύρου προβολής εικόνων της συλλογής, καθώς και ορθή σήμανση των παραθύρων διαλόγου, ώστε ο αναγνώστης οθόνης να τα ανακοινώνει με το όνομά τους.</li>
+            <li><strong>Λεκτική ονομασία των συνδέσμων-εικονιδίων</strong> στα κοινωνικά δίκτυα και στην περιοχή επικοινωνίας, ώστε ο αναγνώστης οθόνης να εκφωνεί τον προορισμό του συνδέσμου και όχι μόνο τη λέξη «σύνδεσμος».</li>
+            <li><strong>Δήλωση της γλώσσας της σελίδας</strong> στο χαρακτηριστικό <code>lang</code> με έγκυρη τιμή για καθεμία από τις τρεις γλώσσες της διεπαφής, ώστε ο αναγνώστης οθόνης να επιλέγει τη σωστή μηχανή εκφώνησης.</li>
+            <li><strong>Δυνατότητα διακοπής της κίνησης και των εφέ</strong> του ιστότοπου μέσω ειδικού χειριστηρίου, καθώς και αυτόματη προσαρμογή στη ρύθμιση <code>prefers-reduced-motion</code> του λειτουργικού συστήματος.</li>
+            <li><strong>Εναλλακτικό κείμενο</strong> σε όλες τις εικόνες του ιστότοπου που φέρουν νόημα.</li>
+            <li><strong>Απόκρυψη των βίντεο με τα λογότυπα των συνεργατών από τους αναγνώστες οθόνης</strong>, ώστε να μην ανακοινώνονται ως αναπαραγωγείς πολυμέσων χωρίς όνομα.</li>
+            <li><strong>Πλωτό γραφικό στοιχείο προσβασιμότητας</strong> που επιτρέπει μεγέθυνση και σμίκρυνση του κειμένου, αύξηση της αντίθεσης, τονισμό των συνδέσμων, διακοπή της κίνησης, απόκρυψη των εικόνων και προσαρμογή της απόστασης μεταξύ γραμμών και χαρακτήρων. Οι προτιμήσεις που επιλέγονται αποθηκεύονται αποκλειστικά στο πρόγραμμα περιήγησής σας.</li>
+            <li><strong>Σύντομοι χρόνοι φόρτωσης.</strong> Το βάρος της αρχικής σελίδας μειώθηκε από 62 MB σε 1,2 MB και ο χρόνος φόρτωσης από 29 δευτερόλεπτα σε 2,6 δευτερόλεπτα. Η βελτίωση είναι ιδιαίτερα σημαντική σε αργές συνδέσεις και σε παλαιότερες συσκευές.</li>
+            <li><strong>Προσαρμοσμένη εμφάνιση</strong> για κινητές συσκευές και για μεγέθυνση του κειμένου στο πρόγραμμα περιήγησης.</li>
+            </ul>
+            <h2>4. Προγράμματα περιήγησης και υποστηρικτικές τεχνολογίες</h2>
+            <p>Ο ιστότοπος έχει ελεγχθεί σε ενημερωμένες εκδόσεις των Chrome, Edge, Firefox και Safari, σε υπολογιστή και σε κινητές συσκευές.</p>
+            <p>Οι έλεγχοι που έχουν ολοκληρωθεί μέχρι σήμερα περιλαμβάνουν αυτοματοποιημένο έλεγχο με το εργαλείο axe-core και στις τρεις γλώσσες της διεπαφής και στις δύο λειτουργίες εμφάνισης, καθώς και πλήρη χειροκίνητη διαδρομή με το πληκτρολόγιο. <strong>Έλεγχος με τους αναγνώστες οθόνης NVDA και VoiceOver δεν έχει ακόμη διενεργηθεί</strong>· έχει προγραμματιστεί, και με την ολοκλήρωσή του η παρούσα δήλωση θα ενημερωθεί. Η χρήση παλαιότερων ή μη υποστηριζόμενων προγραμμάτων περιήγησης ενδέχεται να επηρεάσει τόσο την εμπειρία χρήσης όσο και την προσβασιμότητα.</p>
+            <h2>5. Γνωστοί περιορισμοί προσβασιμότητας</h2>
+            <p>Παρά τις προσπάθειές μας, υπάρχουν τμήματα του ιστότοπου που δεν είναι πλήρως προσβάσιμα. Το δηλώνουμε με διαφάνεια:</p>
+            <ul>
+            <li><strong>Κατεύθυνση από δεξιά προς τα αριστερά.</strong> Η αρχική σελίδα και η σελίδα των συνεργασιών εμφανίζονται σήμερα με κατεύθυνση από αριστερά προς τα δεξιά, ακόμη και όταν η γλώσσα της διεπαφής είναι τα εβραϊκά. Για έναν αναγνώστη των εβραϊκών — και ιδίως για χρήστη αναγνώστη οθόνης — αυτό είναι το σοβαρότερο εμπόδιο στον ιστότοπο, και εργαζόμαστε για τη διόρθωσή του. Η παρούσα σελίδα και η σελίδα της πολιτικής απορρήτου εμφανίζονται ήδη με τη σωστή κατεύθυνση.</li>
+            <li><strong>Ο πίνακας του γραφικού στοιχείου δεν διαθέτει ελληνικά.</strong> Η διεπαφή του γραφικού στοιχείου προσβασιμότητας είναι διαθέσιμη στα εβραϊκά, τα αγγλικά, τα αραβικά και τα ρωσικά. Επισκέπτης που έχει επιλέξει τα ελληνικά θα λάβει τον πίνακα στα αγγλικά. Οι λειτουργίες του γραφικού στοιχείου λειτουργούν πλήρως σε κάθε γλώσσα.</li>
+            <li><strong>Δομή επικεφαλίδων και ορόσημα πλοήγησης.</strong> Ορισμένες ενότητες του ιστότοπου δεν έχουν σημανθεί ως επώνυμα ορόσημα (landmarks) και υπάρχουν άλματα στην ιεραρχία των επικεφαλίδων. Αυτό δεν εμποδίζει την πρόσβαση στο περιεχόμενο, δυσχεραίνει όμως τη γρήγορη πλοήγηση με αναγνώστη οθόνης. Υπό επεξεργασία.</li>
+            <li><strong>Αντίθεση χρωμάτων πάνω σε εικόνες.</strong> Η αντίθεση του απλού κειμένου του ιστότοπου έχει μετρηθεί και πληροί το όριο του επιπέδου AA — στο κάτω μέρος της σελίδας, για παράδειγμα, 9,63:1 στη φωτεινή λειτουργία και 13,49:1 στη σκοτεινή, έναντι ορίου 4,5:1. Ωστόσο, όπου το κείμενο βρίσκεται πάνω σε εικόνα φόντου — στην αρχική οθόνη και στις ημιδιαφανείς κάρτες — ένα αυτοματοποιημένο εργαλείο δεν μπορεί να υπολογίσει καθόλου λόγο αντίθεσης, και τα σημεία αυτά δεν έχουν ακόμη μετρηθεί ένα προς ένα. Η χειροκίνητη μέτρηση έχει προγραμματιστεί.</li>
+            <li><strong>Περιεχόμενο τρίτων.</strong> Ο ιστότοπος παραπέμπει με συνδέσμους σε κανάλια YouTube, σελίδες Facebook και προφίλ LinkedIn του οργανισμού και των συνεργαζόμενων πρωτοβουλιών. Το επίπεδο προσβασιμότητας των ιστότοπων αυτών καθορίζεται από τους διαχειριστές τους και δεν εμπίπτει στον έλεγχό μας. Οι σύνδεσμοι ανοίγουν σε νέα καρτέλα και αυτό επισημαίνεται.</li>
+            <li><strong>Νέες σελίδες και νέο περιεχόμενο.</strong> Περιεχόμενο που προστίθεται στον ιστότοπο ενδέχεται να ελεγχθεί και να καταστεί προσβάσιμο με μικρή χρονική απόκλιση από τη δημοσίευσή του.</li>
+            </ul>
+            <h2>6. Αναφορά ζητήματος προσβασιμότητας — ο υπεύθυνος προσβασιμότητας</h2>
+            <p>Αντιμετωπίσατε πρόβλημα προσβασιμότητας στον ιστότοπο; Θα θέλαμε να το μάθουμε. Η αναφορά σας μας βοηθά να βελτιώσουμε την υπηρεσία για όλους.</p>
+            <ul>
+            <li><strong>Υπεύθυνος προσβασιμότητας:</strong> David Haim</li>
+            <li><strong>Τηλέφωνο:</strong> +972-55-934-4443</li>
+            <li><strong>Ηλεκτρονικό ταχυδρομείο:</strong> support@moraltogether.com</li>
+            <li><strong>Ταχυδρομική διεύθυνση:</strong> Deshanim 11, Χάιφα</li>
+            </ul>
+            <p>Για να μπορέσουμε να εξετάσουμε γρήγορα την αναφορά σας, παρακαλούμε αναφέρετε τη διεύθυνση της σελίδας στην οποία συναντήσατε το πρόβλημα, περιγραφή της δυσλειτουργίας, τον τύπο της συσκευής και του προγράμματος περιήγησης που χρησιμοποιήσατε, καθώς και τυχόν υποστηρικτική τεχνολογία.</p>
+            <p>Θα απαντήσουμε το συντομότερο δυνατόν και το αργότερο εντός 14 εργάσιμων ημερών από την παραλαβή, και θα σας ενημερώσουμε για την πορεία του αιτήματος.</p>
+            <h2>7. Προσβασιμότητα φυσικών εκδηλώσεων</h2>
+            <p>Εφόσον πραγματοποιηθούν συναντήσεις, συνέδρια ή εκδηλώσεις του οργανισμού ή των συνεργαζόμενων πρωτοβουλιών ενώπιον κοινού, οι ρυθμίσεις προσβασιμότητας στον χώρο καθορίζονται από τα χαρακτηριστικά της αίθουσας ή του χώρου διεξαγωγής. Συνιστούμε να επικοινωνήσετε μαζί μας εκ των προτέρων, με τα παραπάνω στοιχεία, για να ενημερωθείτε ποιες προσαρμογές προσβασιμότητας είναι διαθέσιμες και να συντονίσετε όσες απαιτούνται.</p>
+            <h2>8. Ενημέρωση της δήλωσης</h2>
+            <p>Η παρούσα δήλωση εξετάζεται και ενημερώνεται κατά διαστήματα, ύστερα από αλλαγές στον ιστότοπο και ύστερα από αναφορές που λαμβάνουμε από τους χρήστες. Η ημερομηνία της τελευταίας ενημέρωσης αναγράφεται στην κορυφή της σελίδας.</p>
+        </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="footer-logo">
+                    <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                </div>
+                <div class="footer-links">
+                    <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
+                        <li><a href="index.html#vision" data-i18n="nav_vision">Vision</a></li>
+                        <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
+                        <li><a href="index.html#team" data-i18n="nav_team">Team</a></li>
+                        <li><a href="index.html#gallery" data-i18n="nav_gallery">Gallery</a></li>
+                        <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
+                        <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3 data-i18n="footer_social_heading">Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--youtube" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <a href="accessibility.html" data-i18n="footer_accessibility">Accessibility Statement</a>
+                <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom" style="margin-bottom: 20px;" data-i18n="footer_copyright">
+                &copy; 2026 MoralTogether. All rights reserved.
+            </div>
+        </div>
+        <div class="developer-credit"
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                Hamedia</a>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+    <script>
+    (function () {
+        // The i18n engine writes the site-wide meta_title into document.title on every
+        // language change. On a page with a name of its own that is the wrong title, so it
+        // is put back after the engine has finished. The strings live here rather than in
+        // translations.js because the text of this page lives here too.
+        var TITLES = {"he":"הצהרת נגישות | MoralTogether","en":"Accessibility Statement | MoralTogether","gr":"Δήλωση Προσβασιμότητας | MoralTogether"};
+        var DESCS = {"he":"הצהרת הנגישות של אתר MoralTogether — רמת הנגישות, מה הונגש, מגבלות ידועות ופרטי רכז הנגישות.","en":"The accessibility statement for the MoralTogether website — level of accessibility, what has been made accessible, known limitations and the accessibility coordinator.","gr":"Η δήλωση προσβασιμότητας του ιστότοπου MoralTogether — επίπεδο προσβασιμότητας, τι έχει καταστεί προσβάσιμο, γνωστοί περιορισμοί και ο υπεύθυνος προσβασιμότητας."};
+        var KEY = { en: 'en', he: 'he', el: 'gr' };
+        function apply() {
+            var k = KEY[document.documentElement.lang] || 'en';
+            document.title = TITLES[k];
+            var m = document.querySelector('meta[name="description"]');
+            if (m) m.setAttribute('content', DESCS[k]);
+        }
+        document.addEventListener('langChanged', apply);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+        else apply();
+    })();
+    </script>
+    <script src="a11y-widget.js" defer></script>
+
+</body>
+</html>

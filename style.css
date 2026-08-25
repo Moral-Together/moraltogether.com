@@ -2168,6 +2168,35 @@ body.dark-mode .ring-3 {
     font-size: 0.9rem;
 }
 
+/* The accessibility statement and the privacy policy. Both have to be reachable from every
+   page, so they sit just above the copyright line and take over its divider — the footer
+   keeps one rule across its foot rather than two stacked ones. */
+.footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 28px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 0.9rem;
+}
+
+.footer-legal a {
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+    color: #ffffff;
+}
+
+.footer-legal + .footer-bottom {
+    border-top: none;
+    padding-top: 14px;
+}
+
 /* Text Center Helper */
 .text-center {
     text-align: center;

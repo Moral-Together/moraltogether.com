@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- The document holds all three languages and shows one. Choosing it before the first
+         paint keeps a Hebrew reader from seeing a screen of English first. script.js repeats
+         the same choice a moment later and drives everything else. -->
+    <script>(function(){try{var m={he:'he',iw:'he',en:'en',el:'gr',gr:'gr'},s=null;try{s=localStorage.getItem('lang')}catch(e){}
+    if(!m[s]){s=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length;i++){var t=(a[i]||'').toLowerCase().split('-')[0];if(m[t]){s=m[t];break}}}
+    if(s)document.documentElement.lang=(s==='gr'?'el':s)}catch(e){}})()</script>
+    <!-- No Shabbat gate on this page. An accessibility statement and a privacy policy are
+         documents the law requires to be reachable, so they stay open all week. -->
+    <title>Privacy Policy | MoralTogether</title>
+
+    <!-- SEO -->
+    <meta name="description" content="The privacy policy for the MoralTogether website — what information is actually collected, who receives it and what rights you have.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moraltogether.com/privacy.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moraltogether.com/privacy.html">
+    <meta property="og:title" content="Privacy Policy | MoralTogether">
+    <meta property="og:description" content="The privacy policy for the MoralTogether website — what information is actually collected, who receives it and what rights you have.">
+
+    <!-- Fonts, served from here: no third-party DNS and no third-party connection before text -->
+    <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="legal.css">
+    <link rel="stylesheet" href="icons.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
+            <div class="loader-anim"></div>
+        </div>
+    </div>
+    <div class="custom-cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" dir="ltr">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
+                <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="index.html#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="index.html#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="index.html#team" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="index.html#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="he">עב</button>
+                    <button class="lang-btn" data-lang="gr">ΕΛ</button>
+                </div>
+                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                </button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="legal-main">
+        <div class="container legal-container">
+
+        <article class="legal-doc" lang="he" dir="rtl">
+            <h1>מדיניות פרטיות</h1>
+            <p class="legal-org"><strong>MoralTogether — מאחדים כוחות טובים</strong></p>
+            <p class="legal-meta">עודכן לאחרונה: 25 באוגוסט 2026 · גרסה 1.0</p>
+            <p class="legal-lead"><strong>בקצרה:</strong> אתר MoralTogether הוא אתר תדמית ומידע. אין בו הרשמה, אין בו חשבונות משתמש ואין בו טפסים. איננו מבקשים ממך פרטים אישיים, איננו שומרים אותם בשרת כלשהו ואיננו משתמשים בעוגיות, בכלי אנליטיקה או בפיקסלים פרסומיים. המסמך המלא שלהלן מפרט את המעט שכן נאסף, על ידי מי, ואילו זכויות עומדות לך.</p>
+            <h2>1. מי אנחנו</h2>
+            <p>האתר מופעל על ידי זוזים פרנסה מבורכת בתנופה בע"מ, חברה פרטית הרשומה בישראל שמספרה 516602992 (להלן: "החברה", "אנחנו" או "מפעילת האתר").</p>
+            <p>החברה היא הגורם האחראי לעיבוד המידע (Data Controller) לעניין תקנת הגנת המידע האירופית (GDPR).</p>
+            <ul>
+            <li><strong>כתובת:</strong> דשנים 11, חיפה</li>
+            <li><strong>איש הקשר בנושאי פרטיות:</strong> דוד חיים</li>
+            <li><strong>דואר אלקטרוני:</strong> support@moraltogether.com (פרטי קשר מלאים בסעיף 18)</li>
+            </ul>
+            <p>אנו מכבדים את פרטיותך ומחויבים להגן על המידע האישי שלך. מדיניות זו מנוסחת בהתאם לחוק הגנת הפרטיות, התשמ"א-1981 ולתיקון מס' 13 לחוק, וכן בהתאם לתקנה הכללית להגנת מידע של האיחוד האירופי (GDPR), ככל שהיא חלה — ובכלל זה על גולשים ביוון ובקפריסין, שכן האתר מוצע גם ביוונית.</p>
+            <p>המדיניות חלה על כל מבקר באתר <code>https://moraltogether.com/</code>.</p>
+            <h2>2. מה האתר הזה עושה, ומה הוא איננו</h2>
+            <p>האתר מציג מידע על הארגון, על היוזמות השותפות ועל פעילותן, לצד גלריית תמונות ופרטי יצירת קשר. הוא אתר סטטי: אין בו בסיס נתונים, אין בו צד שרת המעבד את פנייתך, ואין בו אזור אישי.</p>
+            <p>אין באתר טופס יצירת קשר, טופס הרשמה, טופס תרומה או כל שדה קלט אחר. הדרך ליצור עמנו קשר היא באמצעות הקישור לדואר אלקטרוני שבעמוד — כלומר בהודעה שאתה שולח מתיבת הדואר שלך, ביוזמתך.</p>
+            <h2>3. בהירות ושקיפות — חובת היידוע</h2>
+            <p>בהתאם להוראות תיקון 13 לחוק הגנת הפרטיות אנו מבהירים במפורש:</p>
+            <ul>
+            <li><strong>איסוף מרצון.</strong> אינך חב על פי חוק למסור לנו מידע אישי כלשהו. גלישה באתר אינה מותנית במסירת מידע.</li>
+            <li><strong>תוצאת אי-מסירה.</strong> אין כל תוצאה. כל תוכן האתר פתוח וזמין ללא מסירת פרטים.</li>
+            <li><strong>זהות בעל המאגר</strong> מפורטת בסעיף 1; <strong>מטרות העיבוד</strong> בסעיף 7; <strong>זהות מקבלי המידע</strong> בסעיפים 9 ו-10.</li>
+            </ul>
+            <h2>4. איזה מידע נאסף בפועל</h2>
+            <p><strong>מידע שאתה מוסר ביוזמתך.</strong> אם תבחר לכתוב אלינו לכתובת שבאתר, נקבל את כתובת הדואר האלקטרוני שלך ואת תוכן ההודעה, לרבות כל פרט שבחרת לכלול בה. איננו מבקשים פרטים מעבר לנדרש למענה, ואיננו משתמשים בכתובת שלך לשום מטרה אחרת.</p>
+            <p><strong>רשומות שרת אצל ספק האחסון.</strong> האתר מאוחסן בשירות GitHub Pages. כמו כל שרת אינטרנט, השרת המגיש את העמודים רושם את כתובת ה-IP של המבקש, את סוג הדפדפן ומערכת ההפעלה, את כתובת העמוד שהתבקש ואת מועד הבקשה. רשומות אלה נוצרות ומוחזקות אצל ספק האחסון ולא אצלנו; אין לנו גישה שוטפת אליהן ואיננו מקבלים מהן דוחות.</p>
+            <p><strong>פנייה אל שירות חיצוני לחישוב זמני שבת.</strong> ראו סעיף 9.</p>
+            <p><strong>מידע שאיננו אוספים.</strong> איננו אוספים ואיננו מעבדים מידע ביומטרי, ואיננו מבצעים זיהוי פנים או ניתוח קולי. איננו אוספים במכוון מידע על מצב בריאות, מוצא, דעות פוליטיות, אמונות דתיות, נטייה מינית או חברות באיגוד מקצועי. נא לא לכלול מידע כזה בפנייה אלינו אלא אם הוא חיוני לעניין הפנייה.</p>
+            <h2>5. עוגיות ואחסון מקומי בדפדפן</h2>
+            <p><strong>האתר אינו עושה שימוש בעוגיות (Cookies) כלל</strong> — לא עוגיות חיוניות, לא עוגיות מדידה ולא עוגיות פרסום. מטעם זה אין באתר באנר בקשת הסכמה לעוגיות.</p>
+            <p>האתר כן שומר מספר העדפות ב-<code>localStorage</code> של הדפדפן שלך. מדובר במנגנון אחסון מקומי: הערכים נשמרים במכשיר שלך בלבד, <strong>אינם נשלחים אלינו ואינם נשלחים לאף גורם אחר</strong>, ואין בהם כדי לזהות אותך. אלה הערכים:</p>
+            <div class="legal-table-scroll">
+            <table>
+            <thead>
+            <tr><th scope="col">מפתח</th><th scope="col">מה נשמר בו</th></tr>
+            </thead>
+            <tbody>
+            <tr><th scope="row"><code>lang</code></th><td>שפת הממשק שבחרת — עברית, אנגלית או יוונית</td></tr>
+            <tr><th scope="row"><code>theme</code></th><td>מצב תצוגה בהיר או כהה</td></tr>
+            <tr><th scope="row"><code>motion</code></th><td>האם ביקשת לעצור את התנועה והאנימציה באתר</td></tr>
+            <tr><th scope="row"><code>shabbat.v1</code></th><td>עותק מקומי של לוח זמני כניסת השבת וצאתה, כדי שהאתר לא יבקש אותו מחדש בכל ביקור</td></tr>
+            <tr><th scope="row"><code>opennagish_prefs</code></th><td>ההעדפות שבחרת בווידג'ט הנגישות — גודל טקסט, ניגודיות וכדומה</td></tr>
+            </tbody>
+            </table>
+            </div>
+            <p>ניתן למחוק ערכים אלה בכל עת דרך הגדרות הדפדפן ("נקה נתוני אתרים" או "Clear site data"), וכן על ידי גלישה בחלון פרטי. מחיקתם תאפס את ההעדפות ולא תפגע בשימוש באתר.</p>
+            <h2>6. הבסיס החוקי לעיבוד</h2>
+            <ul>
+            <li><strong>אינטרס לגיטימי</strong> (סעיף 6(1)(f) ל-GDPR) — הגשת האתר, שמירה על תקינותו ואבטחתו, ומניעת שימוש לרעה. זהו הבסיס לרשומות השרת המתוארות בסעיף 4.</li>
+            <li><strong>הסכמה</strong> (סעיף 6(1)(a)) — פנייה יזומה שלך אלינו בדואר אלקטרוני, ושמירת ההעדפות בדפדפן שלך.</li>
+            <li><strong>חובה חוקית</strong> (סעיף 6(1)(c)) — ככל שנידרש לשמור מסמך או להשיב לדרישת רשות מוסמכת.</li>
+            </ul>
+            <h2>7. מטרות העיבוד</h2>
+            <ul>
+            <li>הצגת האתר ותוכנו למבקרים בו.</li>
+            <li>מענה לפניות שנשלחו אלינו ביוזמת הפונה.</li>
+            <li>שמירה על תקינות האתר ואבטחתו, ואבחון תקלות.</li>
+            <li>שמירת העדפות התצוגה שלך במכשירך, לנוחותך.</li>
+            <li>עמידה בדרישות הדין.</li>
+            </ul>
+            <p>לא ייעשה שימוש במידע למטרה שונה מאלה אלא בהסכמתך או מכוח חובה שבדין.</p>
+            <h2>8. מה איננו עושים</h2>
+            <p>לשם בהירות, ובאופן מפורש:</p>
+            <ul>
+            <li><strong>איננו מוכרים מידע אישי</strong> ואיננו מעבירים אותו לצדדים שלישיים לצורכי הפרסום שלהם.</li>
+            <li><strong>איננו מפעילים כלי אנליטיקה.</strong> אין באתר Google Analytics, אין Google Tag Manager, ואין כל מערכת מדידה אחרת.</li>
+            <li><strong>איננו מפעילים פיקסלים פרסומיים</strong> של Meta, TikTok או כל רשת אחרת.</li>
+            <li><strong>איננו מנהלים רשימת תפוצה</strong> ואיננו שולחים דיוור שיווקי, לא בדואר אלקטרוני ולא במסרונים.</li>
+            <li><strong>איננו מבצעים פרופיילינג</strong> ואיננו מקבלים החלטות אוטומטיות בעניינך.</li>
+            <li><strong>איננו מטמיעים נגני וידאו או רכיבי רשתות חברתיות</strong> בעמודי האתר. כל התמונות, הסרטונים, הגופנים והאייקונים מוגשים מהשרת שלנו.</li>
+            </ul>
+            <h2>9. מקבלי מידע וצדדים שלישיים</h2>
+            <ul>
+            <li><strong>GitHub, Inc.</strong> — אחסון והגשת האתר בשירות GitHub Pages. כמתואר בסעיף 4, השרת רושם את כתובת ה-IP וסוג הדפדפן של כל מבקר.</li>
+            <li><strong>hebcal.com</strong> — האתר נסגר אוטומטית בשבת ובחגים, ולשם כך הוא זקוק ללוח זמני כניסת השבת וצאתה. הלוח מוגש כקובץ מהשרת שלנו. <strong>רק אם הקובץ אינו זמין</strong> פונה הדפדפן שלך ישירות לשירות <code>hebcal.com</code> לקבלת הזמנים, ובמקרה זה נחשפים לאותו שירות כתובת ה-IP וסוג הדפדפן שלך. זהו מסלול גיבוי בלבד, ואיננו מעבירים לשירות זה כל פרט אחר.</li>
+            <li><strong>רשויות מוסמכות</strong> — ככל שנידרש לכך בדין, בצו שיפוטי או לשם הגנה על זכויותינו המשפטיות.</li>
+            </ul>
+            <p>איננו מעבירים מידע לגורם נוסף. אם תבחר לפנות אלינו בדואר אלקטרוני, ההודעה עוברת גם דרך ספק הדואר שלך ושלנו, בהתאם למדיניות הפרטיות שלהם.</p>
+            <h2>10. העברת מידע בין מדינות</h2>
+            <p>שרתי ספק האחסון שלנו ממוקמים מחוץ לישראל, ובכלל זה בארצות הברית. ההעברה מתבצעת על בסיס סעיפים חוזיים סטנדרטיים (SCCs) של הנציבות האירופית ו/או השתייכות הספק למסגרת EU–U.S. Data Privacy Framework.</p>
+            <p>העברת מידע מהאיחוד האירופי לישראל מתבססת על החלטת התאימות של הנציבות האירופית בעניין ישראל. העברת מידע מישראל לחו"ל מתבצעת בהתאם לתקנות הגנת הפרטיות (העברת מידע אל מחוץ לגבולות המדינה), התשס"א-2001, ולהוראות תיקון 13 לחוק.</p>
+            <p>ניתן לפנות אלינו לקבלת פרטים נוספים על מנגנוני ההעברה.</p>
+            <h2>11. אבטחת מידע</h2>
+            <p>בהתאם לתקנות הגנת הפרטיות (אבטחת מידע), התשע"ז-2017, ולסעיף 32 ל-GDPR:</p>
+            <ul>
+            <li>כל התעבורה אל האתר וממנו מוצפנת בפרוטוקול HTTPS/TLS.</li>
+            <li>האתר סטטי ואינו מחזיק בסיס נתונים; אין בו מאגר של פרטי מבקרים שניתן לפרוץ אליו.</li>
+            <li>הגישה לניהול האתר ולפרסום גרסאות חדשות מוגבלת לבעלי הרשאה בלבד ומוגנת באימות דו-שלבי.</li>
+            <li>קוד המקור של האתר פתוח לעיון, ואינו מכיל סודות, מפתחות גישה או פרטי משתמשים.</li>
+            <li>פניות בדואר אלקטרוני נשמרות בתיבות מוגנות בסיסמה ובאימות דו-שלבי.</li>
+            </ul>
+            <p>עם זאת, אין באפשרותנו להבטיח חסינות מוחלטת מפני חדירה או שימוש לא מורשה במידע.</p>
+            <h2>12. אירוע אבטחה ודליפת מידע</h2>
+            <ul>
+            <li>נדווח לרשות להגנת הפרטיות בישראל בהתאם לתקנות אבטחת מידע ולתיקון 13.</li>
+            <li>נדווח לרשות המפקחת הרלוונטית באיחוד האירופי בתוך 72 שעות ממועד היוודע האירוע, לפי סעיף 33 ל-GDPR.</li>
+            <li>נודיע לנפגעים ללא דיחוי כאשר קיים סיכון גבוה לזכויותיהם, בציון מהות האירוע, המידע המושפע והצעדים המומלצים.</li>
+            </ul>
+            <h2>13. תקופות שמירת המידע</h2>
+            <ul>
+            <li><strong>רשומות שרת</strong> — נוצרות ומוחזקות אצל ספק האחסון בהתאם למדיניות שלו; אינן נשמרות אצלנו.</li>
+            <li><strong>פניות ותכתובות בדואר אלקטרוני</strong> — עד 24 חודשים ממועד סיום הטיפול בפנייה.</li>
+            <li><strong>העדפות בדפדפן</strong> — נשמרות במכשירך עד שתמחק אותן בעצמך; אינן מגיעות אלינו כלל.</li>
+            <li><strong>רשומות כספיות וחשבונאיות</strong>, ככל שייווצרו — 7 שנים, בהתאם לחובות שבדין.</li>
+            </ul>
+            <p>בתום התקופה המידע יימחק, יושמד או יעבור אנונימיזציה בלתי הפיכה.</p>
+            <h2>14. הזכויות שלך</h2>
+            <p>בין אם אתה פועל כישראלי לפי חוק הגנת הפרטיות ובין אם כתושב האיחוד האירופי לפי ה-GDPR, עומדות לך הזכויות הבאות:</p>
+            <ul>
+            <li><strong>עיון</strong> — לקבל אישור אם אנו מעבדים מידע אודותיך, לעיין בו ולקבל עותק.</li>
+            <li><strong>תיקון</strong> — לבקש תיקון מידע שאינו נכון, שלם, ברור או מעודכן.</li>
+            <li><strong>מחיקה</strong> — "הזכות להישכח", בכפוף לחובות שמירה שבדין.</li>
+            <li><strong>הגבלת עיבוד</strong> — בעת בירור מחלוקת על דיוק המידע או חוקיות העיבוד.</li>
+            <li><strong>התנגדות</strong> — לרבות התנגדות לעיבוד המבוסס על אינטרס לגיטימי.</li>
+            <li><strong>ניידות מידע</strong> — לקבל את המידע שמסרת בפורמט מקובל וקריא במכונה.</li>
+            <li><strong>חזרה מהסכמה</strong> — בכל עת, בלי לפגוע בחוקיות עיבוד שבוצע לפני החזרה.</li>
+            <li><strong>תלונה לרשות מפקחת</strong> — הרשות להגנת הפרטיות בישראל; Hellenic Data Protection Authority ביוון; Office of the Commissioner for Personal Data Protection בקפריסין; או הרשות המפקחת במדינת מושבך.</li>
+            </ul>
+            <p><strong>הערה מעשית.</strong> מאחר שהאתר אינו אוסף פרטים ואינו מנהל מאגר מבקרים, ברוב המקרים תשובתנו לבקשת עיון תהיה שאין בידינו מידע אודותיך. אם פנית אלינו בדואר אלקטרוני, המידע היחיד שברשותנו הוא אותה תכתובת, וניתן לבקש את מחיקתה.</p>
+            <p>למימוש הזכויות ניתן לפנות בדואר אלקטרוני לכתובת support@moraltogether.com. נשיב בתוך 30 יום; בבקשה מורכבת נהיה רשאים להאריך בעד 60 יום נוספים ונודיע על כך. לצורך הגנה על פרטיותך נבקש אימות זהות סביר לפני מסירת מידע או ביצוע מחיקה. מימוש הזכויות אינו כרוך בתשלום, למעט בקשות בלתי סבירות או חוזרות.</p>
+            <h2>15. קטינים</h2>
+            <p>האתר הוא אתר מידע ותדמית, פתוח לעיון הציבור, ואינו מיועד באופן ייחודי לקטינים. מאחר שאיננו אוספים פרטים מאף מבקר, איננו אוספים פרטים גם מקטינים, ואיננו מבצעים פרופיילינג או פרסום מותאם אישית המכוון אליהם.</p>
+            <p>אם קטין פנה אלינו בדואר אלקטרוני והורה או אפוטרופוס מבקש למחוק את התכתובת, נעשה זאת בעדיפות ובתוך 7 ימי עסקים.</p>
+            <h2>16. קישורים ופלטפורמות חיצוניות</h2>
+            <p>האתר כולל קישורים לפלטפורמות חיצוניות, ובהן YouTube, Facebook ו-LinkedIn, של הארגון ושל היוזמות השותפות. אלה <strong>קישורים בלבד</strong>: אין בעמודי האתר נגנים מוטמעים או רכיבי רשתות חברתיות, ולפיכך אותן פלטפורמות אינן מקבלות מידע כלשהו כל עוד לא לחצת על הקישור.</p>
+            <p>מרגע שלחצת ועברת אליהן, אותן פלטפורמות אוספות מידע באופן עצמאי לפי מדיניות הפרטיות שלהן, שאינה בשליטתנו ואיננו אחראים לה. מומלץ לעיין בה.</p>
+            <h2>17. שינויים במדיניות ודין חל</h2>
+            <ul>
+            <li>נוסח מעודכן יפורסם בדף זה בציון תאריך העדכון ומספר הגרסה.</li>
+            <li>בשינוי מהותי — ובכלל זה הוספת כלי מדידה, טופס יצירת קשר או כל איסוף מידע שאינו קיים היום — נודיע על כך בהודעה בולטת באתר 14 יום לפני כניסת השינוי לתוקף. ככל ששינוי מחייב הסכמה, נבקש אותה בנפרד.</li>
+            <li>על מדיניות זו יחולו דיני מדינת ישראל, בכפוף לזכויות שאינן ניתנות לוויתור העומדות למשתמשים באיחוד האירופי לפי ה-GDPR ולפי דין מקום מושבם. סמכות השיפוט נתונה לבתי המשפט המוסמכים בישראל, בלי לגרוע מזכות משתמש באיחוד האירופי לפנות לרשות המפקחת או לבית משפט במדינת מושבו.</li>
+            <li>המדיניות מפורסמת בעברית ובתרגומים לשפות נוספות. בכל סתירה בין הנוסחים — <strong>הנוסח העברי גובר</strong>, למעט אם הדין המקומי מחייב אחרת.</li>
+            </ul>
+            <h2>18. יצירת קשר</h2>
+            <p>בכל שאלה, בקשה או תלונה בנושא פרטיות ניתן לפנות אלינו:</p>
+            <ul>
+            <li><strong>איש הקשר בנושאי פרטיות:</strong> דוד חיים</li>
+            <li><strong>דואר אלקטרוני:</strong> support@moraltogether.com</li>
+            <li><strong>טלפון:</strong> +972-55-934-4443</li>
+            <li><strong>כתובת:</strong> דשנים 11, חיפה</li>
+            </ul>
+        </article>
+
+        <article class="legal-doc" lang="en" dir="ltr">
+            <h1>Privacy Policy</h1>
+            <p class="legal-org"><strong>MoralTogether — Uniting Good Forces</strong></p>
+            <p class="legal-meta">Last updated: 25 August 2026 · Version 1.0</p>
+            <p class="legal-lead"><strong>In brief:</strong> the MoralTogether website is an informational site. It has no registration, no user accounts and no forms. We do not ask you for personal details, we do not store them on any server, and we do not use cookies, analytics tools or advertising pixels. The full document below sets out the little that is collected, by whom, and what rights you have.</p>
+            <h2>1. Who we are</h2>
+            <p>The site is operated by Zuzim Parnasa Mevorechet Bitnufa Ltd., a private company registered in Israel under number 516602992 (the "Company", "we" or "the site operator").</p>
+            <p>The Company is the Data Controller for the purposes of the European General Data Protection Regulation (GDPR).</p>
+            <ul>
+            <li><strong>Address:</strong> 11 Deshanim Street, Haifa</li>
+            <li><strong>Privacy contact:</strong> David Haim</li>
+            <li><strong>Email:</strong> support@moraltogether.com (full contact details in section 18)</li>
+            </ul>
+            <p>We respect your privacy and are committed to protecting your personal information. This policy is written in accordance with the Protection of Privacy Law, 5741-1981 and Amendment No. 13 thereto, and in accordance with the GDPR insofar as it applies — including to visitors in Greece and Cyprus, since the site is also offered in Greek.</p>
+            <p>This policy applies to every visitor to <code>https://moraltogether.com/</code>.</p>
+            <h2>2. What this site does, and what it is not</h2>
+            <p>The site presents information about the organisation, about its partner initiatives and their work, alongside a photo gallery and contact details. It is a static site: it has no database, no server-side component that processes anything you send, and no personal area.</p>
+            <p>There is no contact form, no registration form, no donation form and no other input field anywhere on the site. The way to reach us is through the email link on the page — that is, in a message you send from your own mailbox, on your own initiative.</p>
+            <h2>3. Clarity and transparency — the duty to inform</h2>
+            <p>In accordance with Amendment No. 13 to the Protection of Privacy Law, we state explicitly:</p>
+            <ul>
+            <li><strong>Collection is voluntary.</strong> You are under no legal obligation to give us any personal information. Browsing the site is not conditional on providing any.</li>
+            <li><strong>The consequence of not providing it.</strong> There is none. All of the site's content is open and available without providing any details.</li>
+            <li><strong>The identity of the database owner</strong> is set out in section 1; <strong>the purposes of processing</strong> in section 7; <strong>the identity of the recipients of information</strong> in sections 9 and 10.</li>
+            </ul>
+            <h2>4. What information is actually collected</h2>
+            <p><strong>Information you provide on your own initiative.</strong> If you choose to write to us at the address shown on the site, we will receive your email address and the contents of your message, including anything you chose to put in it. We do not ask for details beyond what is needed to reply, and we do not use your address for any other purpose.</p>
+            <p><strong>Server records held by the hosting provider.</strong> The site is hosted on GitHub Pages. Like any web server, the server that delivers the pages records the visitor's IP address, browser type and operating system, the address of the page requested and the time of the request. These records are created and held by the hosting provider, not by us; we have no routine access to them and we receive no reports from them.</p>
+            <p><strong>A request to an external service for Shabbat times.</strong> See section 9.</p>
+            <p><strong>Information we do not collect.</strong> We do not collect or process biometric information, and we do not perform facial recognition or voice analysis. We do not knowingly collect information about health, ethnic origin, political opinions, religious beliefs, sexual orientation or trade union membership. Please do not include such information when writing to us unless it is essential to the subject of your message.</p>
+            <h2>5. Cookies and local storage in your browser</h2>
+            <p><strong>The site does not use cookies at all</strong> — no essential cookies, no measurement cookies and no advertising cookies. For that reason the site carries no cookie consent banner.</p>
+            <p>The site does store a small number of preferences in your browser's <code>localStorage</code>. This is a local storage mechanism: the values are kept on your device only, <strong>they are not sent to us and they are not sent to anyone else</strong>, and they cannot identify you. These are the values:</p>
+            <div class="legal-table-scroll">
+            <table>
+            <thead>
+            <tr><th scope="col">Key</th><th scope="col">What it holds</th></tr>
+            </thead>
+            <tbody>
+            <tr><th scope="row"><code>lang</code></th><td>the interface language you chose — Hebrew, English or Greek</td></tr>
+            <tr><th scope="row"><code>theme</code></th><td>light or dark display mode</td></tr>
+            <tr><th scope="row"><code>motion</code></th><td>whether you asked to stop motion and animation on the site</td></tr>
+            <tr><th scope="row"><code>shabbat.v1</code></th><td>a local copy of the timetable of Shabbat start and end times, so that the site need not request it again on every visit</td></tr>
+            <tr><th scope="row"><code>opennagish_prefs</code></th><td>the preferences you chose in the accessibility widget — text size, contrast and so on</td></tr>
+            </tbody>
+            </table>
+            </div>
+            <p>You can delete these values at any time through your browser settings ("Clear site data"), or by browsing in a private window. Deleting them resets the preferences and does not affect your use of the site.</p>
+            <h2>6. Legal basis for processing</h2>
+            <ul>
+            <li><strong>Legitimate interest</strong> (Article 6(1)(f) GDPR) — delivering the site, maintaining its integrity and security, and preventing misuse. This is the basis for the server records described in section 4.</li>
+            <li><strong>Consent</strong> (Article 6(1)(a)) — a message you send us by email on your own initiative, and the storing of preferences in your browser.</li>
+            <li><strong>Legal obligation</strong> (Article 6(1)(c)) — insofar as we are required to retain a document or to respond to a request from a competent authority.</li>
+            </ul>
+            <h2>7. Purposes of processing</h2>
+            <ul>
+            <li>Presenting the site and its content to visitors.</li>
+            <li>Replying to enquiries sent to us at the sender's initiative.</li>
+            <li>Maintaining the site's integrity and security, and diagnosing faults.</li>
+            <li>Storing your display preferences on your device, for your convenience.</li>
+            <li>Complying with legal requirements.</li>
+            </ul>
+            <p>The information will not be used for any purpose other than these, except with your consent or under a legal obligation.</p>
+            <h2>8. What we do not do</h2>
+            <p>For the avoidance of doubt, explicitly:</p>
+            <ul>
+            <li><strong>We do not sell personal information</strong> and we do not pass it to third parties for their own advertising.</li>
+            <li><strong>We run no analytics tools.</strong> There is no Google Analytics on the site, no Google Tag Manager, and no other measurement system.</li>
+            <li><strong>We run no advertising pixels</strong> from Meta, TikTok or any other network.</li>
+            <li><strong>We maintain no mailing list</strong> and send no marketing messages, by email or by SMS.</li>
+            <li><strong>We do not profile you</strong> and we make no automated decisions about you.</li>
+            <li><strong>We embed no video players or social network components</strong> in the site's pages. Every image, video, font and icon is served from our own server.</li>
+            </ul>
+            <h2>9. Recipients of information and third parties</h2>
+            <ul>
+            <li><strong>GitHub, Inc.</strong> — hosting and delivery of the site through the GitHub Pages service. As described in section 4, the server records the IP address and browser type of every visitor.</li>
+            <li><strong>hebcal.com</strong> — the site closes automatically on Shabbat and on festivals, and for that it needs a timetable of Shabbat start and end times. The timetable is served as a file from our own server. <strong>Only if that file is unavailable</strong> does your browser contact the <code>hebcal.com</code> service directly to obtain the times, and in that case your IP address and browser type are exposed to that service. This is a fallback route only, and we pass no other detail to it.</li>
+            <li><strong>Competent authorities</strong> — insofar as we are required to do so by law, by court order, or in order to protect our legal rights.</li>
+            </ul>
+            <p>We pass information to no one else. If you choose to write to us by email, your message also travels through your email provider and ours, in accordance with their privacy policies.</p>
+            <h2>10. International transfers</h2>
+            <p>Our hosting provider's servers are located outside Israel, including in the United States. The transfer is made on the basis of the European Commission's Standard Contractual Clauses (SCCs) and/or the provider's participation in the EU–U.S. Data Privacy Framework.</p>
+            <p>Transfers from the European Union to Israel rely on the European Commission's adequacy decision in respect of Israel. Transfers from Israel abroad are made in accordance with the Protection of Privacy Regulations (Transfer of Information Outside the Borders of the State), 5761-2001, and the provisions of Amendment No. 13 to the Law.</p>
+            <p>You may contact us for further details of the transfer mechanisms.</p>
+            <h2>11. Information security</h2>
+            <p>In accordance with the Protection of Privacy Regulations (Data Security), 5777-2017, and Article 32 GDPR:</p>
+            <ul>
+            <li>All traffic to and from the site is encrypted using HTTPS/TLS.</li>
+            <li>The site is static and holds no database; there is no store of visitor details that could be breached.</li>
+            <li>Access to administering the site and publishing new versions is limited to authorised people and protected by two-factor authentication.</li>
+            <li>The site's source code is open to inspection and contains no secrets, access keys or user details.</li>
+            <li>Email enquiries are held in mailboxes protected by a password and two-factor authentication.</li>
+            </ul>
+            <p>Even so, we cannot guarantee absolute immunity from intrusion or unauthorised use of information.</p>
+            <h2>12. Security incidents and data breaches</h2>
+            <ul>
+            <li>We will report to the Israeli Privacy Protection Authority in accordance with the Data Security Regulations and Amendment No. 13.</li>
+            <li>We will report to the relevant supervisory authority in the European Union within 72 hours of becoming aware of the incident, in accordance with Article 33 GDPR.</li>
+            <li>We will notify those affected without delay where there is a high risk to their rights, stating the nature of the incident, the information affected and the steps we recommend.</li>
+            </ul>
+            <h2>13. Retention periods</h2>
+            <ul>
+            <li><strong>Server records</strong> — created and held by the hosting provider in accordance with its own policy; not retained by us.</li>
+            <li><strong>Enquiries and email correspondence</strong> — up to 24 months from the conclusion of the matter.</li>
+            <li><strong>Preferences in your browser</strong> — kept on your device until you delete them yourself; they never reach us.</li>
+            <li><strong>Financial and accounting records</strong>, insofar as any arise — 7 years, in accordance with legal obligations.</li>
+            </ul>
+            <p>At the end of the period the information will be deleted, destroyed or irreversibly anonymised.</p>
+            <h2>14. Your rights</h2>
+            <p>Whether you act as an Israeli under the Protection of Privacy Law or as a resident of the European Union under the GDPR, you have the following rights:</p>
+            <ul>
+            <li><strong>Access</strong> — to obtain confirmation of whether we process information about you, to inspect it and to receive a copy.</li>
+            <li><strong>Rectification</strong> — to request correction of information that is inaccurate, incomplete, unclear or out of date.</li>
+            <li><strong>Erasure</strong> — the "right to be forgotten", subject to legal retention obligations.</li>
+            <li><strong>Restriction of processing</strong> — while a dispute over the accuracy of the information or the lawfulness of the processing is being resolved.</li>
+            <li><strong>Objection</strong> — including objection to processing based on legitimate interest.</li>
+            <li><strong>Data portability</strong> — to receive the information you provided in a commonly used, machine-readable format.</li>
+            <li><strong>Withdrawal of consent</strong> — at any time, without affecting the lawfulness of processing carried out before the withdrawal.</li>
+            <li><strong>Complaint to a supervisory authority</strong> — the Privacy Protection Authority in Israel; the Hellenic Data Protection Authority in Greece; the Office of the Commissioner for Personal Data Protection in Cyprus; or the supervisory authority in your country of residence.</li>
+            </ul>
+            <p><strong>A practical note.</strong> Since the site collects no details and maintains no register of visitors, in most cases our answer to an access request will be that we hold no information about you. If you have written to us by email, the only information we hold is that correspondence, and you may ask for it to be deleted.</p>
+            <p>To exercise these rights, write to support@moraltogether.com. We will reply within 30 days; for a complex request we may extend by up to a further 60 days and will tell you if we do. To protect your privacy we will ask for reasonable proof of identity before disclosing information or carrying out a deletion. Exercising these rights is free of charge, except for unreasonable or repetitive requests.</p>
+            <h2>15. Minors</h2>
+            <p>The site is an informational site, open to the public, and is not directed specifically at minors. Since we collect no details from any visitor, we collect none from minors either, and we carry out no profiling or personalised advertising directed at them.</p>
+            <p>If a minor has written to us by email and a parent or guardian asks for the correspondence to be deleted, we will do so as a priority and within 7 business days.</p>
+            <h2>16. Links and external platforms</h2>
+            <p>The site includes links to external platforms, among them YouTube, Facebook and LinkedIn, belonging to the organisation and its partner initiatives. These are <strong>links only</strong>: there are no embedded players or social network components in the site's pages, and therefore those platforms receive no information whatsoever until you click a link.</p>
+            <p>Once you have clicked and moved to them, those platforms collect information independently under their own privacy policies, which are not under our control and for which we are not responsible. We recommend reading them.</p>
+            <h2>17. Changes to this policy, and governing law</h2>
+            <ul>
+            <li>An updated version will be published on this page, stating the date of the update and the version number.</li>
+            <li>In the event of a material change — including the addition of a measurement tool, a contact form, or any collection of information that does not exist today — we will give notice prominently on the site 14 days before the change takes effect. Where a change requires consent, we will ask for it separately.</li>
+            <li>This policy is governed by the laws of the State of Israel, subject to the non-waivable rights available to users in the European Union under the GDPR and under the law of their place of residence. Jurisdiction lies with the competent courts in Israel, without derogating from the right of a user in the European Union to approach the supervisory authority or a court in their country of residence.</li>
+            <li>The policy is published in Hebrew and in translations into further languages. In the event of any conflict between the versions, <strong>the Hebrew version prevails</strong>, unless local law requires otherwise.</li>
+            </ul>
+            <h2>18. Contact us</h2>
+            <p>For any question, request or complaint regarding privacy:</p>
+            <ul>
+            <li><strong>Privacy contact:</strong> David Haim</li>
+            <li><strong>Email:</strong> support@moraltogether.com</li>
+            <li><strong>Telephone:</strong> +972-55-934-4443</li>
+            <li><strong>Address:</strong> 11 Deshanim Street, Haifa</li>
+            </ul>
+        </article>
+
+        <article class="legal-doc" lang="el" dir="ltr">
+            <h1>Πολιτική Απορρήτου</h1>
+            <p class="legal-org"><strong>MoralTogether — Ενώνουμε τις Καλές Δυνάμεις</strong></p>
+            <p class="legal-meta">Τελευταία ενημέρωση: 25 Αυγούστου 2026 · Έκδοση 1.0</p>
+            <p class="legal-lead"><strong>Με λίγα λόγια:</strong> ο ιστότοπος MoralTogether είναι ιστότοπος ενημέρωσης και παρουσίασης. Δεν διαθέτει εγγραφή, δεν διαθέτει λογαριασμούς χρηστών και δεν διαθέτει φόρμες. Δεν σας ζητούμε προσωπικά στοιχεία, δεν τα αποθηκεύουμε σε κανέναν διακομιστή και δεν χρησιμοποιούμε cookies, εργαλεία ανάλυσης ή διαφημιστικά pixel. Το πλήρες κείμενο που ακολουθεί περιγράφει τα ελάχιστα που όντως συλλέγονται, από ποιον, και ποια δικαιώματα έχετε.</p>
+            <h2>1. Ποιοι είμαστε</h2>
+            <p>Ο ιστότοπος λειτουργεί από την εταιρεία Zuzim Parnasa Mevorechet Bitnufa Ltd., ιδιωτική εταιρεία εγγεγραμμένη στο Ισραήλ με αριθμό 516602992 (εφεξής «η Εταιρεία», «εμείς» ή «ο διαχειριστής του ιστότοπου»).</p>
+            <p>Η Εταιρεία είναι ο Υπεύθυνος Επεξεργασίας (Data Controller) κατά την έννοια του ευρωπαϊκού Γενικού Κανονισμού για την Προστασία Δεδομένων (GDPR).</p>
+            <ul>
+            <li><strong>Διεύθυνση:</strong> Deshanim 11, Χάιφα</li>
+            <li><strong>Αρμόδιος επικοινωνίας για θέματα απορρήτου:</strong> David Haim</li>
+            <li><strong>Ηλεκτρονικό ταχυδρομείο:</strong> support@moraltogether.com (πλήρη στοιχεία στην ενότητα 18)</li>
+            </ul>
+            <p>Σεβόμαστε το απόρρητό σας και δεσμευόμαστε να προστατεύουμε τα προσωπικά σας δεδομένα. Η παρούσα πολιτική συντάχθηκε σύμφωνα με τον ισραηλινό Νόμο περί Προστασίας του Απορρήτου, 5741-1981 και την υπ' αριθμόν 13 Τροποποίησή του, καθώς και σύμφωνα με τον GDPR, στον βαθμό που εφαρμόζεται — μεταξύ άλλων σε επισκέπτες στην Ελλάδα και στην Κύπρο, καθώς ο ιστότοπος προσφέρεται και στα ελληνικά.</p>
+            <p>Η πολιτική ισχύει για κάθε επισκέπτη του <code>https://moraltogether.com/</code>.</p>
+            <h2>2. Τι κάνει αυτός ο ιστότοπος και τι δεν είναι</h2>
+            <p>Ο ιστότοπος παρουσιάζει πληροφορίες για τον οργανισμό, για τις συνεργαζόμενες πρωτοβουλίες και το έργο τους, μαζί με μια συλλογή φωτογραφιών και στοιχεία επικοινωνίας. Πρόκειται για στατικό ιστότοπο: δεν διαθέτει βάση δεδομένων, δεν διαθέτει πλευρά διακομιστή που επεξεργάζεται ό,τι στέλνετε, και δεν διαθέτει προσωπική περιοχή.</p>
+            <p>Δεν υπάρχει στον ιστότοπο φόρμα επικοινωνίας, φόρμα εγγραφής, φόρμα δωρεάς ή οποιοδήποτε άλλο πεδίο εισαγωγής. Ο τρόπος να επικοινωνήσετε μαζί μας είναι μέσω του συνδέσμου ηλεκτρονικού ταχυδρομείου στη σελίδα — δηλαδή με μήνυμα που στέλνετε από τη δική σας θυρίδα, με δική σας πρωτοβουλία.</p>
+            <h2>3. Σαφήνεια και διαφάνεια — η υποχρέωση ενημέρωσης</h2>
+            <p>Σύμφωνα με την υπ' αριθμόν 13 Τροποποίηση του Νόμου περί Προστασίας του Απορρήτου δηλώνουμε ρητά:</p>
+            <ul>
+            <li><strong>Η παροχή στοιχείων είναι εθελοντική.</strong> Δεν υπέχετε καμία νομική υποχρέωση να μας παράσχετε προσωπικά δεδομένα. Η περιήγηση στον ιστότοπο δεν εξαρτάται από την παροχή τους.</li>
+            <li><strong>Συνέπεια της μη παροχής.</strong> Καμία. Όλο το περιεχόμενο του ιστότοπου είναι ανοικτό και διαθέσιμο χωρίς την παροχή στοιχείων.</li>
+            <li><strong>Η ταυτότητα του κατόχου του αρχείου</strong> αναφέρεται στην ενότητα 1· <strong>οι σκοποί της επεξεργασίας</strong> στην ενότητα 7· <strong>η ταυτότητα των αποδεκτών</strong> στις ενότητες 9 και 10.</li>
+            </ul>
+            <h2>4. Ποια δεδομένα συλλέγονται στην πράξη</h2>
+            <p><strong>Δεδομένα που παρέχετε με δική σας πρωτοβουλία.</strong> Αν επιλέξετε να μας γράψετε στη διεύθυνση που εμφανίζεται στον ιστότοπο, θα λάβουμε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και το περιεχόμενο του μηνύματός σας, συμπεριλαμβανομένου κάθε στοιχείου που επιλέξατε να συμπεριλάβετε. Δεν ζητούμε στοιχεία πέραν όσων απαιτούνται για την απάντηση και δεν χρησιμοποιούμε τη διεύθυνσή σας για κανέναν άλλο σκοπό.</p>
+            <p><strong>Αρχεία καταγραφής διακομιστή στον πάροχο φιλοξενίας.</strong> Ο ιστότοπος φιλοξενείται στην υπηρεσία GitHub Pages. Όπως κάθε διακομιστής ιστού, ο διακομιστής που παραδίδει τις σελίδες καταγράφει τη διεύθυνση IP του επισκέπτη, τον τύπο του προγράμματος περιήγησης και του λειτουργικού συστήματος, τη διεύθυνση της σελίδας που ζητήθηκε και τη χρονική στιγμή του αιτήματος. Τα αρχεία αυτά δημιουργούνται και τηρούνται από τον πάροχο φιλοξενίας και όχι από εμάς· δεν έχουμε τακτική πρόσβαση σε αυτά και δεν λαμβάνουμε αναφορές από αυτά.</p>
+            <p><strong>Αίτημα προς εξωτερική υπηρεσία για τις ώρες του Σαββάτου.</strong> Βλ. ενότητα 9.</p>
+            <p><strong>Δεδομένα που δεν συλλέγουμε.</strong> Δεν συλλέγουμε και δεν επεξεργαζόμαστε βιομετρικά δεδομένα, και δεν πραγματοποιούμε αναγνώριση προσώπου ή βιομετρική ανάλυση φωνής. Δεν συλλέγουμε εν γνώσει μας δεδομένα σχετικά με την υγεία, την εθνοτική καταγωγή, τις πολιτικές πεποιθήσεις, τις θρησκευτικές πεποιθήσεις, τον γενετήσιο προσανατολισμό ή τη συμμετοχή σε συνδικαλιστική οργάνωση. Παρακαλούμε μην περιλαμβάνετε τέτοια δεδομένα όταν μας γράφετε, εκτός αν είναι ουσιώδη για το αντικείμενο του μηνύματός σας.</p>
+            <h2>5. Cookies και τοπική αποθήκευση στο πρόγραμμα περιήγησης</h2>
+            <p><strong>Ο ιστότοπος δεν χρησιμοποιεί cookies καθόλου</strong> — ούτε απαραίτητα cookies, ούτε cookies μέτρησης, ούτε διαφημιστικά cookies. Για τον λόγο αυτό ο ιστότοπος δεν εμφανίζει μπάνερ συγκατάθεσης για cookies.</p>
+            <p>Ο ιστότοπος αποθηκεύει ωστόσο ορισμένες προτιμήσεις στο <code>localStorage</code> του προγράμματος περιήγησής σας. Πρόκειται για μηχανισμό τοπικής αποθήκευσης: οι τιμές παραμένουν αποκλειστικά στη συσκευή σας, <strong>δεν αποστέλλονται σε εμάς ούτε σε κανέναν άλλον</strong>, και δεν μπορούν να σας ταυτοποιήσουν. Οι τιμές είναι οι εξής:</p>
+            <div class="legal-table-scroll">
+            <table>
+            <thead>
+            <tr><th scope="col">Κλειδί</th><th scope="col">Τι περιέχει</th></tr>
+            </thead>
+            <tbody>
+            <tr><th scope="row"><code>lang</code></th><td>τη γλώσσα διεπαφής που επιλέξατε — εβραϊκά, αγγλικά ή ελληνικά</td></tr>
+            <tr><th scope="row"><code>theme</code></th><td>φωτεινή ή σκοτεινή λειτουργία εμφάνισης</td></tr>
+            <tr><th scope="row"><code>motion</code></th><td>αν ζητήσατε τη διακοπή της κίνησης και των εφέ στον ιστότοπο</td></tr>
+            <tr><th scope="row"><code>shabbat.v1</code></th><td>τοπικό αντίγραφο του πίνακα με τις ώρες έναρξης και λήξης του Σαββάτου, ώστε ο ιστότοπος να μην το ζητά εκ νέου σε κάθε επίσκεψη</td></tr>
+            <tr><th scope="row"><code>opennagish_prefs</code></th><td>τις προτιμήσεις που επιλέξατε στο γραφικό στοιχείο προσβασιμότητας — μέγεθος κειμένου, αντίθεση κ.ο.κ.</td></tr>
+            </tbody>
+            </table>
+            </div>
+            <p>Μπορείτε να διαγράψετε τις τιμές αυτές ανά πάσα στιγμή από τις ρυθμίσεις του προγράμματος περιήγησης («Εκκαθάριση δεδομένων ιστότοπου»), ή περιηγούμενοι σε ιδιωτικό παράθυρο. Η διαγραφή τους επαναφέρει τις προτιμήσεις και δεν επηρεάζει τη χρήση του ιστότοπου.</p>
+            <h2>6. Νομική βάση της επεξεργασίας</h2>
+            <ul>
+            <li><strong>Έννομο συμφέρον</strong> (άρθρο 6 παρ. 1 στοιχ. στ' GDPR) — η παράδοση του ιστότοπου, η διατήρηση της ακεραιότητας και της ασφάλειάς του και η αποτροπή κατάχρησης. Αυτή είναι η βάση για τα αρχεία καταγραφής της ενότητας 4.</li>
+            <li><strong>Συγκατάθεση</strong> (άρθρο 6 παρ. 1 στοιχ. α') — μήνυμα που μας στέλνετε με δική σας πρωτοβουλία, και η αποθήκευση προτιμήσεων στο πρόγραμμα περιήγησής σας.</li>
+            <li><strong>Νομική υποχρέωση</strong> (άρθρο 6 παρ. 1 στοιχ. γ') — στον βαθμό που υποχρεωνόμαστε να διατηρήσουμε έγγραφο ή να απαντήσουμε σε αίτημα αρμόδιας αρχής.</li>
+            </ul>
+            <h2>7. Σκοποί της επεξεργασίας</h2>
+            <ul>
+            <li>Η παρουσίαση του ιστότοπου και του περιεχομένου του στους επισκέπτες.</li>
+            <li>Η απάντηση σε ερωτήματα που μας απευθύνονται με πρωτοβουλία του αποστολέα.</li>
+            <li>Η διατήρηση της ακεραιότητας και της ασφάλειας του ιστότοπου και η διάγνωση βλαβών.</li>
+            <li>Η αποθήκευση των προτιμήσεων εμφάνισης στη συσκευή σας, για τη διευκόλυνσή σας.</li>
+            <li>Η συμμόρφωση με τις απαιτήσεις του νόμου.</li>
+            </ul>
+            <p>Τα δεδομένα δεν θα χρησιμοποιηθούν για σκοπό διαφορετικό από τους παραπάνω, παρά μόνο με τη συγκατάθεσή σας ή δυνάμει νομικής υποχρέωσης.</p>
+            <h2>8. Τι δεν κάνουμε</h2>
+            <p>Για λόγους σαφήνειας και ρητά:</p>
+            <ul>
+            <li><strong>Δεν πωλούμε προσωπικά δεδομένα</strong> και δεν τα διαβιβάζουμε σε τρίτους για δικούς τους διαφημιστικούς σκοπούς.</li>
+            <li><strong>Δεν χρησιμοποιούμε εργαλεία ανάλυσης.</strong> Δεν υπάρχει Google Analytics στον ιστότοπο, δεν υπάρχει Google Tag Manager, ούτε οποιοδήποτε άλλο σύστημα μέτρησης.</li>
+            <li><strong>Δεν χρησιμοποιούμε διαφημιστικά pixel</strong> της Meta, του TikTok ή οποιουδήποτε άλλου δικτύου.</li>
+            <li><strong>Δεν τηρούμε λίστα αλληλογραφίας</strong> και δεν αποστέλλουμε διαφημιστικά μηνύματα, ούτε με ηλεκτρονικό ταχυδρομείο ούτε με SMS.</li>
+            <li><strong>Δεν καταρτίζουμε προφίλ</strong> και δεν λαμβάνουμε αυτοματοποιημένες αποφάσεις που σας αφορούν.</li>
+            <li><strong>Δεν ενσωματώνουμε αναπαραγωγείς βίντεο ή στοιχεία κοινωνικών δικτύων</strong> στις σελίδες του ιστότοπου. Όλες οι εικόνες, τα βίντεο, οι γραμματοσειρές και τα εικονίδια παραδίδονται από τον δικό μας διακομιστή.</li>
+            </ul>
+            <h2>9. Αποδέκτες δεδομένων και τρίτα μέρη</h2>
+            <ul>
+            <li><strong>GitHub, Inc.</strong> — φιλοξενία και παράδοση του ιστότοπου μέσω της υπηρεσίας GitHub Pages. Όπως περιγράφεται στην ενότητα 4, ο διακομιστής καταγράφει τη διεύθυνση IP και τον τύπο προγράμματος περιήγησης κάθε επισκέπτη.</li>
+            <li><strong>hebcal.com</strong> — ο ιστότοπος κλείνει αυτόματα το Σάββατο και τις εορτές, και για τον σκοπό αυτό χρειάζεται πίνακα με τις ώρες έναρξης και λήξης του Σαββάτου. Ο πίνακας παραδίδεται ως αρχείο από τον δικό μας διακομιστή. <strong>Μόνο αν το αρχείο δεν είναι διαθέσιμο</strong> απευθύνεται το πρόγραμμα περιήγησής σας απευθείας στην υπηρεσία <code>hebcal.com</code> για να λάβει τις ώρες, και στην περίπτωση αυτή αποκαλύπτονται στην υπηρεσία η διεύθυνση IP και ο τύπος του προγράμματος περιήγησής σας. Πρόκειται για εφεδρική διαδρομή μόνο, και δεν διαβιβάζουμε σε αυτήν κανένα άλλο στοιχείο.</li>
+            <li><strong>Αρμόδιες αρχές</strong> — στον βαθμό που υποχρεωνόμαστε από τον νόμο, με δικαστική απόφαση, ή για την προστασία των νομίμων δικαιωμάτων μας.</li>
+            </ul>
+            <p>Δεν διαβιβάζουμε δεδομένα σε κανέναν άλλον. Αν επιλέξετε να μας γράψετε με ηλεκτρονικό ταχυδρομείο, το μήνυμα διέρχεται και από τον δικό σας πάροχο ηλεκτρονικού ταχυδρομείου και από τον δικό μας, σύμφωνα με τις πολιτικές απορρήτου τους.</p>
+            <h2>10. Διασυνοριακή διαβίβαση δεδομένων</h2>
+            <p>Οι διακομιστές του παρόχου φιλοξενίας μας βρίσκονται εκτός Ισραήλ, μεταξύ άλλων στις Ηνωμένες Πολιτείες. Η διαβίβαση πραγματοποιείται βάσει των Τυποποιημένων Συμβατικών Ρητρών (SCCs) της Ευρωπαϊκής Επιτροπής ή/και της συμμετοχής του παρόχου στο πλαίσιο EU–U.S. Data Privacy Framework.</p>
+            <p>Η διαβίβαση από την Ευρωπαϊκή Ένωση προς το Ισραήλ βασίζεται στην απόφαση επάρκειας της Ευρωπαϊκής Επιτροπής για το Ισραήλ. Η διαβίβαση από το Ισραήλ προς το εξωτερικό πραγματοποιείται σύμφωνα με τους Κανονισμούς περί Προστασίας του Απορρήτου (Διαβίβαση Δεδομένων εκτός των Συνόρων του Κράτους), 5761-2001, και τις διατάξεις της υπ' αριθμόν 13 Τροποποίησης του Νόμου.</p>
+            <p>Μπορείτε να επικοινωνήσετε μαζί μας για περισσότερες λεπτομέρειες σχετικά με τους μηχανισμούς διαβίβασης.</p>
+            <h2>11. Ασφάλεια δεδομένων</h2>
+            <p>Σύμφωνα με τους Κανονισμούς περί Προστασίας του Απορρήτου (Ασφάλεια Δεδομένων), 5777-2017, και το άρθρο 32 GDPR:</p>
+            <ul>
+            <li>Όλη η κίνηση προς και από τον ιστότοπο είναι κρυπτογραφημένη με πρωτόκολλο HTTPS/TLS.</li>
+            <li>Ο ιστότοπος είναι στατικός και δεν διατηρεί βάση δεδομένων· δεν υπάρχει αρχείο στοιχείων επισκεπτών που θα μπορούσε να παραβιαστεί.</li>
+            <li>Η πρόσβαση στη διαχείριση του ιστότοπου και στη δημοσίευση νέων εκδόσεων περιορίζεται σε εξουσιοδοτημένα πρόσωπα και προστατεύεται με έλεγχο ταυτότητας δύο παραγόντων.</li>
+            <li>Ο πηγαίος κώδικας του ιστότοπου είναι ανοικτός σε έλεγχο και δεν περιέχει μυστικά, κλειδιά πρόσβασης ή στοιχεία χρηστών.</li>
+            <li>Τα μηνύματα ηλεκτρονικού ταχυδρομείου τηρούνται σε θυρίδες προστατευμένες με κωδικό πρόσβασης και έλεγχο ταυτότητας δύο παραγόντων.</li>
+            </ul>
+            <p>Παρ' όλα αυτά, δεν είμαστε σε θέση να εγγυηθούμε απόλυτη προστασία από παραβίαση ή μη εξουσιοδοτημένη χρήση δεδομένων.</p>
+            <h2>12. Περιστατικό ασφάλειας και διαρροή δεδομένων</h2>
+            <ul>
+            <li>Θα ενημερώσουμε την Αρχή Προστασίας Απορρήτου του Ισραήλ σύμφωνα με τους Κανονισμούς Ασφάλειας Δεδομένων και την υπ' αριθμόν 13 Τροποποίηση.</li>
+            <li>Θα ενημερώσουμε την αρμόδια εποπτική αρχή της Ευρωπαϊκής Ένωσης εντός 72 ωρών από τη στιγμή που θα λάβουμε γνώση του περιστατικού, σύμφωνα με το άρθρο 33 GDPR.</li>
+            <li>Θα ειδοποιήσουμε τους θιγόμενους χωρίς καθυστέρηση όταν υφίσταται υψηλός κίνδυνος για τα δικαιώματά τους, αναφέροντας τη φύση του περιστατικού, τα δεδομένα που επηρεάστηκαν και τα συνιστώμενα μέτρα.</li>
+            </ul>
+            <h2>13. Χρόνοι διατήρησης</h2>
+            <ul>
+            <li><strong>Αρχεία καταγραφής διακομιστή</strong> — δημιουργούνται και τηρούνται από τον πάροχο φιλοξενίας σύμφωνα με τη δική του πολιτική· δεν διατηρούνται από εμάς.</li>
+            <li><strong>Ερωτήματα και αλληλογραφία ηλεκτρονικού ταχυδρομείου</strong> — έως 24 μήνες από την ολοκλήρωση του χειρισμού.</li>
+            <li><strong>Προτιμήσεις στο πρόγραμμα περιήγησης</strong> — παραμένουν στη συσκευή σας μέχρι να τις διαγράψετε οι ίδιοι· ουδέποτε φθάνουν σε εμάς.</li>
+            <li><strong>Οικονομικά και λογιστικά αρχεία</strong>, εφόσον προκύψουν — 7 έτη, σύμφωνα με τις υποχρεώσεις του νόμου.</li>
+            </ul>
+            <p>Με τη λήξη της περιόδου τα δεδομένα διαγράφονται, καταστρέφονται ή ανωνυμοποιούνται μη αναστρέψιμα.</p>
+            <h2>14. Τα δικαιώματά σας</h2>
+            <p>Είτε ενεργείτε ως πολίτης του Ισραήλ βάσει του Νόμου περί Προστασίας του Απορρήτου είτε ως κάτοικος της Ευρωπαϊκής Ένωσης βάσει του GDPR, έχετε τα ακόλουθα δικαιώματα:</p>
+            <ul>
+            <li><strong>Πρόσβαση</strong> — να λάβετε επιβεβαίωση για το αν επεξεργαζόμαστε δεδομένα που σας αφορούν, να τα εξετάσετε και να λάβετε αντίγραφο.</li>
+            <li><strong>Διόρθωση</strong> — να ζητήσετε τη διόρθωση δεδομένων ανακριβών, ελλιπών, ασαφών ή μη επικαιροποιημένων.</li>
+            <li><strong>Διαγραφή</strong> — το «δικαίωμα στη λήθη», με την επιφύλαξη νομικών υποχρεώσεων διατήρησης.</li>
+            <li><strong>Περιορισμός της επεξεργασίας</strong> — όσο εκκρεμεί αμφισβήτηση της ακρίβειας των δεδομένων ή της νομιμότητας της επεξεργασίας.</li>
+            <li><strong>Εναντίωση</strong> — συμπεριλαμβανομένης της εναντίωσης σε επεξεργασία που βασίζεται σε έννομο συμφέρον.</li>
+            <li><strong>Φορητότητα</strong> — να λάβετε τα δεδομένα που παρείχατε σε κοινώς χρησιμοποιούμενο και αναγνώσιμο από μηχανήματα μορφότυπο.</li>
+            <li><strong>Ανάκληση της συγκατάθεσης</strong> — ανά πάσα στιγμή, χωρίς να θίγεται η νομιμότητα της επεξεργασίας που προηγήθηκε.</li>
+            <li><strong>Καταγγελία σε εποπτική αρχή</strong> — στην Αρχή Προστασίας Απορρήτου του Ισραήλ· στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα στην Ελλάδα· στο Γραφείο Επιτρόπου Προστασίας Δεδομένων Προσωπικού Χαρακτήρα στην Κύπρο· ή στην εποπτική αρχή της χώρας διαμονής σας.</li>
+            </ul>
+            <p><strong>Πρακτική σημείωση.</strong> Δεδομένου ότι ο ιστότοπος δεν συλλέγει στοιχεία και δεν τηρεί μητρώο επισκεπτών, στις περισσότερες περιπτώσεις η απάντησή μας σε αίτημα πρόσβασης θα είναι ότι δεν διαθέτουμε δεδομένα που σας αφορούν. Αν μας έχετε γράψει με ηλεκτρονικό ταχυδρομείο, το μόνο στοιχείο που διαθέτουμε είναι η αλληλογραφία αυτή, και μπορείτε να ζητήσετε τη διαγραφή της.</p>
+            <p>Για την άσκηση των δικαιωμάτων σας μπορείτε να απευθυνθείτε στη διεύθυνση support@moraltogether.com. Θα απαντήσουμε εντός 30 ημερών· σε σύνθετο αίτημα ενδέχεται να παρατείνουμε την προθεσμία κατά 60 ακόμη ημέρες και θα σας ενημερώσουμε σχετικά. Για την προστασία του απορρήτου σας θα ζητήσουμε εύλογη επαλήθευση της ταυτότητάς σας πριν από τη γνωστοποίηση δεδομένων ή τη διαγραφή. Η άσκηση των δικαιωμάτων είναι δωρεάν, εκτός από αιτήματα προδήλως αβάσιμα ή επαναλαμβανόμενα.</p>
+            <h2>15. Ανήλικοι</h2>
+            <p>Ο ιστότοπος είναι ιστότοπος ενημέρωσης και παρουσίασης, ανοικτός στο κοινό, και δεν απευθύνεται ειδικά σε ανηλίκους. Καθώς δεν συλλέγουμε στοιχεία από κανέναν επισκέπτη, δεν συλλέγουμε στοιχεία ούτε από ανηλίκους, και δεν προβαίνουμε σε κατάρτιση προφίλ ή εξατομικευμένη διαφήμιση που να απευθύνεται σε αυτούς.</p>
+            <p>Αν ανήλικος μας έχει γράψει με ηλεκτρονικό ταχυδρομείο και γονέας ή κηδεμόνας ζητήσει τη διαγραφή της αλληλογραφίας, θα το πράξουμε κατά προτεραιότητα και εντός 7 εργάσιμων ημερών.</p>
+            <h2>16. Σύνδεσμοι και εξωτερικές πλατφόρμες</h2>
+            <p>Ο ιστότοπος περιλαμβάνει συνδέσμους προς εξωτερικές πλατφόρμες, μεταξύ αυτών YouTube, Facebook και LinkedIn, του οργανισμού και των συνεργαζόμενων πρωτοβουλιών. Πρόκειται για <strong>συνδέσμους και μόνο</strong>: δεν υπάρχουν ενσωματωμένοι αναπαραγωγείς ή στοιχεία κοινωνικών δικτύων στις σελίδες του ιστότοπου, και συνεπώς οι πλατφόρμες αυτές δεν λαμβάνουν κανένα απολύτως δεδομένο όσο δεν έχετε πατήσει τον σύνδεσμο.</p>
+            <p>Από τη στιγμή που πατήσετε και μεταβείτε σε αυτές, οι πλατφόρμες αυτές συλλέγουν δεδομένα αυτοτελώς, βάσει των δικών τους πολιτικών απορρήτου, οι οποίες δεν εμπίπτουν στον έλεγχό μας και για τις οποίες δεν φέρουμε ευθύνη. Συνιστούμε να τις μελετήσετε.</p>
+            <h2>17. Τροποποιήσεις της πολιτικής και εφαρμοστέο δίκαιο</h2>
+            <ul>
+            <li>Επικαιροποιημένο κείμενο θα δημοσιεύεται στη σελίδα αυτή, με αναγραφή της ημερομηνίας ενημέρωσης και του αριθμού έκδοσης.</li>
+            <li>Σε περίπτωση ουσιώδους μεταβολής — μεταξύ άλλων προσθήκης εργαλείου μέτρησης, φόρμας επικοινωνίας ή οποιασδήποτε συλλογής δεδομένων που δεν υφίσταται σήμερα — θα ενημερώσουμε με εμφανή ανακοίνωση στον ιστότοπο 14 ημέρες πριν από την έναρξη ισχύος της μεταβολής. Εφόσον μια μεταβολή απαιτεί συγκατάθεση, θα τη ζητήσουμε χωριστά.</li>
+            <li>Η παρούσα πολιτική διέπεται από το δίκαιο του Κράτους του Ισραήλ, με την επιφύλαξη των μη παραιτήσιμων δικαιωμάτων που παρέχονται σε χρήστες της Ευρωπαϊκής Ένωσης βάσει του GDPR και του δικαίου του τόπου διαμονής τους. Αρμόδια είναι τα δικαστήρια του Ισραήλ, χωρίς να θίγεται το δικαίωμα χρήστη της Ευρωπαϊκής Ένωσης να προσφύγει στην εποπτική αρχή ή σε δικαστήριο της χώρας διαμονής του.</li>
+            <li>Η πολιτική δημοσιεύεται στα εβραϊκά και σε μεταφράσεις σε άλλες γλώσσες. Σε περίπτωση οποιασδήποτε αντίφασης μεταξύ των κειμένων, <strong>υπερισχύει το εβραϊκό κείμενο</strong>, εκτός αν το τοπικό δίκαιο ορίζει διαφορετικά.</li>
+            </ul>
+            <h2>18. Επικοινωνία</h2>
+            <p>Για κάθε ερώτημα, αίτημα ή καταγγελία σχετικά με το απόρρητο:</p>
+            <ul>
+            <li><strong>Αρμόδιος επικοινωνίας για θέματα απορρήτου:</strong> David Haim</li>
+            <li><strong>Ηλεκτρονικό ταχυδρομείο:</strong> support@moraltogether.com</li>
+            <li><strong>Τηλέφωνο:</strong> +972-55-934-4443</li>
+            <li><strong>Διεύθυνση:</strong> Deshanim 11, Χάιφα</li>
+            </ul>
+        </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="footer-logo">
+                    <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                </div>
+                <div class="footer-links">
+                    <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
+                        <li><a href="index.html#vision" data-i18n="nav_vision">Vision</a></li>
+                        <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
+                        <li><a href="index.html#team" data-i18n="nav_team">Team</a></li>
+                        <li><a href="index.html#gallery" data-i18n="nav_gallery">Gallery</a></li>
+                        <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
+                        <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3 data-i18n="footer_social_heading">Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--youtube" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <a href="accessibility.html" data-i18n="footer_accessibility">Accessibility Statement</a>
+                <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom" style="margin-bottom: 20px;" data-i18n="footer_copyright">
+                &copy; 2026 MoralTogether. All rights reserved.
+            </div>
+        </div>
+        <div class="developer-credit"
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            Developed with ❤️ by <a href="https://moral-together.github.io/MerkazHamedia/" target="_blank"
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                Hamedia</a>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+    <script>
+    (function () {
+        // The i18n engine writes the site-wide meta_title into document.title on every
+        // language change. On a page with a name of its own that is the wrong title, so it
+        // is put back after the engine has finished. The strings live here rather than in
+        // translations.js because the text of this page lives here too.
+        var TITLES = {"he":"מדיניות פרטיות | MoralTogether","en":"Privacy Policy | MoralTogether","gr":"Πολιτική Απορρήτου | MoralTogether"};
+        var DESCS = {"he":"מדיניות הפרטיות של אתר MoralTogether — איזה מידע נאסף בפועל, מי מקבל אותו ואילו זכויות עומדות לך.","en":"The privacy policy for the MoralTogether website — what information is actually collected, who receives it and what rights you have.","gr":"Η πολιτική απορρήτου του ιστότοπου MoralTogether — ποια δεδομένα συλλέγονται στην πράξη, ποιοι τα λαμβάνουν και ποια δικαιώματα έχετε."};
+        var KEY = { en: 'en', he: 'he', el: 'gr' };
+        function apply() {
+            var k = KEY[document.documentElement.lang] || 'en';
+            document.title = TITLES[k];
+            var m = document.querySelector('meta[name="description"]');
+            if (m) m.setAttribute('content', DESCS[k]);
+        }
+        document.addEventListener('langChanged', apply);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+        else apply();
+    })();
+    </script>
+    <script src="a11y-widget.js" defer></script>
+
+</body>
+</html>

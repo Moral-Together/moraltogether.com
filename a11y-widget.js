@@ -61,14 +61,20 @@
             bottomOffset: 0,
             mobileBottomOffset: safeInset('bottom'),
 
-            // No statementUrl yet, deliberately: when it is set the widget merely opens that
-            // URL and never shows a statement of its own. It gets wired to /accessibility once
-            // that page exists (subtask 5). Until then the widget generates the statement from
-            // the data below. Phone and coordinator are left out rather than invented — both
-            // are still missing, and the generator omits what it is not given.
+            // Setting statementUrl means the widget only opens that page and never renders a
+            // statement of its own. That is what we want now that the page exists: it names the
+            // coordinator, the phone and the known limitations, none of which the package's
+            // generator can produce, and it says the same thing in all three languages.
+            // Relative on purpose — the package hands this to window.open, which resolves it
+            // against the current document, so it survives a preview deployment and either
+            // domain. An absolute URL would only be one more thing to keep in step.
+            statementUrl: 'accessibility.html',
+
+            // Kept as the fallback for a build where the URL above is cleared. The generator
+            // omits whatever it is not given, so this stays deliberately thin.
             statementData: {
                 orgName: 'MoralTogether',
-                orgEmail: 'info@moraltogether.org',
+                orgEmail: 'support@moraltogether.com',
                 lastAuditDate: '2026-08-24'
             }
         };

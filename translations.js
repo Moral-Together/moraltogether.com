@@ -80,6 +80,7 @@ const TRANSLATIONS = {
     contact_email_label: "Email", contact_whatsapp_label: "WhatsApp",
     footer_tagline: "A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.",
     footer_nav_heading: "Quick Navigation", footer_social_heading: "Follow Us",
+    footer_accessibility: "Accessibility Statement", footer_privacy: "Privacy Policy",
     footer_copyright: "© 2026 MoralTogether. All rights reserved.",
 
     // Shabbat closing screen
@@ -176,6 +177,7 @@ const TRANSLATIONS = {
     contact_email_label: "אימייל", contact_whatsapp_label: "וואטסאפ",
     footer_tagline: "מערכת אקולוגית עוצמתית שמסוגלת באמת להשפיע. אנחנו מחברים אנשים, יוזמות וארגונים ליצירת מציאות של שפע ותקווה.",
     footer_nav_heading: "ניווט מהיר", footer_social_heading: "עקבו אחרינו",
+    footer_accessibility: "הצהרת נגישות", footer_privacy: "מדיניות פרטיות",
     footer_copyright: "© 2026 MoralTogether. כל הזכויות שמורות.",
 
     // Shabbat closing screen
@@ -272,6 +274,7 @@ const TRANSLATIONS = {
     contact_email_label: "Email", contact_whatsapp_label: "WhatsApp",
     footer_tagline: "Ένα ισχυρό οικοσύστημα πραγματικά ικανό να κάνει αντίκτυπο. Συνδέουμε ανθρώπους, πρωτοβουλίες και οργανισμούς για να δημιουργήσουμε μια πραγματικότητα αφθονίας και ελπίδας.",
     footer_nav_heading: "Γρήγορη Πλοήγηση", footer_social_heading: "Ακολουθήστε μας",
+    footer_accessibility: "Δήλωση Προσβασιμότητας", footer_privacy: "Πολιτική Απορρήτου",
     footer_copyright: "© 2026 MoralTogether. Με επιφύλαξη παντός δικαιώματος.",
 
     // Shabbat closing screen
