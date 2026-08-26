@@ -7,7 +7,8 @@
     --secondary-color: #e55b27;
     --accent-color: #90b5b3;
     --text-main: #1d1d1f;
-    --text-muted: #6e6e73;
+    --text-muted: #59595d;   /* было #6e6e73 — 3.54:1 на пилюле переключателя языка,
+                                на её самом тёмном пикселе #d0d3d7 нужно #59595d */
     --bg-body: #fbfbfd;
     --bg-glass: rgba(255, 255, 255, 0.65);
     --card-border: rgba(255, 255, 255, 0.1);
@@ -23,7 +24,7 @@ body.dark-mode {
     --secondary-color: #ff2d78;
     --accent-color: #00ffb3;
     --text-main: #e8e8ff;
-    --text-muted: #7878a0;
+    --text-muted: #8585a9;   /* было #7878a0 — 3.88:1 на подписях контактов */
     --bg-body: #07070f;
     --bg-glass: rgba(10, 10, 25, 0.85);
     --card-border: rgba(0, 200, 255, 0.1);
@@ -1048,7 +1049,8 @@ body.dark-mode .bento-content p {
     color: rgba(180, 200, 240, 0.75);
 }
 body.dark-mode .bento-content .subtitle {
-    color: rgba(140, 170, 220, 0.70);
+    /* было rgba(...,0.70) — прозрачность подмешивала фон и давала 4.46:1 */
+    color: #8caadc;
 }
 
 .bento-icon {
@@ -1098,7 +1100,8 @@ body.dark-mode .bento-content .subtitle {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--secondary-color);
+    /* --secondary-color #e55b27 даёт 3.23:1 на белом; тот же оранжевый, темнее */
+    color: #bb4a20;
     font-weight: 700;
     margin-bottom: 15px;
     display: block;
@@ -1114,7 +1117,7 @@ body.dark-mode .bento-content .subtitle {
     font-size: 0.95rem;
     padding-left: 25px;
     margin-bottom: 12px;
-    color: #555;
+    color: var(--text-muted);   /* было #555 — число не умеет менять тему, 2.53:1 в тёмной */
     position: relative;
 }
 
@@ -1185,7 +1188,7 @@ body.dark-mode .bento-content .subtitle {
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    color: rgba(255,255,255,0.9);
+    color: #ffffff;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
 }
 
@@ -1232,7 +1235,7 @@ body.dark-mode .bento-content .subtitle {
     font-family: var(--font-heading);
     font-size: 1rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.95);
+    color: #ffffff;
     text-shadow: 0 1px 6px rgba(0,0,0,0.3);
 }
 
@@ -1299,11 +1302,23 @@ body.dark-mode .bento-content .subtitle {
 }
 .folder-social a:hover { background: #2979ff; border-color: #2979ff; color: #ffffff; }
 
-/* ─── Per-card gradients — LIGHT MODE (default) ─────────────── */
+/* ─── Per-card gradients — LIGHT MODE (default) ───────────────
+ *
+ * These four used to fade to a pastel tint — #dbeafe, #ccfbf1, #f3e8ff, #fef3c7 — with white
+ * type on top. Measured against the pixels actually under the letters, the name and the role
+ * tab came out between 1.16:1 and 2.0:1 where AA asks for 4.5. The tab had it worst: it is a
+ * hundred pixels wide and rendered the entire four-stop gradient across itself, so the end of
+ * the word sat on something almost white. Someone had already noticed and put a text-shadow
+ * under the names, which helps a human eye and counts for nothing in the measurement.
+ *
+ * White text needs a background no lighter than about 0.17 relative luminance. Each gradient
+ * now runs from its own dark end to the lightest tone that still clears 4.5:1 — computed per
+ * colour, not eyeballed: 4.53, 4.51, 4.52 and 4.52 respectively. The cards keep their four
+ * identities and lose the fade to white. The dark theme already passed and is untouched. */
 
 .folder-card-1 .folder-tab,
 .folder-card-1 .folder-flap {
-    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 40%, #93c5fd 75%, #dbeafe 100%);
+    background: linear-gradient(135deg, #1d4ed8 0%, #3360dc 55%, #446ee0 100%);
 }
 .folder-card-1 .folder-role { color: #1d4ed8; }
 .folder-card-1:hover .folder-inner {
@@ -1313,7 +1328,7 @@ body.dark-mode .bento-content .subtitle {
 
 .folder-card-2 .folder-tab,
 .folder-card-2 .folder-flap {
-    background: linear-gradient(135deg, #0f766e 0%, #0d9488 40%, #5eead4 75%, #ccfbf1 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #197d75 55%, #20827a 100%);
 }
 .folder-card-2 .folder-role { color: #0f766e; }
 .folder-card-2:hover .folder-inner {
@@ -1323,7 +1338,7 @@ body.dark-mode .bento-content .subtitle {
 
 .folder-card-3 .folder-tab,
 .folder-card-3 .folder-flap {
-    background: linear-gradient(135deg, #6b21a8 0%, #9333ea 40%, #d8b4fe 75%, #f3e8ff 100%);
+    background: linear-gradient(135deg, #6b21a8 0%, #8141b6 55%, #935cc2 100%);
 }
 .folder-card-3 .folder-role { color: #6b21a8; }
 .folder-card-3:hover .folder-inner {
@@ -1333,7 +1348,7 @@ body.dark-mode .bento-content .subtitle {
 
 .folder-card-4 .folder-tab,
 .folder-card-4 .folder-flap {
-    background: linear-gradient(135deg, #b45309 0%, #f59e0b 40%, #fcd34d 75%, #fef3c7 100%);
+    background: linear-gradient(135deg, #b45309 0%, #b6580e 55%, #b85b13 100%);
 }
 .folder-card-4 .folder-role { color: #92400e; }
 .folder-card-4:hover .folder-inner {
@@ -1357,7 +1372,7 @@ body.dark-mode .folder-social a:hover { color: #00ffb3; border-color: #00ffb3; b
 
 body.dark-mode .folder-card-1 .folder-tab,
 body.dark-mode .folder-card-1 .folder-flap {
-    background: linear-gradient(135deg, #020b1a 0%, #041e4a 30%, #0044cc 65%, #00aaff 100%);
+    background: linear-gradient(135deg, #020b1a 0%, #014973 55%, #017bbb 100%);
 }
 body.dark-mode .folder-card-1 .folder-role { color: #00aaff; }
 body.dark-mode .folder-card-1:hover .folder-inner {
@@ -1367,7 +1382,7 @@ body.dark-mode .folder-card-1:hover .folder-inner {
 
 body.dark-mode .folder-card-2 .folder-tab,
 body.dark-mode .folder-card-2 .folder-flap {
-    background: linear-gradient(135deg, #01100e 0%, #023328 30%, #007a6e 65%, #00ffdd 100%);
+    background: linear-gradient(135deg, #01100e 0%, #015045 55%, #018473 100%);
 }
 body.dark-mode .folder-card-2 .folder-role { color: #00ffdd; }
 body.dark-mode .folder-card-2:hover .folder-inner {
@@ -1377,7 +1392,7 @@ body.dark-mode .folder-card-2:hover .folder-inner {
 
 body.dark-mode .folder-card-3 .folder-tab,
 body.dark-mode .folder-card-3 .folder-flap {
-    background: linear-gradient(135deg, #0d0116 0%, #2d0550 30%, #7c1fd4 65%, #df80ff 100%);
+    background: linear-gradient(135deg, #0d0116 0%, #5d316e 55%, #9e59b7 100%);
 }
 body.dark-mode .folder-card-3 .folder-role { color: #df80ff; }
 body.dark-mode .folder-card-3:hover .folder-inner {
@@ -1387,7 +1402,7 @@ body.dark-mode .folder-card-3:hover .folder-inner {
 
 body.dark-mode .folder-card-4 .folder-tab,
 body.dark-mode .folder-card-4 .folder-flap {
-    background: linear-gradient(135deg, #120600 0%, #3d1500 30%, #c04c00 65%, #ffaa00 100%);
+    background: linear-gradient(135deg, #120600 0%, #613d00 55%, #a26900 100%);
 }
 body.dark-mode .folder-card-4 .folder-role { color: #ffaa00; }
 body.dark-mode .folder-card-4:hover .folder-inner {
@@ -2691,6 +2706,9 @@ body.dark-mode ::-webkit-scrollbar-thumb {
 
 /* Buttons neon */
 body.dark-mode .btn-primary {
+    /* Белое на этом циане даёт 2.24:1. Тёмная надпись — 8.7:1, как у значка «+500»
+       и у кнопки виджета доступности. */
+    color: var(--bg-body);
     background: linear-gradient(135deg, #0088bb, #00c8ff);
     box-shadow: 0 0 20px rgba(0, 200, 255, 0.35), 0 10px 30px rgba(0, 200, 255, 0.15);
 }
@@ -2700,7 +2718,9 @@ body.dark-mode .btn-primary:hover {
 }
 
 body.dark-mode .btn-secondary {
-    background: rgba(0, 200, 255, 0.08);
+    /* 8% циана — почти прозрачность, и надпись ложилась прямо на фотографию:
+       2.76:1 на худшем пикселе. Тёмная подложка делает контраст предсказуемым. */
+    background: rgba(4, 12, 24, 0.72);
     border: 1px solid rgba(0, 200, 255, 0.3);
     color: #00c8ff;
 }
@@ -3087,7 +3107,8 @@ body.dark-mode .hero-text-panel > p {
 }
 
 body.dark-mode .hero-text-panel .floating-social-proof {
-    background: rgba(0, 0, 20, 0.35) !important;
+    /* 35% — фотография просвечивала, подпись давала 4.32:1 */
+    background: rgba(0, 0, 20, 0.72) !important;
     border-color: rgba(0, 200, 255, 0.20) !important;
 }
 

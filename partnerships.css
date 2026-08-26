@@ -270,12 +270,14 @@ body.dark-mode .partnerships-dark-title {
 }
 
 .partner-social-btn--facebook {
-    background: #1877f2;
+    /* фирменный синий Facebook даёт белому ровно 4.23:1 — на волос темнее, и проходит */
+    background: #1771e6;
     color: #fff;
 }
 
 .partner-social-btn--youtube {
-    background: #ff0000;
+    /* фирменный красный YouTube даёт белому ровно 4.00:1 */
+    background: #ec0000;
     color: #fff;
 }
 
