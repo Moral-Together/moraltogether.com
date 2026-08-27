@@ -32,6 +32,12 @@
     <meta property="og:description" content="Discover all partner organizations and initiatives building a better society together.">
 
     <!-- Google Fonts -->
+    <!-- The skip link, hidden from the first millisecond. style.css hides it properly, but a
+         stylesheet arrives late enough that a keyboard visitor who presses Tab straight away
+         catches it undressed: a plain blue link at the top left of a blank page. Whoever does
+         that is exactly the person the link is for. -->
+    <style>.skip-link{position:absolute;left:50%;top:0;transform:translate(-50%,-120%);z-index:2147483001}
+           .skip-link:focus{transform:translate(-50%,0)}</style>
     <!-- Fonts, served from here: no third-party DNS and no third-party connection before text -->
     <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
