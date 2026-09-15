@@ -335,11 +335,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const DOT_COUNT  = 18;
         const TRAIL_LEN  = 28;
         const SPEED      = 0.55;
+        // The speeds below are written per 60 Hz frame, the way they always were. The tick now
+        // measures the real gap between frames and scales by it, so a 120 Hz screen no longer
+        // runs the hero at twice the speed of a 60 Hz one. The cap keeps a tab that was left in
+        // the background from teleporting the comets across the canvas on the frame it returns.
+        const FRAME      = 1000 / 60;
+        const MAX_STEP   = 3;
 
         const NEON_COLORS  = ['#00c8ff','#ff2d78','#00ffb3','#bf5af2','#ff9500','#f9b80c'];
         const LIGHT_COLORS = ['#0088ee','#e8003d','#00aa55','#8833cc','#e06800','#cc9900'];
 
         let dW, dH, textZone;
+        let raf = null, last = 0, onScreen = true;
         const comets = [];
 
         function dotsResize() {
@@ -369,16 +376,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     x, y,
                     vx: Math.cos(angle) * speed,
                     vy: Math.sin(angle) * speed,
+                    speed,                      // the speed this comet keeps for life
                     r: 2 + Math.random() * 1.5,
                     colorIdx: i % NEON_COLORS.length,
                     trail,
                 });
             }
         }
-
-        dotsResize();
-        initComets();
-        window.addEventListener('resize', () => { dotsResize(); initComets(); });
 
         function hexToRgb(hex) {
             const r = parseInt(hex.slice(1,3),16);
@@ -387,25 +391,44 @@ document.addEventListener('DOMContentLoaded', () => {
             return `${r},${g},${b}`;
         }
 
-        function cometsTick() {
+        function stepComets(step) {
+            comets.forEach(c => {
+                // Bounce. The old test only flipped the sign and left the comet where it was, so
+                // one that had overshot could sit past the edge flipping every frame. It is put
+                // back on the canvas and sent inwards.
+                if (c.x < 0)       { c.x = 0;  c.vx =  Math.abs(c.vx); }
+                else if (c.x > dW) { c.x = dW; c.vx = -Math.abs(c.vx); }
+                if (c.y < 0)       { c.y = 0;  c.vy =  Math.abs(c.vy); }
+                else if (c.y > dH) { c.y = dH; c.vy = -Math.abs(c.vy); }
+
+                // Steering away from the text zone used to add 0.02 to vx every frame and keep
+                // it: the wall bounce only flips the sign, so nothing ever gave the speed back,
+                // and each crossing left the comet faster than the last. Measured at 60 Hz on a
+                // 1440 px canvas — 0.68 px/frame at the start, 5.22 after two minutes, the
+                // 28-point trail stretched from a 19 px dot into a 146 px stripe. The nudge
+                // still turns the comet away; its speed is put back where it began.
+                if (c.x < textZone.w && c.y > textZone.hMin && c.y < textZone.hMax) {
+                    c.vx += 0.02 * step;
+                    const len = Math.hypot(c.vx, c.vy) || 1;
+                    c.vx = c.vx / len * c.speed;
+                    c.vy = c.vy / len * c.speed;
+                }
+
+                c.x += c.vx * step;
+                c.y += c.vy * step;
+
+                // update trail
+                c.trail.push({ x: c.x, y: c.y });
+                if (c.trail.length > TRAIL_LEN) c.trail.shift();
+            });
+        }
+
+        function drawComets() {
             dctx.clearRect(0, 0, dW, dH);
             const dark = document.body.classList.contains('dark-mode');
             const palette = dark ? NEON_COLORS : LIGHT_COLORS;
 
             comets.forEach(c => {
-                // bounce + steer away from text zone
-                if (c.x < 0 || c.x > dW) c.vx *= -1;
-                if (c.y < 0 || c.y > dH) c.vy *= -1;
-                if (c.x < textZone.w && c.y > textZone.hMin && c.y < textZone.hMax) {
-                    c.vx += 0.02;
-                }
-                c.x += c.vx;
-                c.y += c.vy;
-
-                // update trail
-                c.trail.push({ x: c.x, y: c.y });
-                if (c.trail.length > TRAIL_LEN) c.trail.shift();
-
                 const color = palette[c.colorIdx];
                 const rgb = hexToRgb(color);
 
@@ -439,10 +462,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 dctx.fillStyle = color;
                 dctx.fill();
             });
-
-            requestAnimationFrame(cometsTick);
         }
-        requestAnimationFrame(cometsTick);
+
+        function cometsTick(now) {
+            const step = last ? Math.min((now - last) / FRAME, MAX_STEP) : 1;
+            last = now;
+            stepComets(step);
+            drawComets();
+            raf = requestAnimationFrame(cometsTick);
+        }
+
+        // The switch that stops the motion, and the system's own prefers-reduced-motion behind
+        // it, both set html.motion-paused. CSS can pause an animation; it cannot stop a canvas
+        // from being redrawn, so the comets ran straight through both — while the accessibility
+        // statement promised a control that stops the motion on the site. And there was nothing
+        // to gain by drawing them while the hero was scrolled past, which the vision network
+        // canvas below already knew.
+        const motionOff = () => document.documentElement.classList.contains('motion-paused');
+
+        function startComets() {
+            if (raf || !onScreen || motionOff()) return;
+            last = 0;
+            raf = requestAnimationFrame(cometsTick);
+        }
+        function stopComets() {
+            if (!raf) return;
+            cancelAnimationFrame(raf);
+            raf = null;
+        }
+
+        dotsResize();
+        initComets();
+        drawComets();   // one still frame, so a hero with the motion stopped is not an empty one
+        window.addEventListener('resize', () => { dotsResize(); initComets(); drawComets(); });
+
+        new MutationObserver(() => (motionOff() ? stopComets() : startComets()))
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+        new IntersectionObserver((entries) => {
+            onScreen = entries[0].isIntersecting;
+            onScreen ? startComets() : stopComets();
+        }).observe(dotsCanvas);
     }
 
     // ── Vision Network Canvas ──────────────────────────────────────
@@ -460,9 +520,14 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'sector_community',color: '#f4a31e', emoji: '🏘️' },
         ];
 
+        // The pulse speeds below are written per 60 Hz frame; the tick scales them by the real
+        // gap between frames, so a 120 Hz screen no longer runs the dots at twice the speed.
+        const FRAME    = 1000 / 60;
+        const MAX_STEP = 3;
+
         let W, H, cx, cy, radius;
         let pulses = [];
-        let raf = null;
+        let raf = null, last = 0, onScreen = false;
 
         // Preload center logo
         const logoImg = new Image();
@@ -646,24 +711,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function tick() {
+        function tick(now) {
+            const step = last ? Math.min((now - last) / FRAME, MAX_STEP) : 1;
+            last = now;
             pulses.forEach(p => {
-                p.t += p.speed;
+                p.t += p.speed * step;
                 if (p.t > 1) p.t = 0;
             });
             draw();
             raf = requestAnimationFrame(tick);
         }
 
-        function start() { if (!raf) raf = requestAnimationFrame(tick); }
+        // The same gap the hero comets had: html.motion-paused, which the "Stop the motion"
+        // switch and prefers-reduced-motion both set, pauses CSS animations and nothing else.
+        // A canvas goes on being redrawn straight through it, so these dots kept crawling
+        // while the accessibility statement said the motion on the site could be stopped.
+        const motionOff = () => document.documentElement.classList.contains('motion-paused');
+
+        function start() {
+            if (raf || !onScreen || motionOff()) return;
+            last = 0;
+            raf = requestAnimationFrame(tick);
+        }
         function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
 
         const observer = new IntersectionObserver(entries => {
-            entries[0].isIntersecting ? start() : stop();
+            onScreen = entries[0].isIntersecting;
+            onScreen ? start() : stop();
         }, { threshold: 0.1 });
+
+        new MutationObserver(() => (motionOff() ? stop() : start()))
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
         resize();
         initPulses();
+        draw();   // one still frame, so a section with the motion stopped is not an empty one
         observer.observe(canvas);
 
         window.addEventListener('resize', () => { resize(); draw(); });
