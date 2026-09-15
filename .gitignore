@@ -1,5 +1,11 @@
 # The repository is the public site: everything committed here is served. Local tooling and
 # editor droppings must not become URLs.
 .DS_Store
+._*
 .claude/
 node_modules/
+
+# The 15.09 audit report is internal: it names copy that is not approved and contact
+# details that are placeholders. The site is served from this repository as it stands,
+# so a commit would put it on the domain.
+Bug Fix/
