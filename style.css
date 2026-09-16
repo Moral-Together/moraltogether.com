@@ -666,6 +666,108 @@ body.dark-mode .avatar-count {
     margin: 32px 0 12px;
 }
 
+/* Три подраздела свёрнуты в аккордеон. Нативные <details>/<summary>: клавиатура и
+   скринридеры работают без скрипта, текст остаётся в разметке — он свёрнут, а не вырезан,
+   поэтому поиск и индексация его видят. */
+.about-accordion {
+    border-top: 1px solid rgba(0, 43, 100, 0.14);
+}
+
+.about-accordion:last-of-type {
+    border-bottom: 1px solid rgba(0, 43, 100, 0.14);
+}
+
+body.dark-mode .about-accordion,
+body.dark-mode .about-accordion:last-of-type {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.about-accordion > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    cursor: pointer;
+    list-style: none;
+}
+
+/* Штатный треугольник убираем — вместо него своя стрелка ниже */
+.about-accordion > summary::-webkit-details-marker { display: none; }
+
+.about-accordion > summary .about-subheading {
+    margin: 0;
+}
+
+.about-accordion > summary::after {
+    content: "";
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    transform: rotate(45deg);
+    transition: transform 0.34s cubic-bezier(0.32, 0, 0.24, 1);
+}
+
+.about-accordion[open] > summary::after {
+    transform: rotate(-135deg);
+}
+
+.about-accordion > summary:hover .about-subheading {
+    color: var(--secondary-color);
+}
+
+.about-accordion > summary:focus-visible {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.about-accordion-body {
+    padding-bottom: 4px;
+}
+
+/* Плавное раскрытие.
+   ::details-content — обёртка содержимого <details>. Высоту auto браузер анимирует только
+   при interpolate-size: allow-keywords, иначе переход с 0 на auto просто не запускается.
+   allow-discrete откладывает переключение content-visibility до конца перехода — без него
+   содержимое исчезало бы мгновенно при закрытии, и обратный ход не был бы виден.
+   Браузеры без ::details-content открывают рывком, как раньше: поведение не ломается.
+   Тормозить анимацию при «остановить движение» и при системной настройке не нужно —
+   правило html.motion-paused сводит transition-duration к нулю для всего разом. */
+@supports selector(::details-content) {
+    .about-accordion {
+        interpolate-size: allow-keywords;
+    }
+
+    .about-accordion::details-content {
+        height: 0;
+        overflow: hidden;
+        transition:
+            height 0.34s cubic-bezier(0.32, 0, 0.24, 1),
+            content-visibility 0.34s allow-discrete;
+    }
+
+    .about-accordion[open]::details-content {
+        height: auto;
+    }
+
+    /* Текст подхватывает раскрытие лёгким проявлением — от этого движение мягче. */
+    .about-accordion .about-accordion-body {
+        opacity: 0;
+        transition: opacity 0.26s ease 0.06s;
+    }
+
+    .about-accordion[open] .about-accordion-body {
+        opacity: 1;
+    }
+}
+
+.about-accordion-body p:last-child {
+    margin-bottom: 20px;
+}
+
 /* Блок «חיבורים» — коллаж на месте прежних четырёх карточек ценностей */
 .connections-block {
     display: flex;
@@ -815,6 +917,11 @@ body.dark-mode .vision-section { background: #04040e; }
     display: flex;
     flex-direction: column;
     height: 100%;
+    /* Содержимое выравнивается по верху, а не по центру. Центрирование делило пустоту
+       поровну, но сбивало логотипы, подписи и названия с общих линий: у карточки без
+       описания всё уезжало вниз, и ряд выглядел неровным. Выровненные линии важнее, чем
+       поле снизу у карточек, где описания нет. */
+    justify-content: flex-start;
 }
 
 .card-app::after {
@@ -822,14 +929,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #00c8ff, #00ffb3);
+    background: linear-gradient(var(--accent-dir, 90deg), #00c8ff, #00ffb3);
     box-shadow: 0 0 12px rgba(0, 200, 255, 0.55);
 }
 .card-app {
     box-shadow: 0 -2px 14px rgba(0, 200, 255, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-app .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -842,14 +951,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #ff2d78, #ff6ba8);
+    background: linear-gradient(var(--accent-dir, 90deg), #ff2d78, #ff6ba8);
     box-shadow: 0 0 12px rgba(255, 45, 120, 0.55);
 }
 .card-radio {
     box-shadow: 0 -2px 14px rgba(255, 45, 120, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-radio .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -870,14 +981,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #bf5af2, #e07aff);
+    background: linear-gradient(var(--accent-dir, 90deg), #bf5af2, #e07aff);
     box-shadow: 0 0 12px rgba(191, 90, 242, 0.55);
 }
 .card-tv {
     box-shadow: 0 -2px 14px rgba(191, 90, 242, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-tv .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -898,14 +1011,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #e8467c, #ff8fb4);
+    background: linear-gradient(var(--accent-dir, 90deg), #e8467c, #ff8fb4);
     box-shadow: 0 0 12px rgba(232, 70, 124, 0.55);
 }
 .card-trustmom {
     box-shadow: 0 -2px 14px rgba(232, 70, 124, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-trustmom .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -918,14 +1033,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #35a86b, #f0b429);
+    background: linear-gradient(var(--accent-dir, 90deg), #35a86b, #f0b429);
     box-shadow: 0 0 12px rgba(53, 168, 107, 0.55);
 }
 .card-zuzim {
     box-shadow: 0 -2px 14px rgba(53, 168, 107, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-zuzim .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -938,14 +1055,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #c9a227, #e8cf7a);
+    background: linear-gradient(var(--accent-dir, 90deg), #c9a227, #e8cf7a);
     box-shadow: 0 0 12px rgba(201, 162, 39, 0.55);
 }
 .card-vvip {
     box-shadow: 0 -2px 14px rgba(201, 162, 39, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-vvip .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -958,14 +1077,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #1f6f8b, #4aa3b8);
+    background: linear-gradient(var(--accent-dir, 90deg), #1f6f8b, #4aa3b8);
     box-shadow: 0 0 12px rgba(31, 111, 139, 0.55);
 }
 .card-triplewin {
     box-shadow: 0 -2px 14px rgba(31, 111, 139, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-triplewin .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -978,14 +1099,16 @@ body.dark-mode .vision-section { background: #04040e; }
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 6px;
-    background: linear-gradient(90deg, #e58f27, #ffc860);
+    background: linear-gradient(var(--accent-dir, 90deg), #e58f27, #ffc860);
     box-shadow: 0 0 12px rgba(229, 143, 39, 0.55);
 }
 .card-stage {
     box-shadow: 0 -2px 14px rgba(229, 143, 39, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-stage .bento-icon .bento-logo-img {
-    width: 110px;
+    max-width: 110px;
+    max-height: 110px;
+    width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
 }
@@ -1015,7 +1138,7 @@ body.dark-mode .card-app {
     box-shadow: 0 -3px 16px rgba(0, 200, 255, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-app::after {
-    background: linear-gradient(90deg, #00c8ff, #00ffb3);
+    background: linear-gradient(var(--accent-dir, 90deg), #00c8ff, #00ffb3);
     box-shadow: 0 0 14px rgba(0, 200, 255, 0.70);
 }
 body.dark-mode .card-app:hover {
@@ -1027,7 +1150,7 @@ body.dark-mode .card-radio {
     box-shadow: 0 -3px 16px rgba(255, 45, 120, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-radio::after {
-    background: linear-gradient(90deg, #ff2d78, #ff6ba8);
+    background: linear-gradient(var(--accent-dir, 90deg), #ff2d78, #ff6ba8);
     box-shadow: 0 0 14px rgba(255, 45, 120, 0.70);
 }
 body.dark-mode .card-radio .bento-icon i {
@@ -1047,7 +1170,7 @@ body.dark-mode .card-tv {
     box-shadow: 0 -3px 16px rgba(191, 90, 242, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-tv::after {
-    background: linear-gradient(90deg, #bf5af2, #ff2d78);
+    background: linear-gradient(var(--accent-dir, 90deg), #bf5af2, #ff2d78);
     box-shadow: 0 0 14px rgba(191, 90, 242, 0.70);
 }
 body.dark-mode .card-tv .bento-icon i {
@@ -1067,7 +1190,7 @@ body.dark-mode .card-trustmom {
     box-shadow: 0 -3px 16px rgba(232, 70, 124, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-trustmom::after {
-    background: linear-gradient(90deg, #e8467c, #ff8fb4);
+    background: linear-gradient(var(--accent-dir, 90deg), #e8467c, #ff8fb4);
     box-shadow: 0 0 14px rgba(232, 70, 124, 0.70);
 }
 body.dark-mode .card-trustmom:hover {
@@ -1079,7 +1202,7 @@ body.dark-mode .card-zuzim {
     box-shadow: 0 -3px 16px rgba(53, 168, 107, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-zuzim::after {
-    background: linear-gradient(90deg, #35a86b, #f0b429);
+    background: linear-gradient(var(--accent-dir, 90deg), #35a86b, #f0b429);
     box-shadow: 0 0 14px rgba(53, 168, 107, 0.70);
 }
 body.dark-mode .card-zuzim:hover {
@@ -1091,7 +1214,7 @@ body.dark-mode .card-vvip {
     box-shadow: 0 -3px 16px rgba(201, 162, 39, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-vvip::after {
-    background: linear-gradient(90deg, #c9a227, #e8cf7a);
+    background: linear-gradient(var(--accent-dir, 90deg), #c9a227, #e8cf7a);
     box-shadow: 0 0 14px rgba(201, 162, 39, 0.70);
 }
 body.dark-mode .card-vvip:hover {
@@ -1103,7 +1226,7 @@ body.dark-mode .card-triplewin {
     box-shadow: 0 -3px 16px rgba(31, 111, 139, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-triplewin::after {
-    background: linear-gradient(90deg, #1f6f8b, #4aa3b8);
+    background: linear-gradient(var(--accent-dir, 90deg), #1f6f8b, #4aa3b8);
     box-shadow: 0 0 14px rgba(31, 111, 139, 0.70);
 }
 body.dark-mode .card-triplewin:hover {
@@ -1115,7 +1238,7 @@ body.dark-mode .card-stage {
     box-shadow: 0 -3px 16px rgba(229, 143, 39, 0.40), 0 8px 40px rgba(0,0,0,0.50);
 }
 body.dark-mode .card-stage::after {
-    background: linear-gradient(90deg, #e58f27, #ffc860);
+    background: linear-gradient(var(--accent-dir, 90deg), #e58f27, #ffc860);
     box-shadow: 0 0 14px rgba(229, 143, 39, 0.70);
 }
 body.dark-mode .card-stage:hover {
@@ -1137,7 +1260,14 @@ body.dark-mode .bento-content .subtitle {
 .bento-icon {
     font-size: 3.5rem;
     margin-bottom: 25px;
-    display: inline-block;
+    /* Фиксированное окно под логотип. Пропорции у брендов разные: при ширине 110px высота
+       выходила от 70px (VVIP) до 114px (Trust Mom) — разброс в 44px, и всё, что ниже,
+       вставало на разной высоте. Особенно бросалось в глаза на VVIP: его широкий и низкий
+       знак поднимал текст выше соседей. Теперь знак любой формы центрируется в общем окне. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 124px;
     transition: transform 0.4s ease;
 }
 
@@ -1166,7 +1296,11 @@ body.dark-mode .bento-content .subtitle {
 .bento-content h3 {
     font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: 15px;
+    /* margin-top сбрасываем явно: у h3 браузерный дефолт 1em, и он добавлял 29px поверх
+       15px у подписи. Получалось, что подпись и название — самую связанную пару в карточке —
+       разделял самый широкий промежуток во всём блоке. */
+    margin-top: 0;
+    margin-bottom: 18px;
     color: var(--primary-color);
 }
 
@@ -1174,18 +1308,27 @@ body.dark-mode .bento-content .subtitle {
     font-size: 1rem;
     color: var(--text-muted);
     line-height: 1.6;
+    margin-top: 0;
     margin-bottom: 20px;
 }
 
 .bento-content .subtitle {
-    font-size: 0.85rem;
+    /* Кегль чуть крупнее, а трекинг наоборот убран: 1.5px растягивали короткий ярлык
+       в широкую разрядку, из-за чего он спорил с названием под ним. */
+    font-size: 0.92rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 0.4px;
     /* --secondary-color #e55b27 даёт 3.23:1 на белом; тот же оранжевый, темнее */
     color: #bb4a20;
     font-weight: 700;
-    margin-bottom: 15px;
+    /* Ярлык категории и название — одна группа, держим их вплотную. */
+    margin-bottom: 6px;
     display: block;
+    /* Под ярлык резервируем две строки. У части брендов он длиннее и переносится — без
+       резерва их названия вставали ниже соседних по ряду. Где ярлык в одну строку, запас
+       просто остаётся пустым, и названия по всему ряду держат общую линию. */
+    line-height: 1.35;
+    min-height: 2.7em;
 }
 
 .feature-checklist {
@@ -1627,7 +1770,6 @@ body.dark-mode .folder-card-4.open .folder-inner {
     width: 160px;
     height: 150px;
     background: #ffffff;
-    border: 1px solid color-mix(in srgb, var(--card-accent, var(--primary-color)) 35%, transparent);
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -1648,7 +1790,9 @@ body.dark-mode .folder-card-4.open .folder-inner {
     background: var(--card-accent, var(--primary-color));
     box-shadow: 0 0 10px var(--card-accent, var(--primary-color)),
                 0 0 20px color-mix(in srgb, var(--card-accent, var(--primary-color)) 50%, transparent);
-    border-radius: 16px 16px 0 0;
+    /* Радиуса здесь быть не должно. Полоса высотой 3px, а радиус стоял 16px — браузер
+       ужимает его в эллипс и съедает по 16px с каждого конца, отчего полоса не доходила до
+       углов и загибалась крючками. Карточка и так обрезает её своим overflow: hidden. */
     z-index: 2;
 }
 
@@ -1657,14 +1801,12 @@ body.dark-mode .folder-card-4.open .folder-inner {
         box-shadow:
             0 0 8px  color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
             0 4px 20px rgba(0,0,0,0.4);
-        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 35%, transparent);
     }
     50% {
         box-shadow:
             0 0 18px color-mix(in srgb, var(--card-accent, var(--primary-color)) 65%, transparent),
             0 0 35px color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
             0 4px 20px rgba(0,0,0,0.4);
-        border-color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 75%, transparent);
     }
 }
 
@@ -1975,6 +2117,23 @@ body.dark-mode .folder-card-4.open .folder-inner {
     color: var(--text-main);
     transition: 0.3s;
     border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Цветная метка канала связи. Раньше это был `border-left: 4px` при остальных бортах в 1px.
+   На скруглении в 16px браузер сводит толстый борт к тонкому клином — по углам оставался
+   загнутый хвостик, будто рамка отклеилась от карточки. Полоса псевдоэлементом такого шва не
+   даёт: её просто обрезает скругление родителя. inset-inline-start вместо left — логическое
+   свойство, поэтому на иврите полоса сама переходит на правый край. */
+.contact-method-card::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 4px;
+    background: transparent;
+    pointer-events: none;
 }
 
 body.dark-mode .contact-method-card {
@@ -2607,8 +2766,8 @@ html.dark-mode-early .light-logo {
 }
 
 /* Custom Colors for Contact Cards */
-.contact-mail-card {
-    border-left: 4px solid #dd2a7b;
+.contact-mail-card::before {
+    background: #dd2a7b;
 }
 
 .contact-mail-card:hover {
@@ -2620,8 +2779,8 @@ html.dark-mode-early .light-logo {
     background: #dd2a7b;
 }
 
-.contact-whatsapp-card {
-    border-left: 4px solid #4bb578;
+.contact-whatsapp-card::before {
+    background: #4bb578;
 }
 
 .contact-whatsapp-card:hover {
@@ -2914,7 +3073,10 @@ body.dark-mode .hero-overlay {
 .hero-text-panel {
     position: relative;
     z-index: 2;
-    max-width: 680px;
+    /* 720, а не 680: при крупном кегле второй ярус латинского заголовка на 680 срывался
+       на вторую строку и оставлял «resonates» в одиночестве. На иврите ширину задаёт
+       отдельное правило в rtl.css. */
+    max-width: 720px;
     margin: 0;
     text-align: left;
     display: flex;
@@ -2965,18 +3127,22 @@ body.dark-mode .hero-text-panel::before {
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.70);
-    paint-order: stroke fill;
-    filter: drop-shadow(0 2px 10px rgba(255,255,255,0.25));
+    /* Здесь была -webkit-text-stroke: 1.5px — она держала читаемость поверх фотографии, но
+       обводка идёт по контуру литеры и на острых углах даёт мителевые шипы. На иврите углов
+       много (ם, ה, כ), и заголовок выглядел обтрёпанным. Ту же работу делает плотный ореол
+       тенью: тень размыта, стыков у неё нет, шипов тоже. */
+    filter: drop-shadow(0 1px 2px rgba(255,255,255,0.92))
+            drop-shadow(0 0 6px rgba(255,255,255,0.75))
+            drop-shadow(0 2px 16px rgba(255,255,255,0.45));
 }
 
 /* Title — dark mode: neon shimmer */
 body.dark-mode .hero-text-panel .shimmer-text {
     background: linear-gradient(110deg, #00c8ff 5%, #ffffff 38%, #ff2d78 62%, #00ffb3 85%, #00c8ff 100%);
     background-size: 200% auto;
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.45);
-    paint-order: stroke fill;
-    filter: drop-shadow(0 0 28px rgba(0, 200, 255, 0.50));
+    /* То же, что в светлой теме: обводка убрана, отделение от фона держит тень. */
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 28px rgba(0, 200, 255, 0.50));
 }
 
 /* Subtitle — light mode */
@@ -2993,15 +3159,32 @@ body.dark-mode .hero-text-panel > p {
     text-shadow: 0 1px 8px rgba(0,0,0,0.60);
 }
 
-/* Заголовок героя. Прежние 5.5rem были подобраны под два слова, «Good Forces / Unite»;
-   фраза из брифа в семь раз длиннее и на 1440px наезжала на навигацию, занимая семь строк.
-   clamp держит её в три-четыре строки от телефона до широкого экрана. */
+/* Заголовок героя. Исходные 5.5rem были подобраны под два слова, «Good Forces / Unite», и
+   длинную фразу из брифа рвали на три строки по одному-два слова. Ярусная разбивка ниже
+   укоротила ведущую строку, поэтому кегль возвращается почти к прежнему: 5rem — предел, при
+   котором ведущая фраза держится в две строки в панели шириной 47%. */
 .hero-text-panel .shimmer-text {
     display: block;
-    font-size: clamp(1.9rem, 3vw, 3rem);
-    line-height: 1.16;
-    letter-spacing: -1px;
+    font-size: clamp(2.2rem, 5.6vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -1.5px;
     margin-top: 24px;
+    /* Главный разрыв в блоке: сообщение кончилось, дальше — действие. Раньше здесь стояли
+       те же 24px, что и везде, поэтому три группы читались как один сплошной столбик. */
+    margin-bottom: 44px;
+}
+
+/* Вторая половина фразы идёт отдельным ярусом помельче: ведущая мысль читается сразу,
+   продолжение её не перегружает. Одним кеглем на три строки заголовок выглядел стеной. */
+.shimmer-text .title-rest {
+    display: block;
+    font-size: 0.5em;
+    font-weight: 600;
+    line-height: 1.34;
+    letter-spacing: 0;
+    /* Две половины одного предложения — это одна группа, отступ внутри неё должен быть
+       заметно меньше, чем до следующего блока. */
+    margin-top: 0.18em;
 }
 
 /* Buttons */
@@ -3013,7 +3196,9 @@ body.dark-mode .hero-text-panel > p {
     border-color: rgba(0, 43, 100, 0.15) !important;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    margin-top: 36px;
+    /* «+500 участников» — довод в пользу кнопки, а не отдельный блок. Держим её при
+       кнопках: 20px против 44px до заголовка. */
+    margin-top: 20px;
 }
 
 .hero-text-panel .floating-social-proof span {
@@ -3082,16 +3267,18 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
         padding-top: 44px;
         padding-bottom: 54px;
     }
+    /* Как и на телефоне — по краю чтения, а не по центру, чтобы герой вёл себя одинаково
+       на всех ширинах и в обоих направлениях письма. */
     .hero-text-panel {
         max-width: 680px;
-        margin: 0 auto;
-        text-align: center;
-        align-items: center;
+        margin: 0;
+        text-align: start;
+        align-items: flex-start;
         padding: 0;
     }
     .hero-text-panel::before { display: none; }
-    .hero-text-panel .shimmer-text { text-align: center; }
-    .hero-text-panel .btn-group { justify-content: center; }
+    .hero-text-panel .shimmer-text { text-align: start; }
+    .hero-text-panel .btn-group { justify-content: flex-start; }
 }
 
 @media (max-width: 1366px) and (min-width: 1024px) {
@@ -3153,17 +3340,20 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
         padding-top: 36px;
         padding-bottom: 44px;
     }
+    /* На телефоне текст выравнивается по краю, а не по центру: start — это левый край
+       в латинице и правый на иврите, так что одно правило покрывает оба направления. */
     .hero-text-panel {
         max-width: 100%;
-        margin: 0 auto;
-        text-align: center;
-        align-items: center;
+        margin: 0;
+        text-align: start;
+        align-items: flex-start;
         padding: 0;
     }
     .hero-text-panel::before { display: none; }
-    .hero-text-panel .shimmer-text { text-align: center; margin-bottom: 12px; }
+    .hero-text-panel .shimmer-text { text-align: start; margin-bottom: 28px; }
+    .hero-text-panel .floating-social-proof { margin-top: 14px; }
     .hero-text-panel > p { margin-top: 0; margin-bottom: 24px; }
-    .hero-text-panel .btn-group { justify-content: center; }
+    .hero-text-panel .btn-group { justify-content: flex-start; }
 }
 
 @media (max-width: 768px) {

@@ -2,43 +2,35 @@
    RTL overrides — applied when <html dir="rtl"> (Hebrew)
    ============================================================ */
 
-/* --- Hero overlay: mirror horizontal gradient --- */
-[dir="rtl"] .hero-overlay {
-    background:
-        linear-gradient(to left,
-            rgba(255,255,255,0.82) 0%,
-            rgba(255,255,255,0.55) 38%,
-            rgba(255,255,255,0.10) 60%,
-            transparent 75%
-        ),
-        linear-gradient(to bottom,
-            rgba(0,0,0,0.08) 0%,
-            transparent 15%,
-            transparent 82%,
-            rgba(0,0,0,0.12) 100%
-        );
-}
+/* --- Hero overlay: НЕ зеркалим ---
+   Белая подложка в латинской версии лежит слева, под текстом. На иврите текст остаётся там
+   же, поэтому и подложка должна остаться слева: зеркальный градиент из style.css здесь
+   намеренно не переопределяется. */
 
-body.dark-mode[dir="rtl"] .hero-overlay,
-[dir="rtl"] body.dark-mode .hero-overlay {
-    background:
-        linear-gradient(to left,
-            rgba(4,6,20,0.72) 0%,
-            rgba(4,6,20,0.40) 45%,
-            transparent 70%
-        ),
-        linear-gradient(to bottom,
-            rgba(0,0,0,0.20) 0%,
-            transparent 15%,
-            transparent 82%,
-            rgba(0,0,0,0.15) 100%
-        );
-}
-
-/* --- Hero text panel: right-aligned on desktop --- */
+/* --- Hero text panel: держится левой части экрана, текст жмётся к её правому краю ---
+   В RTL блок без auto-полей прижимается к правому краю контейнера, и панель уезжала вправо
+   целиком. Она должна оставаться слева, как в латинской версии; вправо выравнивается только
+   текст внутри неё. Поперечная ось колонки идёт по направлению письма, поэтому в RTL правый
+   край — это flex-start, а не flex-end. */
 [dir="rtl"] .hero-text-panel {
+    margin-right: auto;
+    margin-left: 0;
+    /* В латинской версии строки сами обрываются примерно на середине экрана, хотя панель
+       шире. На иврите текст прижат к правому краю панели, поэтому этот край и задаёт, где
+       кончится строка: 47% колонки выводят его почти на половину экрана — туда же, где
+       визуально заканчивается английский заголовок. */
+    max-width: 47%;
     text-align: right;
-    align-items: flex-end;
+    align-items: flex-start;
+}
+
+/* --- Hero text panel на телефоне: во всю ширину ---
+   Правило выше задаёт 47% и по специфичности перебивает мобильное `max-width: 100%`
+   из style.css. Без этого сброса заголовок на 400px рвётся по одному слову в строку. */
+@media (max-width: 768px) {
+    [dir="rtl"] .hero-text-panel {
+        max-width: 100%;
+    }
 }
 
 /* --- Mobile / Tablet nav menu: slide from right --- */
@@ -67,15 +59,6 @@ body.dark-mode[dir="rtl"] .hero-overlay,
     padding-left: 30px;
 }
 
-/* --- About quote: border flips side --- */
-[dir="rtl"] .about-quote {
-    border-left: none;
-    border-right: 4px solid var(--secondary-color);
-    border-radius: 15px 0 0 15px;
-    padding-left: 20px;
-    padding-right: 24px;
-}
-
 /* --- Feature checklist: checkmark moves to right --- */
 [dir="rtl"] .feature-checklist li {
     padding-left: 0;
@@ -85,6 +68,15 @@ body.dark-mode[dir="rtl"] .hero-overlay,
 [dir="rtl"] .feature-checklist li::before {
     left: auto;
     right: 0;
+}
+
+/* --- Folder flap: квадратный угол переезжает под язычок ---
+   У .folder-flap `border-radius: 0 12px 4px 4px`: левый верхний угол оставлен прямым, чтобы
+   встык сойтись с язычком, который в латинской версии сидит слева. Язычок мы переносим
+   вправо, а радиус не зеркалится сам — и получалось, что справа язычок ложится на
+   скруглённый угол (между ними белый клин), а слева торчит прямой угол без язычка. */
+[dir="rtl"] .folder-flap {
+    border-radius: 12px 0 4px 4px;
 }
 
 /* --- Folder tab: anchor to right side --- */
@@ -104,40 +96,26 @@ body.dark-mode[dir="rtl"] .hero-overlay,
     right: 0;
 }
 
-/* --- Value card highlight bar: flip to right --- */
-[dir="rtl"] .value-card::before {
-    left: auto;
-    right: 0;
-    border-radius: 0 12px 12px 0;
-}
-
 /* --- Bento card glow bar: flip to right --- */
 [dir="rtl"] .bento-card::before {
     left: auto;
     right: 0;
 }
 
-/* --- Bento card corner accent: flip --- */
-[dir="rtl"] .card-app::after,
-[dir="rtl"] .card-radio::after,
-[dir="rtl"] .card-tv::after {
-    left: auto;
-    right: 0;
-    transform: scaleX(-1);
+/* --- Bento card accent bar: градиент идёт по направлению чтения ---
+   Раньше полоса зеркалилась через transform: scaleX(-1). Трансформация выносит
+   псевдоэлемент в отдельный слой, и Chrome перестаёт применять к нему скругление от
+   родительского overflow: hidden — клип вырождается в прямоугольный, и квадратные концы
+   полосы вылезали за скруглённый угол карточки заусенцами. Разворачиваем сам градиент:
+   результат тот же, трансформации нет, скругление снова работает. Переменную подхватывают
+   все восемь карточек разом, и в светлой теме, и в тёмной. */
+[dir="rtl"] .bento-card {
+    --accent-dir: 270deg;
 }
 
 /* --- Contact method cards --- */
-/* Flex puts the icon on the reading side by itself, but the coloured accent is a physical
-   border-left and stays put. It belongs where the eye starts, which is the right here. */
-[dir="rtl"] .contact-mail-card {
-    border-left: 1px solid transparent;
-    border-right: 4px solid #dd2a7b;
-}
-
-[dir="rtl"] .contact-whatsapp-card {
-    border-left: 1px solid transparent;
-    border-right: 4px solid #4bb578;
-}
+/* Цветная метка канала больше не переопределяется здесь: в style.css она задана через
+   inset-inline-start, а это свойство само переезжает на правый край при dir="rtl". */
 
 /* The card nudges towards the reader on hover; mirrored, that is the other way. */
 [dir="rtl"] .contact-method-card:hover {
@@ -194,3 +172,4 @@ body.dark-mode[dir="rtl"] .hero-overlay,
 [dir="rtl"] .developer-credit {
     direction: ltr;
 }
+

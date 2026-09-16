@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else el.innerHTML = t[key];
         });
 
-        // Translate innerHTML (preserves inner spans like vision-highlight)
+        // Translate innerHTML — для значений с разметкой внутри (перенос строки в заголовке героя)
         document.querySelectorAll('[data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n-html');
             if (t[key] !== undefined) el.innerHTML = t[key];
