@@ -631,7 +631,9 @@ body.dark-mode .avatar-count {
     grid-template-columns: 1.2fr 0.8fr;
     /* More space for text */
     gap: 80px;
-    align-items: center;
+    /* Текст «нашей истории» теперь вчетверо длиннее коллажа рядом. При align-items: center
+       картинка повисала бы в середине простыни текста, оторванная от заголовка раздела. */
+    align-items: start;
     margin-top: 60px;
 }
 
@@ -655,94 +657,36 @@ body.dark-mode .avatar-count {
     margin-bottom: 20px;
 }
 
-.about-quote {
+/* Подзаголовки внутри «Нашей истории»: מטרת העל, תקשורת, מערך סושיאל מקיף */
+.about-subheading {
     font-family: var(--font-heading);
-    font-size: 1.2rem;
-    color: var(--primary-dark);
-    font-style: italic;
-    background: rgba(229, 91, 39, 0.1);
-    padding: 20px;
-    border-radius: 0 15px 15px 0;
-    margin-top: 30px;
-    border-left: 4px solid var(--secondary-color);
-}
-
-/* Glass Value Cards */
-.values-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-}
-
-.value-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid var(--card-border);
-    padding: 30px 20px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.value-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at top right, rgba(229, 91, 39, 0.15), transparent 60%);
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.value-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-    background: rgba(255, 255, 255, 0.85);
-}
-
-body.dark-mode .value-card:hover {
-    background: rgba(30, 30, 30, 0.85);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-.value-card:hover::before {
-    opacity: 1;
-}
-
-.value-icon {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-/* These icons carry a gradient rather than one flat colour. They used to be Font Awesome
-   glyphs, so the gradient was clipped to the letterform with background-clip: text. They are
-   CSS masks now — icons.css paints currentColor through the shape — and against a mask that
-   same rule is fatal: it clips the background to text the <i> does not contain, so nothing is
-   painted at all and the card shows an empty 32px box. The mask already cuts the silhouette,
-   so a plain background-image is all a gradient icon needs. */
-.value-icon i {
-    background-image: linear-gradient(135deg, #e55b27 0%, #f9b80c 100%);
-    display: inline-block;
-}
-
-.value-card h4 {
-    font-size: 1.15rem;
-    margin-bottom: 8px;
-    color: var(--primary-color);
+    font-size: 1.25rem;
     font-weight: 700;
+    color: var(--primary-color);
+    margin: 32px 0 12px;
 }
 
-.value-card p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.4;
+/* Блок «חיבורים» — коллаж на месте прежних четырёх карточек ценностей */
+.connections-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+}
+
+.connections-img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    border-radius: 24px;
+}
+
+.connections-heading {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
     margin: 0;
 }
 
@@ -778,33 +722,6 @@ body.dark-mode .vision-section { background: #04040e; }
     color: var(--text-color);
     margin: 0;
 }
-
-.vision-highlight {
-    background: linear-gradient(110deg,
-        #e0197a 0%, #7b2d8b 22%,
-        #1a3a8c 40%, #0e9898 57%,
-        #4caf50 72%, #f06000 90%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
-    animation: visionShimmer 7s linear infinite;
-}
-body.dark-mode .vision-highlight {
-    background: linear-gradient(110deg,
-        #00c8ff 0%, #ffffff 28%, #ff2d78 55%, #00ffb3 78%, #00c8ff 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: visionShimmer 7s linear infinite;
-}
-@keyframes visionShimmer {
-    from { background-position: 0% center; }
-    to   { background-position: 200% center; }
-}
-
 .vision-body {
     font-size: 1rem;
     line-height: 1.88;
@@ -846,7 +763,9 @@ body.dark-mode .vision-highlight {
 
 .bento-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* Карточек стало восемь: два ряда по четыре. Ниже 75em правило переключает на два
+       столбца, ниже 768px — на один. */
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     margin-top: 60px;
     perspective: 1000px;
@@ -865,7 +784,9 @@ body.dark-mode .vision-highlight {
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, background 0.4s;
     display: flex;
     flex-direction: column;
-    min-height: 480px;
+    /* Пять карточек из восьми идут без описания — под 480px у них зияла пустота.
+       Внутри ряда grid всё равно выравнивает высоту по самой высокой. */
+    min-height: 360px;
 }
 
 .bento-card::before {
@@ -972,6 +893,106 @@ body.dark-mode .vision-highlight {
     box-shadow: 0 -2px 22px rgba(191, 90, 242, 0.50), 0 24px 50px rgba(191,90,242,0.12);
 }
 
+.card-trustmom::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #e8467c, #ff8fb4);
+    box-shadow: 0 0 12px rgba(232, 70, 124, 0.55);
+}
+.card-trustmom {
+    box-shadow: 0 -2px 14px rgba(232, 70, 124, 0.25), 0 8px 32px rgba(0,0,0,0.06);
+}
+.card-trustmom .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
+.card-trustmom:hover {
+    box-shadow: 0 -2px 22px rgba(232, 70, 124, 0.50), 0 24px 50px rgba(232, 70, 124, 0.12);
+}
+
+.card-zuzim::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #35a86b, #f0b429);
+    box-shadow: 0 0 12px rgba(53, 168, 107, 0.55);
+}
+.card-zuzim {
+    box-shadow: 0 -2px 14px rgba(53, 168, 107, 0.25), 0 8px 32px rgba(0,0,0,0.06);
+}
+.card-zuzim .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
+.card-zuzim:hover {
+    box-shadow: 0 -2px 22px rgba(53, 168, 107, 0.50), 0 24px 50px rgba(53, 168, 107, 0.12);
+}
+
+.card-vvip::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #c9a227, #e8cf7a);
+    box-shadow: 0 0 12px rgba(201, 162, 39, 0.55);
+}
+.card-vvip {
+    box-shadow: 0 -2px 14px rgba(201, 162, 39, 0.25), 0 8px 32px rgba(0,0,0,0.06);
+}
+.card-vvip .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
+.card-vvip:hover {
+    box-shadow: 0 -2px 22px rgba(201, 162, 39, 0.50), 0 24px 50px rgba(201, 162, 39, 0.12);
+}
+
+.card-triplewin::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #1f6f8b, #4aa3b8);
+    box-shadow: 0 0 12px rgba(31, 111, 139, 0.55);
+}
+.card-triplewin {
+    box-shadow: 0 -2px 14px rgba(31, 111, 139, 0.25), 0 8px 32px rgba(0,0,0,0.06);
+}
+.card-triplewin .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
+.card-triplewin:hover {
+    box-shadow: 0 -2px 22px rgba(31, 111, 139, 0.50), 0 24px 50px rgba(31, 111, 139, 0.12);
+}
+
+.card-stage::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
+    background: linear-gradient(90deg, #e58f27, #ffc860);
+    box-shadow: 0 0 12px rgba(229, 143, 39, 0.55);
+}
+.card-stage {
+    box-shadow: 0 -2px 14px rgba(229, 143, 39, 0.25), 0 8px 32px rgba(0,0,0,0.06);
+}
+.card-stage .bento-icon .bento-logo-img {
+    width: 110px;
+    height: auto;
+    animation: icon-float 3s ease-in-out infinite;
+}
+.card-stage:hover {
+    box-shadow: 0 -2px 22px rgba(229, 143, 39, 0.50), 0 24px 50px rgba(229, 143, 39, 0.12);
+}
+
 .bento-card:hover {
     transform: translateY(-15px);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
@@ -1039,6 +1060,66 @@ body.dark-mode .card-tv .bento-icon i {
 }
 body.dark-mode .card-tv:hover {
     box-shadow: 0 -3px 24px rgba(191, 90, 242, 0.65), 0 24px 60px rgba(191,90,242,0.18);
+}
+
+/* card-trustmom — Trust Mom */
+body.dark-mode .card-trustmom {
+    box-shadow: 0 -3px 16px rgba(232, 70, 124, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-trustmom::after {
+    background: linear-gradient(90deg, #e8467c, #ff8fb4);
+    box-shadow: 0 0 14px rgba(232, 70, 124, 0.70);
+}
+body.dark-mode .card-trustmom:hover {
+    box-shadow: 0 -3px 24px rgba(232, 70, 124, 0.65), 0 24px 60px rgba(232, 70, 124, 0.18);
+}
+
+/* card-zuzim — זוזים קאש */
+body.dark-mode .card-zuzim {
+    box-shadow: 0 -3px 16px rgba(53, 168, 107, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-zuzim::after {
+    background: linear-gradient(90deg, #35a86b, #f0b429);
+    box-shadow: 0 0 14px rgba(53, 168, 107, 0.70);
+}
+body.dark-mode .card-zuzim:hover {
+    box-shadow: 0 -3px 24px rgba(53, 168, 107, 0.65), 0 24px 60px rgba(53, 168, 107, 0.18);
+}
+
+/* card-vvip — VVIP */
+body.dark-mode .card-vvip {
+    box-shadow: 0 -3px 16px rgba(201, 162, 39, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-vvip::after {
+    background: linear-gradient(90deg, #c9a227, #e8cf7a);
+    box-shadow: 0 0 14px rgba(201, 162, 39, 0.70);
+}
+body.dark-mode .card-vvip:hover {
+    box-shadow: 0 -3px 24px rgba(201, 162, 39, 0.65), 0 24px 60px rgba(201, 162, 39, 0.18);
+}
+
+/* card-triplewin — My Triple Win */
+body.dark-mode .card-triplewin {
+    box-shadow: 0 -3px 16px rgba(31, 111, 139, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-triplewin::after {
+    background: linear-gradient(90deg, #1f6f8b, #4aa3b8);
+    box-shadow: 0 0 14px rgba(31, 111, 139, 0.70);
+}
+body.dark-mode .card-triplewin:hover {
+    box-shadow: 0 -3px 24px rgba(31, 111, 139, 0.65), 0 24px 60px rgba(31, 111, 139, 0.18);
+}
+
+/* card-stage — Stage of Stars */
+body.dark-mode .card-stage {
+    box-shadow: 0 -3px 16px rgba(229, 143, 39, 0.40), 0 8px 40px rgba(0,0,0,0.50);
+}
+body.dark-mode .card-stage::after {
+    background: linear-gradient(90deg, #e58f27, #ffc860);
+    box-shadow: 0 0 14px rgba(229, 143, 39, 0.70);
+}
+body.dark-mode .card-stage:hover {
+    box-shadow: 0 -3px 24px rgba(229, 143, 39, 0.65), 0 24px 60px rgba(229, 143, 39, 0.18);
 }
 
 /* Dark mode card text */
@@ -1877,8 +1958,6 @@ body.dark-mode .folder-card-4.open .folder-inner {
     justify-content: center;
 }
 
-
-
 .contact-methods {
     display: flex;
     flex-direction: column;
@@ -2071,7 +2150,6 @@ body.dark-mode .ring-3 {
         min-height: 300px;
     }
 }
-
 
 /* Footer Section */
 .site-footer {
@@ -2315,10 +2393,6 @@ body.dark-mode .ring-3 {
         padding-bottom: 30px;
     }
 
-    .values-grid {
-        gap: 15px;
-    }
-
     .footer-content {
         flex-direction: column;
         gap: 30px;
@@ -2376,10 +2450,6 @@ body.dark-mode .ring-3 {
         z-index: 1001;
     }
 
-    .values-grid {
-        grid-template-columns: 1fr;
-    }
-
     h2 {
         font-size: 2rem !important;
     }
@@ -2418,10 +2488,6 @@ body.dark-mode .ring-3 {
         font-size: 2.5rem;
     }
 
-    .about-quote {
-        font-size: 1.1rem;
-        padding: 15px;
-    }
 
     .scroll-indicator {
         bottom: 20px;
@@ -2538,71 +2604,6 @@ html.dark-mode-early .dark-logo {
 body.dark-mode .light-logo,
 html.dark-mode-early .light-logo {
     display: none;
-}
-
-/* Value Cards Colors (About Section) */
-.value-card-1 {
-    border-top: 4px solid #dd2a7b;
-}
-
-.value-card-1 .value-icon i {
-    background-image: linear-gradient(135deg, #dd2a7b 0%, #a71d6a 100%);
-}
-
-.value-card-1:hover {
-    box-shadow: 0 20px 40px rgba(221, 42, 123, 0.15);
-}
-
-.value-card-2 {
-    border-top: 4px solid #e47525;
-}
-
-.value-card-2 .value-icon i {
-    background-image: linear-gradient(135deg, #e47525 0%, #e1681f 100%);
-}
-
-.value-card-2:hover {
-    box-shadow: 0 20px 40px rgba(228, 117, 37, 0.15);
-}
-
-.value-card-3 {
-    border-top: 4px solid #f9b80c;
-}
-
-.value-card-3 .value-icon i {
-    background-image: linear-gradient(135deg, #f9b80c 0%, #fea033 100%);
-}
-
-.value-card-3:hover {
-    box-shadow: 0 20px 40px rgba(249, 184, 12, 0.15);
-}
-
-.value-card-4 {
-    border-top: 4px solid #4bb578;
-}
-
-.value-card-4 .value-icon i {
-    background-image: linear-gradient(135deg, #f9b80c 0%, #ffdd00 100%);
-}
-
-.value-card-4:hover {
-    box-shadow: 0 20px 40px rgba(75, 181, 120, 0.15);
-}
-
-body.dark-mode .value-card-1:hover {
-    box-shadow: 0 20px 40px rgba(221, 42, 123, 0.3);
-}
-
-body.dark-mode .value-card-2:hover {
-    box-shadow: 0 20px 40px rgba(228, 117, 37, 0.3);
-}
-
-body.dark-mode .value-card-3:hover {
-    box-shadow: 0 20px 40px rgba(249, 184, 12, 0.3);
-}
-
-body.dark-mode .value-card-4:hover {
-    box-shadow: 0 20px 40px rgba(75, 181, 120, 0.3);
 }
 
 /* Custom Colors for Contact Cards */
@@ -2730,11 +2731,6 @@ body.dark-mode .btn-secondary:hover {
     box-shadow: 0 0 20px rgba(0, 200, 255, 0.25);
 }
 
-
-body.dark-mode .value-card:hover {
-    border-color: rgba(0, 200, 255, 0.25) !important;
-}
-
 /* Navbar neon top accent */
 body.dark-mode .navbar::before {
     background: linear-gradient(to right, #00c8ff, #ff2d78, #00ffb3);
@@ -2744,7 +2740,6 @@ body.dark-mode .navbar.scrolled {
     background: rgba(7, 7, 15, 0.9);
     border-bottom: 1px solid rgba(0, 200, 255, 0.12);
 }
-
 
 /* Footer neon */
 body.dark-mode .site-footer {
@@ -2792,86 +2787,11 @@ body.dark-mode .tag:hover {
 }
 
 /* About quote neon */
-body.dark-mode .about-quote {
-    background: rgba(255, 45, 120, 0.06);
-    border-left-color: #ff2d78;
-    box-shadow: 0 0 20px rgba(255, 45, 120, 0.08);
-}
-
-/* Value cards — dark mode: dark glass with neon glow */
-body.dark-mode .value-card {
-    background: rgba(6, 8, 28, 0.80);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40);
-}
-
-body.dark-mode .value-card h4 {
-    color: #e8f0ff;
-}
-
-body.dark-mode .value-card p {
-    color: rgba(180, 200, 240, 0.72);
-}
-
-body.dark-mode .value-card:hover {
-    background: rgba(8, 12, 40, 0.90);
-}
-
-/* Neon top border + glow per card */
-body.dark-mode .value-card-1 {
-    border-top: 2px solid #ff2d78;
-    box-shadow: 0 -2px 12px rgba(255, 45, 120, 0.45), 0 8px 32px rgba(0,0,0,0.45);
-}
-body.dark-mode .value-card-1 .value-icon i {
-    background-image: linear-gradient(135deg, #ff2d78, #ff6ba8);
-    filter: drop-shadow(0 0 6px rgba(255, 45, 120, 0.8));
-}
-body.dark-mode .value-card-1:hover {
-    box-shadow: 0 -2px 18px rgba(255, 45, 120, 0.65), 0 16px 48px rgba(255,45,120,0.18);
-}
-
-body.dark-mode .value-card-2 {
-    border-top: 2px solid #ff9500;
-    box-shadow: 0 -2px 12px rgba(255, 149, 0, 0.45), 0 8px 32px rgba(0,0,0,0.45);
-}
-body.dark-mode .value-card-2 .value-icon i {
-    background-image: linear-gradient(135deg, #ff9500, #ffcc44);
-    filter: drop-shadow(0 0 6px rgba(255, 149, 0, 0.8));
-}
-body.dark-mode .value-card-2:hover {
-    box-shadow: 0 -2px 18px rgba(255, 149, 0, 0.65), 0 16px 48px rgba(255,149,0,0.18);
-}
-
-body.dark-mode .value-card-3 {
-    border-top: 2px solid #00ffb3;
-    box-shadow: 0 -2px 12px rgba(0, 255, 179, 0.40), 0 8px 32px rgba(0,0,0,0.45);
-}
-body.dark-mode .value-card-3 .value-icon i {
-    background-image: linear-gradient(135deg, #00ffb3, #00c8ff);
-    filter: drop-shadow(0 0 6px rgba(0, 255, 179, 0.8));
-}
-body.dark-mode .value-card-3:hover {
-    box-shadow: 0 -2px 18px rgba(0, 255, 179, 0.60), 0 16px 48px rgba(0,255,179,0.15);
-}
-
-body.dark-mode .value-card-4 {
-    border-top: 2px solid #f9b80c;
-    box-shadow: 0 -2px 12px rgba(249, 184, 12, 0.45), 0 8px 32px rgba(0,0,0,0.45);
-}
-body.dark-mode .value-card-4 .value-icon i {
-    background-image: linear-gradient(135deg, #f9b80c, #ffdd00);
-    filter: drop-shadow(0 0 6px rgba(249, 184, 12, 0.85));
-}
-body.dark-mode .value-card-4:hover {
-    box-shadow: 0 -2px 18px rgba(249, 184, 12, 0.65), 0 16px 48px rgba(249,184,12,0.18);
-}
-
 /* Feature checklist */
 body.dark-mode .feature-checklist li::before {
     color: #00ffb3;
     text-shadow: 0 0 8px rgba(0, 255, 179, 0.6);
 }
-
 
 /* ============================================================
    HERO — OVERFLOW HIDDEN (shared by all hero variants)
@@ -2978,7 +2898,6 @@ body.dark-mode .hero-overlay {
         );
 }
 
-
 /* Floating dots canvas — behind text, above overlay */
 #hero-dots-canvas {
     position: absolute;
@@ -2995,7 +2914,7 @@ body.dark-mode .hero-overlay {
 .hero-text-panel {
     position: relative;
     z-index: 2;
-    max-width: 560px;
+    max-width: 680px;
     margin: 0;
     text-align: left;
     display: flex;
@@ -3074,20 +2993,15 @@ body.dark-mode .hero-text-panel > p {
     text-shadow: 0 1px 8px rgba(0,0,0,0.60);
 }
 
-/* "Unite" centered under "Good Forces" */
+/* Заголовок героя. Прежние 5.5rem были подобраны под два слова, «Good Forces / Unite»;
+   фраза из брифа в семь раз длиннее и на 1440px наезжала на навигацию, занимая семь строк.
+   clamp держит её в три-четыре строки от телефона до широкого экрана. */
 .hero-text-panel .shimmer-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    margin-top: 38px;
-}
-.hero-text-panel .shimmer-text br {
-    display: none;
-}
-.hero-text-panel .shimmer-text .unite-line {
-    align-self: center;
-    margin-top: -0.15em;
+    display: block;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin-top: 24px;
 }
 
 /* Buttons */
@@ -3133,7 +3047,6 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 }
 
 @media (max-width: 768px) {
-    .hero-text-panel .shimmer-text { font-size: 2.6rem; }
     .hero-text-panel > p { font-size: 1rem !important; }
 }
 
@@ -3177,7 +3090,7 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
         padding: 0;
     }
     .hero-text-panel::before { display: none; }
-    .hero-text-panel .shimmer-text { align-items: center; }
+    .hero-text-panel .shimmer-text { text-align: center; }
     .hero-text-panel .btn-group { justify-content: center; }
 }
 
@@ -3248,7 +3161,7 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
         padding: 0;
     }
     .hero-text-panel::before { display: none; }
-    .hero-text-panel .shimmer-text { align-items: center; margin-bottom: 12px; }
+    .hero-text-panel .shimmer-text { text-align: center; margin-bottom: 12px; }
     .hero-text-panel > p { margin-top: 0; margin-bottom: 24px; }
     .hero-text-panel .btn-group { justify-content: center; }
 }
@@ -3294,7 +3207,6 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
 .avatar-dot--1 { background: linear-gradient(140deg, #0f4c81, #2c6fae); }
 .avatar-dot--2 { background: linear-gradient(140deg, #f5a623, #e07b39); }
 .avatar-dot--3 { background: linear-gradient(140deg, #2c8a6a, #4bb18c); }
-
 
 /* Skip link — the first thing a keyboard finds, invisible until it has focus. */
 .skip-link {
@@ -3349,7 +3261,6 @@ html.motion-paused *::after {
     outline: 3px solid var(--secondary-color, #e55b27);
     outline-offset: 2px;
 }
-
 
 /* Read by a screen reader, invisible on screen — for headings that the layout conveys by
    position and size rather than by text. */
