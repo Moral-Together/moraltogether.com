@@ -292,17 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }));
 
-    // --- Folder cards: tap-to-open on touch/mobile ---
-    const folderCards = document.querySelectorAll('.folder-card');
-    folderCards.forEach(card => {
-        card.addEventListener('click', () => {
-            if (window.innerWidth > 1024) return;
-            const isOpen = card.classList.contains('open');
-            folderCards.forEach(c => c.classList.remove('open'));
-            if (!isOpen) card.classList.add('open');
-        });
-    });
-
     // --- Scroll Indicator ---
     const scrollInd = document.querySelector('.scroll-indicator');
     if (scrollInd) {
@@ -518,6 +507,9 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'sector_public',   color: '#d62060', emoji: '🏛️' },
             { key: 'sector_media',    color: '#9c27b0', emoji: '📡' },
             { key: 'sector_community',color: '#f4a31e', emoji: '🏘️' },
+            { key: 'sector_employment', color: '#0f8b8d', emoji: '🛠️' },
+            { key: 'sector_health',     color: '#e53935', emoji: '🩺' },
+            { key: 'sector_environment', color: '#7cb342', emoji: '🌿' },
         ];
 
         // The pulse speeds below are written per 60 Hz frame; the tick scales them by the real

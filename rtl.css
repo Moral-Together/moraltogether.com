@@ -70,23 +70,6 @@
     right: 0;
 }
 
-/* --- Folder flap: квадратный угол переезжает под язычок ---
-   У .folder-flap `border-radius: 0 12px 4px 4px`: левый верхний угол оставлен прямым, чтобы
-   встык сойтись с язычком, который в латинской версии сидит слева. Язычок мы переносим
-   вправо, а радиус не зеркалится сам — и получалось, что справа язычок ложится на
-   скруглённый угол (между ними белый клин), а слева торчит прямой угол без язычка. */
-[dir="rtl"] .folder-flap {
-    border-radius: 12px 0 4px 4px;
-}
-
-/* --- Folder tab: anchor to right side --- */
-[dir="rtl"] .folder-tab {
-    left: auto;
-    right: 0;
-    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
-    padding: 0 14px 0 20px;
-}
-
 /* --- Nav link underline: already follows text direction --- */
 
 /* --- Footer headings underline: follows text direction --- */

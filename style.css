@@ -988,8 +988,9 @@ body.dark-mode .vision-section { background: #04040e; }
     box-shadow: 0 -2px 14px rgba(191, 90, 242, 0.25), 0 8px 32px rgba(0,0,0,0.06);
 }
 .card-tv .bento-icon .bento-logo-img {
-    max-width: 110px;
-    max-height: 110px;
+    /* the MoralTV logo is a wide wordmark, not a square icon */
+    max-width: 200px;
+    max-height: 80px;
     width: auto;
     height: auto;
     animation: icon-float 3s ease-in-out infinite;
@@ -1381,313 +1382,291 @@ body.dark-mode .bento-content .subtitle {
 
 .team-section { background: transparent; }
 
+/* ─── Team: cut-out portraits on coloured stages ────────────────
+ *
+ * Each person is a transparent cut-out standing in front of a rounded "stage"; the stage starts a
+ * quarter of the way down, so the head rises above its top edge. All six photos were scaled so the
+ * heads are the same size and the eyes sit on one line (images/team-*-portrait.webp, 672x952).
+ * The photo is clipped at the stage's sides and bottom only — the original frames cut some of the
+ * bodies off at the shoulders, and those straight edges have to stay outside the stage.
+ *
+ * Hover, keyboard focus, or a tap on a phone (the card is focusable) lifts the person, draws a
+ * rainbow border round the stage — the same effect as the logo on welcome.moraltogether.com — and
+ * opens the bio. Role colours on the light plate are the ones the folder cards had measured to
+ * pass 4.5:1 on white; on the dark plate, the dark-theme role colours. */
+
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 32px;
     max-width: 1100px;
+    /* no gap under the heading: the head tops sit ~8% into each card, which leaves about 70px
+       to the heading, and still ~38px once a head grows on hover */
     margin: 0 auto;
+    /* The seating plan comes from a Hebrew brief and is the same in every language: the grid
+       always fills right to left, so English and Greek show the people in the same places
+       and only the text changes. The cards themselves follow the page direction. */
+    direction: rtl;
 }
 
-/* ─── Folder Card base ──────────────────────────────────────── */
+html[dir="ltr"] .team-grid > .member {
+    direction: ltr;
+}
 
-.folder-card {
+@property --member-sweep {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.member {
+    --m-deep: #1d4ed8;
+    --m-mid: #3b82f6;
+    --m-soft: #dbeafe;
+    --m-role: #1d4ed8;
+    --m-role-dark: #00aaff;
     position: relative;
-    height: 340px;
-    perspective: 1200px;
-    cursor: pointer;
-    margin-top: 26px;
+    border-radius: 28px;
+    outline: none;
+    cursor: default;
 }
 
-.folder-tab {
+.member-1 { --m-deep: #1d4ed8; --m-mid: #3b82f6; --m-soft: #dbeafe; --m-role: #1d4ed8; --m-role-dark: #00aaff; }
+.member-2 { --m-deep: #0f766e; --m-mid: #14b8a6; --m-soft: #ccfbf1; --m-role: #0f766e; --m-role-dark: #00ffdd; }
+.member-3 { --m-deep: #6b21a8; --m-mid: #a855f7; --m-soft: #f3e8ff; --m-role: #6b21a8; --m-role-dark: #df80ff; }
+.member-4 { --m-deep: #b45309; --m-mid: #f59e0b; --m-soft: #fef3c7; --m-role: #92400e; --m-role-dark: #ffaa00; }
+.member-5 { --m-deep: #be123c; --m-mid: #f43f5e; --m-soft: #ffe4e6; --m-role: #be123c; --m-role-dark: #ff6b93; }
+.member-6 { --m-deep: #15803d; --m-mid: #22c55e; --m-soft: #dcfce7; --m-role: #15803d; --m-role-dark: #4ade80; }
+
+.member-stage {
+    position: relative;
+    aspect-ratio: 480 / 680;
+}
+
+/* the coloured stage behind the person */
+.member-backdrop {
     position: absolute;
-    top: -24px;
-    left: 0;
-    height: 26px;
-    padding: 0 20px 0 14px;
-    border-radius: 8px 8px 0 0;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    color: #ffffff;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+    inset: 24% 0 0 0;
+    border-radius: 28px;
+    background:
+        radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--m-mid) 55%, white) 0%, transparent 70%),
+        linear-gradient(180deg, var(--m-soft) 0%, color-mix(in srgb, var(--m-mid) 35%, white) 100%);
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--m-deep) 45%, transparent);
+    transition: box-shadow 450ms ease, transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.folder-flap {
+/* The drawn border: a rainbow ring revealed by a conic mask from the top and bottom centres. It is
+   drawn twice, in step: once behind the photo, so the head covers the top edge, and once in front
+   of it with the top edge cut off, so the border runs over the shoulders at the sides and bottom.
+   Hidden outright at rest — a mask at zero still leaves anti-aliasing hairlines on the corners. */
+.member-ring {
+    --member-sweep: 0deg;
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 62%;
-    z-index: 3;
-    transform-origin: top center;
-    transform: rotateX(0deg);
-    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.55s ease;
-    border-radius: 0 12px 4px 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    backface-visibility: hidden;
-    overflow: hidden;
-}
-
-.folder-card:hover .folder-flap {
-    transform: rotateX(-70deg);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
-}
-
-.folder-flap-shine {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    inset: 24% 0 0 0;
+    border: 3px solid transparent;
+    border-radius: 28px;
+    background: conic-gradient(from 0deg, #6d5dfc, #2b91df, #15be53, #ffc53d, #ff9b3d, #ea2261, #6d5dfc) border-box;
+    mask:
+        conic-gradient(#000 calc(var(--member-sweep) / 4),
+            transparent 0 calc(180deg - var(--member-sweep) / 4),
+            #000 0 calc(180deg + var(--member-sweep) / 4),
+            transparent 0 calc(360deg - var(--member-sweep) / 4),
+            #000 0) border-box intersect,
+        linear-gradient(#000 0 0) padding-box exclude,
+        linear-gradient(#000 0 0) border-box;
+    opacity: 0;
+    transition: --member-sweep 500ms cubic-bezier(0.3, 0.7, 0.4, 1), opacity 0s linear 500ms;
     pointer-events: none;
 }
 
-.folder-avatar {
-    width: 86px;
-    height: 86px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid rgba(255,255,255,0.35);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+/* in front of the photo: everything but the top edge and its rounded corners */
+.member-ring-front {
+    clip-path: inset(34px 0 0 0);
 }
 
-.folder-flap-name {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.3);
-}
-
-.folder-inner {
+/* clips the photo at the stage's sides and bottom, leaves the top open for the head */
+.member-photo-clip {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    border-radius: 12px;
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 16px 18px 20px;
+    /* One pixel inside the stage at the sides and bottom (radius 27 = the stage's 28 minus that
+       pixel). Card widths are fractional, so edge to edge the two shapes are anti-aliased separately
+       and the dark photo showed a pixel past the stage along the side and at the bottom corners. */
+    clip-path: inset(-20% 1px 1px 1px round 0 0 27px 27px);
+    pointer-events: none;
+}
+
+.member-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    transform-origin: 50% 100%;
+    filter: drop-shadow(0 14px 22px rgba(0, 20, 60, 0.18));
+    transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1), filter 550ms ease;
+}
+
+/* name, role and bio over the lower part of the stage */
+.member-plate {
+    position: absolute;
+    inset: auto 12px 12px 12px;
+    padding: 16px 18px 14px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px -12px rgba(0, 30, 80, 0.35);
     text-align: center;
-    gap: 5px;
-    overflow: hidden;
-    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.folder-role {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+.member-name {
     margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--primary-color, #002b64);
+}
+
+.member-role {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--m-role);
+}
+
+/* the bio opens by animating the grid row from 0 to its natural height */
+.member-bio-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.member-bio {
+    overflow: hidden;
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.3;
+    /* avoids a lone word on the last line */
+    text-wrap: pretty;
+    color: #3d4a5c;
     opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.3s 0.08s, transform 0.3s 0.08s;
-}
-.folder-card:hover .folder-role { opacity: 1; transform: translateY(0); }
-
-.folder-bio {
-    font-size: 0.8rem;
-    color: rgba(15,23,42,0.65);
-    line-height: 1.55;
-    margin: 4px 0 6px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
-}
-.folder-card:hover .folder-bio { opacity: 1; transform: translateY(0); }
-
-.folder-social {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.3s 0.2s, transform 0.3s 0.2s;
-}
-.folder-card:hover .folder-social { opacity: 1; transform: translateY(0); }
-
-.folder-social a {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(41,121,255,0.1);
-    border: 1px solid rgba(41,121,255,0.35);
-    color: #2979ff;
-    font-size: 0.78rem;
-    transition: all 0.25s;
-    text-decoration: none;
-}
-.folder-social a:hover { background: #2979ff; border-color: #2979ff; color: #ffffff; }
-
-/* ─── Per-card gradients — LIGHT MODE (default) ───────────────
- *
- * These four used to fade to a pastel tint — #dbeafe, #ccfbf1, #f3e8ff, #fef3c7 — with white
- * type on top. Measured against the pixels actually under the letters, the name and the role
- * tab came out between 1.16:1 and 2.0:1 where AA asks for 4.5. The tab had it worst: it is a
- * hundred pixels wide and rendered the entire four-stop gradient across itself, so the end of
- * the word sat on something almost white. Someone had already noticed and put a text-shadow
- * under the names, which helps a human eye and counts for nothing in the measurement.
- *
- * White text needs a background no lighter than about 0.17 relative luminance. Each gradient
- * now runs from its own dark end to the lightest tone that still clears 4.5:1 — computed per
- * colour, not eyeballed: 4.53, 4.51, 4.52 and 4.52 respectively. The cards keep their four
- * identities and lose the fade to white. The dark theme already passed and is untouched. */
-
-.folder-card-1 .folder-tab,
-.folder-card-1 .folder-flap {
-    background: linear-gradient(135deg, #1d4ed8 0%, #3360dc 55%, #446ee0 100%);
-}
-.folder-card-1 .folder-role { color: #1d4ed8; }
-.folder-card-1:hover .folder-inner {
-    border-color: rgba(59,130,246,0.35);
-    box-shadow: 0 8px 32px rgba(59,130,246,0.15);
+    transition: opacity 300ms ease, margin-top 450ms ease;
 }
 
-.folder-card-2 .folder-tab,
-.folder-card-2 .folder-flap {
-    background: linear-gradient(135deg, #0f766e 0%, #197d75 55%, #20827a 100%);
-}
-.folder-card-2 .folder-role { color: #0f766e; }
-.folder-card-2:hover .folder-inner {
-    border-color: rgba(13,148,136,0.3);
-    box-shadow: 0 8px 32px rgba(13,148,136,0.12);
+/* ─── Hover / focus / tap ─── */
+
+.member:hover .member-photo,
+.member:focus-visible .member-photo,
+.member:focus .member-photo {
+    /* grows from its bottom edge only, so the bottom stays put and the head rises */
+    transform: scale(1.07);
+    filter: drop-shadow(0 22px 30px rgba(0, 20, 60, 0.28));
 }
 
-.folder-card-3 .folder-tab,
-.folder-card-3 .folder-flap {
-    background: linear-gradient(135deg, #6b21a8 0%, #8141b6 55%, #935cc2 100%);
-}
-.folder-card-3 .folder-role { color: #6b21a8; }
-.folder-card-3:hover .folder-inner {
-    border-color: rgba(147,51,234,0.3);
-    box-shadow: 0 8px 32px rgba(147,51,234,0.12);
+.member:hover .member-backdrop,
+.member:focus-visible .member-backdrop,
+.member:focus .member-backdrop {
+    box-shadow: 0 26px 50px -18px color-mix(in srgb, var(--m-deep) 60%, transparent);
 }
 
-.folder-card-4 .folder-tab,
-.folder-card-4 .folder-flap {
-    background: linear-gradient(135deg, #b45309 0%, #b6580e 55%, #b85b13 100%);
-}
-.folder-card-4 .folder-role { color: #92400e; }
-.folder-card-4:hover .folder-inner {
-    border-color: rgba(245,158,11,0.3);
-    box-shadow: 0 8px 32px rgba(245,158,11,0.12);
+.member:hover .member-ring,
+.member:focus-visible .member-ring,
+.member:focus .member-ring {
+    --member-sweep: 360deg;
+    opacity: 1;
+    transition: --member-sweep 500ms cubic-bezier(0.3, 0.7, 0.4, 1), opacity 0s;
 }
 
-/* ─── Dark mode overrides ────────────────────────────────────── */
-
-body.dark-mode .folder-inner {
-    background: rgba(6,8,28,0.92);
-    border-color: rgba(255,255,255,0.07);
-}
-body.dark-mode .folder-bio { color: rgba(200,210,255,0.65); }
-body.dark-mode .folder-social a {
-    background: rgba(10,10,25,0.85);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(200,220,255,0.8);
-}
-body.dark-mode .folder-social a:hover { color: #00ffb3; border-color: #00ffb3; background: transparent; }
-
-body.dark-mode .folder-card-1 .folder-tab,
-body.dark-mode .folder-card-1 .folder-flap {
-    background: linear-gradient(135deg, #020b1a 0%, #014973 55%, #017bbb 100%);
-}
-body.dark-mode .folder-card-1 .folder-role { color: #00aaff; }
-body.dark-mode .folder-card-1:hover .folder-inner {
-    border-color: rgba(0,170,255,0.4);
-    box-shadow: 0 8px 40px rgba(0,100,255,0.25);
+.member:hover .member-bio-wrap,
+.member:focus-visible .member-bio-wrap,
+.member:focus .member-bio-wrap {
+    grid-template-rows: 1fr;
 }
 
-body.dark-mode .folder-card-2 .folder-tab,
-body.dark-mode .folder-card-2 .folder-flap {
-    background: linear-gradient(135deg, #01100e 0%, #015045 55%, #018473 100%);
-}
-body.dark-mode .folder-card-2 .folder-role { color: #00ffdd; }
-body.dark-mode .folder-card-2:hover .folder-inner {
-    border-color: rgba(0,255,221,0.35);
-    box-shadow: 0 8px 40px rgba(0,220,190,0.22);
+.member:hover .member-bio,
+.member:focus-visible .member-bio,
+.member:focus .member-bio {
+    margin-top: 8px;
+    opacity: 1;
 }
 
-body.dark-mode .folder-card-3 .folder-tab,
-body.dark-mode .folder-card-3 .folder-flap {
-    background: linear-gradient(135deg, #0d0116 0%, #5d316e 55%, #9e59b7 100%);
-}
-body.dark-mode .folder-card-3 .folder-role { color: #df80ff; }
-body.dark-mode .folder-card-3:hover .folder-inner {
-    border-color: rgba(200,100,255,0.35);
-    box-shadow: 0 8px 40px rgba(150,50,234,0.25);
+/* keyboard focus also gets the site's usual ring, outside the stage */
+.member:focus-visible {
+    outline: 3px solid var(--primary-color, #002b64);
+    outline-offset: 6px;
 }
 
-body.dark-mode .folder-card-4 .folder-tab,
-body.dark-mode .folder-card-4 .folder-flap {
-    background: linear-gradient(135deg, #120600 0%, #613d00 55%, #a26900 100%);
+/* ─── Dark mode ─── */
+
+body.dark-mode .member-backdrop {
+    background:
+        radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--m-mid) 45%, transparent) 0%, transparent 70%),
+        linear-gradient(180deg, color-mix(in srgb, var(--m-deep) 55%, #07070f) 0%, #0a0d22 100%);
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--m-mid) 40%, transparent);
 }
-body.dark-mode .folder-card-4 .folder-role { color: #ffaa00; }
-body.dark-mode .folder-card-4:hover .folder-inner {
-    border-color: rgba(255,170,0,0.35);
-    box-shadow: 0 8px 40px rgba(220,120,0,0.22);
+body.dark-mode .member-plate {
+    background: rgba(8, 10, 28, 0.86);
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+}
+body.dark-mode .member-name { color: #ffffff; }
+body.dark-mode .member-role { color: var(--m-role-dark); }
+body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
+
+/* ─── Less motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+    .member-photo,
+    .member-backdrop,
+    .member-ring,
+    .member-bio-wrap,
+    .member-bio {
+        transition: none;
+    }
+    .member:hover .member-photo,
+    .member:focus .member-photo {
+        transform: none;
+    }
 }
 
-/* ─── Tap-to-open (.open) — mirrors all :hover states for touch ── */
-
-.folder-card.open .folder-flap {
-    transform: rotateX(-70deg);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
-}
-.folder-card.open .folder-role  { opacity: 1; transform: translateY(0); }
-.folder-card.open .folder-bio   { opacity: 1; transform: translateY(0); }
-.folder-card.open .folder-social { opacity: 1; transform: translateY(0); }
-
-.folder-card-1.open .folder-inner {
-    border-color: rgba(59,130,246,0.35);
-    box-shadow: 0 8px 32px rgba(59,130,246,0.15);
-}
-.folder-card-2.open .folder-inner {
-    border-color: rgba(13,148,136,0.3);
-    box-shadow: 0 8px 32px rgba(13,148,136,0.12);
-}
-.folder-card-3.open .folder-inner {
-    border-color: rgba(147,51,234,0.3);
-    box-shadow: 0 8px 32px rgba(147,51,234,0.12);
-}
-.folder-card-4.open .folder-inner {
-    border-color: rgba(245,158,11,0.3);
-    box-shadow: 0 8px 32px rgba(245,158,11,0.12);
-}
-
-body.dark-mode .folder-card-1.open .folder-inner {
-    border-color: rgba(0,170,255,0.4);
-    box-shadow: 0 8px 40px rgba(0,100,255,0.25);
-}
-body.dark-mode .folder-card-2.open .folder-inner {
-    border-color: rgba(0,255,221,0.35);
-    box-shadow: 0 8px 40px rgba(0,220,190,0.22);
-}
-body.dark-mode .folder-card-3.open .folder-inner {
-    border-color: rgba(200,100,255,0.35);
-    box-shadow: 0 8px 40px rgba(150,50,234,0.25);
-}
-body.dark-mode .folder-card-4.open .folder-inner {
-    border-color: rgba(255,170,0,0.35);
-    box-shadow: 0 8px 40px rgba(220,120,0,0.22);
-}
-
-/* ─── Responsive ─────────────────────────────────────────────── */
+/* ─── Responsive ─── */
 
 @media (max-width: 992px) {
-    .team-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-    .folder-card { height: 300px; }
+    .team-grid { grid-template-columns: 1fr 1fr; gap: 40px 20px; }
+    .member-name { font-size: 1.15rem; }
 }
 
-@media (max-width: 480px) {
-    .team-grid { grid-template-columns: 1fr; }
-    .folder-card { height: 280px; }
+/* phones: still two people per row, with smaller type and a tighter plate. The founder stands
+   alone and centred on top, as in the brief, and the last one left over is centred too. */
+@media (max-width: 560px) {
+    .team-grid { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
+    .team-grid .member-1 {
+        order: -1;
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 6px);
+    }
+    .team-grid .member:last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 6px);
+    }
+    .member,
+    .member-backdrop,
+    .member-ring { border-radius: 20px; }
+    .member-photo-clip { clip-path: inset(-20% 1px 1px 1px round 0 0 19px 19px); }
+    .member-plate {
+        inset: auto 6px 6px 6px;
+        padding: 9px 8px 8px;
+        border-radius: 14px;
+    }
+    .member-name { font-size: 0.95rem; }
+    .member-role { margin-top: 2px; font-size: 0.74rem; }
+    .member-bio { font-size: 0.74rem; }
+    .member:hover .member-bio,
+    .member:focus-visible .member-bio,
+    .member:focus .member-bio { margin-top: 5px; }
 }
 
 /* Partners Section */

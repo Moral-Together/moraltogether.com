@@ -294,9 +294,9 @@
 
                 <div class="bento-card card-tv">
                     <div class="bento-content">
-                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="MoralTVMedia" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="MoralTV" class="bento-logo-img" width="640" height="198" loading="lazy" decoding="async"></span>
                         <span class="subtitle" data-i18n="tv_subtitle">Content &amp; Podcast Channel</span>
-                        <h3 data-i18n="tv_title">MoralTVMedia</h3>
+                        <h3 data-i18n="tv_title">MoralTV</h3>
                         <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
                     </div>
                 </div>
@@ -340,77 +340,116 @@
     <!-- Team Section -->
     <section id="team" class="section team-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 70px;" data-i18n="team_heading">Our Team</h2>
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 0;" data-i18n="team_heading">Our Team</h2>
+            <!-- Order from the brief: the founder in the middle of the first row, with community on his
+                 right and organizational development on his left (the page is right to left in Hebrew).
+                 Team: a cut-out portrait standing in front of a coloured stage, the head rising above
+                 its top edge. Hover or keyboard focus (a tap on phones) lifts the person, draws a
+                 rainbow border round the stage and opens the short bio. The previous "folders"
+                 version is kept in ../Backups/team-folders-2026-09-27. -->
             <div class="team-grid">
-
-                <div class="folder-card folder-card-1 reveal" style="transition-delay: 0.1s;">
-                    <div class="folder-tab" data-i18n="team1_tab">Founder</div>
-                    <div class="folder-flap">
-                        <div class="folder-flap-shine"></div>
-                        <img src="images/team1-avatar.webp" alt="Dudi Chaim" class="folder-avatar" width="240" height="240" loading="lazy" decoding="async">
-                        <span class="folder-flap-name" data-i18n="team1_name">Dudi Chaim</span>
-                    </div>
-                    <div class="folder-inner">
-                        <p class="folder-role" data-i18n="team1_role">Founder &amp; Organization Visionary</p>
-                        <p class="folder-bio" data-i18n="team1_bio">Leads the organization's vision of connecting different sectors of society to create mutual abundance and shared hope.</p>
-                        <div class="folder-social">
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                <article class="member member-2 reveal" style="transition-delay: 0.1s;" tabindex="0" aria-labelledby="team2-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-yariv-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team2-name" data-i18n="team2_name">Yariv Peer</h3>
+                            <p class="member-role" data-i18n="team2_role">Community &amp; Partnerships Manager</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team2_bio">Responsible for building connections, nurturing our community nationwide, and creating meaningful collaborations on the ground.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="folder-card folder-card-2 reveal" style="transition-delay: 0.2s;">
-                    <div class="folder-tab" data-i18n="team2_tab">Community</div>
-                    <div class="folder-flap">
-                        <div class="folder-flap-shine"></div>
-                        <img src="images/team2-avatar.webp" alt="Yael Cohen" class="folder-avatar" width="240" height="240" loading="lazy" decoding="async">
-                        <span class="folder-flap-name" data-i18n="team2_name">Yael Cohen</span>
-                    </div>
-                    <div class="folder-inner">
-                        <p class="folder-role" data-i18n="team2_role">Community &amp; Partnerships Manager</p>
-                        <p class="folder-bio" data-i18n="team2_bio">Responsible for building connections, nurturing our community nationwide, and creating meaningful collaborations on the ground.</p>
-                        <div class="folder-social">
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                </article>
+                <article class="member member-1 reveal" style="transition-delay: 0.2s;" tabindex="0" aria-labelledby="team1-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-dudi-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team1-name" data-i18n="team1_name">Dudi Chaim</h3>
+                            <p class="member-role" data-i18n="team1_role">Founder &amp; Director</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team1_bio">Leads the organization's vision of connecting different sectors of society to create mutual abundance and shared hope.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="folder-card folder-card-3 reveal" style="transition-delay: 0.3s;">
-                    <div class="folder-tab" data-i18n="team3_tab">Technology</div>
-                    <div class="folder-flap">
-                        <div class="folder-flap-shine"></div>
-                        <img src="images/team3-avatar.webp" alt="David Arlich" class="folder-avatar" width="240" height="240" loading="lazy" decoding="async">
-                        <span class="folder-flap-name" data-i18n="team3_name">David Arlich</span>
-                    </div>
-                    <div class="folder-inner">
-                        <p class="folder-role" data-i18n="team3_role">Chief Technology Officer</p>
-                        <p class="folder-bio" data-i18n="team3_bio">Leads the technological development of our digital platforms to ensure seamless connection between all partners.</p>
-                        <div class="folder-social">
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                </article>
+                <article class="member member-6 reveal" style="transition-delay: 0.3s;" tabindex="0" aria-labelledby="team6-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-lavi-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team6-name" data-i18n="team6_name">Lavi Sigman</h3>
+                            <p class="member-role" data-i18n="team6_role">Organizational Development Manager</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team6_bio">Leads processes that improve organizational effectiveness, develops managers and staff, and embeds change.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="folder-card folder-card-4 reveal" style="transition-delay: 0.4s;">
-                    <div class="folder-tab" data-i18n="team4_tab">Marketing</div>
-                    <div class="folder-flap">
-                        <div class="folder-flap-shine"></div>
-                        <img src="images/team4-avatar.webp" alt="Shira Levi" class="folder-avatar" width="240" height="240" loading="lazy" decoding="async">
-                        <span class="folder-flap-name" data-i18n="team4_name">Shira Levi</span>
-                    </div>
-                    <div class="folder-inner">
-                        <p class="folder-role" data-i18n="team4_role">Marketing &amp; Communications Manager</p>
-                        <p class="folder-bio" data-i18n="team4_bio">The voice behind our initiatives. Ensures our message spreads and shares the community's success stories.</p>
-                        <div class="folder-social">
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                </article>
+                <article class="member member-4 reveal" style="transition-delay: 0.4s;" tabindex="0" aria-labelledby="team4-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-agam-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team4-name" data-i18n="team4_name">Agam Chaim</h3>
+                            <p class="member-role" data-i18n="team4_role">Marketing &amp; Communications Manager</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team4_bio">The voice behind our initiatives. Ensures our message spreads and shares the community's success stories.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                </article>
+                <article class="member member-3 reveal" style="transition-delay: 0.5s;" tabindex="0" aria-labelledby="team3-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-vladimir-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team3-name" data-i18n="team3_name">Vladimir Berson</h3>
+                            <p class="member-role" data-i18n="team3_role">Chief Technology Officer</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team3_bio">Leads the technological development of our digital platforms to ensure seamless connection between all partners.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="member member-5 reveal" style="transition-delay: 0.6s;" tabindex="0" aria-labelledby="team5-name">
+                    <div class="member-stage">
+                        <div class="member-backdrop" aria-hidden="true"></div>
+                        <div class="member-ring member-ring-back" aria-hidden="true"></div>
+                        <div class="member-photo-clip">
+                            <img src="images/team-georgi-portrait.webp" alt="" class="member-photo" width="672" height="952" loading="lazy" decoding="async">
+                        </div>
+                        <div class="member-ring member-ring-front" aria-hidden="true"></div>
+                        <div class="member-plate">
+                            <h3 class="member-name" id="team5-name" data-i18n="team5_name">Georgi Davdariani</h3>
+                            <p class="member-role" data-i18n="team5_role">Organizational Control Manager</p>
+                            <div class="member-bio-wrap">
+                                <p class="member-bio" data-i18n="team5_bio">Responsible for monitoring and overseeing the organization's performance, analysing data and identifying trends and gaps.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
