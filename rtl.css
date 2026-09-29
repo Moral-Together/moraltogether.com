@@ -156,3 +156,12 @@
     direction: ltr;
 }
 
+
+/* --- Partners marquee: the track runs left to right in every language ---
+   The keyframes move it by -50% of its width, which assumes it starts at the left edge.
+   In RTL the track was anchored to the right instead, and the second row slid off the page
+   entirely, leaving an empty band in the Hebrew version. The logos have no reading order,
+   so the strip itself is pinned to LTR; each name under a logo still reads in its script. */
+[dir="rtl"] .partners-marquee-wrap {
+    direction: ltr;
+}

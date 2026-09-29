@@ -24,26 +24,28 @@
         content="MoralTogether, community, volunteering, social collaboration, social entrepreneurship, ecosystem, connections, nonprofit">
     <meta name="author" content="MoralTogether Team">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://moraltogether.org/">
+    <link rel="canonical" href="https://moraltogether.com/">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/favicon.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://moraltogether.org/">
+    <meta property="og:url" content="https://moraltogether.com/">
     <meta property="og:title" content="MoralTogether — Uniting Good Forces">
     <meta property="og:description"
         content="The organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Where good forces unite.">
-    <meta property="og:image" content="https://moraltogether.org/images/og-image.jpg">
+    <meta property="og:image" content="https://moraltogether.com/images/og-image.jpg">
     <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="he_IL">
+    <meta property="og:locale:alternate" content="el_GR">
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://moraltogether.org/">
+    <meta name="twitter:url" content="https://moraltogether.com/">
     <meta name="twitter:title" content="MoralTogether — Uniting Good Forces">
     <meta name="twitter:description" content="The organization connecting entrepreneurs and organizations for a reality of abundance and shared hope.">
-    <meta name="twitter:image" content="https://moraltogether.org/images/twitter-card.jpg">
+    <meta name="twitter:image" content="https://moraltogether.com/images/og-image.jpg">
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -51,8 +53,8 @@
       "@context": "https://schema.org",
       "@type": "NGO",
       "name": "MoralTogether",
-      "url": "https://moraltogether.org",
-      "logo": "https://moraltogether.org/images/logo.png",
+      "url": "https://moraltogether.com",
+      "logo": "https://moraltogether.com/images/logo.png",
       "description": "A social organization working to connect different sectors of society to create mutual abundance and shared hope.",
       "sameAs": [
         "https://www.facebook.com/moraltogether",
@@ -60,10 +62,10 @@
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+972-50-0000000",
+        "telephone": "+972-55-771-1433",
         "contactType": "customer support",
         "email": "support@moraltogether.com",
-        "availableLanguage": ["Hebrew", "English"]
+        "availableLanguage": ["Hebrew", "English", "Greek"]
       }
     }
     </script>
@@ -119,15 +121,21 @@
                 <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
                 <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
             </a>
-            <ul class="nav-menu">
+            <!-- Same order as the sections on the page: what we do comes right after the hero. -->
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="#about" class="nav-link" data-i18n="nav_about">About</a></li>
                 <li><a href="#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
-                <li><a href="#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="#team" class="nav-link" data-i18n="nav_team">Team</a></li>
                 <li><a href="#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
+                <li class="nav-contact">
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                </li>
             </ul>
             <div class="nav-controls">
                 <div class="lang-switcher">
@@ -135,15 +143,15 @@
                     <button class="lang-btn" data-lang="he">עב</button>
                     <button class="lang-btn" data-lang="gr">ΕΛ</button>
                 </div>
-                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <button id="darkModeToggle" class="theme-toggle" data-i18n="theme_toggle_label" data-i18n-attr="aria-label" aria-label="Toggle dark mode">
                     <i class="fas fa-moon" aria-hidden="true"></i>
                     <i class="fas fa-sun" aria-hidden="true"></i>
                 </button>
-                <div class="hamburger">
+                <button type="button" class="hamburger" aria-controls="navMenu" aria-expanded="false" data-i18n="menu_label" data-i18n-attr="aria-label" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </div>
     </nav>
@@ -163,17 +171,17 @@
             <div class="hero-text-panel">
                 <h1 class="shimmer-text reveal"><span data-i18n-html="hero_title">A place where forces unite,<span class="title-rest">initiatives meet, and good resonates</span></span></h1>
                 <div class="btn-group reveal" style="transition-delay: 0.35s;">
-                    <a href="#activities" class="btn btn-primary" data-i18n="hero_btn_join">Join the Organization</a>
-                    <a href="partnerships.html" class="btn btn-secondary" data-i18n="hero_btn_learn">Learn More</a>
-                </div>
-                <div class="floating-social-proof reveal" style="transition-delay: 0.5s;">
-                    <div class="avatar-group">
-                        <span class="avatar-dot avatar-dot--1" aria-hidden="true"></span>
-                        <span class="avatar-dot avatar-dot--2" aria-hidden="true"></span>
-                        <span class="avatar-dot avatar-dot--3" aria-hidden="true"></span>
-                        <div class="avatar-count">+500</div>
-                    </div>
-                    <span data-i18n="hero_social_proof">participants in our ecosystem</span>
+                    <!-- The same Moral Together ID button the sub-projects sign in with (zuzim.cash),
+                         so joining here and signing in there look like one door. -->
+                    <a href="https://id.moraltogether.com/" class="id-button">
+                        <span class="id-button__sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                        <img src="images/moral-id-mark.webp" alt="" aria-hidden="true" class="id-button__mark" width="40" height="40">
+                        <span data-i18n="hero_btn_join">Join the Organization</span>
+                    </a>
+                    <a href="#activities" class="hero-projects-btn">
+                        <span data-i18n="hero_btn_projects">Our projects</span>
+                        <svg class="hero-projects-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -185,11 +193,93 @@
         </div>
     </header>
 
+    <!-- Activities Section -->
+    <section id="activities" class="bento-section">
+        <div class="container">
+            <h2 class="section-title reveal" style="margin-bottom: 10px;" data-i18n="activities_heading">Our Activities</h2>
+            <p class="reveal" style="margin-bottom: 40px; color: var(--text-muted);" data-i18n="activities_subtitle">Our tools for creating a better reality</p>
+
+            <div class="bento-grid reveal">
+
+                <article class="bento-card card-radio has-link">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/radio-m1-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="radio_subtitle">Radio Channel</span>
+                        <h3 id="act-radio" data-i18n="radio_title">M1 Radio</h3>
+                        <p data-i18n="radio_p1">A radio platform for positive content, knowledge sharing, and showcasing initiatives, letting every person make their voice heard, share what they do, and widen circles of influence.</p>
+                    </div>
+                    <a class="bento-go" href="https://m1-radio.com" aria-labelledby="act-radio"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                </article>
+                <article class="bento-card card-stage has-link">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/stage-of-stars-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="stage_subtitle">Musical Talent Competition</span>
+                        <h3 id="act-stage" data-i18n="stage_title">Stage of Stars</h3>
+                        <p data-i18n="stage_p1">An international singing competition linking Israel, Greece and Cyprus. Contestants send a 90-second audition from their phone, the audience and the judges decide who goes on, and the grand final takes the stage in Cyprus. Taking part is free.</p>
+                    </div>
+                    <a class="bento-go" href="https://stageofstars.com" aria-labelledby="act-stage"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                </article>
+                <article class="bento-card card-trustmom has-link">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/trust-mom-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="trustmom_subtitle">Maternal Support Network</span>
+                        <h3 id="act-trustmom" data-i18n="trustmom_title">Trust Mom</h3>
+                        <span class="bento-members" data-i18n="members_only">Members only</span>
+                        <p data-i18n="trustmom_p1">International organization — the chosen representation of women and mothers in Israel. A caring social network for mutual support, where community strength demands fairness.</p>
+                    </div>
+                    <a class="bento-go" href="https://trust-mom.com/" aria-labelledby="act-trustmom"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                </article>
+                <article class="bento-card card-app">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/moral-for-good-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="app_subtitle">Digital Community</span>
+                        <h3 id="act-app" data-i18n="app_title">MoralForGood</h3>
+                        <span class="bento-members" data-i18n="members_only">Members only</span>
+                        <p data-i18n="app_p1">A community app that connects people around positive action and makes it possible to offer help, request assistance, share initiatives, and publish activities — all in one place.</p>
+                    </div>
+                </article>
+                <article class="bento-card card-vvip">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/vvip-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="vvip_subtitle">Appreciation Club for Volunteers</span>
+                        <h3 id="act-vvip" data-i18n="vvip_title">VVIP</h3>
+                        <span class="bento-members" data-i18n="members_only">Members only</span>
+                    </div>
+                </article>
+                <article class="bento-card card-zuzim has-link">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/zuzim-cash-logo-v2.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="zuzim_subtitle">An App for Rating Good Deeds</span>
+                        <h3 id="act-zuzim" data-i18n="zuzim_title">Zuzim Cash</h3>
+                        <span class="bento-members" data-i18n="members_only">Members only</span>
+                    </div>
+                    <a class="bento-go" href="https://zuzim.cash" aria-labelledby="act-zuzim"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                </article>
+                <article class="bento-card card-tv">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="" width="640" height="198" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="tv_subtitle">Content & Podcast Channel</span>
+                        <h3 id="act-tv" data-i18n="tv_title">MoralTV</h3>
+                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
+                    </div>
+                </article>
+                <article class="bento-card card-triplewin">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/triple-win-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="triplewin_subtitle">Business Collaborations</span>
+                        <h3 id="act-triplewin" data-i18n="triplewin_title">My Triple Win</h3>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="bento-section">
         <div class="container">
             <div class="reveal">
-                <h2 style="font-size: 2.5rem; margin-bottom: 30px;" data-i18n="about_heading">Our Story</h2>
+                <h2 class="section-title" style="margin-bottom: 30px;" data-i18n="about_heading">Our Story</h2>
 
                 <div class="about-content-layout">
                     <div class="about-text-column">
@@ -231,7 +321,6 @@
                         <img src="images/connections.webp" alt="" class="connections-img" width="502" height="502" loading="lazy" decoding="async">
                         <h3 class="connections-heading" data-i18n="connections_heading">Connections</h3>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -243,7 +332,7 @@
             <div class="vision-split reveal">
 
                 <div class="vision-left">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 24px;" data-i18n="vision_heading">Our Vision</h2>
+                    <h2 class="section-title" style="margin-bottom: 24px;" data-i18n="vision_heading">Our Vision</h2>
                     <p class="vision-quote" data-i18n="vision_p1">We believe that when good people connect — good things happen.</p>
                     <p class="vision-body" data-i18n="vision_p2">MoralTogether connects people, communities, businesses, organizations, and academia, to create collaborations that bring good ideas into action and assured impact.</p>
                     <p class="vision-body" data-i18n="vision_p3">We create a place where you can get to know one another, share knowledge and experience, find the right people, and connect whoever has an idea, a need, or a resource — with whoever can help turn it into something bigger.</p>
@@ -258,89 +347,10 @@
         </div>
     </section>
 
-    <!-- Activities Section -->
-    <section id="activities" class="bento-section">
-        <div class="container">
-            <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="activities_heading">Our Activities</h2>
-            <p class="reveal" style="margin-bottom: 40px; color: var(--text-muted);" data-i18n="activities_subtitle">Our tools for creating a better reality</p>
-
-            <div class="bento-grid reveal">
-
-                <div class="bento-card card-app">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/moral-for-good-logo.webp" alt="MoralForGood" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="app_subtitle">Digital Community</span>
-                        <h3 data-i18n="app_title">MoralForGood</h3>
-                        <p data-i18n="app_p1">A community app that connects people around positive action and makes it possible to offer help, request assistance, share initiatives, and publish activities — all in one place.</p>
-                    </div>
-                </div>
-
-                <div class="bento-card card-radio">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/radio-m1-logo.webp" alt="M1 Radio" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="radio_subtitle">Radio Channel</span>
-                        <h3 data-i18n="radio_title">M1 Radio</h3>
-                        <p data-i18n="radio_p1">A radio platform for positive content, knowledge sharing, and showcasing initiatives, letting every person make their voice heard, share what they do, and widen circles of influence.</p>
-                    </div>
-                </div>
-
-                <div class="bento-card card-trustmom">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/trust-mom-logo.webp" alt="Trust Mom" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="trustmom_subtitle">Maternal Support Network</span>
-                        <h3 data-i18n="trustmom_title">Trust Mom</h3>
-                    </div>
-                </div>
-
-                <div class="bento-card card-tv">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="MoralTV" class="bento-logo-img" width="640" height="198" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="tv_subtitle">Content &amp; Podcast Channel</span>
-                        <h3 data-i18n="tv_title">MoralTV</h3>
-                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
-                    </div>
-                </div>
-
-                <div class="bento-card card-zuzim">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/zuzim-cash-logo.webp" alt="Zuzim Cash" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="zuzim_subtitle">An App for Rating Good Deeds</span>
-                        <h3 data-i18n="zuzim_title">Zuzim Cash</h3>
-                    </div>
-                </div>
-
-                <div class="bento-card card-vvip">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/vvip-logo.webp" alt="VVIP" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="vvip_subtitle">Appreciation Club for Volunteers</span>
-                        <h3 data-i18n="vvip_title">VVIP</h3>
-                    </div>
-                </div>
-
-                <div class="bento-card card-triplewin">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/triple-win-logo.webp" alt="My Triple Win" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="triplewin_subtitle">Business Collaborations</span>
-                        <h3 data-i18n="triplewin_title">My Triple Win</h3>
-                    </div>
-                </div>
-
-                <div class="bento-card card-stage">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/stage-of-stars-logo.webp" alt="Stage of Stars" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="stage_subtitle">Musical Talent Competition</span>
-                        <h3 data-i18n="stage_title">Stage of Stars</h3>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Team Section -->
     <section id="team" class="section team-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 0;" data-i18n="team_heading">Our Team</h2>
+            <h2 class="section-title text-center" style="margin-bottom: 0;" data-i18n="team_heading">Our Team</h2>
             <!-- Order from the brief: the founder in the middle of the first row, with community on his
                  right and organizational development on his left (the page is right to left in Hebrew).
                  Team: a cut-out portrait standing in front of a coloured stage, the head rising above
@@ -457,58 +467,58 @@
     <!-- Partnerships -->
     <section id="partners" class="section partners-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 10px;" data-i18n="partners_heading">Partnerships</h2>
+            <h2 class="section-title text-center" style="margin-bottom: 10px;" data-i18n="partners_heading">Partnerships</h2>
             <p class="text-center" style="color: var(--text-muted); margin-bottom: 50px;" data-i18n="partners_subtitle">Building bridges across sectors</p>
     </div>
 
     <div class="partners-marquee-wrap">
         <div class="partners-track partners-track--left">
-            <div class="partners-logo-card" style="--card-accent:#e63946"><video loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#1e8ec8"><video loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt="Elderly Moral"></div>
-            <div class="partners-logo-card" style="--card-accent:#38b56a"><video loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" style="--card-accent:#1565c0"><video loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#e63946"><video loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#1e8ec8"><video loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#38b56a"><video loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#1565c0"><video loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#e63946"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#38b56a"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#1565c0"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#e63946"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#38b56a"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#1565c0"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></figure>
         </div>
     </div>
 
     <div class="partners-marquee-wrap">
         <div class="partners-track partners-track--right">
-            <div class="partners-logo-card" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt="" style=""></div>
-            <div class="partners-logo-card" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo2.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div>
-            <div class="partners-logo-card" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div>
-            <div class="partners-logo-card" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div>
-            <div class="partners-logo-card" aria-hidden="true" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt="" style=""></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div><figcaption class="partners-name" data-i18n="p10_name">Sports Moral</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p14_name">Moral Radio</figcaption></figure>
+            <figure class="partners-item"><div class="partners-logo-card" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p16_name">Moral Colleges</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div><figcaption class="partners-name" data-i18n="p10_name">Sports Moral</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p14_name">Moral Radio</figcaption></figure>
+            <figure class="partners-item" aria-hidden="true"><div class="partners-logo-card" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p16_name">Moral Colleges</figcaption></figure>
         </div>
     </div>
 
@@ -523,32 +533,32 @@
     <!-- Gallery -->
     <section id="gallery" class="section gallery-section">
         <div class="container reveal">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</h2>
+            <h2 class="section-title text-center" style="margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</h2>
             <p class="text-center" style="margin-bottom: 18px;">
                 <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="false">
-                    <i class="fas fa-hammer" aria-hidden="true"></i>
+                    <i class="fas fa-pause motion-toggle-icon" aria-hidden="true"></i>
                     <span data-i18n="motion_stop">Stop the motion</span>
                 </button>
             </p>
             <div class="gallery-marquee-container">
                 <div class="gallery-marquee">
                     <div class="gallery-scroll">
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
-                        <div class="gallery-card card-1" data-index="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
-                        <div class="gallery-card card-2" data-index="1"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
-                        <div class="gallery-card card-3" data-index="2"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
-                        <div class="gallery-card card-4" data-index="3"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
+                        <div class="gallery-card card-1" data-index="0" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_1">Connections</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_2">Community</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_3">Entrepreneurship</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3" aria-hidden="true"><div class="overlay"><h3 data-i18n="gallery_4">Hope</h3></div></div>
                     </div>
                 </div>
             </div>
@@ -560,7 +570,7 @@
         <div class="container">
             <div class="contact-bento-panel bento-card reveal">
                 <div class="contact-info">
-                    <h2 style="font-size: 3rem; margin-bottom: 20px;" data-i18n="contact_heading">Let's Talk</h2>
+                    <h2 class="section-title section-title--lg" style="margin-bottom: 20px;" data-i18n="contact_heading">Let's Talk</h2>
                     <p style="margin-bottom: 40px; font-size: 1.2rem; color: var(--text-muted);" data-i18n="contact_subtitle">Have an idea? Want to collaborate? We're here.</p>
                     <div class="contact-methods">
                         <a href="mailto:support@moraltogether.com" class="contact-method-card contact-mail-card">
@@ -570,11 +580,11 @@
                                 <strong>support@moraltogether.com</strong>
                             </div>
                         </a>
-                        <a href="#" class="contact-method-card contact-whatsapp-card">
+                        <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="contact-method-card contact-whatsapp-card">
                             <i class="fab fa-whatsapp contact-icon" aria-hidden="true"></i>
                             <div>
                                 <span data-i18n="contact_whatsapp_label">WhatsApp</span>
-                                <strong>+972-50-0000000</strong>
+                                <strong dir="ltr">055-771-1433</strong>
                             </div>
                         </a>
                     </div>
@@ -606,16 +616,24 @@
                     <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
                     <ul>
                         <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="#activities" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="#about" data-i18n="nav_about">About</a></li>
                         <li><a href="#vision" data-i18n="nav_vision">Vision</a></li>
-                        <li><a href="#activities" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="#team" data-i18n="nav_team">Team</a></li>
                         <li><a href="#gallery" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-social">
+                <div class="footer-links footer-contact">
+                    <h3 data-i18n="nav_contact">Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@moraltogether.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>support@moraltogether.com</span></a></li>
+                        <li><a href="https://wa.me/972557711433" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span dir="ltr">055-771-1433</span></a></li>
+                    </ul>
+                </div>
+                <!-- Hidden until the real profile addresses exist: all four links pointed at "#". -->
+                <div class="footer-social" hidden>
                     <h3 data-i18n="footer_social_heading">Follow Us</h3>
                     <div class="social-icons">
                         <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
@@ -634,9 +652,9 @@
             </div>
         </div>
         <div class="developer-credit"
-            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 0.875rem; font-weight: 500; direction: ltr; width: 100%;">
             Developed with ❤️ by <a href="https://moral-together.github.io/merkaz-media-landing/" target="_blank"
-                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 600;">Merkaz
                 Hamedia</a>
         </div>
     </footer>
@@ -645,14 +663,15 @@
     <!-- Gallery Modal -->
     <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle" data-i18n-attr="aria-label" data-i18n="gallery_modal_label" aria-label="Gallery image">
         <div class="gallery-modal-backdrop"></div>
-        <button class="gallery-modal-close" aria-label="Close"><span>✕</span></button>
-        <button class="gallery-modal-arrow gallery-modal-prev" aria-label="Previous">&#8249;</button>
+        <button class="gallery-modal-close" data-i18n="gallery_close" data-i18n-attr="aria-label" aria-label="Close"><span>✕</span></button>
+        <button class="gallery-modal-arrow gallery-modal-prev" data-i18n="gallery_prev" data-i18n-attr="aria-label" aria-label="Previous image">&#8249;</button>
         <div class="gallery-modal-content">
             <img id="galleryModalImg" src="" alt="">
             <p id="galleryModalTitle" class="gallery-modal-title"></p>
         </div>
-        <button class="gallery-modal-arrow gallery-modal-next" aria-label="Next">&#8250;</button>
+        <button class="gallery-modal-arrow gallery-modal-next" data-i18n="gallery_next" data-i18n-attr="aria-label" aria-label="Next image">&#8250;</button>
     </div>
+
 
     <script src="translations.js"></script>
     <script src="script.js"></script>

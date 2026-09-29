@@ -462,62 +462,6 @@ body.dark-mode .navbar.scrolled {
     margin-bottom: 40px;
 }
 
-.floating-social-proof {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 50px;
-    padding: 10px 20px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
-    border-radius: 100px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
-
-.avatar-group {
-    display: flex;
-    align-items: center;
-}
-
-.avatar-group img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid var(--bg-body);
-    margin-right: -15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.avatar-count {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.8rem;
-    border: 3px solid var(--bg-body);
-    margin-right: -15px;
-    z-index: 1;
-}
-
-/* In the dark theme --primary-color is a bright cyan, and white on it measures 1.96:1 against
-   a 4.5 threshold — the count is barely there. Dark type on the same cyan measures 9.7:1. The
-   accessibility widget's button already turns its glyph dark for exactly this reason. */
-body.dark-mode .avatar-count {
-    color: var(--bg-body);
-}
-
-.floating-social-proof span {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-muted);
-}
-
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
@@ -1865,7 +1809,9 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
 }
 
 /* Pause animation and handle focus states on hover */
-.gallery-scroll:hover {
+/* A card with keyboard focus must not slide away under the fade. */
+.gallery-scroll:hover,
+.gallery-scroll:focus-within {
     animation-play-state: paused;
 }
 
@@ -1961,6 +1907,12 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
 .gallery-modal.is-open {
     opacity: 1;
     pointer-events: all;
+}
+/* Closed, the dialog was only transparent: its three buttons stayed in the tab order at the
+   end of the page, invisible. Hidden after the fade, it leaves the order entirely. */
+.gallery-modal:not(.is-open) {
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 .gallery-modal-backdrop {
     position: absolute;
@@ -2498,6 +2450,13 @@ body.dark-mode .ring-3 {
         left: 0;
     }
 
+    /* Off-canvas is not the same as gone: the closed drawer's links were still reached by Tab
+       before the burger. Hidden once it has slid out, visible the moment it opens. */
+    .nav-menu:not(.active) {
+        visibility: hidden;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
+    }
+
     body.dark-mode .nav-menu {
         background: rgba(7, 7, 15, 0.97);
         box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
@@ -2905,13 +2864,6 @@ body.dark-mode .glow-icon {
     color: #ff2d78;
 }
 
-/* Floating social proof */
-body.dark-mode .floating-social-proof {
-    border-color: rgba(0, 200, 255, 0.2);
-    background: rgba(0, 200, 255, 0.05);
-    box-shadow: 0 0 20px rgba(0, 200, 255, 0.08);
-}
-
 /* Tag cloud neon */
 body.dark-mode .tag {
     background: rgba(0, 200, 255, 0.08);
@@ -3169,29 +3121,209 @@ body.dark-mode .hero-text-panel > p {
 /* Buttons */
 .hero-text-panel .btn-group { justify-content: flex-start; }
 
-/* Social proof */
-.hero-text-panel .floating-social-proof {
-    background: rgba(255,255,255,0.18) !important;
-    border-color: rgba(0, 43, 100, 0.15) !important;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    /* «+500 участников» — довод в пользу кнопки, а не отдельный блок. Держим её при
-       кнопках: 20px против 44px до заголовка. */
-    margin-top: 20px;
+/* Moral Together ID — the button the sub-projects sign in with (zuzim.cash/auth/login), in
+   this site's navy. A one-pixel rim in the logo's colours turns slowly, sparks rise through the
+   button and a light sweep passes every few seconds; the mark stands still. It keeps
+   the same dark body in both themes. */
+@property --id-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
 }
 
-.hero-text-panel .floating-social-proof span {
-    color: rgba(0, 20, 70, 0.80) !important;
+.id-button {
+    --id-body: linear-gradient(135deg, #0f4d96, #0a3d7e 45%, #002b64 78%, #001c44);
+    --id-glow: rgba(0, 43, 100, 0.45);
+    --id-rim-mix: #0a3d7e;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.95rem 1.75rem 0.95rem 1.25rem;
+    border-radius: 999px;
+    /* One pixel, and the logo's colours mixed a third of the way into the body: the rim reads
+       as a glint on the edge rather than an outline competing with the headline. */
+    border: 1px solid transparent;
+    background:
+        var(--id-body) padding-box,
+        conic-gradient(from var(--id-angle),
+            color-mix(in srgb, #e0197a 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #f06000 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #f9b80c 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #35a86b 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #0e9898 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #2c6fae 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #8b5cf6 68%, var(--id-rim-mix)),
+            color-mix(in srgb, #e0197a 68%, var(--id-rim-mix))) border-box;
+    animation: id-rim 9s linear infinite;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    color: #f1f5f9;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.3),
+        0 2px 4px var(--id-glow),
+        0 10px 24px var(--id-glow);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+[dir="rtl"] .id-button { padding: 0.95rem 1.25rem 0.95rem 1.75rem; }
+@keyframes id-rim { to { --id-angle: 360deg; } }
+
+.id-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.25),
+        0 4px 8px var(--id-glow),
+        0 16px 34px var(--id-glow);
+}
+.id-button:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 2px 6px rgba(0, 0, 0, 0.45),
+        0 1px 2px var(--id-glow),
+        0 3px 8px var(--id-glow);
+}
+.id-button:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 3px;
 }
 
-body.dark-mode .hero-text-panel .floating-social-proof {
-    /* 35% — фотография просвечивала, подпись давала 4.32:1 */
-    background: rgba(0, 0, 20, 0.72) !important;
-    border-color: rgba(0, 200, 255, 0.20) !important;
+/* A light sweep crosses the button every few seconds on its own, and at once on hover; in
+   Hebrew it travels right to left. */
+.id-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, rgba(217, 70, 239, 0.25) 50%, rgba(6, 182, 212, 0.25) 65%, transparent 80%);
+    transform: translateX(-120%);
+    animation: id-sweep 7s cubic-bezier(0.45, 0, 0.55, 1) 1.5s infinite;
+}
+.id-button:hover::before { animation: id-sweep-now 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards; }
+[dir="rtl"] .id-button::before { transform: translateX(120%) scaleX(-1); animation-name: id-sweep-rtl; }
+[dir="rtl"] .id-button:hover::before { animation-name: id-sweep-now-rtl; }
+@keyframes id-sweep         { 0%, 78% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes id-sweep-now     { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+@keyframes id-sweep-rtl     { 0%, 78% { transform: translateX(120%) scaleX(-1); } 100% { transform: translateX(-120%) scaleX(-1); } }
+@keyframes id-sweep-now-rtl { from { transform: translateX(120%) scaleX(-1); } to { transform: translateX(-120%) scaleX(-1); } }
+
+/* The glassy top half. */
+.id-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 42%, transparent 62%);
+    pointer-events: none;
 }
 
-body.dark-mode .hero-text-panel .floating-social-proof span {
-    color: rgba(180, 215, 255, 0.85) !important;
+/* The mark stays still: both a spin on hover and a slow constant turn read as restless next to
+   the rising sparks. */
+.id-button__mark {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+/* Sparks rise from the bottom edge through the whole height at an even pace and fade out at
+   the top, each on its own clock. An eased path made them slow down twice a cycle, which read
+   as stopping; linear motion with a separate fade keeps them drifting. */
+.id-button__sparkles {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: inherit;
+}
+.id-button__sparkles i {
+    position: absolute;
+    bottom: -6px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: id-rise 5.4s linear infinite;
+}
+.id-button__sparkles i:nth-child(1)  { left: 8%;  background: #e0197a; box-shadow: 0 0 8px #e0197a; animation-duration: 4.7s; animation-delay: -0.6s; }
+.id-button__sparkles i:nth-child(2)  { left: 17%; background: #f9b80c; box-shadow: 0 0 8px #f9b80c; animation-duration: 5.8s; animation-delay: -3.3s; width: 3px; height: 3px; }
+.id-button__sparkles i:nth-child(3)  { left: 27%; background: #0e9898; box-shadow: 0 0 8px #0e9898; animation-duration: 4.2s; animation-delay: -1.7s; }
+.id-button__sparkles i:nth-child(4)  { left: 36%; background: #f06000; box-shadow: 0 0 8px #f06000; animation-duration: 6.4s; animation-delay: -4.5s; width: 5px; height: 5px; }
+.id-button__sparkles i:nth-child(5)  { left: 46%; background: #8b5cf6; box-shadow: 0 0 8px #8b5cf6; animation-duration: 4.9s; animation-delay: -1.4s; width: 3px; height: 3px; }
+.id-button__sparkles i:nth-child(6)  { left: 55%; background: #35a86b; box-shadow: 0 0 8px #35a86b; animation-duration: 5.6s; animation-delay: -3.9s; }
+.id-button__sparkles i:nth-child(7)  { left: 64%; background: #f9b80c; box-shadow: 0 0 8px #f9b80c; animation-duration: 4.3s; animation-delay: -2.7s; width: 3px; height: 3px; }
+.id-button__sparkles i:nth-child(8)  { left: 73%; background: #e0197a; box-shadow: 0 0 8px #e0197a; animation-duration: 6.1s; animation-delay: -0.3s; width: 5px; height: 5px; }
+.id-button__sparkles i:nth-child(9)  { left: 83%; background: #2c6fae; box-shadow: 0 0 8px #58a6ff; animation-duration: 4.8s; animation-delay: -4.3s; }
+.id-button__sparkles i:nth-child(10) { left: 92%; background: #0e9898; box-shadow: 0 0 8px #0e9898; animation-duration: 5.4s; animation-delay: -2.2s; width: 3px; height: 3px; }
+@keyframes id-rise {
+    0%   { transform: translate(0, 0); opacity: 0; }
+    20%  { opacity: 0.95; }
+    75%  { opacity: 0.8; }
+    100% { transform: translate(2px, -84px); opacity: 0; }
+}
+
+/* The second button: down to the projects, quiet beside the ID button. */
+.hero-text-panel .btn-group { align-items: center; flex-wrap: wrap; gap: 16px; }
+.hero-projects-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 58px;
+    padding: 0 26px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.74);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 43, 100, 0.18);
+    color: #002b64;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(0, 43, 100, 0.12);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.hero-projects-btn__icon { width: 18px; height: 18px; }
+.hero-projects-btn:hover {
+    background: #fff;
+    border-color: rgba(0, 43, 100, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 43, 100, 0.16);
+}
+/* The arrow has no motion of its own: it rises with the button, so the two never drift out
+   of step. */
+.hero-projects-btn:focus-visible { outline: 2px solid #002b64; outline-offset: 3px; }
+body.dark-mode .hero-projects-btn {
+    background: rgba(7, 10, 28, 0.72);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #e8f0ff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+body.dark-mode .hero-projects-btn:hover { background: rgba(12, 18, 44, 0.9); border-color: rgba(0, 200, 255, 0.45); }
+body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
+
+@media (max-width: 768px) {
+    .id-button { min-width: 250px; }
+    .hero-text-panel .btn-group { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-projects-btn { min-width: 250px; min-height: 52px; }
+}
+
+/* html.motion-paused already freezes every animation on the page; the OS setting gets the
+   same treatment here, even before script.js has run. */
+@media (prefers-reduced-motion: reduce) {
+    .id-button,
+    .id-button::before,
+    .id-button__sparkles i { animation: none; }
+    .id-button__sparkles { display: none; }
+    .hero-projects-btn { transition: none; }
+    .id-button:hover { transform: none; }
 }
 
 /* Scroll indicator */
@@ -3330,7 +3462,6 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
     }
     .hero-text-panel::before { display: none; }
     .hero-text-panel .shimmer-text { text-align: start; margin-bottom: 28px; }
-    .hero-text-panel .floating-social-proof { margin-top: 14px; }
     .hero-text-panel > p { margin-top: 0; margin-bottom: 24px; }
     .hero-text-panel .btn-group { justify-content: flex-start; }
 }
@@ -3363,19 +3494,6 @@ body.dark-mode .hero-text-panel .floating-social-proof span {
     background: linear-gradient(140deg, #0f4c81 0%, #2c6fae 55%, #f5a623 190%);
     user-select: none;
 }
-
-.avatar-dot {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid var(--bg-body);
-    margin-right: -15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.avatar-dot--1 { background: linear-gradient(140deg, #0f4c81, #2c6fae); }
-.avatar-dot--2 { background: linear-gradient(140deg, #f5a623, #e07b39); }
-.avatar-dot--3 { background: linear-gradient(140deg, #2c8a6a, #4bb18c); }
 
 /* Skip link — the first thing a keyboard finds, invisible until it has focus. */
 .skip-link {
@@ -3445,3 +3563,349 @@ html.motion-paused *::after {
     white-space: nowrap;
     border: 0;
 }
+
+/* ============================================================
+   INFORMATION ACCESS — 29.09 (critique of the homepage)
+   Same look throughout; what changes is how easy each thing is to find, read and reach.
+   ============================================================ */
+
+/* Section headings: the size lived in eight inline styles, so the scale could not be tuned
+   in one place. Same values as before; the phone rule for h2 still applies on top. */
+.section-title { font-size: 2.5rem; }
+.section-title--lg { font-size: 3rem; }
+
+/* --- Partners: every logo carries its name under it --- */
+.partners-item {
+    flex-shrink: 0;
+    margin: 0;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.partners-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    color: var(--text-muted);
+    /* The track is pinned left to right (rtl.css); the name still reads in its own script. */
+    unicode-bidi: plaintext;
+}
+
+/* --- Gallery: the title is part of the picture, not a hover reward. A keyboard now
+   reaches the first four cards, and focus shows where it is. --- */
+.gallery-card .overlay,
+.gallery-card:hover .overlay {
+    opacity: 1;
+    transform: none;
+}
+.gallery-card[role="button"] { cursor: pointer; }
+.gallery-card[role="button"]:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 4px;
+}
+
+/* --- Header controls: real buttons, big enough to hit --- */
+.hamburger {
+    background: none;
+    border: 0;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+.hamburger:focus-visible,
+.theme-toggle:focus-visible,
+.lang-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+}
+
+/* The drawer's contact row exists only inside the drawer. */
+.nav-contact { display: none; }
+
+@media (max-width: 75em) {
+    .lang-btn {
+        font-size: 0.75rem;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0 8px;
+    }
+    .nav-menu .nav-link {
+        display: inline-block;
+        padding: 10px 6px;
+        font-size: 1.05rem;
+    }
+    .nav-menu .nav-link::after { bottom: 6px; }
+    .nav-contact {
+        display: flex;
+        gap: 16px;
+        margin-top: 10px;
+    }
+    .nav-contact-link {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: var(--primary-color);
+        border: 1px solid var(--card-border);
+        background: var(--bg-glass);
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s;
+    }
+    .nav-contact-link:hover,
+    .nav-contact-link:focus-visible {
+        background: var(--primary-color);
+        color: #fff;
+    }
+    body.dark-mode .nav-contact-link:hover,
+    body.dark-mode .nav-contact-link:focus-visible { color: #07070f; }
+}
+
+/* --- Phones --- */
+@media (max-width: 768px) {
+    /* The picture pushed the headline to y≈640 on an 844 px screen, so the first view was a
+       picture and a button. At 40% of the screen the headline and both buttons land in it, and
+       the buttons stay clear of the accessibility button in the bottom-left corner; the crowd
+       at the bottom of the picture stays in frame. */
+    .hero-bg { height: clamp(240px, 40svh, 520px); }
+
+    /* Footer links were 20 px tall targets. */
+    .footer-links li { margin-bottom: 0; }
+    .footer-links a {
+        display: inline-block;
+        padding: 12px 4px;
+    }
+    .footer-legal a {
+        display: inline-block;
+        padding: 10px 2px;
+    }
+}
+
+@media (max-width: 560px) {
+    /* 11.8 px was below what reads comfortably on a phone. */
+    .member-role { font-size: 0.8125rem; }
+    .member-bio { font-size: 0.8125rem; }
+}
+
+@media (max-width: 480px) {
+    /* 15 px from the glass edge was tight for a paragraph. */
+    .container { padding: 0 20px; }
+}
+
+/* Header on a phone: with 44 px targets the controls no longer fit beside a 48 px logo —
+   the burger was pushed off the screen (it already touched the edge before). A slightly
+   smaller logo and tighter gaps keep everything on one row down to 360 px. The language
+   buttons stay at 28×32: three of them at 44 would not fit, and 24 px is the AA minimum. */
+@media (max-width: 480px) {
+    .nav-container { padding: 0 12px; }
+    .logo-img { height: 38px; }
+    .nav-controls { gap: 6px; }
+    .lang-btn { min-width: 28px; padding: 0 6px; }
+    .theme-toggle { width: 36px; height: 36px; }
+}
+
+/* The credit link was a 20 px tall target. */
+.developer-credit a {
+    display: inline-block;
+    padding: 4px 0;
+}
+
+/* Four partner clips are 16:9 frames with the logo in a square in the middle and black
+   bars baked in on both sides. Filling the card crops exactly those bars. */
+.partners-logo-card video.is-pillarboxed { object-fit: cover; }
+
+/* Footer contact column: same type as the navigation beside it, icon ahead of the text. */
+.footer-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.footer-contact .fas,
+.footer-contact .fab {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+@media (max-width: 992px) {
+    .footer-contact a { justify-content: center; }
+}
+
+/* ============================================================
+   ACTIVITIES CARDS
+   ============================================================ */
+/* Activities cards: variant C (centred, floating logos) with elements borrowed from welcome.moraltogether.com —
+   a soft wash of the brand colour behind the logo, the round arrow in the corner, and
+   "members only". Order follows Welcome; the two projects it does not list come last. */
+
+.bento-grid .card-app       { --accent: #00c8ff; --go: #0a84c2; --go-ink: #fff; }
+.bento-grid .card-radio     { --accent: #ff2d78; --go: #d11a55; --go-ink: #fff; }
+.bento-grid .card-tv        { --accent: #bf5af2; }
+.bento-grid .card-trustmom  { --accent: #e8467c; --go: #c2185b; --go-ink: #fff; }
+.bento-grid .card-zuzim     { --accent: #6d5dfc; --go: #5b4bf0; --go-ink: #fff; }
+.bento-grid .card-vvip      { --accent: #c9a227; }
+.bento-grid .card-triplewin { --accent: #1f6f8b; }
+.bento-grid .card-stage     { --accent: #e58f27; --go: #ffc53d; --go-ink: #102033; }
+
+/* Zuzim's logo is violet now (the one on Welcome), so its bar follows. */
+.bento-grid .card-zuzim::after,
+body.dark-mode .bento-grid .card-zuzim::after {
+    background: linear-gradient(var(--accent-dir, 90deg), #5b4bf0, #d946ef);
+    box-shadow: 0 0 12px rgba(109, 93, 252, 0.55);
+}
+.bento-grid .card-zuzim { box-shadow: 0 -2px 14px rgba(109, 93, 252, 0.25), 0 8px 32px rgba(0,0,0,0.06); }
+.bento-grid .card-zuzim:hover { box-shadow: 0 -2px 22px rgba(109, 93, 252, 0.5), 0 24px 50px rgba(109, 93, 252, 0.12); }
+body.dark-mode .bento-grid .card-zuzim { box-shadow: 0 -3px 16px rgba(109, 93, 252, 0.4), 0 8px 40px rgba(0,0,0,0.5); }
+body.dark-mode .bento-grid .card-zuzim:hover { box-shadow: 0 -3px 24px rgba(109, 93, 252, 0.65), 0 24px 60px rgba(109, 93, 252, 0.18); }
+
+/* ---------- the card ---------- */
+.bento-grid .bento-card {
+    min-height: 0;
+    padding: 34px 26px 28px;
+    background:
+        linear-gradient(170deg, color-mix(in srgb, var(--accent) 13%, transparent) 0%, transparent 46%),
+        var(--bg-glass);
+}
+body.dark-mode .bento-grid .bento-card {
+    background:
+        linear-gradient(170deg, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 50%),
+        rgba(6, 8, 28, 0.82);
+}
+
+.bento-grid .bento-content {
+    align-items: center;
+    text-align: center;
+}
+.bento-grid .bento-icon {
+    margin: 0 auto 20px;
+}
+.bento-grid .bento-content .subtitle {
+    min-height: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+.bento-grid .bento-content h3 {
+    font-size: 1.55rem;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+.bento-grid .bento-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 4px 0 0;
+}
+
+.bento-grid .bento-members {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    opacity: 0.8;
+}
+
+/* Logos keep their size and keep floating: slower, and each on its own clock. */
+@keyframes logo-drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25%      { transform: translate(1.5px, -4px) rotate(0.6deg); }
+    50%      { transform: translate(0, -7px) rotate(0deg); }
+    75%      { transform: translate(-1.5px, -3.5px) rotate(-0.6deg); }
+}
+.bento-grid .bento-card .bento-icon .bento-logo-img {
+    animation: logo-drift 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.bento-grid .card-app       .bento-icon .bento-logo-img { animation-duration: 6.4s; animation-delay: -1.3s; }
+.bento-grid .card-radio     .bento-icon .bento-logo-img { animation-duration: 7.3s; animation-delay: -4.1s; }
+.bento-grid .card-trustmom  .bento-icon .bento-logo-img { animation-duration: 5.7s; animation-delay: -0.6s; }
+.bento-grid .card-tv        .bento-icon .bento-logo-img { animation-duration: 8.1s; animation-delay: -2.9s; }
+.bento-grid .card-zuzim     .bento-icon .bento-logo-img { animation-duration: 6.9s; animation-delay: -5.2s; }
+.bento-grid .card-vvip      .bento-icon .bento-logo-img { animation-duration: 6.1s; animation-delay: -2.2s; }
+.bento-grid .card-triplewin .bento-icon .bento-logo-img { animation-duration: 7.7s; animation-delay: -6.3s; }
+.bento-grid .card-stage     .bento-icon .bento-logo-img { animation-duration: 5.9s; animation-delay: -3.6s; }
+
+/* ---------- a project with a site: the whole card is the link, the arrow says so ---------- */
+.bento-grid .bento-go {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+}
+.bento-grid .bento-go:focus-visible { outline: none; }
+.bento-grid .bento-card:has(.bento-go:focus-visible) {
+    outline: 3px solid var(--go);
+    outline-offset: 4px;
+}
+.bento-grid .bento-go-badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--go);
+    color: var(--go-ink);
+    box-shadow: 0 6px 14px -6px color-mix(in srgb, var(--go), black 30%);
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bento-grid .bento-go-icon { width: 22px; height: 22px; }
+.bento-grid .bento-card:hover .bento-go-badge,
+.bento-grid .bento-go:focus-visible .bento-go-badge { transform: scale(1.08) rotate(-8deg); }
+.bento-grid .bento-go:active .bento-go-badge { transform: scale(0.92); }
+
+/* ---------- phone ---------- */
+@media (max-width: 768px) {
+    /* Two to a row only where two short cards stand next to each other in the order (VVIP,
+       Zuzim); pairing any others would make a card jump ahead of its neighbour. */
+    .bento-grid { grid-template-columns: 1fr 1fr; grid-auto-flow: row; gap: 14px; }
+    .bento-grid .bento-card { grid-column: 1 / -1; }
+    .bento-grid .bento-card.card-vvip,
+    .bento-grid .bento-card.card-zuzim { grid-column: auto; }
+
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) {
+        padding: 52px 12px 18px;
+    }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-icon {
+        height: 72px;
+        margin-bottom: 12px;
+    }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-logo-img {
+        max-height: 72px !important;
+        max-width: 100% !important;
+    }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) h3 { font-size: 1.2rem; margin-bottom: 4px; }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .subtitle { font-size: 0.72rem; }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-members { font-size: 0.74rem; }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-badge { top: 10px; right: 10px; }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-badge { width: 36px; height: 36px; }
+    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-icon { width: 18px; height: 18px; }
+}
+
+/* Dark theme: two logos are dark ink on a transparent ground and vanished into the card. A thin
+   light rim brings their outline back without putting them on a plate. */
+body.dark-mode .bento-grid .card-trustmom .bento-logo-img,
+body.dark-mode .bento-grid .card-triplewin .bento-logo-img {
+    filter: drop-shadow(0 0 0.6px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 0.6px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.18));
+}
+
+/* The drift stops for anyone who asked for less motion, even before script.js has run. */
+@media (prefers-reduced-motion: reduce) {
+    .bento-grid .bento-card .bento-icon .bento-logo-img { animation: none; }
+}
+
+/* Section heading and its subtitle are one pair. With the site-wide h2 line-height of 1.8, 16px
+   of air sat inside the heading's own line, and the subtitle floated about 38px under it —
+   halfway to the cards. A display line-height and no default margin on the subtitle bring the
+   pair to about 20px, a third of the 66px that separates it from the cards. */
+#activities .section-title { line-height: 1.2; }
+#activities .section-title + p { margin-top: 0; }

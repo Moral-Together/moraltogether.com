@@ -67,15 +67,20 @@
                 <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
                 <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
             </a>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html#home" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="index.html#about" class="nav-link" data-i18n="nav_about">About</a></li>
                 <li><a href="index.html#vision" class="nav-link" data-i18n="nav_vision">Vision</a></li>
-                <li><a href="index.html#activities" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="index.html#team" class="nav-link" data-i18n="nav_team">Team</a></li>
                 <li><a href="index.html#gallery" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="index.html#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
+                <li class="nav-contact">
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                </li>
             </ul>
             <div class="nav-controls">
                 <div class="lang-switcher">
@@ -83,15 +88,15 @@
                     <button class="lang-btn" data-lang="he">עב</button>
                     <button class="lang-btn" data-lang="gr">ΕΛ</button>
                 </div>
-                <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <button id="darkModeToggle" class="theme-toggle" data-i18n="theme_toggle_label" data-i18n-attr="aria-label" aria-label="Toggle dark mode">
                     <i class="fas fa-moon" aria-hidden="true"></i>
                     <i class="fas fa-sun" aria-hidden="true"></i>
                 </button>
-                <div class="hamburger">
+                <button type="button" class="hamburger" aria-controls="navMenu" aria-expanded="false" data-i18n="menu_label" data-i18n-attr="aria-label" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </div>
     </nav>
@@ -285,16 +290,24 @@
                     <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
                     <ul>
                         <li><a href="index.html#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="index.html#about" data-i18n="nav_about">About</a></li>
                         <li><a href="index.html#vision" data-i18n="nav_vision">Vision</a></li>
-                        <li><a href="index.html#activities" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="index.html#team" data-i18n="nav_team">Team</a></li>
                         <li><a href="index.html#gallery" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-social">
+                <div class="footer-links footer-contact">
+                    <h3 data-i18n="nav_contact">Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@moraltogether.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>support@moraltogether.com</span></a></li>
+                        <li><a href="https://wa.me/972557711433" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span dir="ltr">055-771-1433</span></a></li>
+                    </ul>
+                </div>
+                <!-- Hidden until the real profile addresses exist: all four links pointed at "#". -->
+                <div class="footer-social" hidden>
                     <h3 data-i18n="footer_social_heading">Follow Us</h3>
                     <div class="social-icons">
                         <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
@@ -313,9 +326,9 @@
             </div>
         </div>
         <div class="developer-credit"
-            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 1rem; font-weight: 700; direction: ltr; width: 100%;">
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 0.875rem; font-weight: 500; direction: ltr; width: 100%;">
             Developed with ❤️ by <a href="https://moral-together.github.io/merkaz-media-landing/" target="_blank"
-                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 700;">Merkaz
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 600;">Merkaz
                 Hamedia</a>
         </div>
     </footer>

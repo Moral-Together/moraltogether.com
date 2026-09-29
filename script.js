@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- i18n Language Engine ---
     const HTML_LANG = { en: 'en', he: 'he', gr: 'el' };
+    const entityBox = document.createElement('textarea');
+    const decodeEntities = (str) => { entityBox.innerHTML = str; return entityBox.value; };
     // remember: only a deliberate click is stored. Writing the default on every load made a
     // first visit look like a choice, which meant an Israeli visitor was greeted in English
     // and nothing downstream could tell the difference.
@@ -27,7 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const key = el.getAttribute('data-i18n');
             if (t[key] === undefined) return;
             const attr = el.getAttribute('data-i18n-attr');
-            if (attr) el.setAttribute(attr, t[key]);
+            // Some strings carry entities ("Mothers &amp; Family"). innerHTML decodes them; an
+            // attribute takes the text literally, so it is decoded first.
+            if (attr) el.setAttribute(attr, decodeEntities(t[key]));
             else el.innerHTML = t[key];
         });
 
@@ -169,8 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const menu = document.querySelector('.nav-menu.active');
         if (!menu) return;
         menu.classList.remove('active');
-        document.querySelector('.hamburger')?.classList.remove('active');
-        document.querySelector('.hamburger')?.focus();
+        const burger = document.querySelector('.hamburger');
+        burger?.classList.remove('active');
+        burger?.setAttribute('aria-expanded', 'false');
+        burger?.focus();
     });
 
     // --- One switch for everything that moves on its own ---------------------------
@@ -188,6 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.classList.toggle('motion-paused', paused);
             if (!toggle) return;
             toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+            // The icon shows what a press will do: pause while things move, play once stopped.
+            const icon = toggle.querySelector('.motion-toggle-icon');
+            icon?.classList.toggle('fa-pause', !paused);
+            icon?.classList.toggle('fa-play', paused);
             if (label) {
                 label.setAttribute('data-i18n', paused ? 'motion_start' : 'motion_stop');
                 const dict = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[document.documentElement.lang === 'el' ? 'gr' : document.documentElement.lang];
@@ -281,14 +291,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Mobile Menu ---
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    // A real <button> now, so it is reachable by Tab and says whether the drawer is open.
     hamburger?.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+        const open = !navMenu.classList.contains('active');
+        hamburger.classList.toggle('active', open);
+        navMenu.classList.toggle('active', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-    navLinks.forEach(n => n.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link, .nav-contact-link').forEach(n => n.addEventListener('click', () => {
         if (hamburger?.classList.contains('active')) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         }
     }));
 
@@ -296,7 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollInd = document.querySelector('.scroll-indicator');
     if (scrollInd) {
         scrollInd.style.cursor = 'pointer';
-        scrollInd.addEventListener('click', () => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }));
+        // Whatever section follows the hero, so the arrow survives the sections being reordered.
+        scrollInd.addEventListener('click', () => document.querySelector('#home')?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' }));
     }
 
     // --- Preloader ---
@@ -765,32 +780,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const backdrop    = modal.querySelector('.gallery-modal-backdrop');
     const galleryScroll = document.querySelector('.gallery-scroll');
     let currentIndex  = 0;
+    let returnFocus   = null;
 
-    function openModal(index) {
+    // The title comes from the card, which is already in the page's language; the English
+    // strings above were shown in every language.
+    const titleFor = (i) => document.querySelector(`.gallery-card[data-index="${i}"] h3`)?.textContent.trim()
+        || GALLERY_IMAGES[i].title;
+
+    function show(index) {
         currentIndex = index;
         modalImg.src = GALLERY_IMAGES[currentIndex].src;
-        modalImg.alt = GALLERY_IMAGES[currentIndex].title;
-        modalTitle.textContent = GALLERY_IMAGES[currentIndex].title;
+        modalImg.alt = titleFor(currentIndex);
+        modalTitle.textContent = titleFor(currentIndex);
+    }
+
+    function openModal(index) {
+        returnFocus = document.activeElement;
+        show(index);
         modal.classList.add('is-open');
         if (galleryScroll) galleryScroll.style.animationPlayState = 'paused';
         document.body.style.overflow = 'hidden';
+        modalClose.focus();
     }
 
     function closeModal() {
         modal.classList.remove('is-open');
         if (galleryScroll) galleryScroll.style.animationPlayState = '';
         document.body.style.overflow = '';
+        returnFocus?.focus?.();
     }
 
     function navigate(dir) {
-        currentIndex = (currentIndex + dir + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
-        modalImg.src = GALLERY_IMAGES[currentIndex].src;
-        modalImg.alt = GALLERY_IMAGES[currentIndex].title;
-        modalTitle.textContent = GALLERY_IMAGES[currentIndex].title;
+        show((currentIndex + dir + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
     }
 
     document.querySelectorAll('.gallery-card').forEach(card => {
-        card.addEventListener('click', () => openModal(parseInt(card.dataset.index, 10)));
+        const open = () => openModal(parseInt(card.dataset.index, 10));
+        card.addEventListener('click', open);
+        // The first four are buttons for the keyboard; the rest are the marquee's copies.
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+        });
     });
 
     modalClose.addEventListener('click', closeModal);
@@ -800,9 +830,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', e => {
         if (!modal.classList.contains('is-open')) return;
-        if (e.key === 'ArrowLeft')  navigate(-1);
-        if (e.key === 'ArrowRight') navigate(1);
+        // In Hebrew "next" lies to the left, the way the arrows on screen are already swapped.
+        const rtl = document.documentElement.dir === 'rtl';
+        if (e.key === 'ArrowLeft')  navigate(rtl ? 1 : -1);
+        if (e.key === 'ArrowRight') navigate(rtl ? -1 : 1);
         if (e.key === 'Escape')     closeModal();
+        // aria-modal promises the page behind is out of reach; Tab now keeps that promise.
+        if (e.key === 'Tab') {
+            const stops = [...modal.querySelectorAll('button')];
+            const first = stops[0], last = stops[stops.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            else if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        }
     });
 
 });
