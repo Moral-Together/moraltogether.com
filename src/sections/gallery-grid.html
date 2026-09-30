@@ -1,0 +1,10 @@
+    <!-- Gallery page: every photo at once, in a grid. The home page keeps the moving strip
+         (sections/gallery.html); both are built from partials/gallery-cards.html. -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <{{h|h2}}{{hide|}} class="section-title text-center reveal" style="margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</{{h|h2}}>
+            <div class="gallery-grid reveal">
+{{> partials/gallery-cards}}
+            </div>
+        </div>
+    </section>

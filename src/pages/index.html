@@ -1,0 +1,73 @@
+---
+title: home
+---
+<!-- @head -->
+    <title data-i18n="meta_title">MoralTogether — Uniting Good Forces | Ecosystem of Social Harmony</title>
+
+    <!-- SEO -->
+    <meta name="description" data-i18n-attr="content" data-i18n="meta_description"
+        content="MoralTogether — the organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Join us to do good together.">
+    <meta name="keywords"
+        content="MoralTogether, community, volunteering, social collaboration, social entrepreneurship, ecosystem, connections, nonprofit">
+    <meta name="author" content="MoralTogether Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moraltogether.com/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moraltogether.com/">
+    <meta property="og:title" content="MoralTogether — Uniting Good Forces">
+    <meta property="og:description"
+        content="The organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Where good forces unite.">
+    <meta property="og:image" content="https://moraltogether.com/images/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="he_IL">
+    <meta property="og:locale:alternate" content="el_GR">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://moraltogether.com/">
+    <meta name="twitter:title" content="MoralTogether — Uniting Good Forces">
+    <meta name="twitter:description" content="The organization connecting entrepreneurs and organizations for a reality of abundance and shared hope.">
+    <meta name="twitter:image" content="https://moraltogether.com/images/og-image.jpg">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "MoralTogether",
+      "url": "https://moraltogether.com",
+      "logo": "https://moraltogether.com/images/logo.png",
+      "description": "A social organization working to connect different sectors of society to create mutual abundance and shared hope.",
+      "sameAs": [
+        "https://www.facebook.com/moraltogether",
+        "https://www.linkedin.com/company/moraltogether"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+972-55-771-1433",
+        "contactType": "customer support",
+        "email": "support@moraltogether.com",
+        "availableLanguage": ["Hebrew", "English", "Greek"]
+      }
+    }
+    </script>
+<!-- @body_top -->
+{{> partials/decor}}
+<!-- @main -->
+    <main id="main">
+    {{> sections/hero}}
+    {{> sections/activities}}
+    {{> sections/about}}
+    {{> sections/vision}}
+    {{> sections/team}}
+    {{> sections/partners}}
+    {{> sections/gallery}}
+    {{> sections/contact}}
+    </main>
+<!-- @after -->
+{{> partials/gallery-modal}}

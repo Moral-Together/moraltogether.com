@@ -2,67 +2,6 @@
    PARTNERSHIPS PAGE
    ============================================================ */
 
-/* Hero */
-.partnerships-hero {
-    padding: 140px 0 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.partnerships-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(0, 43, 100, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-body.dark-mode .partnerships-hero::before {
-    background: radial-gradient(ellipse at 50% 0%, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
-}
-
-/* Title only visible in light mode */
-.partnerships-hero .shimmer-text {
-    font-size: 4rem;
-    margin-bottom: 20px;
-}
-
-/* Dark mode: shimmer-text becomes a decorative gradient bar */
-body.dark-mode .partnerships-hero .shimmer-text {
-    filter: none;
-    font-size: 0;
-    height: 12px;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto 24px;
-    max-width: 480px;
-}
-
-/* Separate visible title for dark mode */
-.partnerships-dark-title {
-    display: none;
-}
-
-body.dark-mode .partnerships-dark-title {
-    display: block;
-    font-family: 'Rubik', sans-serif;
-    font-size: 4rem;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -2px;
-    text-shadow: 0 0 40px rgba(0, 200, 255, 0.55),
-                 0 0 80px rgba(0, 200, 255, 0.25);
-    margin-bottom: 16px;
-}
-
-.partnerships-hero > .container > p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 /* Main content */
 .partnerships-main {
     padding: 10px 0 100px;
@@ -221,6 +160,31 @@ body.dark-mode .partnerships-dark-title {
     line-height: 1.3;
 }
 
+/* The title links to the Moral's page (morals/<slug>/), and its box stretches over the whole
+   card, so the card is the link; the social buttons stay above it and keep their own targets. */
+.partner-card-link {
+    color: inherit;
+    text-decoration: none;
+}
+.partner-card-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+}
+.partner-card:has(.partner-card-link:focus-visible) {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 4px;
+}
+.partner-card-link:focus-visible { outline: none; }
+.partner-card-socials { position: relative; z-index: 2; }
+/* .bento-content is positioned in style.css, which would keep the link's box inside the text
+   half; here the card is the box. The text stays above the hover spotlight — all but the
+   title, which would otherwise hold the link's box in turn. */
+.partner-card .bento-content { position: static; }
+.partner-card .bento-content > :not(.partner-card-title):not(.partner-card-socials) { position: relative; }
+
 .partner-card-hebrew {
     display: none;
 }
@@ -279,6 +243,56 @@ body.dark-mode .partnerships-dark-title {
     /* фирменный красный YouTube даёт белому ровно 4.00:1 */
     background: #ec0000;
     color: #fff;
+}
+
+/* The bottom row: the social buttons at the start, and at the end a chevron in the Moral's
+   colour saying the card itself leads on, to the Moral's page on this site. A chevron in the
+   reading direction rather than an arrow: ↗ reads as "leaves the site", and a chevron under
+   the logo or in the middle would pass for a carousel control. Decoration only — the card's
+   link (the title) already says where it goes, and clicks pass through to it. */
+.partner-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+}
+.partner-card-footer .partner-card-socials { margin-top: 0; }
+
+.partner-card-go {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    color: color-mix(in srgb, var(--card-accent, var(--primary-color)) 78%, var(--text-main));
+    background: color-mix(in srgb, var(--card-accent, var(--primary-color)) 12%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--card-accent, var(--primary-color)) 45%, transparent);
+    pointer-events: none;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+.partner-card-go svg {
+    width: 20px;
+    height: 20px;
+    transition: translate 0.25s ease;
+}
+/* in Hebrew the next step is to the left */
+[dir="rtl"] .partner-card-go svg { scale: -1 1; }
+
+.partner-card:hover .partner-card-go,
+.partner-card:has(.partner-card-link:focus-visible) .partner-card-go {
+    background: color-mix(in srgb, var(--card-accent, var(--primary-color)) 24%, transparent);
+    border-color: var(--card-accent, var(--primary-color));
+}
+.partner-card:hover .partner-card-go svg,
+.partner-card:has(.partner-card-link:focus-visible) .partner-card-go svg { translate: 3px 0; }
+[dir="rtl"] .partner-card:hover .partner-card-go svg,
+[dir="rtl"] .partner-card:has(.partner-card-link:focus-visible) .partner-card-go svg { translate: -3px 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    .partner-card-go,
+    .partner-card-go svg { transition: none; }
 }
 
 /* Hide empty socials wrapper */
@@ -342,14 +356,6 @@ body:not(.dark-mode) .partner-card-media::before {
 }
 
 @media (max-width: 768px) {
-    .partnerships-hero {
-        padding: 120px 0 60px;
-    }
-
-    .partnerships-hero .shimmer-text {
-        font-size: 2.6rem;
-    }
-
     .partners-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -365,10 +371,6 @@ body:not(.dark-mode) .partner-card-media::before {
 }
 
 @media (max-width: 480px) {
-    .partnerships-hero .shimmer-text {
-        font-size: 2rem;
-    }
-
     .partner-card-media {
         height: 160px;
     }
@@ -377,65 +379,6 @@ body:not(.dark-mode) .partner-card-media::before {
         padding: 7px 13px;
         font-size: 0.74rem;
     }
-}
-
-/* ============================================================
-   HERO RINGS
-   ============================================================ */
-.hero-ring {
-    position: absolute;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    border: 1.5px solid rgba(0, 100, 180, 0.35);
-    transform: translate(-50%, -50%) scale(0.3);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    animation: ringPulse 5s ease-out infinite;
-}
-
-.hero-ring--1 { animation-delay: 0s; }
-.hero-ring--2 { animation-delay: 1.25s; }
-.hero-ring--3 { animation-delay: 2.5s; }
-.hero-ring--4 { animation-delay: 3.75s; }
-
-body.dark-mode .hero-ring--1 { border-color: rgba(0, 200, 255, 0.55); }
-body.dark-mode .hero-ring--2 { border-color: rgba(233, 30, 99, 0.55); }
-body.dark-mode .hero-ring--3 { border-color: rgba(244, 163, 30, 0.55); }
-body.dark-mode .hero-ring--4 { border-color: rgba(156, 39, 176, 0.55); }
-
-@keyframes ringPulse {
-    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; }
-    100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; }
-}
-
-/* Container above rings */
-.partnerships-hero > .container {
-    position: relative;
-    z-index: 1;
-}
-
-/* ============================================================
-   TYPEWRITER CURSOR
-   ============================================================ */
-@keyframes typewriterBlink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-}
-
-.partnerships-hero p.typewriter-active::after {
-    content: '|';
-    animation: typewriterBlink 0.6s infinite;
-    color: var(--primary-color);
-    font-weight: 300;
-    margin-left: 1px;
-}
-
-body.dark-mode .partnerships-hero p.typewriter-active::after {
-    color: #00c8ff;
 }
 
 /* ============================================================

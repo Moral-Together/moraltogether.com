@@ -1,0 +1,229 @@
+[
+  {
+    "slug": "mothers-family",
+    "key": "p1",
+    "accent": "#e63946",
+    "logo": {
+      "video": "images/p1-logo.mp4",
+      "poster": "images/p1-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/@%D7%9E%D7%95%D7%A8%D7%9C%D7%94%D7%90%D7%99%D7%9E%D7%94%D7%95%D7%AA%D7%95%D7%94%D7%9E%D7%A9%D7%A4%D7%97%D7%94/videos"
+      }
+    ]
+  },
+  {
+    "slug": "neighborhoods",
+    "key": "p2",
+    "accent": "#f4a31e",
+    "logo": {
+      "video": "images/p2-logo.mp4",
+      "poster": "images/p2-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%A9%D7%9B%D7%95%D7%A0%D7%94/61579740565077/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/watch?v=7fiI7SkkZDg"
+      }
+    ]
+  },
+  {
+    "slug": "elderly",
+    "key": "p4",
+    "accent": "#f9b80c",
+    "logo": {
+      "image": "images/p4-logo.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%95%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D/61579768552236/"
+      }
+    ]
+  },
+  {
+    "slug": "young-ambassadors",
+    "key": "p3",
+    "accent": "#1e8ec8",
+    "logo": {
+      "video": "images/p3-logo.mp4",
+      "poster": "images/p3-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%A9%D7%92%D7%A8%D7%99%D7%A8%D7%99%D7%9D-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D/61579824440833/"
+      }
+    ]
+  },
+  {
+    "slug": "animals",
+    "key": "p5",
+    "accent": "#38b56a",
+    "logo": {
+      "video": "images/p5-logo.mp4",
+      "poster": "images/p5-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%91%D7%A2%D7%9C%D7%99-%D7%94%D7%97%D7%99%D7%99%D7%9D/61579588736152/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/watch?v=3DqdSxLhpTM"
+      }
+    ]
+  },
+  {
+    "slug": "stage-arts",
+    "key": "p6",
+    "accent": "#9c27b0",
+    "logo": {
+      "video": "images/p6-logo.mp4",
+      "poster": "images/p6-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%90%D7%95%D7%9E%D7%A0%D7%95%D7%AA-%D7%94%D7%91%D7%9E%D7%94/61579153906411/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/watch?v=1U0tkFLvgY0&list=PLpDbflfCGjfx1NiJ0VjX8I0gNC0aUfNeD&index=3"
+      }
+    ]
+  },
+  {
+    "slug": "constructive-criticism",
+    "key": "p7",
+    "accent": "#00897b",
+    "logo": {
+      "video": "images/p7-logo.mp4",
+      "poster": "images/p7-logo-poster.webp"
+    }
+  },
+  {
+    "slug": "care-encouragement",
+    "key": "p8",
+    "accent": "#4caf50",
+    "logo": {
+      "video": "images/p8-logo.mp4",
+      "poster": "images/p8-logo-poster.webp"
+    }
+  },
+  {
+    "slug": "law",
+    "key": "p9",
+    "accent": "#1565c0",
+    "logo": {
+      "video": "images/p9-logo.mp4",
+      "poster": "images/p9-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%9E%D7%A9%D7%A4%D7%98/61579106534831/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/watch?v=o9s-LO-BFsY&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV"
+      }
+    ]
+  },
+  {
+    "slug": "sports",
+    "key": "p10",
+    "accent": "#ff5722",
+    "logo": {
+      "video": "images/p10-logo2.mp4",
+      "poster": "images/p10-logo2-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%A1%D7%A4%D7%95%D7%A8%D7%98/61579156991775/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/watch?v=Spn1slAXC7s&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV"
+      }
+    ]
+  },
+  {
+    "slug": "moral-tv",
+    "key": "p12",
+    "accent": "#ff2d78",
+    "logo": {
+      "video": "images/p12-logo.mp4",
+      "poster": "images/p12-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/Moral-tv/61579412399105/"
+      },
+      {
+        "type": "youtube",
+        "url": "https://www.youtube.com/@MORALTV176/playlists"
+      }
+    ]
+  },
+  {
+    "slug": "m1-radio",
+    "key": "p13",
+    "accent": "#00bcd4",
+    "logo": {
+      "video": "images/p13-logo.mp4",
+      "poster": "images/p13-logo-poster.webp"
+    }
+  },
+  {
+    "slug": "moral-radio",
+    "key": "p14",
+    "accent": "#5c6bc0",
+    "logo": {
+      "video": "images/p14-logo.mp4",
+      "poster": "images/p14-logo-poster.webp"
+    }
+  },
+  {
+    "slug": "gods-will-ambassador",
+    "key": "p15",
+    "accent": "#ffc107",
+    "logo": {
+      "video": "images/p15-logo.mp4",
+      "poster": "images/p15-logo-poster.webp"
+    }
+  },
+  {
+    "slug": "colleges",
+    "key": "p16",
+    "accent": "#6a1b9a",
+    "logo": {
+      "video": "images/p16-logo.mp4",
+      "poster": "images/p16-logo-poster.webp"
+    },
+    "links": [
+      {
+        "type": "facebook",
+        "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%9E%D7%9B%D7%9C%D7%9C%D7%95%D7%AA/61579756923329/"
+      }
+    ]
+  },
+  {
+    "slug": "trust-mom",
+    "key": "p17",
+    "accent": "#e91e63",
+    "logo": {
+      "video": "images/p17-logo.mp4",
+      "poster": "images/p17-logo-poster.webp"
+    }
+  }
+]

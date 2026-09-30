@@ -1341,9 +1341,12 @@ body.dark-mode .bento-content .subtitle {
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* six half-columns, each person spans two: a row of two then sits centred under the one
+       above, which is what makes the pyramid */
+    grid-template-columns: repeat(6, 1fr);
     gap: 48px 32px;
-    max-width: 1100px;
+    /* three rows now, so narrower than the old two-row grid to keep the section's height sane */
+    max-width: 960px;
     /* no gap under the heading: the head tops sit ~8% into each card, which leaves about 70px
        to the heading, and still ~38px once a head grows on hover */
     margin: 0 auto;
@@ -1353,9 +1356,19 @@ body.dark-mode .bento-content .subtitle {
     direction: rtl;
 }
 
-html[dir="ltr"] .team-grid > .member {
+html[dir="ltr"] .team-grid > .member,
+html[dir="ltr"] .team-bio-panel {
     direction: ltr;
 }
+
+/* 1-2-3; column 1 is on the right, the grid being rtl */
+.team-grid > .member   { grid-column: span 2; }
+.team-grid > .member-1 { grid-column: 3 / 5; grid-row: 1; }
+.team-grid > .member-2 { grid-column: 2 / 4; grid-row: 2; }
+.team-grid > .member-6 { grid-column: 4 / 6; grid-row: 2; }
+.team-grid > .member-4 { grid-column: 1 / 3; grid-row: 3; }
+.team-grid > .member-3 { grid-column: 3 / 5; grid-row: 3; }
+.team-grid > .member-5 { grid-column: 5 / 7; grid-row: 3; }
 
 @property --member-sweep {
     syntax: '<angle>';
@@ -1450,7 +1463,7 @@ html[dir="ltr"] .team-grid > .member {
     transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1), filter 550ms ease;
 }
 
-/* name, role and bio over the lower part of the stage */
+/* name, role and bio over the lower part of the stage (the card and the stage are one height) */
 .member-plate {
     position: absolute;
     inset: auto 12px 12px 12px;
@@ -1501,7 +1514,6 @@ html[dir="ltr"] .team-grid > .member {
 
 /* ─── Hover / focus / tap ─── */
 
-.member:hover .member-photo,
 .member:focus-visible .member-photo,
 .member:focus .member-photo {
     /* grows from its bottom edge only, so the bottom stays put and the head rises */
@@ -1509,13 +1521,11 @@ html[dir="ltr"] .team-grid > .member {
     filter: drop-shadow(0 22px 30px rgba(0, 20, 60, 0.28));
 }
 
-.member:hover .member-backdrop,
 .member:focus-visible .member-backdrop,
 .member:focus .member-backdrop {
     box-shadow: 0 26px 50px -18px color-mix(in srgb, var(--m-deep) 60%, transparent);
 }
 
-.member:hover .member-ring,
 .member:focus-visible .member-ring,
 .member:focus .member-ring {
     --member-sweep: 360deg;
@@ -1523,17 +1533,44 @@ html[dir="ltr"] .team-grid > .member {
     transition: --member-sweep 500ms cubic-bezier(0.3, 0.7, 0.4, 1), opacity 0s;
 }
 
-.member:hover .member-bio-wrap,
 .member:focus-visible .member-bio-wrap,
 .member:focus .member-bio-wrap {
     grid-template-rows: 1fr;
 }
 
-.member:hover .member-bio,
 .member:focus-visible .member-bio,
 .member:focus .member-bio {
     margin-top: 8px;
     opacity: 1;
+}
+
+/* hover only where there is a real pointer: on a phone :hover sticks after a tap, and the
+   second tap that closes the bio (script.js) would leave it open */
+@media (hover: hover) {
+    .member:hover .member-photo {
+        /* grows from its bottom edge only, so the bottom stays put and the head rises */
+        transform: scale(1.07);
+        filter: drop-shadow(0 22px 30px rgba(0, 20, 60, 0.28));
+    }
+
+    .member:hover .member-backdrop {
+        box-shadow: 0 26px 50px -18px color-mix(in srgb, var(--m-deep) 60%, transparent);
+    }
+
+    .member:hover .member-ring {
+        --member-sweep: 360deg;
+        opacity: 1;
+        transition: --member-sweep 500ms cubic-bezier(0.3, 0.7, 0.4, 1), opacity 0s;
+    }
+
+    .member:hover .member-bio-wrap {
+        grid-template-rows: 1fr;
+    }
+
+    .member:hover .member-bio {
+        margin-top: 8px;
+        opacity: 1;
+    }
 }
 
 /* keyboard focus also gets the site's usual ring, outside the stage */
@@ -1577,40 +1614,106 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
 /* ─── Responsive ─── */
 
 @media (max-width: 992px) {
-    .team-grid { grid-template-columns: 1fr 1fr; gap: 40px 20px; }
+    .team-grid { gap: 40px 20px; }
     .member-name { font-size: 1.15rem; }
 }
 
-/* phones: still two people per row, with smaller type and a tighter plate. The founder stands
-   alone and centred on top, as in the brief, and the last one left over is centred too. */
+/* the phone-only bio strip; see the phones block below */
+.team-bio-panel { display: none; }
+
+/* Phones: the same pyramid, with three cards of ~115px in the bottom row. A plate over the photo
+   would cover the face at that size, so the name and role move under the photo, and the bio,
+   which has no room in the card, opens as a strip across the grid right under the tapped
+   person's row (script.js sets its row). People sit on the odd rows, the strip on an even one;
+   the empty even rows take no height, and the row gap is a margin so they add no gap either. */
 @media (max-width: 560px) {
-    .team-grid { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
-    .team-grid .member-1 {
-        order: -1;
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: calc(50% - 6px);
-    }
-    .team-grid .member:last-child {
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: calc(50% - 6px);
-    }
+    .team-grid { gap: 0 8px; }
+    .team-grid > .member { margin-top: 26px; }
+    .team-grid > .member-1 { grid-row: 1; margin-top: 0; }
+    .team-grid > .member-2,
+    .team-grid > .member-6 { grid-row: 3; }
+    .team-grid > .member-4,
+    .team-grid > .member-3,
+    .team-grid > .member-5 { grid-row: 5; }
+
     .member,
     .member-backdrop,
-    .member-ring { border-radius: 20px; }
-    .member-photo-clip { clip-path: inset(-20% 1px 1px 1px round 0 0 19px 19px); }
-    .member-plate {
-        inset: auto 6px 6px 6px;
-        padding: 9px 8px 8px;
-        border-radius: 14px;
+    .member-ring { border-radius: 16px; }
+    .member-ring { border-width: 2px; }
+    .member-ring-front { clip-path: inset(16px 0 0 0); }
+    .member-photo-clip { clip-path: inset(-20% 1px 1px 1px round 0 0 15px 15px); }
+
+    .member-plate,
+    body.dark-mode .member-plate {
+        position: static;
+        margin-top: 6px;
+        padding: 0 2px;
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
-    .member-name { font-size: 0.95rem; }
-    .member-role { margin-top: 2px; font-size: 0.74rem; }
-    .member-bio { font-size: 0.74rem; }
-    .member:hover .member-bio,
-    .member:focus-visible .member-bio,
-    .member:focus .member-bio { margin-top: 5px; }
+    .member-name { font-size: 0.8rem; line-height: 1.2; }
+    .member-role { margin-top: 2px; font-size: 0.66rem; line-height: 1.25; }
+    .member-bio-wrap { display: none; }
+
+    /* Opens by growing its grid row from 0 to the text's height, the same trick as the bio in
+       the card, so the rows below slide down instead of jumping; the text fades in once there is
+       room for it. The strip itself stays in the layout, collapsed, between openings. */
+    .team-bio-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        grid-column: 1 / -1;
+        margin-top: 0;
+        transition:
+            grid-template-rows 380ms cubic-bezier(0.4, 0, 0.2, 1),
+            margin-top 380ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .team-bio-panel.is-open {
+        grid-template-rows: 1fr;
+        margin-top: 12px;
+        transition:
+            grid-template-rows 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            margin-top 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .team-bio-clip {
+        overflow: hidden;
+        min-height: 0;
+    }
+    .team-bio-panel p {
+        margin: 0;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border-top: 3px solid var(--m-mid);
+        background: color-mix(in srgb, var(--m-soft) 70%, white);
+        text-align: center;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        text-wrap: pretty;
+        color: #3d4a5c;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: opacity 200ms ease, transform 380ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms ease, border-color 300ms ease;
+    }
+    .team-bio-panel.is-open p {
+        opacity: 1;
+        transform: none;
+        transition: opacity 400ms ease 160ms, transform 520ms cubic-bezier(0.22, 1, 0.36, 1) 80ms, background-color 300ms ease, border-color 300ms ease;
+    }
+    /* another person in the same row: the text fades out and back in, the strip stays open */
+    .team-bio-panel.is-open.is-swapping p {
+        opacity: 0;
+        transition: opacity 160ms ease, background-color 300ms ease, border-color 300ms ease;
+    }
+    body.dark-mode .team-bio-panel p { background: color-mix(in srgb, var(--m-deep) 30%, #0a0d22); }
+    body.dark-mode .team-bio-panel p { color: rgba(210, 220, 255, 0.82); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .team-bio-panel,
+    .team-bio-panel.is-open,
+    .team-bio-panel p,
+    .team-bio-panel.is-open p { transition: none; }
 }
 
 /* Partners Section */
@@ -1850,22 +1953,16 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
     z-index: 10;
 }
 
-/* Card Backgrounds */
-.card-1 {
-    background: url('images/connect.webp') center/cover no-repeat;
-}
-
-.card-2 {
-    background: url('images/nature.webp') center/cover no-repeat;
-}
-
-.card-3 {
-    background: url('images/urban.webp') center/cover no-repeat;
-}
-
-.card-4 {
-    background: url('images/art.webp') center/cover no-repeat;
-}
+/* Card Backgrounds. Most photos are landscape and the card is portrait, so each has its own
+   horizontal focus; the dialog shows the whole picture. */
+.card-1 { background: url('images/gallery-school.webp') 50% center/cover no-repeat; }
+.card-2 { background: url('images/gallery-radio.webp') 60% center/cover no-repeat; }
+.card-3 { background: url('images/gallery-seniors.webp') 40% center/cover no-repeat; }
+.card-4 { background: url('images/gallery-environment-stand.webp') 50% center/cover no-repeat; }
+.card-5 { background: url('images/gallery-radio-interview.webp') 50% center/cover no-repeat; }
+.card-6 { background: url('images/gallery-sports-stand.webp') 30% center/cover no-repeat; }
+.card-7 { background: url('images/gallery-school-clip.webp') 60% center/cover no-repeat; }
+.card-8 { background: url('images/gallery-mediators.webp') 50% center/cover no-repeat; }
 
 .gallery-card .overlay {
     position: absolute;
@@ -1927,11 +2024,12 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    max-width: 90vw;
+    /* leaves room for an arrow and its margin on each side */
+    max-width: calc(100vw - 200px);
     max-height: 90vh;
 }
 .gallery-modal-content img {
-    max-width: 90vw;
+    max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
     border-radius: 16px;
@@ -1950,7 +2048,8 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
 .gallery-modal-close {
     position: absolute;
     top: 24px;
-    right: 28px;
+    /* the far corner in the reading direction: top right in Latin, top left in Hebrew */
+    inset-inline-end: 28px;
     z-index: 2;
     width: 44px;
     height: 44px;
@@ -1971,11 +2070,17 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
     border-color: #fff;
     transform: scale(1.1);
 }
+/* Pinned to the screen's sides, not laid out in a row with the picture: in the row they were
+   pushed off the screen on phones, where the picture already takes nearly all the width.
+   Previous on the start side, next on the end side, so Hebrew gets next on the left. */
 .gallery-modal-arrow {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    margin-top: -27px;
     z-index: 2;
     width: 54px;
     height: 54px;
+    padding: 0;
     border-radius: 50%;
     border: 2px solid rgba(255,255,255,0.5);
     background: rgba(255,255,255,0.1);
@@ -1990,6 +2095,9 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
     flex-shrink: 0;
     line-height: 1;
 }
+.gallery-modal-prev { inset-inline-start: 28px; }
+.gallery-modal-next { inset-inline-end: 28px; }
+.gallery-modal-arrow svg { width: 26px; height: 26px; }
 .gallery-modal-arrow:hover {
     background: rgba(255,255,255,0.25);
     border-color: #fff;
@@ -2002,6 +2110,20 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
         width: 240px;
         height: 320px;
     }
+    /* the picture takes the width; the arrows sit over its edges, on a dark disc so they read
+       on a light photo */
+    .gallery-modal-content { max-width: calc(100vw - 24px); }
+    .gallery-modal-arrow {
+        width: 44px;
+        height: 44px;
+        margin-top: -22px;
+        background: rgba(0, 0, 0, 0.45);
+        border-color: rgba(255, 255, 255, 0.7);
+    }
+    .gallery-modal-prev { inset-inline-start: 18px; }
+    .gallery-modal-next { inset-inline-end: 18px; }
+    .gallery-modal-arrow svg { width: 22px; height: 22px; }
+    .gallery-modal-close { top: 16px; inset-inline-end: 16px; }
 }
 
 /* Contact Section - Premium Bento Upgrade */
@@ -2547,7 +2669,8 @@ body.dark-mode .ring-3 {
         z-index: 1001;
     }
 
-    h2 {
+    h2,
+    h1.section-title {
         font-size: 2rem !important;
     }
 
@@ -2626,6 +2749,10 @@ html.dark-mode-early #preloader {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
+    /* Clicks go through from the moment it starts to fade. visibility only turns hidden at the
+       end of the 0.6 s transition, and until then the see-through curtain took every click:
+       the menu seemed dead for most of a second after each page opened. */
+    pointer-events: none;
 }
 
 /* Force All Reveal Elements on Load */
@@ -2848,6 +2975,20 @@ body.dark-mode .site-footer {
 body.dark-mode .contact-bento-panel {
     background: rgba(10, 14, 40, 0.90);
     border: 1px solid rgba(0, 200, 255, 0.18);
+    box-shadow:
+        0 0 0 1px rgba(0,200,255,0.08),
+        0 -2px 20px rgba(0, 200, 255, 0.20),
+        0 20px 60px rgba(0, 0, 0, 0.60);
+}
+
+/* The contact panel stands still under the mouse: no lift, no tilt (script.js). */
+.contact-bento-panel:hover {
+    transform: none;
+    background: var(--bg-glass);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .contact-bento-panel:hover {
+    background: rgba(10, 14, 40, 0.90);
     box-shadow:
         0 0 0 1px rgba(0,200,255,0.08),
         0 -2px 20px rgba(0, 200, 255, 0.20),
@@ -3121,82 +3262,65 @@ body.dark-mode .hero-text-panel > p {
 /* Buttons */
 .hero-text-panel .btn-group { justify-content: flex-start; }
 
-/* Moral Together ID — the button the sub-projects sign in with (zuzim.cash/auth/login), in
-   this site's navy. A one-pixel rim in the logo's colours turns slowly, sparks rise through the
-   button and a light sweep passes every few seconds; the mark stands still. It keeps
-   the same dark body in both themes. */
-@property --id-angle {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-}
-
+/* Moral Together ID — the button the sub-projects sign in with, copied one to one from
+   zuzim.cash (its .id-button): the same purple body, the rainbow rim drifting slowly round,
+   "Moral Together ID" in a running rainbow, sparks rising and a light sweep on hover. Only the
+   layout differs (inline here, full width there). It keeps the same dark body in both themes. */
 .id-button {
-    --id-body: linear-gradient(135deg, #0f4d96, #0a3d7e 45%, #002b64 78%, #001c44);
-    --id-glow: rgba(0, 43, 100, 0.45);
-    --id-rim-mix: #0a3d7e;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     min-height: 44px;
-    padding: 0.95rem 1.75rem 0.95rem 1.25rem;
+    padding: 0.95rem 1.5rem;
     border-radius: 999px;
-    /* One pixel, and the logo's colours mixed a third of the way into the body: the rim reads
-       as a glint on the edge rather than an outline competing with the headline. */
     border: 1px solid transparent;
     background:
-        var(--id-body) padding-box,
-        conic-gradient(from var(--id-angle),
-            color-mix(in srgb, #e0197a 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #f06000 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #f9b80c 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #35a86b 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #0e9898 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #2c6fae 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #8b5cf6 68%, var(--id-rim-mix)),
-            color-mix(in srgb, #e0197a 68%, var(--id-rim-mix))) border-box;
-    animation: id-rim 9s linear infinite;
+        linear-gradient(135deg, #5c2170, #481a58 45%, #35143f 78%, #26102e) 0 0 / 200% 200% padding-box,
+        linear-gradient(135deg, #d946ef, #f97316, #facc15, #22c55e, #06b6d4, #8b5cf6, #d946ef) 0 0 / 300% 300% border-box;
+    animation: id-drift 10s ease infinite;
     position: relative;
     overflow: hidden;
     isolation: isolate;
     color: #f1f5f9;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.02em;
     text-decoration: none;
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.22),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.3),
-        0 2px 4px var(--id-glow),
-        0 10px 24px var(--id-glow);
-    transition: transform 0.25s, box-shadow 0.25s;
+        inset 0 -3px 8px rgba(0, 0, 0, 0.35),
+        0 2px 4px rgba(20, 8, 35, 0.35),
+        0 8px 20px rgba(20, 8, 35, 0.45);
+    transition: all 0.25s;
 }
-[dir="rtl"] .id-button { padding: 0.95rem 1.25rem 0.95rem 1.75rem; }
-@keyframes id-rim { to { --id-angle: 360deg; } }
+@keyframes id-drift {
+    0%, 100% { background-position: 0% 50%, 0% 50%; }
+    50%      { background-position: 100% 50%, 100% 50%; }
+}
 
 .id-button:hover {
     transform: translateY(-2px);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.25),
-        0 4px 8px var(--id-glow),
-        0 16px 34px var(--id-glow);
+        inset 0 -3px 8px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(20, 8, 35, 0.35),
+        0 14px 30px rgba(20, 8, 35, 0.5),
+        0 0 24px rgba(139, 92, 246, 0.25);
 }
 .id-button:active {
     transform: translateY(1px);
     box-shadow:
         inset 0 2px 6px rgba(0, 0, 0, 0.45),
-        0 1px 2px var(--id-glow),
-        0 3px 8px var(--id-glow);
+        0 1px 2px rgba(20, 8, 35, 0.35),
+        0 3px 8px rgba(20, 8, 35, 0.4);
 }
 .id-button:focus-visible {
     outline: 2px solid #8b5cf6;
-    outline-offset: 3px;
+    outline-offset: 2px;
 }
 
-/* A light sweep crosses the button every few seconds on its own, and at once on hover; in
-   Hebrew it travels right to left. */
+/* the light sweep, across the button on hover */
 .id-button::before {
     content: "";
     position: absolute;
@@ -3204,15 +3328,9 @@ body.dark-mode .hero-text-panel > p {
     z-index: -1;
     background: linear-gradient(105deg, transparent 35%, rgba(217, 70, 239, 0.25) 50%, rgba(6, 182, 212, 0.25) 65%, transparent 80%);
     transform: translateX(-120%);
-    animation: id-sweep 7s cubic-bezier(0.45, 0, 0.55, 1) 1.5s infinite;
+    transition: transform 1.2s;
 }
-.id-button:hover::before { animation: id-sweep-now 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards; }
-[dir="rtl"] .id-button::before { transform: translateX(120%) scaleX(-1); animation-name: id-sweep-rtl; }
-[dir="rtl"] .id-button:hover::before { animation-name: id-sweep-now-rtl; }
-@keyframes id-sweep         { 0%, 78% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
-@keyframes id-sweep-now     { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
-@keyframes id-sweep-rtl     { 0%, 78% { transform: translateX(120%) scaleX(-1); } 100% { transform: translateX(-120%) scaleX(-1); } }
-@keyframes id-sweep-now-rtl { from { transform: translateX(120%) scaleX(-1); } to { transform: translateX(-120%) scaleX(-1); } }
+.id-button:hover::before { transform: translateX(120%); }
 
 /* The glassy top half. */
 .id-button::after {
@@ -3225,17 +3343,27 @@ body.dark-mode .hero-text-panel > p {
     pointer-events: none;
 }
 
-/* The mark stays still: both a spin on hover and a slow constant turn read as restless next to
-   the rising sparks. */
 .id-button__mark {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
 }
 
-/* Sparks rise from the bottom edge through the whole height at an even pace and fade out at
-   the top, each on its own clock. An eased path made them slow down twice a cycle, which read
-   as stopping; linear motion with a separate fade keeps them drifting. */
+/* "Moral Together ID": a pastel rainbow running through the letters */
+.id-button__brand {
+    white-space: nowrap;
+    background: linear-gradient(90deg, #f9a8d4, #fdba74, #fde047, #86efac, #67e8f9, #f9a8d4) 0 0 / 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: id-shimmer 4s linear infinite;
+}
+@keyframes id-shimmer {
+    from { background-position: 0% center; }
+    to   { background-position: 200% center; }
+}
+
 .id-button__sparkles {
     position: absolute;
     inset: 0;
@@ -3246,27 +3374,23 @@ body.dark-mode .hero-text-panel > p {
 }
 .id-button__sparkles i {
     position: absolute;
-    bottom: -6px;
-    width: 4px;
-    height: 4px;
     border-radius: 50%;
-    animation: id-rise 5.4s linear infinite;
+    animation: id-sparkle linear infinite;
 }
-.id-button__sparkles i:nth-child(1)  { left: 8%;  background: #e0197a; box-shadow: 0 0 8px #e0197a; animation-duration: 4.7s; animation-delay: -0.6s; }
-.id-button__sparkles i:nth-child(2)  { left: 17%; background: #f9b80c; box-shadow: 0 0 8px #f9b80c; animation-duration: 5.8s; animation-delay: -3.3s; width: 3px; height: 3px; }
-.id-button__sparkles i:nth-child(3)  { left: 27%; background: #0e9898; box-shadow: 0 0 8px #0e9898; animation-duration: 4.2s; animation-delay: -1.7s; }
-.id-button__sparkles i:nth-child(4)  { left: 36%; background: #f06000; box-shadow: 0 0 8px #f06000; animation-duration: 6.4s; animation-delay: -4.5s; width: 5px; height: 5px; }
-.id-button__sparkles i:nth-child(5)  { left: 46%; background: #8b5cf6; box-shadow: 0 0 8px #8b5cf6; animation-duration: 4.9s; animation-delay: -1.4s; width: 3px; height: 3px; }
-.id-button__sparkles i:nth-child(6)  { left: 55%; background: #35a86b; box-shadow: 0 0 8px #35a86b; animation-duration: 5.6s; animation-delay: -3.9s; }
-.id-button__sparkles i:nth-child(7)  { left: 64%; background: #f9b80c; box-shadow: 0 0 8px #f9b80c; animation-duration: 4.3s; animation-delay: -2.7s; width: 3px; height: 3px; }
-.id-button__sparkles i:nth-child(8)  { left: 73%; background: #e0197a; box-shadow: 0 0 8px #e0197a; animation-duration: 6.1s; animation-delay: -0.3s; width: 5px; height: 5px; }
-.id-button__sparkles i:nth-child(9)  { left: 83%; background: #2c6fae; box-shadow: 0 0 8px #58a6ff; animation-duration: 4.8s; animation-delay: -4.3s; }
-.id-button__sparkles i:nth-child(10) { left: 92%; background: #0e9898; box-shadow: 0 0 8px #0e9898; animation-duration: 5.4s; animation-delay: -2.2s; width: 3px; height: 3px; }
-@keyframes id-rise {
-    0%   { transform: translate(0, 0); opacity: 0; }
-    20%  { opacity: 0.95; }
-    75%  { opacity: 0.8; }
-    100% { transform: translate(2px, -84px); opacity: 0; }
+.id-button__sparkles i:nth-child(1) { width: 4px; height: 4px; left: 12%; top: 70%; background: #d946ef; box-shadow: 0 0 10px #d946ef; animation-duration: 14s; }
+.id-button__sparkles i:nth-child(2) { width: 3px; height: 3px; left: 28%; top: 85%; background: #06b6d4; box-shadow: 0 0 8px #06b6d4; animation-duration: 18s; animation-delay: -3s; }
+.id-button__sparkles i:nth-child(3) { width: 5px; height: 5px; left: 62%; top: 78%; background: #f97316; box-shadow: 0 0 12px #f97316; animation-duration: 16s; animation-delay: -6s; }
+.id-button__sparkles i:nth-child(4) { width: 3px; height: 3px; left: 80%; top: 88%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation-duration: 20s; animation-delay: -2s; }
+.id-button__sparkles i:nth-child(5) { width: 4px; height: 4px; left: 45%; top: 92%; background: #facc15; box-shadow: 0 0 10px #facc15; animation-duration: 15s; animation-delay: -8s; }
+.id-button__sparkles i:nth-child(6) { width: 2px; height: 2px; left: 92%; top: 75%; background: #3b82f6; box-shadow: 0 0 6px #3b82f6; animation-duration: 22s; animation-delay: -11s; }
+@keyframes id-sparkle {
+    0%   { transform: translateY(0) scale(1); opacity: 0.6; }
+    50%  { transform: translateY(-13px) scale(1.3); opacity: 1; }
+    100% { transform: translateY(-26px) scale(0.8); opacity: 0; }
+}
+
+@media (max-width: 380px) {
+    .id-button { padding: 0.85rem 1rem; font-size: 0.8125rem; }
 }
 
 /* The second button: down to the projects, quiet beside the ID button. */
@@ -3319,9 +3443,9 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
    same treatment here, even before script.js has run. */
 @media (prefers-reduced-motion: reduce) {
     .id-button,
-    .id-button::before,
-    .id-button__sparkles i { animation: none; }
-    .id-button__sparkles { display: none; }
+    .id-button__brand,
+    .id-button__sparkles i { animation: none; transition: none; }
+    .id-button::before { display: none; }
     .hero-projects-btn { transition: none; }
     .id-button:hover { transform: none; }
 }
@@ -3527,26 +3651,14 @@ html.motion-paused *::after {
     transition-duration: 0.001ms !important;
 }
 
-.motion-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 auto;
-    padding: 0.5rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--primary-color, #002b64) 25%, transparent);
-    border-radius: 999px;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.motion-toggle:hover { border-color: var(--primary-color, #002b64); }
-
-.motion-toggle:focus-visible {
-    outline: 3px solid var(--secondary-color, #e55b27);
-    outline-offset: 2px;
+/* With the system's reduce-motion setting nothing lifts or tilts on hover either: cut to no
+   duration, those moves were jumps. The colour and shadow changes stay. */
+html.motion-paused .bento-card:hover,
+html.motion-paused .partner-card:hover,
+html.motion-paused .partners-logo-card:hover,
+html.motion-paused .gallery-card:hover,
+html.motion-paused .gallery-grid .gallery-card:hover {
+    transform: none;
 }
 
 /* Read by a screen reader, invisible on screen — for headings that the layout conveys by
@@ -3593,9 +3705,24 @@ html.motion-paused *::after {
     /* The track is pinned left to right (rtl.css); the name still reads in its own script. */
     unicode-bidi: plaintext;
 }
+/* each logo and its name lead to the Moral's own page (morals/<slug>/index.html) */
+.partners-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 16px;
+}
+.partners-link:hover .partners-name { color: var(--text-main); }
+.partners-link:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 4px; }
+/* a logo with keyboard focus must not slide away */
+.partners-track:focus-within { animation-play-state: paused; }
 
 /* --- Gallery: the title is part of the picture, not a hover reward. A keyboard now
-   reaches the first four cards, and focus shows where it is. --- */
+   reaches the first eight cards, and focus shows where it is. --- */
 .gallery-card .overlay,
 .gallery-card:hover .overlay {
     opacity: 1;
@@ -3909,3 +4036,214 @@ body.dark-mode .bento-grid .card-triplewin .bento-logo-img {
    pair to about 20px, a third of the 66px that separates it from the cards. */
 #activities .section-title { line-height: 1.2; }
 #activities .section-title + p { margin-top: 0; }
+
+/* --- A home-page section on a page of its own (about.html, team.html …, built from
+   src/sections): room under the fixed menu, and the footer kept off the middle of the
+   screen when the section is short. --- */
+.page-main {
+    min-height: 70vh;
+}
+/* The page hero carries the title; the section under it starts as close as the partner grid
+   does on partnerships.html. Its own paddings were made for the flow of the home page. */
+.page-main > .page-hero + section {
+    padding-top: 10px;
+    /* the page colour comes from body anyway; an opaque copy of it here hid the hero's rings */
+    background: transparent;
+}
+/* the section's own title moved into the hero; the space kept for it goes too */
+.page-hero + section .section-title[hidden] ~ .bento-grid,
+.page-hero + section .section-title[hidden] ~ .about-content-layout {
+    margin-top: 0;
+}
+
+/* --- The gallery page: all the photos in a grid (sections/gallery-grid.html). The same cards
+   as the home page strip, in landscape, since most of the photos are; the cover crop is
+   centred again, the per-photo focus being set for the strip's portrait cards. --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+.gallery-grid .gallery-card {
+    width: auto;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    background-position: center;
+}
+.gallery-grid .gallery-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+/* a deeper shade under the title: two photos are video frames with their own caption burnt
+   in at the bottom, and the title sat on it */
+.gallery-grid .gallery-card .overlay {
+    padding: 36px 22px 18px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+}
+.gallery-grid .gallery-card h3 { font-size: 1.1rem; margin: 0; }
+
+/* four across, then two: eight photos always fill their rows */
+@media (max-width: 1100px) {
+    .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+    .gallery-grid { gap: 12px; }
+    .gallery-grid .gallery-card { width: auto; height: auto; border-radius: 16px; }
+    .gallery-grid .gallery-card .overlay { padding: 24px 12px 10px; }
+    .gallery-grid .gallery-card h3 { font-size: 0.85rem; line-height: 1.25; }
+}
+
+
+/* ============================================================
+   PAGE HERO — the title of every inner page
+   ============================================================
+   partials/page-hero.html: the big shimmering title, a subtitle that types itself out and a
+   wave of rings as the page opens. Made for partnerships.html and now shared by every inner
+   page, so they all open the same way. */
+.page-hero {
+    padding: 140px 0 40px;
+    text-align: center;
+    position: relative;
+    /* Clipped at the sides only: cut at the bottom too, the rings stopped short at the hero's
+       edge as if they hit the block below. */
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 43, 100, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+body.dark-mode .page-hero::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
+}
+
+/* Title only visible in light mode */
+.page-hero .shimmer-text {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+/* Dark mode: shimmer-text becomes a decorative gradient bar */
+body.dark-mode .page-hero .shimmer-text {
+    filter: none;
+    font-size: 0;
+    height: 12px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 24px;
+    max-width: 480px;
+}
+
+/* Separate visible title for dark mode */
+.page-hero__dark-title {
+    display: none;
+}
+
+body.dark-mode .page-hero__dark-title {
+    display: block;
+    font-family: 'Rubik', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -2px;
+    text-shadow: 0 0 40px rgba(0, 200, 255, 0.55),
+                 0 0 80px rgba(0, 200, 255, 0.25);
+    margin-bottom: 16px;
+}
+
+.page-hero > .container > p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* the rings: one wave from the middle as the page opens */
+.hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    border: 1.5px solid rgba(0, 100, 180, 0.35);
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+    pointer-events: none;
+    /* The back layer of the page: under every card and every line of text, above only the page
+       colour itself. The section under the hero is made see-through for it (below), so the
+       wave runs on down behind the content instead of stopping at the hero's edge. */
+    z-index: -1;
+}
+
+/* One wave as the page opens, then still: pulsing without end was too much next to the
+   title. It starts when the preloader lifts (body.loaded, script.js), or it would pass unseen
+   behind the curtain; the last keyframe leaves every ring invisible. Three rings: four read as too much. */
+body.loaded .hero-ring {
+    animation: ringPulse 2.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+/* as specific as the rule above, whose shorthand would otherwise reset the delays to 0 */
+body.loaded .hero-ring--2 { animation-delay: 0.3s; }
+body.loaded .hero-ring--3 { animation-delay: 0.6s; }
+
+/* With the motion stopped (the site's switch or the system setting) there is no wave at all:
+   paused, the rings would hang in the middle of the page as circles. */
+html.motion-paused .hero-ring { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+    body.loaded .hero-ring { animation: none; }
+}
+
+body.dark-mode .hero-ring--1 { border-color: rgba(0, 200, 255, 0.55); }
+body.dark-mode .hero-ring--2 { border-color: rgba(233, 30, 99, 0.55); }
+body.dark-mode .hero-ring--3 { border-color: rgba(244, 163, 30, 0.55); }
+
+@keyframes ringPulse {
+    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; }
+    100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; }
+}
+
+/* Container above rings */
+.page-hero > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* the subtitle types itself out (script.js) */
+@keyframes typewriterBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+.page-hero p.typewriter-active::after {
+    content: '|';
+    animation: typewriterBlink 0.6s infinite;
+    color: var(--primary-color);
+    font-weight: 300;
+    margin-left: 1px;
+}
+
+body.dark-mode .page-hero p.typewriter-active::after {
+    color: #00c8ff;
+}
+
+@media (max-width: 768px) {
+    .page-hero {
+        padding: 120px 0 60px;
+    }
+
+    .page-hero .shimmer-text {
+        font-size: 2.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero .shimmer-text {
+        font-size: 2rem;
+    }
+}

@@ -41,12 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (t[key] !== undefined) el.innerHTML = t[key];
         });
 
-        // Update <title>
-        if (t.meta_title) document.title = t.meta_title;
+        // Update <title>. A page about one thing (a Moral's page) names its own keys on <html>;
+        // without them every page took the home page's title in the chosen language.
+        const own = document.documentElement.dataset;
+        if (own.i18nTitle && t[own.i18nTitle]) document.title = `${decodeEntities(t[own.i18nTitle])} — MoralTogether`;
+        else if (t.meta_title) document.title = t.meta_title;
 
         // Update meta description
         const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc && t.meta_description) metaDesc.setAttribute('content', t.meta_description);
+        const descKey = own.i18nDescription && t[own.i18nDescription] ? own.i18nDescription : 'meta_description';
+        if (metaDesc && t[descKey]) metaDesc.setAttribute('content', decodeEntities(t[descKey]));
 
         // Update active button
         document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -155,8 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Scroll Spy ---
     const sections = document.querySelectorAll('section, header');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // Only links to this page's own sections (#…). Since every menu item became a page of its
+    // own there are none, and the current page is marked by tools/build.mjs instead; this stays
+    // for a menu that points into the page again. Unfiltered it marked every link "active" (an
+    // empty id is in every address) or took the build's mark away.
+    const navLinks = [...document.querySelectorAll('.nav-link')].filter(l => l.getAttribute('href').startsWith('#'));
     const setActive = () => {
+        if (!navLinks.length) return;
         let current = '';
         sections.forEach(s => { if (pageYOffset >= s.offsetTop - 250) current = s.getAttribute('id'); });
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) current = 'contact';
@@ -179,41 +188,15 @@ document.addEventListener('DOMContentLoaded', () => {
         burger?.focus();
     });
 
-    // --- One switch for everything that moves on its own ---------------------------
-    // The background orbs and the gallery marquee run for as long as the page is open. The
-    // standard asks for a way to stop that, and hovering is not a way a keyboard can use.
-    (() => {
-        const toggle = document.getElementById('motionToggle');
-        const label = toggle?.querySelector('[data-i18n]');
-        const asked = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let paused = false;
-        try { paused = localStorage.getItem('motion') === 'paused'; } catch (e) { /* ignore */ }
-        if (asked) paused = true;   // the system setting decides unless the visitor says otherwise
-
-        const apply = () => {
-            document.documentElement.classList.toggle('motion-paused', paused);
-            if (!toggle) return;
-            toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
-            // The icon shows what a press will do: pause while things move, play once stopped.
-            const icon = toggle.querySelector('.motion-toggle-icon');
-            icon?.classList.toggle('fa-pause', !paused);
-            icon?.classList.toggle('fa-play', paused);
-            if (label) {
-                label.setAttribute('data-i18n', paused ? 'motion_start' : 'motion_stop');
-                const dict = typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[document.documentElement.lang === 'el' ? 'gr' : document.documentElement.lang];
-                label.textContent = (dict && dict[paused ? 'motion_start' : 'motion_stop'])
-                    || (paused ? 'Start the motion' : 'Stop the motion');
-            }
-        };
-
-        toggle?.addEventListener('click', () => {
-            paused = !paused;
-            try { localStorage.setItem('motion', paused ? 'paused' : 'running'); } catch (e) { /* ignore */ }
-            apply();
-        });
-        apply();
-        document.addEventListener('langChanged', apply);
-    })();
+    // --- Motion: the system's "reduce motion" setting stops everything that moves ---------
+    // The site had its own stop/start switch in the gallery. It was taken out: the
+    // accessibility widget's "Stop animations" does the same for the whole page (the standard's
+    // way to pause what moves by itself), and the switch, once pressed, stayed on in that
+    // browser for every page — cards jumped instead of lifting, with no switch on the inner
+    // pages to turn it back. The choice it stored is dropped, so nobody stays stuck with it.
+    try { localStorage.removeItem('motion'); } catch (e) { /* private mode */ }
+    document.documentElement.classList.toggle('motion-paused',
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
     // --- Partner logo videos: nothing is fetched until the card is nearly in view ---
     // The markup carries data-src and data-poster instead of src and poster, so a visit that
@@ -273,8 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // --- Bento Card + Partner Card 3D Tilt + Spotlight ---
+    // Not the contact panel: a block that wide tilting under the mouse reads as a sway, and it
+    // made the address and the number hard to aim at. The small cards keep it.
     document.querySelectorAll('.bento-card, .partner-card').forEach(card => {
+        if (card.matches('.contact-bento-panel')) return;
         card.addEventListener('mousemove', e => {
+            // The system asks for less motion: the card stays put. With every transition cut to
+            // nothing it would jump up and tilt at once instead.
+            if (document.documentElement.classList.contains('motion-paused')) return;
             const r = card.getBoundingClientRect();
             const x = e.clientX - r.left, y = e.clientY - r.top;
             card.style.setProperty('--mouse-x', `${x}px`);
@@ -762,10 +751,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gallery Modal
     const GALLERY_IMAGES = [
-        { src: 'images/connect.webp', title: 'Connections' },
-        { src: 'images/nature.webp',  title: 'Community' },
-        { src: 'images/urban.webp',   title: 'Entrepreneurship' },
-        { src: 'images/art.webp',     title: 'Hope' },
+        { src: 'images/gallery-school.webp', title: 'School' },
+        { src: 'images/gallery-radio.webp', title: 'Radio Club' },
+        { src: 'images/gallery-seniors.webp', title: 'Senior Citizens' },
+        { src: 'images/gallery-environment-stand.webp', title: 'Environment Stand' },
+        { src: 'images/gallery-radio-interview.webp', title: 'Radio Club Interview' },
+        { src: 'images/gallery-sports-stand.webp', title: 'Sports Stand' },
+        { src: 'images/gallery-school-clip.webp', title: 'The School Clip' },
+        { src: 'images/gallery-mediators.webp', title: 'Mediators Patrol' },
     ];
 
     const modal       = document.getElementById('galleryModal');
@@ -817,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.gallery-card').forEach(card => {
         const open = () => openModal(parseInt(card.dataset.index, 10));
         card.addEventListener('click', open);
-        // The first four are buttons for the keyboard; the rest are the marquee's copies.
+        // The first eight are buttons for the keyboard; the rest are the marquee's copies.
         card.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
         });
@@ -864,5 +857,89 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('loaded');
         }
         setTimeout(() => { window.location.href = href; }, 100);
+    });
+})();
+
+// ── Page hero: the subtitle types itself out, again after each change of language ──
+// It was an inline script of partnerships.html; every inner page opens with the same hero now.
+(function initHeroTypewriter() {
+    let timer = null;
+    function run() {
+        const el = document.querySelector('.page-hero .page-hero__sub');
+        if (!el) return;
+        clearTimeout(timer);
+        const text = el.textContent;
+        el.textContent = '';
+        el.classList.add('typewriter-active');
+        let i = 0;
+        (function type() {
+            if (i < text.length) {
+                el.textContent += text[i++];
+                timer = setTimeout(type, 60);
+            } else {
+                el.classList.remove('typewriter-active');
+            }
+        })();
+    }
+    document.addEventListener('langChanged', run);
+})();
+
+// ── Team: a second tap on an open person closes the bio; on phones the bio shows in a strip ──
+// The bio opens on :focus, and tapping the card again kept it focused, so nothing closed it.
+// Whether it was open is read on pointerdown, before the tap moves focus.
+// Phones have no room for the bio in the card, so the open person's bio is copied into
+// .team-bio-panel, placed on the grid row right under theirs (people sit on rows 1, 3, 5; the
+// CSS hides the strip on wider screens, where the bio opens in the card).
+(function initTeamToggle() {
+    const grid = document.querySelector('.team-grid');
+    if (!grid) return;
+    const panel = grid.querySelector('.team-bio-panel');
+
+    // The strip opens and closes by transition (style.css), so it is never hidden outright.
+    // Moving to a person in another row, it first closes where it is, then opens under them;
+    // within the same row only the text is swapped, faded out and back in.
+    const CLOSE_MS = 380, SWAP_MS = 160;
+    const still = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = 0;
+
+    function fill(member) {
+        // the person's colours; their member-N class would also bring their grid placement
+        const style = getComputedStyle(member);
+        ['--m-deep', '--m-mid', '--m-soft'].forEach(v => panel.style.setProperty(v, style.getPropertyValue(v)));
+        panel.querySelector('p').textContent = member.querySelector('.member-bio').textContent;
+        panel.style.gridRow = String(parseInt(style.gridRowStart, 10) + 1);
+    }
+
+    function showBio(member) {
+        if (!panel) return;
+        clearTimeout(timer);
+        panel.classList.remove('is-swapping');
+        const row = String(parseInt(getComputedStyle(member).gridRowStart, 10) + 1);
+        if (!panel.classList.contains('is-open')) {
+            fill(member);
+            panel.classList.add('is-open');
+        } else if (panel.style.gridRow !== row) {
+            panel.classList.remove('is-open');
+            timer = setTimeout(() => { fill(member); panel.classList.add('is-open'); }, still() ? 0 : CLOSE_MS);
+        } else {
+            panel.classList.add('is-swapping');
+            timer = setTimeout(() => { fill(member); panel.classList.remove('is-swapping'); }, still() ? 0 : SWAP_MS);
+        }
+    }
+
+    function hideBio() {
+        if (!panel) return;
+        clearTimeout(timer);
+        panel.classList.remove('is-open', 'is-swapping');
+    }
+
+    grid.querySelectorAll('.member').forEach(member => {
+        let wasOpen = false;
+        member.addEventListener('pointerdown', () => { wasOpen = document.activeElement === member; });
+        member.addEventListener('click', () => { if (wasOpen) member.blur(); wasOpen = false; });
+        member.addEventListener('focus', () => showBio(member));
+        member.addEventListener('blur', e => {
+            if (!(e.relatedTarget && e.relatedTarget.closest('.team-grid .member'))) hideBio();
+        });
     });
 })();

@@ -1,0 +1,56 @@
+name: Build pages
+
+# The pages at the site root and in morals/ are built from src/ by tools/build.mjs, and GitHub
+# Pages serves them as they are committed. This run keeps the two in step: an edit to src/,
+# morals/morals.json or translations.js pushed without a local build is built here and the
+# result committed, so the site never shows a page older than its source. When the pushed
+# pages are already current it ends without a commit.
+#
+# A commit made with the workflow's own token does not start workflows again, so this cannot
+# loop; GitHub Pages still deploys it (the Shabbat workflow relies on the same).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'morals/morals.json'
+      - 'translations.js'
+      - 'tools/build.mjs'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build
+        run: node tools/build.mjs
+
+      - name: Commit only when a page changed
+        run: |
+          if [ -z "$(git status --porcelain -- '*.html')" ]; then
+            echo "pages already current — nothing to commit"
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html'
+          git commit -m 'chore: build pages from src/'
+          # the Shabbat workflow may have pushed in the meantime
+          git pull --rebase
+          git push
+          echo "pushed — GitHub Pages will redeploy"

@@ -9,7 +9,10 @@
     'use strict';
 
     var CACHE_KEY = 'shabbat.v1';
-    var DATA_URL = 'api/shabbat.json';
+    // Resolved against this script's own address, not the page's: the Moral pages sit two
+    // folders down (morals/<slug>/), where a page-relative 'api/…' does not exist.
+    var BASE = (document.currentScript && document.currentScript.src) || location.href;
+    var DATA_URL = new URL('api/shabbat.json', BASE).href;
     var HEBCAL_URL = 'https://www.hebcal.com/hebcal?v=1&cfg=json&month=x&geo=geoname'
         + '&geonameid=281184&c=on&b=40&M=on&i=on&year=';
     var TZ = 'Asia/Jerusalem';
@@ -442,7 +445,7 @@
         el.tabIndex = -1;   // aria-label is set by applyCopy, in the chosen language
         el.innerHTML =
             '<div class="shabbat-gate__card">'
-            + '<img class="shabbat-gate__logo" src="MoralTogetherLogoBlack.webp" alt="MoralTogether">'
+            + '<img class="shabbat-gate__logo" src="' + new URL('MoralTogetherLogoBlack.webp', BASE).href + '" alt="MoralTogether">'
             + '<h1 class="shabbat-gate__title"></h1>'
             + '<p class="shabbat-gate__body"></p>'
             + '<dl class="shabbat-gate__times">'

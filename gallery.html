@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- Built by tools/build.mjs from src/ — edit the source there, not this file. -->
+<html lang="en" dir="ltr" data-i18n-title="nav_gallery" data-i18n-description="meta_description">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- Direction before the first paint. script.js settles the language a moment later, but
+         a Hebrew reader would otherwise watch the whole page swing from left to right. Same
+         order of preference the engine uses: a remembered choice, then the browser's. -->
+    <script>(function(){try{var m={he:'he',iw:'he',en:'en',el:'gr',gr:'gr'},s=null;try{s=localStorage.getItem('lang')}catch(e){}
+    if(!m[s]){s=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length;i++){var t=(a[i]||'').toLowerCase().split('-')[0];if(m[t]){s=m[t];break}}}
+    if(s){document.documentElement.lang=(s==='gr'?'el':s);document.documentElement.dir=(s==='he'?'rtl':'ltr')}}catch(e){}})()</script>
+    <!-- Shabbat gate: decide before the first paint, from the cached windows -->
+    <script>(function(){try{window.__shabbatLang=localStorage.getItem('lang')||null;var s=location.search;if(/[?&]mtp=open/.test(s))return;if(/[?&]mtp=closed/.test(s)){document.documentElement.classList.add('shabbat-closed');return}var c=JSON.parse(localStorage.getItem('shabbat.v1')||'null'),n=Date.now(),i;if(!c||!c.w)return;for(i=0;i<c.w.length;i++){if(n>=c.w[i][0]&&n<c.w[i][1]){document.documentElement.classList.add('shabbat-closed');break}}}catch(e){}})()</script>
+    <link rel="stylesheet" href="shabbat-gate.css">
+    <script defer src="shabbat-gate.js"></script>
+    <title>Gallery — MoralTogether</title>
+
+    <!-- SEO -->
+    <meta name="description" content="MoralTogether — the organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Join us to do good together.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://moraltogether.com/gallery.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Open Graph: what a shared link shows -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moraltogether.com/gallery.html">
+    <meta property="og:title" content="Gallery — MoralTogether">
+    <meta property="og:description" content="MoralTogether — the organization connecting groups, nonprofits, and social initiatives to create an ecosystem of abundance and shared hope. Join us to do good together.">
+    <meta property="og:image" content="https://moraltogether.com/images/og-image.jpg">
+    <!-- The skip link, hidden from the first millisecond. style.css hides it properly, but a
+         stylesheet arrives late enough that a keyboard visitor who presses Tab straight away
+         catches it undressed: a plain blue link at the top left of a blank page. Whoever does
+         that is exactly the person the link is for. -->
+    <style>.skip-link{position:absolute;left:50%;top:0;transform:translate(-50%,-120%);z-index:2147483001}
+           .skip-link:focus{transform:translate(-50%,0)}</style>
+    <!-- Fonts, served from here: no third-party DNS and no third-party connection before text -->
+    <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rtl.css">
+    <link rel="stylesheet" href="icons.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
+            <div class="loader-anim"></div>
+        </div>
+    </div>
+    <div class="custom-cursor"></div>
+    <!-- Navigation -->
+    <!-- No dir here: the header follows the document. Pinned to ltr, the Hebrew menu read
+         backwards — a reader scanning from the right met Contact first and Home last. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
+                <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
+            </a>
+            <!-- Every item is a page of its own (built from src/sections). The builder marks the
+                 current page's link active. Same order as the sections on the home page. -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="gallery.html" class="nav-link active" aria-current="page" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
+                <li class="nav-contact">
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="he">עב</button>
+                    <button class="lang-btn" data-lang="gr">ΕΛ</button>
+                </div>
+                <button id="darkModeToggle" class="theme-toggle" data-i18n="theme_toggle_label" data-i18n-attr="aria-label" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="hamburger" aria-controls="navMenu" aria-expanded="false" data-i18n="menu_label" data-i18n-attr="aria-label" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="page-main">
+        <!-- The title of an inner page (page front matter: hero_title, hero_subtitle). The second copy
+         of the title is the one dark mode shows; the h1 turns into a gradient bar there. -->
+    <header class="page-hero">
+        <div class="hero-ring hero-ring--1" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--2" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--3" aria-hidden="true"></div>
+        <div class="container">
+            <div class="page-hero__dark-title reveal" data-i18n="gallery_heading" aria-hidden="true">Photo Gallery</div>
+            <h1 class="shimmer-text reveal" data-i18n="gallery_heading">Photo Gallery</h1>
+        </div>
+    </header>
+        <!-- Gallery page: every photo at once, in a grid. The home page keeps the moving strip
+         (sections/gallery.html); both are built from partials/gallery-cards.html. -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <h2 hidden class="section-title text-center reveal" style="margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</h2>
+            <div class="gallery-grid reveal">
+                        <!-- The gallery's photos, one card each, for the strip on the home page (twice, the second
+                             time as a hidden copy) and the grid on the gallery page. The picture of card-N is set in
+                             style.css, the full-size one in GALLERY_IMAGES (script.js); a click opens data-index. -->
+                        <div class="gallery-card card-1" data-index="0" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_1">School</h3></div></div>
+                        <div class="gallery-card card-2" data-index="1" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_2">Radio Club</h3></div></div>
+                        <div class="gallery-card card-3" data-index="2" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_3">Senior Citizens</h3></div></div>
+                        <div class="gallery-card card-4" data-index="3" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_4">Environment Stand</h3></div></div>
+                        <div class="gallery-card card-5" data-index="4" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_5">Radio Club Interview</h3></div></div>
+                        <div class="gallery-card card-6" data-index="5" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_6">Sports Stand</h3></div></div>
+                        <div class="gallery-card card-7" data-index="6" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_7">The School Clip</h3></div></div>
+                        <div class="gallery-card card-8" data-index="7" role="button" tabindex="0"><div class="overlay"><h3 data-i18n="gallery_8">Mediators Patrol</h3></div></div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="footer-logo">
+                    <p data-i18n="footer_tagline">A powerful ecosystem truly capable of impact. We connect people, initiatives, and organizations to create a reality of abundance and hope.</p>
+                </div>
+                <div class="footer-links">
+                    <h3 data-i18n="footer_nav_heading">Quick Navigation</h3>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
+                        <li><a href="about.html" data-i18n="nav_about">About</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
+                        <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
+                        <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
+                        <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links footer-contact">
+                    <h3 data-i18n="nav_contact">Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@moraltogether.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>support@moraltogether.com</span></a></li>
+                        <li><a href="https://wa.me/972557711433" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i><span dir="ltr">055-771-1433</span></a></li>
+                    </ul>
+                </div>
+                <!-- Hidden until the real profile addresses exist: all four links pointed at "#". -->
+                <div class="footer-social" hidden>
+                    <h3 data-i18n="footer_social_heading">Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon social-icon--facebook" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--instagram" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon social-icon--youtube" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <a href="accessibility.html" data-i18n="footer_accessibility">Accessibility Statement</a>
+                <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom" style="margin-bottom: 20px;" data-i18n="footer_copyright">
+                &copy; 2026 MoralTogether. All rights reserved.
+            </div>
+        </div>
+        <div class="developer-credit"
+            style="background-color: #000000; color: #ffffff; text-align: center; padding: 15px 10px; font-size: 0.875rem; font-weight: 500; direction: ltr; width: 100%;">
+            Developed with ❤️ by <a href="https://moral-together.github.io/merkaz-media-landing/" target="_blank"
+                rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline; font-weight: 600;">Merkaz
+                Hamedia</a>
+        </div>
+    </footer>
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle" data-i18n-attr="aria-label" data-i18n="gallery_modal_label" aria-label="Gallery image">
+        <div class="gallery-modal-backdrop"></div>
+        <button class="gallery-modal-close" data-i18n="gallery_close" data-i18n-attr="aria-label" aria-label="Close"><span>✕</span></button>
+        <button class="gallery-modal-arrow gallery-modal-prev" data-i18n="gallery_prev" data-i18n-attr="aria-label" aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="gallery-modal-content">
+            <img id="galleryModalImg" src="" alt="">
+            <p id="galleryModalTitle" class="gallery-modal-title"></p>
+        </div>
+        <button class="gallery-modal-arrow gallery-modal-next" data-i18n="gallery_next" data-i18n-attr="aria-label" aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+    <script src="a11y-widget.js" defer></script>
+
+</body>
+</html>

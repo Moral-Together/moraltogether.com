@@ -1,0 +1,44 @@
+    <!-- Navigation -->
+    <!-- No dir here: the header follows the document. Pinned to ltr, the Hebrew menu read
+         backwards — a reader scanning from the right met Contact first and Home last. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="logo-img light-logo">
+                <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="logo-img dark-logo">
+            </a>
+            <!-- Every item is a page of its own (built from src/sections). The builder marks the
+                 current page's link active. Same order as the sections on the home page. -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
+                <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
+                <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
+                <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
+                <li class="nav-contact">
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="he">עב</button>
+                    <button class="lang-btn" data-lang="gr">ΕΛ</button>
+                </div>
+                <button id="darkModeToggle" class="theme-toggle" data-i18n="theme_toggle_label" data-i18n-attr="aria-label" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="hamburger" aria-controls="navMenu" aria-expanded="false" data-i18n="menu_label" data-i18n-attr="aria-label" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>

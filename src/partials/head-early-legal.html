@@ -1,0 +1,9 @@
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark-mode-early');</script>
+    <!-- The document holds all three languages and shows one. Choosing it before the first
+         paint keeps a Hebrew reader from seeing a screen of English first. script.js repeats
+         the same choice a moment later and drives everything else. -->
+    <script>(function(){try{var m={he:'he',iw:'he',en:'en',el:'gr',gr:'gr'},s=null;try{s=localStorage.getItem('lang')}catch(e){}
+    if(!m[s]){s=null;var a=navigator.languages||[navigator.language||''];for(var i=0;i<a.length;i++){var t=(a[i]||'').toLowerCase().split('-')[0];if(m[t]){s=m[t];break}}}
+    if(s)document.documentElement.lang=(s==='gr'?'el':s)}catch(e){}})()</script>
+    <!-- No Shabbat gate on this page. An accessibility statement and a privacy policy are
+         documents the law requires to be reachable, so they stay open all week. -->

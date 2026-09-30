@@ -1,0 +1,12 @@
+    <!-- The title of an inner page (page front matter: hero_title, hero_subtitle). The second copy
+         of the title is the one dark mode shows; the h1 turns into a gradient bar there. -->
+    <header class="page-hero">
+        <div class="hero-ring hero-ring--1" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--2" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring--3" aria-hidden="true"></div>
+        <div class="container">
+            <div class="page-hero__dark-title reveal" data-i18n="{{hero_title_key}}" aria-hidden="true">{{hero_title}}</div>
+            <h1 class="shimmer-text reveal" data-i18n="{{hero_title_key}}">{{hero_title}}</h1>
+{{hero_subtitle}}
+        </div>
+    </header>

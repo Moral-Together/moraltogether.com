@@ -94,16 +94,34 @@ This project uses a robust, lightweight stack with **Zero Dependencies** (No Fra
 ## 📂 Project Structure
 ```bash
 MoralTogether/
-├── index.html       # Main structure (Semantic HTML)
-├── partnerships.html# Partner organizations and initiatives
+├── src/             # THE SOURCE OF EVERY PAGE — edit here, never the built .html
+│   ├── layout.html  #   the page every page is: <head>, menu, footer, scripts
+│   ├── partials/    #   menu, footer and other shared pieces
+│   ├── sections/    #   the home page sections, one file each (also used by their own pages)
+│   ├── pages/       #   one file per page: index, activities, about, vision, team, gallery,
+│   │                #   contact, partnerships, privacy, accessibility
+│   └── templates/   #   moral.html — the page of one Moral
+├── *.html           # BUILT pages (from src/) — committed, served by GitHub Pages
+├── morals/          # morals.json (one entry per Moral), moral.css, and the built
+│                    #   morals/<slug>/index.html pages
 ├── style.css        # The Design System (Variables, Animations, Layouts)
-├── script.js        # Logic (Preloader, Scroll Spy, Infinite Marquee)
+├── script.js        # Logic (Preloader, Infinite Marquee, i18n)
 ├── translations.js  # Copy for all three languages (EN / HE / GR)
-├── tools/           # Build-time helpers (Shabbat windows builder)
+├── tools/           # build.mjs (the pages), build-shabbat.mjs (Shabbat windows)
 ├── docs/            # Technical specifications
 ├── README.md        # This Documentation
 └── images/          # Assets and Gallery Images
 ```
+
+### Building the pages
+Every page is assembled from `src/` by `node tools/build.mjs` — the way PHP includes would,
+but ahead of time, so GitHub Pages keeps serving plain files. The menu and the footer live once,
+in `src/partials/`; a home-page section lives once, in `src/sections/`, and appears both on the
+home page and on its own page. After an edit in `src/`, `morals/morals.json` or
+`translations.js`, run the builder and commit the source together with the pages it wrote.
+Forgot? The workflow `.github/workflows/build.yml` builds on every push to `main` and commits
+whatever changed. `node tools/build.mjs --check` fails if a built page is out of date.
+The syntax (includes, values, page blocks) is described at the top of `tools/build.mjs`.
 
 ---
 

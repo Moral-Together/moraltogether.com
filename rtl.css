@@ -18,8 +18,12 @@
     /* В латинской версии строки сами обрываются примерно на середине экрана, хотя панель
        шире. На иврите текст прижат к правому краю панели, поэтому этот край и задаёт, где
        кончится строка: 47% колонки выводят его почти на половину экрана — туда же, где
-       визуально заканчивается английский заголовок. */
-    max-width: 47%;
+       визуально заканчивается английский заголовок.
+       Но не уже 36rem: столько занимают в ряд кнопка Moral Together ID и «הפרויקטים שלנו» —
+       ивритская подпись длиннее английской, и на 47% вторая кнопка уходила на новую строку
+       везде уже ~1300px. На средних экранах строка заголовка кончается чуть правее середины,
+       всё равно ближе к центру, чем английская. */
+    max-width: max(47%, 36rem);
     text-align: right;
     align-items: flex-start;
 }
@@ -30,6 +34,17 @@
 @media (max-width: 768px) {
     [dir="rtl"] .hero-text-panel {
         max-width: 100%;
+    }
+}
+
+/* --- Кнопка Moral Together ID на телефоне: подпись в одну строку ---
+   «התחברות באמצעות Moral Together ID» длиннее английской и на 390px не помещалась на 6px,
+   перенося «Moral Together ID» на вторую строку. Боковые поля чуть меньше, чем на
+   zuzim.cash, — остальное в кнопке как там. */
+@media (max-width: 480px) {
+    [dir="rtl"] .id-button {
+        padding-inline: 1rem;
+        gap: 0.4rem;
     }
 }
 
@@ -112,9 +127,12 @@
     scale: -1 1;
 }
 
-/* --- Gallery modal arrows: swap for RTL --- */
-[dir="rtl"] .gallery-modal-prev { order: 1; }
-[dir="rtl"] .gallery-modal-next { order: -1; }
+/* --- Gallery modal arrows ---
+   They sit on the logical sides (style.css), so in Hebrew "next" is already on the left, where
+   the ← key goes too. Only the chevrons turn round, to point outwards. The old `order` swap
+   came on top of the row's own RTL reversal and put the arrows back the Latin way round, while
+   the ‹ › characters were mirrored by the browser: two arrows pointing the same way. */
+[dir="rtl"] .gallery-modal-arrow svg { scale: -1 1; }
 
 /* --- Partners fade masks: flip --- */
 [dir="rtl"] .partners-marquee-wrap::before {

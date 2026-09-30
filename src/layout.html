@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- Built by tools/build.mjs from src/ — edit the source there, not this file. -->
+<html lang="en" dir="ltr"{{html_attrs}}>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{head_early}}
+{{head}}
+    <!-- The skip link, hidden from the first millisecond. style.css hides it properly, but a
+         stylesheet arrives late enough that a keyboard visitor who presses Tab straight away
+         catches it undressed: a plain blue link at the top left of a blank page. Whoever does
+         that is exactly the person the link is for. -->
+    <style>.skip-link{position:absolute;left:50%;top:0;transform:translate(-50%,-120%);z-index:2147483001}
+           .skip-link:focus{transform:translate(-50%,0)}</style>
+    <!-- Fonts, served from here: no third-party DNS and no third-party connection before text -->
+    <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/rubik-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+{{styles}}
+    <link rel="stylesheet" href="rtl.css">
+{{styles_after}}
+    <link rel="stylesheet" href="icons.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="MoralTogetherLogoWhite.webp" alt="MoralTogether Logo" class="loader-logo-img light-logo">
+            <img src="MoralTogetherLogoBlack.webp" alt="MoralTogether Logo" class="loader-logo-img dark-logo">
+            <div class="loader-anim"></div>
+        </div>
+    </div>
+    <div class="custom-cursor"></div>
+{{body_top}}
+{{> partials/nav}}
+
+{{main}}
+
+{{> partials/footer}}
+{{after}}
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+{{scripts}}
+    <script src="a11y-widget.js" defer></script>
+
+</body>
+</html>

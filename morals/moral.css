@@ -1,0 +1,190 @@
+/* ============================================================
+   MORAL PAGE — the one stylesheet of every morals/<slug>/ page
+   ============================================================
+   Each page sets --card-accent to its Moral's colour on <main>; everything else here is
+   shared. The look follows the partner cards on partnerships.html: the logo on a dark stage
+   with the accent glowing from below, the text on the site's glass card. */
+
+.moral-page {
+    position: relative;
+    padding: 130px 0 100px;
+}
+
+/* the accent, faint, behind the top of the page */
+.moral-page::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 520px;
+    background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--card-accent) 16%, transparent) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.moral-page > .container { position: relative; }
+
+/* ← Partnerships */
+.moral-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.moral-back:hover { color: var(--primary-color); }
+.moral-back:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 4px; border-radius: 6px; }
+.moral-back__icon { width: 20px; height: 20px; flex-shrink: 0; }
+/* the arrow points back, which in Hebrew is to the right */
+[dir="rtl"] .moral-back__icon { scale: -1 1; }
+
+/* ── the card: logo stage and text side by side, stacked on phones ── */
+.moral-card {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid color-mix(in srgb, var(--card-accent) 45%, transparent);
+    box-shadow:
+        0 0 30px color-mix(in srgb, var(--card-accent) 30%, transparent),
+        0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.moral-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    padding: 40px;
+    background: #111827;
+    overflow: hidden;
+}
+body.dark-mode .moral-media { background: #0a0a0a; }
+
+/* the accent glowing up from the bottom of the stage, and its neon edge */
+.moral-media::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 60%;
+    background: linear-gradient(to top, color-mix(in srgb, var(--card-accent) 30%, transparent), transparent);
+    pointer-events: none;
+}
+.moral-media::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 3px;
+    background: var(--card-accent);
+    box-shadow: 0 0 10px var(--card-accent), 0 0 22px color-mix(in srgb, var(--card-accent) 50%, transparent);
+}
+
+.moral-logo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 10px;
+    animation: moralLogoFloat 4s ease-in-out infinite;
+}
+@keyframes moralLogoFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-8px) scale(1.03); }
+}
+
+.moral-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 48px 48px 44px;
+}
+
+.moral-name {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.4vw, 2.9rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+}
+/* the accent as a short bar under the name */
+.moral-name::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin-top: 16px;
+    border-radius: 4px;
+    background: var(--card-accent);
+}
+
+.moral-desc {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 60ch;
+}
+
+/* ── buttons: the Moral's own pages elsewhere ── */
+.moral-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+}
+.moral-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.moral-link:hover { transform: translateY(-2px); }
+.moral-link:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 3px; }
+/* the brand colours, darkened just enough to carry white text (same as the partner cards) */
+.moral-link--facebook { background: #1771e6; }
+.moral-link--youtube  { background: #ec0000; }
+.moral-link--facebook:hover { box-shadow: 0 8px 20px rgba(23, 113, 230, 0.35); }
+.moral-link--youtube:hover  { box-shadow: 0 8px 20px rgba(236, 0, 0, 0.3); }
+
+/* ── smaller screens ── */
+@media (max-width: 900px) {
+    .moral-card { grid-template-columns: 1fr; }
+    /* a set height: a percentage max-height on the logo does not resolve against an
+       aspect-ratio box, and a tall logo overflowed it */
+    .moral-media { min-height: 0; height: 280px; padding: 28px; }
+    .moral-logo { max-height: 100%; }
+    .moral-body { padding: 30px 26px 32px; }
+}
+
+@media (max-width: 480px) {
+    .moral-page { padding: 104px 0 70px; }
+    .moral-card { border-radius: 22px; }
+    .moral-media { height: 230px; padding: 22px; }
+    .moral-desc { font-size: 1rem; }
+    .moral-link { flex: 1 1 auto; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .moral-logo { animation: none; }
+    .moral-link { transition: none; }
+}
+html.motion-paused .moral-logo { animation: none; }

@@ -1,0 +1,16 @@
+    <!-- Gallery -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container reveal">
+            <{{h|h2}} class="section-title text-center" style="margin-bottom: 40px;" data-i18n="gallery_heading">Photo Gallery</{{h|h2}}>
+            <div class="gallery-marquee-container">
+                <div class="gallery-marquee">
+                    <div class="gallery-scroll">
+                        <!-- Photos from the Drive folder "תמונות גלריית תמונות" (24.9.26). Eight cards, then
+                             the same eight again: the strip slides by half its length and starts over. -->
+{{> partials/gallery-cards}}
+{{> partials/gallery-cards attrs='aria-hidden="true"'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
