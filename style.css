@@ -4389,7 +4389,7 @@ body.dark-mode .page-hero p.typewriter-active::after {
     }
     .contact-info { padding: 0; }
     .contact-info > .section-title { margin-top: 0; margin-bottom: 10px !important; }
-    .contact-info > p { margin-bottom: 28px !important; font-size: 1.05rem !important; }
+    .contact-info > p { margin-bottom: 28px !important; }
 
     .contact-methods { gap: 12px; }
     .contact-method-card {
@@ -4808,3 +4808,24 @@ body.dark-mode .section-blobs { display: none; }
    block fits one screen, so the room between them comes from the bottom of Team. */
 #team { padding-bottom: 120px; }
 @media (max-width: 768px) { #team { padding-bottom: 72px; } }
+
+/* --- Section subtitles: one style (1.10.26) ---
+   The line under a section title came in four looks: 16 px grey Inter (Activities,
+   Partnerships), 19 px grey Inter (Let's Talk), 22 px dark Rubik (Vision), and 8 to 39 px
+   below its title. All four now take the Vision one: the heading face at 1.25rem, regular
+   weight, the text colour, 10 px under the title. Each keeps its own space below. */
+.section-subtitle,
+.hero p.section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.25rem !important;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin-top: 0;
+    text-wrap: balance;
+}
+.section-title:has(+ .section-subtitle),
+.vision-head .section-title { margin-bottom: 10px !important; line-height: 1.2; }
+@media (max-width: 768px) {
+    .section-subtitle { font-size: 1.1rem !important; }
+}
