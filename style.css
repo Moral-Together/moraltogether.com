@@ -250,7 +250,9 @@ body {
     height: 100%;
     z-index: -1;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 50%, var(--bg-body) 0%, rgba(0, 0, 0, 0.02) 100%);
+    /* edges in a pale blue, not 2% black: the grey vignette read as a dirty grey behind the
+       sections that have no background of their own (Activities, Our Story, Team, Partners) */
+    background: radial-gradient(circle at 50% 50%, var(--bg-body) 0%, #f1f5fd 100%);
 }
 
 body.dark-mode .background-mesh {
@@ -268,7 +270,8 @@ body.dark-mode .background-mesh {
 .orb-1 {
     width: 600px;
     height: 600px;
-    background: rgba(0, 43, 100, 0.15);
+    /* light sky blue; the 15% navy it was blurred into a slate grey */
+    background: rgba(56, 152, 255, 0.14);
     top: -10%;
     right: -10%;
     animation-duration: 25s;
@@ -277,7 +280,7 @@ body.dark-mode .background-mesh {
 .orb-2 {
     width: 400px;
     height: 400px;
-    background: rgba(229, 91, 39, 0.15);
+    background: rgba(255, 120, 150, 0.12);
     bottom: 10%;
     left: -5%;
     animation-duration: 30s;
@@ -286,7 +289,8 @@ body.dark-mode .background-mesh {
 .orb-3 {
     width: 300px;
     height: 300px;
-    background: rgba(144, 181, 179, 0.1);
+    /* teal instead of a grey sage */
+    background: rgba(14, 190, 180, 0.09);
     top: 40%;
     right: 40%;
     animation-duration: 35s;
@@ -539,60 +543,49 @@ body.dark-mode .navbar.scrolled {
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Button Ripple Effect */
-.btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn .ripple {
-    position: absolute;
-    border-radius: 50%;
-    transform: scale(0);
-    animation: ripple-animation 0.6s linear;
-    background: rgba(255, 255, 255, 0.4);
-    pointer-events: none;
-    width: 100px;
-    height: 100px;
-    margin-top: -50px;
-    margin-left: -50px;
-}
-
-.btn-secondary .ripple {
-    background: rgba(0, 43, 100, 0.2);
-}
-
-@keyframes ripple-animation {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-
 /* Premium About Section (Editorial & Glass) */
 .about-content-layout {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    /* More space for text */
-    gap: 80px;
-    /* Текст «нашей истории» теперь вчетверо длиннее коллажа рядом. При align-items: center
-       картинка повисала бы в середине простыни текста, оторванная от заголовка раздела. */
+    /* Колонка со схемой «חיבורים» шире, чем была (1.2fr / 0.8fr, gap 80px): кружкам нужно место,
+       чтобы плавать и не подлетать друг к другу. */
+    grid-template-columns: 1.1fr 0.9fr;
+    /* Заголовок раздела — в сетке, над колонкой текста; схема «חיבורים» справа занимает все
+       строки. Пустые строки 1fr сверху и снизу ставят заголовок с текстом по центру высоты
+       схемы. Где текст выше схемы (about.html с тремя темами), они схлопываются в ноль. */
+    grid-template-areas:
+        ".     web"
+        "title web"
+        "text  web"
+        ".     web";
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: 60px;
     align-items: start;
-    margin-top: 60px;
 }
 
-.about-text-column {
-    position: relative;
-    padding-right: 30px;
-    border-right: 4px solid var(--secondary-color);
+/* Короткий оранжевый штрих под заголовком — вместо вертикальной черты вдоль текста: она
+   отделяла длинный текст с аккордеоном, а рядом с тремя абзацами висела сама по себе. */
+.about-title { grid-area: title; margin: 0 0 30px; }
+.about-title::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin-top: 18px;
+    border-radius: 2px;
+    background: var(--secondary-color);
 }
+.about-text-column { grid-area: text; }
+.about-content-layout > .connections-block { grid-area: web; }
 
-.lead-text {
-    font-size: 1.4rem;
+/* Вступление, которое продолжает следующий абзац. Правило .about-text-column p ниже
+   сильнее простого .lead-text и делало строку мелкой и серой — отсюда селектор. */
+.about-text-column .lead-text {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
     color: var(--primary-color);
-    font-weight: 700;
-    line-height: 1.6;
-    margin-bottom: 25px;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 20px;
 }
 
 .about-text-column p {
@@ -610,129 +603,100 @@ body.dark-mode .navbar.scrolled {
     margin: 32px 0 12px;
 }
 
-/* Три подраздела свёрнуты в аккордеон. Нативные <details>/<summary>: клавиатура и
-   скринридеры работают без скрипта, текст остаётся в разметке — он свёрнут, а не вырезан,
-   поэтому поиск и индексация его видят. */
-.about-accordion {
-    border-top: 1px solid rgba(0, 43, 100, 0.14);
-}
-
-.about-accordion:last-of-type {
-    border-bottom: 1px solid rgba(0, 43, 100, 0.14);
-}
-
-body.dark-mode .about-accordion,
-body.dark-mode .about-accordion:last-of-type {
-    border-color: rgba(255, 255, 255, 0.12);
-}
-
-.about-accordion > summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 18px 0;
-    cursor: pointer;
-    list-style: none;
-}
-
-/* Штатный треугольник убираем — вместо него своя стрелка ниже */
-.about-accordion > summary::-webkit-details-marker { display: none; }
-
-.about-accordion > summary .about-subheading {
-    margin: 0;
-}
-
-.about-accordion > summary::after {
-    content: "";
-    flex-shrink: 0;
-    width: 9px;
-    height: 9px;
-    border-right: 2px solid var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    transform: rotate(45deg);
-    transition: transform 0.34s cubic-bezier(0.32, 0, 0.24, 1);
-}
-
-.about-accordion[open] > summary::after {
-    transform: rotate(-135deg);
-}
-
-.about-accordion > summary:hover .about-subheading {
-    color: var(--secondary-color);
-}
-
-.about-accordion > summary:focus-visible {
-    outline: 2px solid var(--secondary-color);
-    outline-offset: 4px;
-    border-radius: 4px;
-}
-
-.about-accordion-body {
-    padding-bottom: 4px;
-}
-
-/* Плавное раскрытие.
-   ::details-content — обёртка содержимого <details>. Высоту auto браузер анимирует только
-   при interpolate-size: allow-keywords, иначе переход с 0 на auto просто не запускается.
-   allow-discrete откладывает переключение content-visibility до конца перехода — без него
-   содержимое исчезало бы мгновенно при закрытии, и обратный ход не был бы виден.
-   Браузеры без ::details-content открывают рывком, как раньше: поведение не ломается.
-   Тормозить анимацию при «остановить движение» и при системной настройке не нужно —
-   правило html.motion-paused сводит transition-duration к нулю для всего разом. */
-@supports selector(::details-content) {
-    .about-accordion {
-        interpolate-size: allow-keywords;
-    }
-
-    .about-accordion::details-content {
-        height: 0;
-        overflow: hidden;
-        transition:
-            height 0.34s cubic-bezier(0.32, 0, 0.24, 1),
-            content-visibility 0.34s allow-discrete;
-    }
-
-    .about-accordion[open]::details-content {
-        height: auto;
-    }
-
-    /* Текст подхватывает раскрытие лёгким проявлением — от этого движение мягче. */
-    .about-accordion .about-accordion-body {
-        opacity: 0;
-        transition: opacity 0.26s ease 0.06s;
-    }
-
-    .about-accordion[open] .about-accordion-body {
-        opacity: 1;
-    }
-}
-
-.about-accordion-body p:last-child {
-    margin-bottom: 20px;
-}
-
 /* Блок «חיבורים» — коллаж на месте прежних четырёх карточек ценностей */
 .connections-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: 6px;
     text-align: center;
 }
 
-.connections-img {
+/* Коллаж, разобранный на части: каждый кружок — отдельный элемент, script.js покачивает его
+   по своей траектории и тянет за ним нить к сердцу в центре. Координаты (--x, --y — центр,
+   --r — радиус по кольцу) заданы в квадрате 600×600, как viewBox у линий, поэтому кружки и
+   нити совпадают на любой ширине. Фона пока нет — блок прозрачный. */
+.connections-web {
+    --web: 600;
+    /* Нить как на картинке: тёплая белая, с золотистым свечением в два слоя. На почти белом
+       фоне светлой темы её держит свечение, поэтому там оно гуще. */
+    --thread: #fff8ec;
+    --thread-glow: rgba(226, 150, 58, 0.9);
+    --thread-halo: rgba(255, 186, 102, 0.75);
+    position: relative;
     width: 100%;
-    max-width: 420px;
-    height: auto;
-    border-radius: 24px;
+    max-width: 500px;
+    aspect-ratio: 1;
 }
 
+body.dark-mode .connections-web {
+    --thread-glow: rgba(255, 196, 120, 0.85);
+    --thread-halo: rgba(255, 186, 102, 0.5);
+}
+
+.connections-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter:
+        drop-shadow(0 0 1.5px var(--thread-glow))
+        drop-shadow(0 0 5px var(--thread-halo));
+}
+
+.connections-thread path {
+    fill: none;
+    stroke: var(--thread);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.connections-thread circle {
+    fill: var(--thread);
+}
+
+.connections-node {
+    position: absolute;
+    left: calc((var(--x) - var(--r)) / var(--web) * 100%);
+    top: calc((var(--y) - var(--r)) / var(--web) * 100%);
+    width: calc(var(--r) * 2 / var(--web) * 100%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    overflow: hidden;
+    background: #fff;
+    box-shadow:
+        0 0 14px rgba(255, 200, 130, 0.7),
+        0 8px 22px rgba(0, 43, 100, 0.14);
+    will-change: transform;
+}
+
+/* Сердце в центре светится сильнее кружков — как на картинке, это источник всех нитей. */
+.connections-hub {
+    box-shadow:
+        0 0 10px 2px rgba(255, 214, 160, 0.95),
+        0 0 28px 8px rgba(255, 186, 102, 0.55),
+        0 8px 22px rgba(0, 43, 100, 0.12);
+}
+
+.connections-node img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Подпись к схеме, а не второй заголовок блока рядом с «Нашей историей». */
 .connections-heading {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--primary-color);
+    opacity: 0.8;
     margin: 0;
 }
 
@@ -741,64 +705,87 @@ body.dark-mode .about-accordion:last-of-type {
    ============================================================ */
 .vision-section {
     background: var(--bg-body);
-    padding: 120px 0;
+    /* блок целиком на одном экране ноутбука: 120px сверху и снизу его не пускали */
+    padding: 72px 0;
     position: relative;
     overflow: hidden;
 }
 body.dark-mode .vision-section { background: #04040e; }
 
-.vision-split {
-    display: grid;
-    grid-template-columns: 52% 1fr;
-    gap: 80px;
+/* Не так, как «Наша история» над ним (текст рядом со схемой): цитата по центру ведёт блок,
+   под ней круг секторов, ниже три абзаца в три колонки. */
+.vision-stage {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.vision-left {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+.vision-head {
+    max-width: 860px;
+    text-align: center;
 }
 
+.vision-head .section-title { margin: 0 0 8px; line-height: 1.2; }
+
+/* Цитата — лёгкий подзаголовок под «Нашим видением»: крупная и жирная, она читалась
+   как второй заголовок. */
 .vision-quote {
-    font-family: 'Rubik', sans-serif;
-    font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
     font-weight: 400;
-    line-height: 1.72;
+    line-height: 1.5;
     color: var(--text-color);
     margin: 0;
-}
-.vision-body {
-    font-size: 1rem;
-    line-height: 1.88;
-    color: var(--text-muted);
-    margin: 0;
+    /* ровные строки: без этого тире уезжало в начало второй строки */
+    text-wrap: balance;
 }
 
 .vision-canvas-wrap {
     position: relative;
-    aspect-ratio: 1;
     width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1;
+    margin: 12px 0 8px;
 }
+
 #vision-network-canvas {
     width: 100%;
     height: 100%;
     display: block;
 }
 
-@media (max-width: 960px) {
-    .vision-split {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
-    .vision-canvas-wrap {
-        max-width: 420px;
-        margin: 0 auto;
-    }
+/* В разметке абзацы идут до схемы — порядок на экране задаёт order. */
+.vision-text { display: contents; }
+.vision-head { order: 1; }
+.vision-canvas-wrap { order: 2; }
+
+.vision-points {
+    order: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
 }
+
+.vision-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+    padding-top: 16px;
+    /* цвета секторов со схемы: академия, бизнес, некоммерческие */
+    border-top: 3px solid var(--point, #1e8ec8);
+}
+.vision-body:nth-child(2) { --point: #e84c1c; }
+.vision-body:nth-child(3) { --point: #38b56a; }
+
+@media (max-width: 960px) {
+    .vision-points { grid-template-columns: 1fr; gap: 28px; }
+}
+
 @media (max-width: 768px) {
     .vision-section { padding: 80px 0; }
-    .vision-quote   { font-size: 1.05rem; }
+    .vision-canvas-wrap { max-width: 420px; }
 }
 
 /* Modern Symmetric Activities (3-Column Premium Glass) */
@@ -1653,8 +1640,13 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }
-    .member-name { font-size: 0.8rem; line-height: 1.2; }
-    .member-role { margin-top: 2px; font-size: 0.66rem; line-height: 1.25; }
+    /* 14 px for the name (it was 12.8); balanced lines, so a role never leaves one word alone
+       on its last line in a plate barely 100 px wide */
+    .member-name { font-size: 0.875rem; line-height: 1.2; text-wrap: balance; }
+    .member-role { margin-top: 2px; font-size: 0.66rem; line-height: 1.25; text-wrap: balance; }
+    /* "Communications" is wider than a 103 px plate and ran out of it: long words hyphenate */
+    .member-name,
+    .member-role { hyphens: auto; overflow-wrap: break-word; }
     .member-bio-wrap { display: none; }
 
     /* Opens by growing its grid row from 0 to the text's height, the same trick as the bio in
@@ -1770,41 +1762,51 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
 }
 .partners-track {
     display: flex;
-    gap: 20px;
+    /* промежуток — отступом у каждой карточки, а не gap: при gap половина ленты выходила на
+       10px короче шага до копии первой карточки (17 промежутков на 18 карточек), и лента
+       дёргалась раз в круг */
     padding: 12px 0;
     width: max-content;
+    /* лента — отдельный слой, который двигает видеокарта: без перерисовки на каждом кадре */
+    will-change: transform;
+    backface-visibility: hidden;
 }
+.partners-track > .partners-item { margin-right: 20px; }
 .partners-track--left {
-    animation: partnersLeft 35s linear infinite;
+    /* Запасной вариант, если script.js не запустился (обычно ленту ведёт он, см.
+       partnersMarquee): ровно по пикселю за шаг, 1980 шагов на круг в 1980px (9 карточек по 200
+       + 20 отступ). При плавном linear лента ехала на доли пикселя, а играющее видео браузер
+       всегда ставит на целый пиксель — логотипы дрожали в рамках. Меняется число карточек или
+       их ширина — пересчитать. */
+    animation: partnersLeft 33s steps(1980) infinite;
 }
-.partners-track--right {
-    animation: partnersRight 38s linear infinite;
-}
+/* script.js moves the strip itself, a device pixel a frame (partnersMarquee); the steps above
+   are the fallback without it */
+.partners-track.js-marquee { animation: none; }
 @keyframes partnersLeft {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-}
-@keyframes partnersRight {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
 }
 .partners-track:hover {
     animation-play-state: paused;
 }
 .partners-logo-card {
     flex-shrink: 0;
-    width: 160px;
-    height: 150px;
+    /* одна лента вместо двух — карточки крупнее (было 160×150) */
+    width: 200px;
+    height: 188px;
     background: #ffffff;
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 12px;
     overflow: hidden;
     position: relative;
+    box-shadow:
+        0 0 8px  color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
+        0 4px 20px rgba(0,0,0,0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: partnerNeonPulse 3.5s ease-in-out infinite;
 }
 
 /* Neon top accent bar */
@@ -1822,24 +1824,41 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
     z-index: 2;
 }
 
-@keyframes partnerNeonPulse {
-    0%, 100% {
-        box-shadow:
-            0 0 8px  color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
-            0 4px 20px rgba(0,0,0,0.4);
-    }
-    50% {
-        box-shadow:
-            0 0 18px color-mix(in srgb, var(--card-accent, var(--primary-color)) 65%, transparent),
-            0 0 35px color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent),
-            0 4px 20px rgba(0,0,0,0.4);
-    }
+/* Пульсирующее свечение — отдельный слой за карточкой, у которого меняется только
+   прозрачность. Раньше пульсировала тень самой карточки: её приходилось перерисовывать на
+   каждом кадре вместе с лентой, и логотипы внутри мелко дрожали на ходу. Цвет — --card-accent
+   со ссылки (src/sections/partners.html), потому что у карточки overflow: hidden и свечение
+   снаружи неё было бы обрезано. */
+.partners-link { position: relative; isolation: isolate; }
+.partners-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 188px;
+    border-radius: 16px;
+    box-shadow:
+        0 0 18px color-mix(in srgb, var(--card-accent, var(--primary-color)) 65%, transparent),
+        0 0 35px color-mix(in srgb, var(--card-accent, var(--primary-color)) 30%, transparent);
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    will-change: opacity;
+    animation: partnerNeonPulse 3.5s ease-in-out infinite;
 }
 
-/* Stagger pulse so cards don't all sync */
-.partners-track .partners-logo-card:nth-child(3n)   { animation-delay: 0s; }
-.partners-track .partners-logo-card:nth-child(3n+1) { animation-delay: 1.2s; }
-.partners-track .partners-logo-card:nth-child(3n+2) { animation-delay: 2.4s; }
+@keyframes partnerNeonPulse {
+    0%, 100% { opacity: 0; }
+    50%      { opacity: 1; }
+}
+
+/* Stagger pulse so cards don't all sync (the card is its link's only child, so the count
+   goes by the item in the track) */
+.partners-track .partners-item:nth-child(3n)   .partners-link::before { animation-delay: 0s; }
+.partners-track .partners-item:nth-child(3n+1) .partners-link::before { animation-delay: 1.2s; }
+.partners-track .partners-item:nth-child(3n+2) .partners-link::before { animation-delay: 2.4s; }
+.partners-link:hover::before { animation-play-state: paused; }
 
 .partners-logo-card:hover {
     transform: translateY(-4px);
@@ -1847,17 +1866,36 @@ body.dark-mode .member-bio { color: rgba(210, 220, 255, 0.82); }
         0 0 28px color-mix(in srgb, var(--card-accent, var(--primary-color)) 80%, transparent),
         0 0 50px color-mix(in srgb, var(--card-accent, var(--primary-color)) 40%, transparent),
         0 8px 30px rgba(0,0,0,0.5);
-    animation-play-state: paused;
+}
+
+/* Каждый логотип — во внутренней рамке с полем 12px до края карточки. Одни картинки несли
+   своё белое поле, другие (Моралы пожилых, конструктивной критики, поддержки) упирались в
+   край, и ряд выглядел сломанным. */
+.partners-logo-clip {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 .partners-logo-card img,
 .partners-logo-card video {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
     opacity: 0.88;
     transition: opacity 0.25s;
 }
+
+/* Часть роликов заполняет рамку, а не вписывается в неё: вертикальный ролик Морала сцены и
+   кадр-фото конструктивной критики (.is-cover) оставляли пустые поля, а у .is-pillarboxed
+   по бокам впечатаны чёрные поля — такие ещё и чуть увеличены (--zoom ровно на столько, чтобы
+   поля ушли за край). Квадратные ролики вписаны: при заполнении срезался текст внизу. */
+.partners-logo-card video.is-cover,
+.partners-logo-card video.is-pillarboxed { object-fit: cover; }
+.partners-logo-card video.is-pillarboxed { transform: scale(var(--zoom, 1)); }
 .partners-logo-card:hover img,
 .partners-logo-card:hover video {
     opacity: 1;
@@ -2419,18 +2457,23 @@ body.dark-mode .ring-3 {
 }
 
 .footer-links li {
-    margin-bottom: 10px;
+    /* шаг пунктов 30px: при строке 1.8 и отступе 10px было 39px, меню выглядело разреженным */
+    margin-bottom: 6px;
+    line-height: 1.5;
 }
 
 .footer-links a {
+    display: inline-block;
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: 0.3s;
 }
 
+/* Сдвиг при наведении — transform, не padding: отступ расширял ссылку, а почта самая широкая
+   в колонке контактов, и вся строка футера (flex, space-between) уезжала. */
 .footer-links a:hover {
     color: var(--secondary-color);
-    padding-left: 5px;
+    transform: translateX(5px);
 }
 
 .social-icons {
@@ -2602,15 +2645,14 @@ body.dark-mode .ring-3 {
 
     .about-content-layout {
         grid-template-columns: 1fr;
-        gap: 40px;
+        grid-template-areas: "title" "text" "web";
+        grid-template-rows: none;
     }
 
-    .about-text-column {
-        padding-right: 0;
-        border-right: none;
-        border-bottom: 4px solid var(--secondary-color);
-        padding-bottom: 30px;
-    }
+    /* отступы у самих блоков, а не row-gap: на about.html заголовок скрыт,
+       и промежуток у пустой строки остался бы лишним */
+    .about-text-column { margin-bottom: 40px; }
+
 
     .footer-content {
         flex-direction: column;
@@ -2877,9 +2919,11 @@ body.dark-mode .contact-whatsapp-card:hover {
         padding: 15px;
     }
 
+    /* break-all cut the address anywhere ("…co / m"); now it breaks at the <wbr> after "@"
+       (src/sections/contact.html), and mid-word only if a part still does not fit */
     .contact-method-card strong {
         font-size: 1rem;
-        word-break: break-all;
+        overflow-wrap: anywhere;
     }
 }
 
@@ -3063,14 +3107,6 @@ body.dark-mode .feature-checklist li::before {
     --hero-dark: image-set(url("images/Background_Black_desctop.webp") type("image/webp"), url("images/Background_Black_desctop.jpg") type("image/jpeg"));
 }
 
-/* Tablet (1024px – 1366px) — iPad Pro portrait/landscape */
-@media (max-width: 1366px) and (min-width: 1024px) {
-    .hero-bg {
-        --hero-light: image-set(url("images/Background_Light_tablet.webp") type("image/webp"), url("images/Background_Light_tablet.jpg") type("image/jpeg"));
-        --hero-dark: image-set(url("images/Background_Black_tablet.webp") type("image/webp"), url("images/Background_Black_tablet.jpg") type("image/jpeg"));
-    }
-}
-
 /* Mobile (≤ 768px) — portrait images, focal area at top-center */
 @media (max-width: 768px) {
     .hero-bg {
@@ -3106,11 +3142,12 @@ body.dark-mode .hero-img-dark  { opacity: 1; }
             rgba(255,255,255,0.10) 60%,
             transparent 75%
         ),
+        /* the picture's bottom edge melts into the page instead of darkening to grey (it was
+           12% black at the bottom and 8% at the top) */
         linear-gradient(to bottom,
-            rgba(0,0,0,0.08) 0%,
-            transparent 15%,
-            transparent 82%,
-            rgba(0,0,0,0.12) 100%
+            transparent 0%,
+            transparent 80%,
+            rgba(251,251,253,0.55) 100%
         );
 }
 
@@ -3241,6 +3278,9 @@ body.dark-mode .hero-text-panel > p {
     line-height: 1.1;
     letter-spacing: -1.5px;
     margin-top: 24px;
+    /* Строки ведущей фразы — равной длины, как на десктопе («A place where / forces unite,»).
+       Без этого на ~450px «unite,» оставалось одно на второй строке. */
+    text-wrap: balance;
     /* Главный разрыв в блоке: сообщение кончилось, дальше — действие. Раньше здесь стояли
        те же 24px, что и везде, поэтому три группы читались как один сплошной столбик. */
     margin-bottom: 44px;
@@ -3434,9 +3474,10 @@ body.dark-mode .hero-projects-btn:hover { background: rgba(12, 18, 44, 0.9); bor
 body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
 
 @media (max-width: 768px) {
-    .id-button { min-width: 250px; }
-    .hero-text-panel .btn-group { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .hero-projects-btn { min-width: 250px; min-height: 52px; }
+    /* both buttons one width, the width of the column (no wider than 400 px) */
+    .hero-text-panel .btn-group { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; max-width: 400px; }
+    .id-button,
+    .hero-projects-btn { width: 100%; min-height: 52px; }
 }
 
 /* html.motion-paused already freezes every animation on the page; the OS setting gets the
@@ -3470,67 +3511,16 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
     .hero-text-panel > p { font-size: 1rem !important; }
 }
 
-/* ============================================================
-   TABLET HERO — image on top, text block below (iPad Pro 1024–1366px)
-   ============================================================ */
-@media (max-width: 1366px) and (min-width: 1024px) {
-    .hero {
-        flex-direction: column;
-        align-items: stretch;
-        min-height: auto;
-        height: auto;
-        padding-top: 72px;
-        padding-bottom: 0;
-    }
-    .hero-bg {
-        position: relative;
-        height: 560px;
-        flex-shrink: 0;
-    }
-    .hero-overlay,
-    .hero .scroll-indicator {
-        display: none;
-    }
-    #hero-dots-canvas {
-        height: 560px;
-        bottom: auto;
-    }
-    .hero .container {
-        position: relative;
-        background:
-            linear-gradient(135deg, #9dbbef 0%, #e8f1fd 50%, #9dbbef 100%);
-        padding-top: 44px;
-        padding-bottom: 54px;
-    }
-    /* Как и на телефоне — по краю чтения, а не по центру, чтобы герой вёл себя одинаково
-       на всех ширинах и в обоих направлениях письма. */
-    .hero-text-panel {
-        max-width: 680px;
-        margin: 0;
-        text-align: start;
-        align-items: flex-start;
-        padding: 0;
-    }
-    .hero-text-panel::before { display: none; }
-    .hero-text-panel .shimmer-text { text-align: start; }
-    .hero-text-panel .btn-group { justify-content: flex-start; }
-}
-
-@media (max-width: 1366px) and (min-width: 1024px) {
-    body.dark-mode .hero-bg::after {
-        background: linear-gradient(to bottom, transparent 0%, #07070f 100%);
-    }
-    body.dark-mode .hero .container {
-        background: linear-gradient(135deg, #07070f 0%, #141428 50%, #07070f 100%);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border-top: none;
-        border-bottom: none;
-    }
-}
+/* Tablets (1024–1366px) show the desktop hero, text over the picture, like every computer
+   (1.10.26). They had their own layout, the picture on top and the text under it, and laptop
+   windows of that width got it too, so the headline went under the fold. The tablet pictures
+   (images/Background_*_tablet.*) are no longer used. */
 
 /* ============================================================
-   MOBILE HERO — image on top, text block below (≤ 768px)
+   MOBILE HERO — image on top, text below (≤ 768px)
+   No box under the text any more (1.10.26): the picture dissolves into the page colour and
+   the headline rises onto that faded edge, the way the desktop text sits on the picture. The
+   blue gradient panel it replaced read as a separate card with a hard bottom edge.
    ============================================================ */
 @media (max-width: 768px) {
     .hero {
@@ -3538,7 +3528,9 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
         align-items: stretch;
         min-height: auto;
         height: auto;
-        padding-top: 60px;
+        /* The picture starts at the very top, under the transparent header: it used to start
+           at 60 px, so the header's logo and controls sat on its hard top edge. */
+        padding-top: 0;
         padding-bottom: 0;
     }
     .hero-bg {
@@ -3546,23 +3538,20 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
         height: 520px;
         flex-shrink: 0;
     }
-    .hero-bg::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 120px;
-        background: linear-gradient(to bottom, transparent 0%, #9dbbef 100%);
-        pointer-events: none;
-        z-index: 2;
+    /* The bottom of the picture turns transparent rather than fading to a colour: behind it
+       is the page's own mesh of colour, not a flat #fbfbfd, and a fade to a fixed colour left
+       a visible seam where the picture ended. */
+    .hero-bg {
+        -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent 100%);
     }
-    .hero-img-light {
-        background-size: cover;
-        background-position: center 65%;
-        background-repeat: no-repeat;
-    }
+    /* The picture at full width from the very top of the screen, solid under the header; the
+       ring of icons starts right below the header, and the crowd at the bottom fades out
+       under the mask. */
+    .hero-img-light,
     .hero-img-dark {
-        background-size: cover;
-        background-position: center 65%;
+        background-size: 100% auto;
+        background-position: center top;
         background-repeat: no-repeat;
     }
     .hero-overlay,
@@ -3571,9 +3560,11 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
         display: none;
     }
     .hero .container {
-        background: linear-gradient(135deg, #9dbbef 0%, #e8f1fd 50%, #9dbbef 100%);
-        padding-top: 36px;
-        padding-bottom: 44px;
+        position: relative;
+        z-index: 3;
+        margin-top: -56px;
+        padding-top: 0;
+        padding-bottom: 40px;
     }
     /* На телефоне текст выравнивается по краю, а не по центру: start — это левый край
        в латинице и правый на иврите, так что одно правило покрывает оба направления. */
@@ -3591,11 +3582,8 @@ body.dark-mode .hero-projects-btn:focus-visible { outline-color: #00c8ff; }
 }
 
 @media (max-width: 768px) {
-    body.dark-mode .hero-bg::after {
-        background: linear-gradient(to bottom, transparent 0%, #07070f 100%);
-    }
     body.dark-mode .hero .container {
-        background: linear-gradient(135deg, #07070f 0%, #141428 50%, #07070f 100%);
+        background: none;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }
@@ -3683,21 +3671,21 @@ html.motion-paused .gallery-grid .gallery-card:hover {
 
 /* Section headings: the size lived in eight inline styles, so the scale could not be tuned
    in one place. Same values as before; the phone rule for h2 still applies on top. */
-.section-title { font-size: 2.5rem; }
+.section-title { font-size: 2.5rem; color: var(--primary-color); }
 .section-title--lg { font-size: 3rem; }
 
 /* --- Partners: every logo carries its name under it --- */
 .partners-item {
     flex-shrink: 0;
     margin: 0;
-    width: 160px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 .partners-name {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.3;
     text-align: center;
@@ -3720,6 +3708,34 @@ html.motion-paused .gallery-grid .gallery-card:hover {
 .partners-link:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 4px; }
 /* a logo with keyboard focus must not slide away */
 .partners-track:focus-within { animation-play-state: paused; }
+
+/* Призыв одной полосой: текст и кнопка в строку, на светлой карточке. */
+.partners-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: 880px;
+    margin: 48px auto 0;
+    padding: 24px 32px;
+    background: var(--bg-glass);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 43, 100, 0.08);
+}
+.partners-cta-text {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.partners-cta .btn { flex-shrink: 0; }
+
+@media (max-width: 640px) {
+    .partners-cta { flex-direction: column; text-align: center; padding: 24px; }
+}
+
 
 /* --- Gallery: the title is part of the picture, not a hover reward. A keyboard now
    reaches the first eight cards, and focus shows where it is. --- */
@@ -3805,13 +3821,17 @@ html.motion-paused .gallery-grid .gallery-card:hover {
        picture and a button. At 40% of the screen the headline and both buttons land in it, and
        the buttons stay clear of the accessibility button in the bottom-left corner; the crowd
        at the bottom of the picture stays in frame. */
-    .hero-bg { height: clamp(240px, 40svh, 520px); }
+    /* Now taller: whatever the screen leaves after the header, the headline and both buttons
+       (about 340 px, the header now lies over the picture), so the picture is as large as it
+       can be and the buttons still land in the first view. */
+    .hero-bg { height: clamp(320px, calc(100svh - 340px), 600px); }
 
-    /* Footer links were 20 px tall targets. */
+    /* Footer links were 20 px tall targets; 34 px now (they were 44, too sparse a list),
+       still well above the 24 px minimum for a target. */
     .footer-links li { margin-bottom: 0; }
     .footer-links a {
         display: inline-block;
-        padding: 12px 4px;
+        padding: 5px 4px;
     }
     .footer-legal a {
         display: inline-block;
@@ -3840,6 +3860,26 @@ html.motion-paused .gallery-grid .gallery-card:hover {
     .nav-controls { gap: 6px; }
     .lang-btn { min-width: 28px; padding: 0 6px; }
     .theme-toggle { width: 36px; height: 36px; }
+
+    /* The controls keep their size, but the finger gets more: an invisible hit area takes the
+       language buttons to 44 px tall and the theme switch to 44×44, inside the gaps around
+       them. The bar is 64 px tall, so nothing reaches past it. */
+    .lang-btn,
+    .theme-toggle { position: relative; }
+    .lang-btn::after,
+    .theme-toggle::after {
+        content: "";
+        position: absolute;
+        inset: -6px 0;
+    }
+    .theme-toggle::after { inset: -4px; }
+}
+
+/* At 375 px the logo ended 3 px short of the language switch (and touched it in Hebrew). */
+@media (max-width: 400px) {
+    .logo-img { height: 34px; }
+    /* the team plates are ~100 px wide here, and "Communications" at 13 px is 105 */
+    .member-role { font-size: 0.75rem; }
 }
 
 /* The credit link was a 20 px tall target. */
@@ -3850,7 +3890,6 @@ html.motion-paused .gallery-grid .gallery-card:hover {
 
 /* Four partner clips are 16:9 frames with the logo in a square in the middle and black
    bars baked in on both sides. Filling the card crops exactly those bars. */
-.partners-logo-card video.is-pillarboxed { object-fit: cover; }
 
 /* Footer contact column: same type as the navigation beside it, icon ahead of the text. */
 .footer-contact a {
@@ -3992,30 +4031,42 @@ body.dark-mode .bento-grid .bento-card {
 
 /* ---------- phone ---------- */
 @media (max-width: 768px) {
-    /* Two to a row only where two short cards stand next to each other in the order (VVIP,
-       Zuzim); pairing any others would make a card jump ahead of its neighbour. */
-    .bento-grid { grid-template-columns: 1fr 1fr; grid-auto-flow: row; gap: 14px; }
-    .bento-grid .bento-card { grid-column: 1 / -1; }
-    .bento-grid .bento-card.card-vvip,
-    .bento-grid .bento-card.card-zuzim { grid-column: auto; }
-
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) {
-        padding: 52px 12px 18px;
-    }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-icon {
-        height: 72px;
-        margin-bottom: 12px;
-    }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-logo-img {
-        max-height: 72px !important;
+    /* Two to a row, all eight cards (1.10.26). The cards keep their whole text; to fit a
+       column of about 160 px the padding, the logo and the type are smaller. A row takes the
+       height of its taller card. MoralTV stands before VVIP in the markup, so the two short
+       cards Zuzim Cash and My Triple Win share the last row. */
+    .bento-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .bento-grid .bento-card { padding: 16px 12px 18px; }
+    /* The logo fills its window: 104 px tall and the full width of the card, where it was
+       held to 64 px inside a 124 px window. */
+    .bento-grid .bento-icon { height: 104px; width: 100%; margin-bottom: 12px; }
+    .bento-grid .bento-card .bento-icon .bento-logo-img {
+        max-height: 104px !important;
         max-width: 100% !important;
     }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) h3 { font-size: 1.2rem; margin-bottom: 4px; }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .subtitle { font-size: 0.72rem; }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-members { font-size: 0.74rem; }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-badge { top: 10px; right: 10px; }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-badge { width: 36px; height: 36px; }
-    .bento-grid .bento-card:is(.card-vvip, .card-zuzim) .bento-go-icon { width: 18px; height: 18px; }
+    .bento-grid .bento-content .subtitle { font-size: 0.66rem; letter-spacing: 0.02em; }
+    .bento-grid .bento-content h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .bento-grid .bento-content p { font-size: 0.8rem; line-height: 1.45; hyphens: auto; }
+    .bento-grid .bento-members { font-size: 0.72rem; }
+
+    /* On a phone only the arrow leads to the site. The link used to cover the whole card, so
+       a finger that touched a card to scroll past it was taken away from the page. The link
+       is now the arrow itself, 40×40, in the card's top corner. */
+    .bento-grid .bento-go {
+        inset: auto;
+        top: 8px;
+        right: auto;
+        inset-inline-end: 8px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    .bento-grid .bento-go-badge {
+        position: static;
+        width: 100%;
+        height: 100%;
+    }
+    .bento-grid .bento-go-icon { width: 18px; height: 18px; }
 }
 
 /* Dark theme: two logos are dark ink on a transparent ground and vanished into the card. A thin
@@ -4051,8 +4102,7 @@ body.dark-mode .bento-grid .card-triplewin .bento-logo-img {
     background: transparent;
 }
 /* the section's own title moved into the hero; the space kept for it goes too */
-.page-hero + section .section-title[hidden] ~ .bento-grid,
-.page-hero + section .section-title[hidden] ~ .about-content-layout {
+.page-hero + section .section-title[hidden] ~ .bento-grid {
     margin-top: 0;
 }
 
@@ -4247,3 +4297,514 @@ body.dark-mode .page-hero p.typewriter-active::after {
         font-size: 2rem;
     }
 }
+
+/* Phones: the white fades at the strips' edges were 12rem (partners) and 15rem (gallery) —
+   on a 390 px screen they covered most of the strip, and the logos and photos showed only
+   in a narrow band in the middle. A short fade keeps the soft edge and shows the cards. */
+@media (max-width: 768px) {
+    .partners-marquee-wrap::before,
+    .partners-marquee-wrap::after { width: 28px; }
+    .gallery-marquee-container::before,
+    .gallery-marquee-container::after { width: 28px; }
+}
+
+/* --- Gallery on a phone: an album, not a second moving strip (1.10.26) ---
+   Right after the partners' strip the gallery was another ribbon of cards sliding sideways, and
+   the two read as one thing. On a phone it stands still: one large photo, four smaller ones
+   under it, two to a row, and a link to the full gallery page. The rest of the eight, and the
+   hidden copies the strip needs for its loop, are not shown here. A darker shade under each
+   title keeps it legible on a light photo. */
+.gallery-more { display: none; }
+
+@media (max-width: 768px) {
+    .gallery-marquee-container {
+        direction: inherit;
+        overflow: visible;
+        padding: 0;
+    }
+    .gallery-marquee-container::before,
+    .gallery-marquee-container::after { display: none; }
+    .gallery-marquee { display: block; width: auto; }
+    .gallery-scroll {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        animation: none;
+    }
+    .gallery-scroll > .gallery-card {
+        width: auto;
+        height: auto;
+        aspect-ratio: 1;
+        border-radius: 16px;
+        background-position: center;
+    }
+    .gallery-scroll > .gallery-card:first-child {
+        grid-column: 1 / -1;
+        aspect-ratio: 16 / 10;
+        border-radius: 20px;
+    }
+    .gallery-scroll > .gallery-card:nth-child(n + 6) { display: none; }
+    .gallery-scroll:has(.gallery-card:hover) .gallery-card:not(:hover) {
+        filter: none;
+        opacity: 1;
+        transform: none;
+    }
+    .gallery-scroll .gallery-card .overlay {
+        padding: 28px 12px 10px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+    }
+    .gallery-scroll .gallery-card h3 { font-size: 0.9rem; line-height: 1.25; margin: 0; }
+    .gallery-scroll .gallery-card:first-child .overlay { padding: 40px 18px 14px; }
+    .gallery-scroll .gallery-card:first-child h3 { font-size: 1.15rem; }
+
+    .gallery-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+    }
+}
+
+/* --- "Let's Talk" on a phone (1.10.26) ---
+   No panel: the heading and the line under it stand on the page itself, and the two ways to
+   reach us are two large buttons the full width of the column, the number and the address
+   written on them. WhatsApp comes first and is filled in its green (most people here write
+   there); the email is a white button with an outline. The decorative rings and the loose
+   glowing line under the panel are left out on a phone. */
+@media (max-width: 768px) {
+    .contact-section { padding: 56px 0 48px; }
+    .contact-visual,
+    .contact-section .footer-divider { display: none; }
+
+    .contact-bento-panel,
+    .contact-bento-panel:hover,
+    body.dark-mode .contact-bento-panel,
+    body.dark-mode .contact-bento-panel:hover {
+        background: none;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-radius: 0;
+        overflow: visible;
+    }
+    .contact-info { padding: 0; }
+    .contact-info > .section-title { margin-top: 0; margin-bottom: 10px !important; }
+    .contact-info > p { margin-bottom: 28px !important; font-size: 1.05rem !important; }
+
+    .contact-methods { gap: 12px; }
+    .contact-method-card {
+        flex-direction: row;
+        text-align: start;
+        gap: 14px;
+        min-height: 72px;
+        padding: 14px 20px;
+        border-radius: 18px;
+    }
+    .contact-method-card::before { display: none; }
+    .contact-method-card:hover { transform: none; }
+    .contact-method-card div { min-width: 0; }
+    .contact-method-card span { font-size: 0.85rem; }
+    .contact-method-card strong { font-size: 1.05rem; line-height: 1.3; text-align: start; }
+    /* the icons are masks (icons.css): the background is the glyph's colour */
+    .contact-method-card .contact-icon,
+    .contact-method-card:hover .contact-icon {
+        width: 28px;
+        height: 28px;
+        margin: 0;
+        border-radius: 0;
+        transform: none;
+    }
+
+    .contact-whatsapp-card,
+    body.dark-mode .contact-whatsapp-card {
+        order: -1;
+        background: #168a46;
+        border-color: #168a46;
+        box-shadow: 0 10px 24px -10px rgba(22, 138, 70, 0.6);
+    }
+    .contact-whatsapp-card:hover,
+    body.dark-mode .contact-whatsapp-card:hover { background: #127a3d; border-color: #127a3d; }
+    .contact-whatsapp-card span,
+    .contact-whatsapp-card strong { color: #fff; }
+    .contact-whatsapp-card span { opacity: 0.85; }
+    .contact-whatsapp-card .contact-icon,
+    .contact-whatsapp-card:hover .contact-icon { background: #fff; }
+
+    .contact-mail-card,
+    .contact-mail-card:hover {
+        background: #fff;
+        border: 1.5px solid rgba(0, 43, 100, 0.18);
+        box-shadow: 0 6px 18px -10px rgba(0, 43, 100, 0.3);
+    }
+    .contact-mail-card .contact-icon,
+    .contact-mail-card:hover .contact-icon { background: #dd2a7b; }
+    body.dark-mode .contact-mail-card,
+    body.dark-mode .contact-mail-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* --- "Let's Talk" on a phone: its own band (1.10.26) ---
+   The last block before the footer had nothing to set it apart from the page. It is now a band
+   across the full width: a soft gradient in the logo's colours with two blurred glows, a thin
+   rainbow line on top, like the vortex on the first screen. No picture: the two buttons are the
+   point of the block, and a photo would compete with them. */
+@media (max-width: 768px) {
+    .contact-section {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 88% 12%, rgba(221, 42, 123, 0.16), transparent 42%),
+            radial-gradient(circle at 8% 92%, rgba(0, 200, 255, 0.18), transparent 46%),
+            linear-gradient(160deg, #eef4ff 0%, #f8f3ff 55%, #fff4ec 100%);
+    }
+    .contact-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #e0197a, #7b2d8b, #1a3a8c, #0e9898, #4caf50, #f06000);
+        z-index: -1;
+    }
+    body.dark-mode .contact-section {
+        background:
+            radial-gradient(circle at 88% 12%, rgba(255, 45, 120, 0.22), transparent 42%),
+            radial-gradient(circle at 8% 92%, rgba(0, 200, 255, 0.2), transparent 46%),
+            linear-gradient(160deg, #0b1030 0%, #120c2a 55%, #1a0f22 100%);
+    }
+}
+@media (max-width: 768px) {
+    /* the band runs straight into the footer: its 50 px top margin left a stripe of page
+       between them (only on the home page, where "Let's Talk" is the last block) */
+    main:has(> .contact-section:last-child) + .site-footer { margin-top: 0; }
+}
+
+/* --- "Let's Talk" icons and the line under the panel, every width (1.10.26) ---
+   The icons are masks (icons.css): the background is the glyph itself. The old rule meant
+   them as a glyph on a tinted disc and gave them a 10% navy background, so on a computer the
+   envelope and the WhatsApp sign were pale grey shapes. They now take their channel's colour,
+   as on a phone. The glowing line under the panel ended nothing and is gone. */
+@media (min-width: 769px) {
+    .contact-method-card .contact-icon,
+    .contact-method-card:hover .contact-icon {
+        width: 34px;
+        height: 34px;
+        margin: 0 8px;
+        border-radius: 0;
+        transform: none;
+    }
+    .contact-mail-card .contact-icon,
+    .contact-mail-card:hover .contact-icon { background: #dd2a7b; }
+    .contact-whatsapp-card .contact-icon,
+    .contact-whatsapp-card:hover .contact-icon { background: #4bb578; }
+}
+.contact-section .footer-divider { display: none; }
+main:has(> .contact-section:last-child) + .site-footer { margin-top: 0; }
+
+/* --- "Let's Talk" cards on a computer: tinted by their channel, not grey (1.10.26) ---
+   The cards were 3% navy, which on the white panel read as a dull grey unrelated to anything.
+   Each now takes a light wash of its own colour — pink for email, green for WhatsApp, the
+   colours of the stripe at its edge and of its icon — a little deeper under the pointer. */
+@media (min-width: 769px) {
+    .contact-mail-card { background: rgba(221, 42, 123, 0.07); }
+    .contact-mail-card:hover { background: rgba(221, 42, 123, 0.12); }
+    .contact-whatsapp-card { background: rgba(75, 181, 120, 0.09); }
+    .contact-whatsapp-card:hover { background: rgba(75, 181, 120, 0.15); }
+    body.dark-mode .contact-mail-card { background: rgba(255, 45, 120, 0.1); }
+    body.dark-mode .contact-mail-card:hover { background: rgba(255, 45, 120, 0.16); }
+    body.dark-mode .contact-whatsapp-card { background: rgba(75, 181, 120, 0.12); }
+    body.dark-mode .contact-whatsapp-card:hover { background: rgba(75, 181, 120, 0.18); }
+}
+
+
+/* --- Strips: the glows were cut off (1.10.26) ---
+   A strip has to clip sideways to scroll, and a box that clips one axis clips both, so the
+   cards' glow and shadow ended in a hard line just above and below them. The strips now have
+   room for it inside — more padding, given back by a negative margin, so the layout is as
+   before. */
+.partners-marquee-wrap {
+    padding: 28px 0;
+    margin-top: -28px;
+    margin-bottom: -8px;
+}
+.gallery-marquee-container {
+    padding: 50px 0;
+    margin: -30px 0;
+}
+@media (max-width: 768px) {
+    .gallery-marquee-container { margin: 0; padding: 0; }
+    /* the CTA button in the partners block keeps its natural width */
+    .partners-cta .hero-projects-btn { width: auto; min-width: 200px; }
+}
+
+/* --- Strip edges: faded by a mask, not by painted bands (1.10.26) ---
+   The soft edges were two strips painted in the page colour (#fbfbfd) over the strip. On the
+   tinted page background they showed as two pale rectangles with hard tops and bottoms. The
+   strip itself now fades out at its ends, so whatever is behind it shows through. */
+.partners-marquee-wrap::before,
+.partners-marquee-wrap::after,
+.gallery-marquee-container::before,
+.gallery-marquee-container::after { display: none; }
+.partners-marquee-wrap {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12rem, #000 calc(100% - 12rem), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 12rem, #000 calc(100% - 12rem), transparent 100%);
+}
+.gallery-marquee-container {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 15rem, #000 calc(100% - 15rem), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 15rem, #000 calc(100% - 15rem), transparent 100%);
+}
+@media (max-width: 768px) {
+    .partners-marquee-wrap {
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+    }
+    /* the gallery is a still album on a phone: nothing to fade */
+    .gallery-marquee-container { -webkit-mask-image: none; mask-image: none; }
+}
+
+/* The gallery card lifts 16 px on hover and drops a shadow 28 px down with a 56 px blur:
+   about 70 px under the card. 50 px of room cut it off; the bottom now has 96. */
+@media (min-width: 769px) {
+    .gallery-marquee-container {
+        padding: 40px 0 96px;
+        margin: -20px 0 -76px;
+    }
+}
+
+/* --- Shared buttons: one motion for all (1.10.26) ---
+   .btn-primary and .btn-secondary behave like the hero's "Our projects" and the partners'
+   "Learn More": a quick 2 px lift and a slightly deeper shadow under the pointer, nothing that
+   follows the cursor or ripples. The secondary one also takes that button's look: a white,
+   half-clear pill with a thin outline. */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.btn-primary:hover,
+body.dark-mode .btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:hover { box-shadow: 0 14px 30px rgba(0, 43, 100, 0.36); }
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.74);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 43, 100, 0.18);
+    color: #002b64;
+    box-shadow: 0 6px 18px rgba(0, 43, 100, 0.12);
+}
+.btn-secondary:hover {
+    background: #fff;
+    border-color: rgba(0, 43, 100, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 43, 100, 0.16);
+}
+body.dark-mode .btn-secondary:hover { transform: translateY(-2px); }
+.btn:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 3px; }
+html.motion-paused .btn:hover { transform: none; }
+
+/* --- Activity cards on a phone: no response to a tap (1.10.26) ---
+   A tap on a touch screen sets :hover, so a card lifted 15 px, glowed, turned its logo and
+   lit its spotlight under the finger, and stayed so until the next tap elsewhere. On a phone
+   the hover state now looks exactly like the card at rest (the shadow below repeats each
+   card's own resting glow, in its accent colour); only the arrow is a link anyway. */
+@media (max-width: 768px), (hover: none) {
+    .bento-grid .bento-card:hover {
+        transform: none !important;
+        box-shadow: 0 -2px 14px color-mix(in srgb, var(--accent) 25%, transparent), 0 8px 32px rgba(0, 0, 0, 0.06);
+    }
+    body.dark-mode .bento-grid .bento-card:hover {
+        box-shadow: 0 -3px 16px color-mix(in srgb, var(--accent) 40%, transparent), 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+    .bento-grid .bento-card:hover::before { opacity: 0; }
+    .bento-grid .bento-card:hover .bento-icon { transform: none; }
+    .bento-grid .bento-card:hover .bento-go-badge { transform: none; }
+}
+
+/* --- One background under the whole page (1.10.26) ---
+   Vision, Gallery and (on a computer) Let's Talk painted their own flat #fbfbfd, while the
+   other sections are clear and show the page's tinted background; each boundary was a step
+   from pale blue to near-white. These three are clear now too, so the colour changes only
+   slowly and continuously under the whole page. The light theme only: in the dark one the
+   difference is a shade of near-black and reads as nothing. The phone's Let's Talk band keeps
+   its own gradient (above), which is meant to stand apart. */
+body:not(.dark-mode) .vision-section,
+body:not(.dark-mode) .gallery-section { background: transparent; }
+@media (min-width: 769px) {
+    body:not(.dark-mode) .contact-section { background: transparent; }
+}
+
+/* --- The drawer menu (1.10.26) ---
+   It was eight words centred on an empty white panel and two small unlabelled icons, with
+   nothing to say whose site it was. Now: the logo at the top; the items aligned to the reading
+   edge, larger, each a full-width row, the current page marked by a rainbow bar at its start
+   instead of an underline; and at the bottom the two ways to reach us as labelled buttons,
+   WhatsApp filled in its green. The panel has a light wash of the brand colours. */
+.nav-brand { display: none; }
+
+@media (max-width: 75em) {
+    .nav-menu {
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 2px;
+        padding: 22px 22px 28px;
+        overflow-y: auto;
+        background:
+            radial-gradient(circle at 100% 0%, rgba(221, 42, 123, 0.10), transparent 45%),
+            radial-gradient(circle at 0% 100%, rgba(0, 200, 255, 0.12), transparent 50%),
+            rgba(255, 255, 255, 0.98);
+    }
+    body.dark-mode .nav-menu {
+        background:
+            radial-gradient(circle at 100% 0%, rgba(255, 45, 120, 0.16), transparent 45%),
+            radial-gradient(circle at 0% 100%, rgba(0, 200, 255, 0.14), transparent 50%),
+            rgba(7, 7, 15, 0.97);
+    }
+
+    .nav-brand {
+        display: block;
+        padding: 4px 6px 22px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--card-border);
+    }
+    .nav-brand-img { height: 46px; width: auto; }
+
+    .nav-menu > li:not(.nav-brand):not(.nav-contact) { display: block; }
+    .nav-menu .nav-link {
+        position: relative;
+        display: block;
+        padding: 12px 16px;
+        border-radius: 14px;
+        font-size: 1.15rem;
+        font-weight: 600;
+        text-align: start;
+        color: var(--text-main);
+    }
+    .nav-menu .nav-link::after { display: none; }
+    .nav-menu .nav-link:hover { background: rgba(0, 43, 100, 0.05); }
+    body.dark-mode .nav-menu .nav-link:hover { background: rgba(255, 255, 255, 0.06); }
+    .nav-menu .nav-link.active {
+        color: var(--primary-color);
+        background: rgba(0, 43, 100, 0.06);
+    }
+    body.dark-mode .nav-menu .nav-link.active { background: rgba(0, 200, 255, 0.08); }
+    .nav-menu .nav-link.active::before {
+        content: "";
+        position: absolute;
+        inset-block: 10px;
+        inset-inline-start: 0;
+        width: 4px;
+        border-radius: 4px;
+        background: linear-gradient(to bottom, #e0197a, #7b2d8b, #1a3a8c, #0e9898, #4caf50);
+    }
+
+    .nav-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 22px;
+    }
+    .nav-contact-link,
+    .nav-contact-link:hover,
+    .nav-contact-link:focus-visible {
+        width: auto;
+        height: 52px;
+        border-radius: 999px;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    .nav-contact-link .fas,
+    .nav-contact-link .fab { width: 20px; height: 20px; }
+    .nav-contact-link--whatsapp,
+    .nav-contact-link--whatsapp:hover,
+    .nav-contact-link--whatsapp:focus-visible {
+        background: #168a46;
+        border-color: #168a46;
+        color: #fff;
+    }
+    .nav-contact-link--whatsapp .fab { background: #fff; }
+    .nav-contact-link--mail { color: var(--primary-color); }
+    .nav-contact-link--mail .fas { background: #dd2a7b; }
+    .nav-contact-link--mail:hover,
+    .nav-contact-link--mail:focus-visible {
+        background: #fff;
+        color: var(--primary-color);
+        border-color: rgba(0, 43, 100, 0.3);
+    }
+    body.dark-mode .nav-contact-link--mail:hover,
+    body.dark-mode .nav-contact-link--mail:focus-visible {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--primary-color);
+    }
+}
+@media (max-width: 75em) {
+    /* the accessibility button sits in the bottom corner over the drawer: the contact buttons
+       end above it */
+    .nav-menu { padding-bottom: 92px; }
+    .nav-contact-link--mail {
+        background: #fff;
+        border: 1.5px solid rgba(0, 43, 100, 0.18);
+    }
+    body.dark-mode .nav-contact-link--mail {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+
+/* --- Floating circles behind each section (1.10.26) ---
+   The page is plain white now (light theme), and each section has its own few soft, blurred
+   circles in pastel brand colours, each set placed and coloured differently, so the backdrop
+   changes from block to block. They drift slowly; html.motion-paused (the accessibility
+   switch, reduce-motion) stops them with every other animation. script.js adds the
+   .section-blobs layer to the sections. The page-wide orbs behind everything are hidden in
+   the light theme; the dark theme keeps its own background as it was. */
+body:not(.dark-mode) .background-mesh { background: var(--bg-body); }
+body:not(.dark-mode) .background-mesh .orb { display: none; }
+
+.has-blobs { position: relative; isolation: isolate; }
+.section-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+body.dark-mode .section-blobs { display: none; }
+.section-blobs span {
+    position: absolute;
+    width: var(--s, 360px);
+    height: var(--s, 360px);
+    border-radius: 50%;
+    background: var(--c);
+    filter: blur(90px);
+    opacity: 0.32;
+    animation: blob-drift var(--t, 22s) ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+}
+@keyframes blob-drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(var(--dx, 40px), var(--dy, -30px)) scale(1.08); }
+    100% { transform: translate(calc(var(--dx, 40px) * -0.6), calc(var(--dy, -30px) * -0.8)) scale(0.96); }
+}
+@media (max-width: 768px) {
+    .section-blobs span { width: calc(var(--s, 360px) * 0.6); height: calc(var(--s, 360px) * 0.6); filter: blur(56px); }
+}
+/* the circles cross into the neighbouring sections instead of ending in a straight cut at a
+   section's edge; only the sides are clipped (no sideways scroll). Sections that clipped all
+   round for their strips clip only sideways too. */
+.section-blobs { overflow: visible; }
+.has-blobs { overflow-x: clip; overflow-y: visible; }
+
+/* Team now stands right above Vision (1.10.26): Vision's own top padding is kept short so the
+   block fits one screen, so the room between them comes from the bottom of Team. */
+#team { padding-bottom: 120px; }
+@media (max-width: 768px) { #team { padding-bottom: 72px; } }

@@ -71,18 +71,23 @@
             <!-- Every item is a page of its own (built from src/sections). The builder marks the
                  current page's link active. Same order as the sections on the home page. -->
             <ul class="nav-menu" id="navMenu">
+                <!-- Drawer only: the logo at the top, so an open menu says whose site it is. -->
+                <li class="nav-brand" aria-hidden="true">
+                    <img src="MoralTogetherLogoWhite.webp" alt="" class="nav-brand-img light-logo">
+                    <img src="MoralTogetherLogoBlack.webp" alt="" class="nav-brand-img dark-logo">
+                </li>
                 <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
                 <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
-                <li><a href="vision.html" class="nav-link active" aria-current="page" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="vision.html" class="nav-link active" aria-current="page" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
                 <li class="nav-contact">
-                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link nav-contact-link--whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span data-i18n="contact_whatsapp_label">WhatsApp</span></a>
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link nav-contact-link--mail"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="contact_email_label">Email</span></a>
                 </li>
             </ul>
             <div class="nav-controls">
@@ -117,16 +122,26 @@
         </div>
     </header>
         <!-- Vision Section -->
+    <!-- Laid out differently from "Our Story" above it, which is text beside a scheme: here the
+         quote leads, centred, the sectors' circle sits under it and the three paragraphs follow
+         in three columns. Chosen 1.10.26 out of three tried; the others were a dark band and the
+         scheme as a backdrop behind a card. -->
     <section id="vision" class="vision-section">
         <div class="container">
-            <div class="vision-split reveal">
+            <div class="vision-stage reveal">
 
-                <div class="vision-left">
-                    <h2 hidden class="section-title" style="margin-bottom: 24px;" data-i18n="vision_heading">Our Vision</h2>
-                    <p class="vision-quote" data-i18n="vision_p1">We believe that when good people connect — good things happen.</p>
-                    <p class="vision-body" data-i18n="vision_p2">MoralTogether connects people, communities, businesses, organizations, and academia, to create collaborations that bring good ideas into action and assured impact.</p>
-                    <p class="vision-body" data-i18n="vision_p3">We create a place where you can get to know one another, share knowledge and experience, find the right people, and connect whoever has an idea, a need, or a resource — with whoever can help turn it into something bigger.</p>
-                    <p class="vision-body" data-i18n="vision_p4">Our goal is simple: to unite forces, to open opportunities, and to turn goodwill into action that advances us all together.</p>
+                <div class="vision-text">
+                    <!-- The heading, then the quote in its original place under it, as a light subtitle
+                         (1.10.26: a large bold quote read as a second heading). -->
+                    <div class="vision-head">
+                        <h2 hidden class="section-title" data-i18n="vision_heading">Our Vision</h2>
+                        <p class="vision-quote" data-i18n="vision_p1">We believe that when good people connect — good things happen.</p>
+                    </div>
+                    <div class="vision-points">
+                        <p class="vision-body" data-i18n="vision_p2">MoralTogether connects people, communities, businesses, organizations, and academia, to create collaborations that bring good ideas into action and assured impact.</p>
+                        <p class="vision-body" data-i18n="vision_p3">We create a place where you can get to know one another, share knowledge and experience, find the right people, and connect whoever has an idea, a need, or a resource — with whoever can help turn it into something bigger.</p>
+                        <p class="vision-body" data-i18n="vision_p4">Our goal is simple: to unite forces, to open opportunities, and to turn goodwill into action that advances us all together.</p>
+                    </div>
                 </div>
 
                 <div class="vision-canvas-wrap">
@@ -152,8 +167,8 @@
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About</a></li>
-                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>

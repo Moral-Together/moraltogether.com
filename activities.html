@@ -71,18 +71,23 @@
             <!-- Every item is a page of its own (built from src/sections). The builder marks the
                  current page's link active. Same order as the sections on the home page. -->
             <ul class="nav-menu" id="navMenu">
+                <!-- Drawer only: the logo at the top, so an open menu says whose site it is. -->
+                <li class="nav-brand" aria-hidden="true">
+                    <img src="MoralTogetherLogoWhite.webp" alt="" class="nav-brand-img light-logo">
+                    <img src="MoralTogetherLogoBlack.webp" alt="" class="nav-brand-img dark-logo">
+                </li>
                 <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
                 <li><a href="activities.html" class="nav-link active" aria-current="page" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
-                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
                 <li class="nav-contact">
-                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link nav-contact-link--whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span data-i18n="contact_whatsapp_label">WhatsApp</span></a>
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link nav-contact-link--mail"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="contact_email_label">Email</span></a>
                 </li>
             </ul>
             <div class="nav-controls">
@@ -162,6 +167,14 @@
                         <p data-i18n="app_p1">A community app that connects people around positive action and makes it possible to offer help, request assistance, share initiatives, and publish activities — all in one place.</p>
                     </div>
                 </article>
+                <article class="bento-card card-tv">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="" width="640" height="198" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="tv_subtitle">Content & Podcast Channel</span>
+                        <h3 id="act-tv" data-i18n="tv_title">MoralTV</h3>
+                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
+                    </div>
+                </article>
                 <article class="bento-card card-vvip">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/vvip-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
@@ -178,14 +191,6 @@
                         <span class="bento-members" data-i18n="members_only">Members only</span>
                     </div>
                     <a class="bento-go" href="https://zuzim.cash" aria-labelledby="act-zuzim"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-                </article>
-                <article class="bento-card card-tv">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="" width="640" height="198" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="tv_subtitle">Content & Podcast Channel</span>
-                        <h3 id="act-tv" data-i18n="tv_title">MoralTV</h3>
-                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
-                    </div>
                 </article>
                 <article class="bento-card card-triplewin">
                     <div class="bento-content">
@@ -214,8 +219,8 @@
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About</a></li>
-                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>

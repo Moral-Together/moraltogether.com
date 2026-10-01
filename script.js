@@ -66,6 +66,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.dispatchEvent(new CustomEvent('langChanged'));
     }
 
+    // --- A Moral's page: "back" returns where the visitor came from ---
+    // The link always led to partnerships.html, but the Morals are opened from the home page's
+    // strip too, and from there it took the visitor somewhere they had never been. The strip's
+    // links carry ?from=home: the page cannot rely on document.referrer, which is empty when
+    // the site is opened from disk (file://). Coming from home the link says "Home" and leads
+    // there; from home or from partnerships.html a click steps back in history, so the visitor
+    // lands where they had scrolled to. Any other way in (a search, a shared link) keeps the
+    // plain link to partnerships.html. Set before the first applyLanguage below, which writes
+    // the label from data-i18n.
+    (function moralBack() {
+        const back = document.querySelector('.moral-back');
+        if (!back) return;
+        const fromHome = new URLSearchParams(location.search).get('from') === 'home';
+        let fromPartners = false, sameSite = location.protocol === 'file:';
+        try {
+            const ref = new URL(document.referrer);
+            sameSite = sameSite || ref.origin === location.origin;
+            fromPartners = sameSite && ref.pathname.endsWith('/partnerships.html');
+        } catch (e) { /* no referrer: opened from disk, a bookmark or a new tab */ }
+        if (!fromHome && !fromPartners) return;
+        if (fromHome) {
+            back.querySelector('[data-i18n]').setAttribute('data-i18n', 'nav_home');
+            back.href = back.getAttribute('href').replace('partnerships.html', 'index.html#partners');
+        }
+        back.addEventListener('click', (e) => {
+            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            // only step back onto our own page; a shared ?from=home link, or a page opened
+            // in a new tab, follows the link instead
+            if (!sameSite || history.length < 2) return;
+            e.preventDefault();
+            history.back();
+        });
+    })();
+
     // Wire up buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang'), true));
@@ -124,23 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
         orbs.forEach((orb, i) => { orb.style.transform = `translateY(${st * (i + 1) * 0.15}px)`; });
     });
 
-    // --- Magnetic Buttons + Ripple ---
-    document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-            const r = btn.getBoundingClientRect();
-            btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.3}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`;
-        });
-        btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
-        btn.addEventListener('click', function(e) {
-            const r = this.getBoundingClientRect();
-            const rpl = document.createElement('span');
-            rpl.classList.add('ripple');
-            rpl.style.left = `${e.clientX - r.left}px`;
-            rpl.style.top = `${e.clientY - r.top}px`;
-            this.appendChild(rpl);
-            setTimeout(() => rpl.remove(), 600);
-        });
-    });
+    // The shared buttons (.btn) used to follow the cursor ("magnetic") and spread a ripple on
+    // click. They now move like the hero's "Our projects" button, in CSS alone (1.10.26).
 
     // --- Dark Mode ---
     const darkToggle = document.getElementById('darkModeToggle');
@@ -236,34 +255,52 @@ document.addEventListener('DOMContentLoaded', () => {
             if (started && started.catch) started.catch(() => { /* the poster stands */ });
         };
 
+        // A video in the home page's strip is watched through its strip, not on its own. The
+        // strip carries every card across its own edges all the time, so each logo was paused
+        // as it left on the left and started again as it came in on the right: the decoder was
+        // brought up again in the middle of the motion, and the strip and the logos stuttered.
+        // Now a strip's videos all play while it is in view and all sleep when it is not.
+        const groups = new Map();
+        videos.forEach((source) => {
+            const video = source.parentElement;
+            const target = video.closest('.partners-marquee-wrap') || video;
+            if (!groups.has(target)) groups.set(target, []);
+            groups.get(target).push(video);
+        });
+
         const watcher = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    wake(video);
-                    if (video.paused && video.dataset.awake && !stillsOnly) {
-                        const resumed = video.play();
-                        if (resumed && resumed.catch) resumed.catch(() => {});
+                groups.get(entry.target).forEach((video) => {
+                    if (entry.isIntersecting) {
+                        wake(video);
+                        if (video.paused && video.dataset.awake && !stillsOnly) {
+                            const resumed = video.play();
+                            if (resumed && resumed.catch) resumed.catch(() => {});
+                        }
+                    } else if (!video.paused) {
+                        // Off screen it is just a decoder burning battery.
+                        video.pause();
                     }
-                } else if (!video.paused) {
-                    // Off screen it is just a decoder burning battery.
-                    video.pause();
-                }
+                });
             });
         }, { rootMargin: '300px 0px' });
 
-        videos.forEach((source) => watcher.observe(source.parentElement));
+        groups.forEach((_, target) => watcher.observe(target));
     })();
 
     // --- Bento Card + Partner Card 3D Tilt + Spotlight ---
     // Not the contact panel: a block that wide tilting under the mouse reads as a sway, and it
     // made the address and the number hard to aim at. The small cards keep it.
+    // A touch screen sends a mousemove with every tap, so a card tilted and lifted under the
+    // finger; on a phone the activity cards and the partner cards stay still when tapped.
+    const noHover = () => window.matchMedia('(hover: none), (max-width: 768px)').matches;
     document.querySelectorAll('.bento-card, .partner-card').forEach(card => {
         if (card.matches('.contact-bento-panel')) return;
         card.addEventListener('mousemove', e => {
             // The system asks for less motion: the card stays put. With every transition cut to
             // nothing it would jump up and tilt at once instead.
             if (document.documentElement.classList.contains('motion-paused')) return;
+            if (noHover()) return;
             const r = card.getBoundingClientRect();
             const x = e.clientX - r.left, y = e.clientY - r.top;
             card.style.setProperty('--mouse-x', `${x}px`);
@@ -497,6 +534,101 @@ document.addEventListener('DOMContentLoaded', () => {
             onScreen ? startComets() : stopComets();
         }).observe(dotsCanvas);
     }
+
+    // ── Partners strip: one device pixel a frame ───────────────────
+    // A smooth CSS slide put the strip on fractions of a pixel while a playing video always
+    // lands on a whole one, so the logos shook in their frames. Steps of a pixel in CSS fixed
+    // that, but a step clock of 60 a second never quite matches the screen's own, and every so
+    // often a frame got no step or two. So the strip is moved here, from the frame callback
+    // itself: the same whole number of device pixels every frame (on a fast screen, one pixel
+    // every few frames), about 60 CSS pixels a second. A frame the browser drops is caught up,
+    // so the speed holds. .js-marquee turns the CSS animation off; it stays as the fallback.
+    (function partnersMarquee() {
+        const track = document.querySelector('.partners-track');
+        if (!track) return;
+
+        const SPEED = 60;              // CSS px a second: a circle of 1980px in 33 s
+        const motionOff = () => document.documentElement.classList.contains('motion-paused');
+        let dev = 0, frame = 0, last = 0, frameMs = 1000 / 60, seen = [], raf = null, onScreen = false;
+
+        track.classList.add('js-marquee');
+
+        function tick(now) {
+            const dt = last ? now - last : frameMs;
+            last = now;
+            // the refresh interval: the median of the first frames, then followed slowly
+            if (dt > 2 && dt < 100) {
+                if (seen.length < 30) { seen.push(dt); frameMs = [...seen].sort((a, b) => a - b)[seen.length >> 1]; }
+                else frameMs += (dt - frameMs) * 0.02;
+            }
+            const frames = dt < 100 ? Math.max(1, Math.round(dt / frameMs)) : 1;
+            const dpr = window.devicePixelRatio || 1;
+            const perFrame = SPEED * dpr * frameMs / 1000;           // device px a frame
+            const step = perFrame >= 1 ? Math.round(perFrame) : 1;
+            const every = perFrame >= 1 ? 1 : Math.round(1 / perFrame);
+            // still while a visitor points at a logo or tabs to one, as before
+            if (!track.matches(':hover, :focus-within')) {
+                for (let i = 0; i < frames; i++) if (++frame % every === 0) dev += step;
+                dev %= Math.round(track.scrollWidth / 2 * dpr);
+            }
+            track.style.transform = `translate3d(${-dev / dpr}px, 0, 0)`;
+            raf = requestAnimationFrame(tick);
+        }
+
+        function start() {
+            if (raf || !onScreen || motionOff()) return;
+            last = 0;
+            raf = requestAnimationFrame(tick);
+        }
+        function stop() {
+            if (!raf) return;
+            cancelAnimationFrame(raf);
+            raf = null;
+        }
+
+        new IntersectionObserver((entries) => {
+            onScreen = entries[0].isIntersecting;
+            onScreen ? start() : stop();
+        }).observe(track);
+        new MutationObserver(() => (motionOff() ? stop() : start()))
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    })();
+
+    // ── Floating circles behind each section (see style.css) ──
+    // Each section gets its own set: colours from the brand palette in pastel, positions given
+    // as a share of the section, so the backdrop changes from one block to the next.
+    (function sectionBlobs() {
+        const P = { pink: '#ffb3d1', blue: '#a9d4ff', mint: '#a6ecd9', peach: '#ffd2a8',
+                    lilac: '#d6c6ff', sun: '#ffe7a3', sky: '#b9f0ff' };
+        // One or two per section, large and pale: a soft wash that shifts colour from block
+        // to block, not confetti (1.10.26: there were three to a section, small and bright).
+        const SETS = {
+            activities: [['blue', 6, 15, 560], ['pink', 92, 75, 480]],
+            about:      [['peach', 88, 30, 560]],
+            team:       [['lilac', 8, 50, 600]],
+            vision:     [['mint', 90, 35, 560], ['sun', 10, 90, 420]],
+            partners:   [['pink', 10, 60, 520]],
+            gallery:    [['sky', 90, 40, 560]],
+            contact:    [['lilac', 10, 50, 520]],
+        };
+        Object.entries(SETS).forEach(([id, blobs], si) => {
+            const section = document.getElementById(id);
+            if (!section) return;
+            const layer = document.createElement('div');
+            layer.className = 'section-blobs';
+            layer.setAttribute('aria-hidden', 'true');
+            blobs.forEach(([colour, x, y, size], i) => {
+                const b = document.createElement('span');
+                const k = si * 3 + i;
+                b.style.cssText = `left:calc(${x}% - ${size / 2}px);top:calc(${y}% - ${size / 2}px);` +
+                    `--s:${size}px;--c:${P[colour]};--t:${18 + (k * 7) % 12}s;--d:${-(k * 5) % 17}s;` +
+                    `--dx:${(k % 2 ? -1 : 1) * (30 + (k * 11) % 30)}px;--dy:${(k % 3 ? 1 : -1) * (24 + (k * 13) % 26)}px`;
+                layer.appendChild(b);
+            });
+            section.classList.add('has-blobs');
+            section.prepend(layer);
+        });
+    })();
 
     // ── Vision Network Canvas ──────────────────────────────────────
     (function initVisionNetwork() {
@@ -747,6 +879,101 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => { resize(); draw(); });
         document.addEventListener('themeChanged', () => draw());
         document.addEventListener('langChanged', () => draw());
+    })();
+
+    // ── Connections web (the "Connections" block of Our Story) ──────
+    // The collage used to be one flat picture. Now every photo circle drifts on a path of its
+    // own, the heart in the middle sways a little, and each thread is redrawn every frame from
+    // the heart to its circle, so they stay tied however the two move. Everything is in the
+    // SVG's 600-unit square; the circles are moved in pixels, scaled from the same units.
+    (function initConnectionsWeb() {
+        const web = document.querySelector('.connections-web');
+        if (!web) return;
+
+        const UNITS = 600;
+        const nodes = [...web.querySelectorAll('.connections-node')];
+        const hubEl = web.querySelector('.connections-hub');
+        const threads = [...web.querySelectorAll('.connections-thread')].map(g => ({
+            path: g.querySelector('path'),
+            hubBead: g.querySelector('.bead-hub'),
+            bead: g.querySelector('.bead'),
+            bend: +g.dataset.bend,
+        }));
+        // As on the picture: a thread leaves the heart at a small bead on its edge, bows a
+        // little on the way, meets a larger glowing bead just outside the ring and runs on
+        // straight into it. Each thread bows its own way (data-bend, share of its length).
+        const GAP = 5;
+        const fix = (v) => Math.round(v * 10) / 10;
+
+        const rest = (el) => {
+            const s = el.style;
+            return { el, x: +s.getPropertyValue('--x'), y: +s.getPropertyValue('--y'), r: +s.getPropertyValue('--r') };
+        };
+        const hub = rest(hubEl);
+        // Each circle gets its own amplitude, speed and phase, so no two move in step.
+        // Periods are 6-10 s: a slow float, not a jiggle. The heart moves least.
+        const spokes = nodes.filter(el => el !== hubEl).map((el, i) => ({
+            ...rest(el),
+            ax: 6 + (i * 3) % 4, ay: 7 + (i * 5) % 4,
+            wx: (2 * Math.PI) / (7000 + (i * 1300) % 3000),
+            wy: (2 * Math.PI) / (6000 + (i * 1700) % 4000),
+            px: i * 1.7, py: i * 2.3 + 1,
+        }));
+        Object.assign(hub, { ax: 2.5, ay: 3, wx: (2 * Math.PI) / 9000, wy: (2 * Math.PI) / 7500, px: 0, py: 0.8 });
+
+        let scale = web.clientWidth / UNITS;
+        let raf = null, onScreen = false;
+
+        const offset = (n, t) => ({ dx: n.ax * Math.sin(t * n.wx + n.px), dy: n.ay * Math.sin(t * n.wy + n.py) });
+        const place = (n, o) => { n.el.style.transform = `translate(${o.dx * scale}px, ${o.dy * scale}px)`; };
+
+        function frame(t) {
+            const h = offset(hub, t);
+            const hx = hub.x + h.dx, hy = hub.y + h.dy;
+            place(hub, h);
+            spokes.forEach((n, i) => {
+                const o = offset(n, t);
+                const x = n.x + o.dx, y = n.y + o.dy;
+                place(n, o);
+                const th = threads[i];
+                const d = Math.hypot(x - hx, y - hy) || 1;
+                const ux = (x - hx) / d, uy = (y - hy) / d;
+                const sx = fix(hx + ux * hub.r), sy = fix(hy + uy * hub.r);
+                const bx = fix(x - ux * (n.r + GAP)), by = fix(y - uy * (n.r + GAP));
+                const ex = fix(x - ux * n.r), ey = fix(y - uy * n.r);
+                const bow = th.bend * (d - hub.r - n.r - GAP);
+                const cx = fix((sx + bx) / 2 - uy * bow), cy = fix((sy + by) / 2 + ux * bow);
+                th.path.setAttribute('d', `M${sx} ${sy}Q${cx} ${cy} ${bx} ${by}L${ex} ${ey}`);
+                th.hubBead.setAttribute('cx', sx); th.hubBead.setAttribute('cy', sy);
+                th.bead.setAttribute('cx', bx);    th.bead.setAttribute('cy', by);
+            });
+        }
+
+        function tick(now) {
+            frame(now);
+            raf = requestAnimationFrame(tick);
+        }
+
+        // Same rule as the canvases above: html.motion-paused (the accessibility widget's
+        // "Stop animations" and prefers-reduced-motion) stops it, and so does scrolling past.
+        const motionOff = () => document.documentElement.classList.contains('motion-paused');
+        function start() {
+            if (raf || !onScreen || motionOff()) return;
+            raf = requestAnimationFrame(tick);
+        }
+        function stop() {
+            if (!raf) return;
+            cancelAnimationFrame(raf);
+            raf = null;
+        }
+
+        new ResizeObserver(() => { scale = web.clientWidth / UNITS; }).observe(web);
+        new IntersectionObserver((entries) => {
+            onScreen = entries[0].isIntersecting;
+            onScreen ? start() : stop();
+        }).observe(web);
+        new MutationObserver(() => (motionOff() ? stop() : start()))
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     })();
 
     // Gallery Modal

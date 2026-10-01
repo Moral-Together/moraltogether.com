@@ -71,18 +71,23 @@
             <!-- Every item is a page of its own (built from src/sections). The builder marks the
                  current page's link active. Same order as the sections on the home page. -->
             <ul class="nav-menu" id="navMenu">
+                <!-- Drawer only: the logo at the top, so an open menu says whose site it is. -->
+                <li class="nav-brand" aria-hidden="true">
+                    <img src="MoralTogetherLogoWhite.webp" alt="" class="nav-brand-img light-logo">
+                    <img src="MoralTogetherLogoBlack.webp" alt="" class="nav-brand-img dark-logo">
+                </li>
                 <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
                 <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
-                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="gallery.html" class="nav-link active" aria-current="page" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
                 <li class="nav-contact">
-                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link nav-contact-link--whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span data-i18n="contact_whatsapp_label">WhatsApp</span></a>
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link nav-contact-link--mail"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="contact_email_label">Email</span></a>
                 </li>
             </ul>
             <div class="nav-controls">
@@ -152,8 +157,8 @@
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About</a></li>
-                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>

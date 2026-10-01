@@ -120,18 +120,23 @@
             <!-- Every item is a page of its own (built from src/sections). The builder marks the
                  current page's link active. Same order as the sections on the home page. -->
             <ul class="nav-menu" id="navMenu">
+                <!-- Drawer only: the logo at the top, so an open menu says whose site it is. -->
+                <li class="nav-brand" aria-hidden="true">
+                    <img src="MoralTogetherLogoWhite.webp" alt="" class="nav-brand-img light-logo">
+                    <img src="MoralTogetherLogoBlack.webp" alt="" class="nav-brand-img dark-logo">
+                </li>
                 <li><a href="index.html" class="nav-link active" aria-current="page" data-i18n="nav_home">Home</a></li>
                 <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
-                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
                 <li class="nav-contact">
-                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link nav-contact-link--whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span data-i18n="contact_whatsapp_label">WhatsApp</span></a>
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link nav-contact-link--mail"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="contact_email_label">Email</span></a>
                 </li>
             </ul>
             <div class="nav-controls">
@@ -234,6 +239,14 @@
                         <p data-i18n="app_p1">A community app that connects people around positive action and makes it possible to offer help, request assistance, share initiatives, and publish activities — all in one place.</p>
                     </div>
                 </article>
+                <article class="bento-card card-tv">
+                    <div class="bento-content">
+                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="" width="640" height="198" class="bento-logo-img" loading="lazy" decoding="async"></span>
+                        <span class="subtitle" data-i18n="tv_subtitle">Content & Podcast Channel</span>
+                        <h3 id="act-tv" data-i18n="tv_title">MoralTV</h3>
+                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
+                    </div>
+                </article>
                 <article class="bento-card card-vvip">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/vvip-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
@@ -251,14 +264,6 @@
                     </div>
                     <a class="bento-go" href="https://zuzim.cash" aria-labelledby="act-zuzim"><span class="bento-go-badge"><svg class="bento-go-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                 </article>
-                <article class="bento-card card-tv">
-                    <div class="bento-content">
-                        <span class="bento-icon"><img src="images/moral-tv-logo.webp" alt="" width="640" height="198" class="bento-logo-img" loading="lazy" decoding="async"></span>
-                        <span class="subtitle" data-i18n="tv_subtitle">Content & Podcast Channel</span>
-                        <h3 id="act-tv" data-i18n="tv_title">MoralTV</h3>
-                        <p data-i18n="tv_p1">A home for media, content, and digital marketing that connects businesses, initiatives, and audiences and promotes them through content, podcasts, and online activity.</p>
-                    </div>
-                </article>
                 <article class="bento-card card-triplewin">
                     <div class="bento-content">
                         <span class="bento-icon"><img src="images/triple-win-logo.webp" alt="" class="bento-logo-img" loading="lazy" decoding="async"></span>
@@ -274,72 +279,45 @@
     <section id="about" class="bento-section">
         <div class="container">
             <div class="reveal">
-                <h2 class="section-title" style="margin-bottom: 30px;" data-i18n="about_heading">Our Story</h2>
-
+                <!-- The title sits in the grid, over the text column, so the connections web beside
+                     it starts level with the title instead of under it. -->
                 <div class="about-content-layout">
+                    <h2 class="section-title about-title" data-i18n="about_heading">Our Story</h2>
                     <div class="about-text-column">
                         <p class="lead-text" data-i18n="about_lead">The organization was founded on a simple belief:</p>
                         <p data-i18n="about_p1">When good forces unite — a powerful system is created, capable of changing reality for the better. Our role is to serve as a bridge connecting organizations, nonprofits, initiatives, and groups — to create a space for collaboration and to amplify cumulative impact through the power of community and social connection.</p>
                         <p data-i18n="about_p2">We work to connect people and organizations acting for society, to make information accessible, to encourage collaborative dialogue, and to build an infrastructure of mutual recognition, trust, and joint action.</p>
 
-                        <!-- The three topics of "Our Story". On the home page an accordion (<details>), the
-                             first one open; on about.html plain text, each title heading its paragraphs:
-                             tag=div head=div kind=about-topic first_open="". -->
-                        <details class="about-accordion" open>
-                            <summary>
-                                <h3 class="about-subheading" data-i18n="about_goal_heading">Our Overarching Goal</h3>
-                            </summary>
-                            <div class="about-accordion-body">
-                                <p data-i18n="about_goal_body">Creating economic, security, health, nutritional, and social resilience for a united, healthy, and developing society. To put that belief, role, action, and these goals into practice, we have established social systems that touch every circle of life.</p>
-                            </div>
-                        </details>
-
-                        <details class="about-accordion">
-                            <summary>
-                                <h3 class="about-subheading" data-i18n="about_comm_heading">Communications</h3>
-                            </summary>
-                            <div class="about-accordion-body">
-                                <p data-i18n="about_comm_body">We have communications studios equipped to the highest technological standard, serving as a voice and a stage for positive social communication for all ages.</p>
-                            </div>
-                        </details>
-
-                        <details class="about-accordion">
-                            <summary>
-                                <h3 class="about-subheading" data-i18n="about_social_heading">A Comprehensive Social Media Network</h3>
-                            </summary>
-                            <div class="about-accordion-body">
-                                <p data-i18n="about_social_p1">At the core of our activity is turning the digital space into a space that spreads good and connects people to it. We see digital as an enormous opportunity for positive impact. In the place where people are every day, we seek to give a stage to good deeds, to initiatives of value, to organizations working for society, and to messages that strengthen hope, mutual responsibility, and connection worth making.</p>
-                                <p data-i18n="about_social_p2">Through this platform we centralize and make accessible the good that already exists, connect people with opportunities for action, and enable positive content to reach wider audiences — turning exposure into involvement, and involvement into action.</p>
-                                <p data-i18n="about_social_p3">The goal is not only to tell about the good — but to use the power of digital to spread the good, connect more people to it, and increase its impact in the real world.</p>
-                            </div>
-                        </details>
                     </div>
 
                     <div class="connections-block">
-                        <img src="images/connections.webp" alt="" class="connections-img" width="502" height="502" loading="lazy" decoding="async">
+                        <!-- The collage, taken apart: each photo is its own circle drifting on its own path,
+                             and the threads to the heart in the middle follow them (script.js). Lines sit
+                             under the circles, so each one starts and ends at a ring. All seven rings are one size,
+                             set evenly round the heart; coordinates are in the 600-unit square of the SVG.
+                             The old flat picture is images/connections.webp. -->
+                        <div class="connections-web" aria-hidden="true">
+                            <svg class="connections-lines" viewBox="0 0 600 600">
+                                <g class="connections-thread" data-bend="0.1"><path d="M300 250Q308.7 206.5 300 163L300 158"/><circle class="bead-hub" r="2.5" cx="300" cy="250"/><circle class="bead" r="4.5" cx="300" cy="163"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M339.1 268.8Q367.7 234.9 407.1 214.6L411 211.5"/><circle class="bead-hub" r="2.5" cx="339.1" cy="268.8"/><circle class="bead" r="4.5" cx="407.1" cy="214.6"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M348.7 311.1Q389.2 329.3 433.6 330.5L438.4 331.6"/><circle class="bead-hub" r="2.5" cx="348.7" cy="311.1"/><circle class="bead" r="4.5" cx="433.6" cy="330.5"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M321.7 345Q348.4 380.5 359.4 423.4L361.6 427.9"/><circle class="bead-hub" r="2.5" cx="321.7" cy="345"/><circle class="bead" r="4.5" cx="359.4" cy="423.4"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M278.3 345Q251.6 380.5 240.6 423.4L238.4 427.9"/><circle class="bead-hub" r="2.5" cx="278.3" cy="345"/><circle class="bead" r="4.5" cx="240.6" cy="423.4"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M251.3 311.1Q210.8 329.3 166.4 330.5L161.6 331.6"/><circle class="bead-hub" r="2.5" cx="251.3" cy="311.1"/><circle class="bead" r="4.5" cx="166.4" cy="330.5"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M260.9 268.8Q232.3 234.9 192.9 214.6L189 211.5"/><circle class="bead-hub" r="2.5" cx="260.9" cy="268.8"/><circle class="bead" r="4.5" cx="192.9" cy="214.6"/></g>
+                            </svg>
+                            <div class="connections-node" style="--x: 300; --y: 88; --r: 70;"><img src="images/connections/connections-2.webp" alt="" width="150" height="150" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 465.7; --y: 167.8; --r: 70;"><img src="images/connections/connections-3.webp" alt="" width="138" height="138" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 506.7; --y: 347.2; --r: 70;"><img src="images/connections/connections-5.webp" alt="" width="142" height="142" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 392; --y: 491; --r: 70;"><img src="images/connections/connections-7.webp" alt="" width="144" height="144" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 208; --y: 491; --r: 70;"><img src="images/connections/connections-6.webp" alt="" width="150" height="150" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 93.3; --y: 347.2; --r: 70;"><img src="images/connections/connections-4.webp" alt="" width="144" height="144" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 134.3; --y: 167.8; --r: 70;"><img src="images/connections/connections-1.webp" alt="" width="134" height="134" loading="lazy" decoding="async"></div>
+                            <div class="connections-node connections-hub" style="--x: 300; --y: 300; --r: 50;"><img src="images/connections/connections-center.webp" alt="" width="90" height="90" loading="lazy" decoding="async"></div>
+                        </div>
                         <h3 class="connections-heading" data-i18n="connections_heading">Connections</h3>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-        <!-- Vision Section -->
-    <section id="vision" class="vision-section">
-        <div class="container">
-            <div class="vision-split reveal">
-
-                <div class="vision-left">
-                    <h2 class="section-title" style="margin-bottom: 24px;" data-i18n="vision_heading">Our Vision</h2>
-                    <p class="vision-quote" data-i18n="vision_p1">We believe that when good people connect — good things happen.</p>
-                    <p class="vision-body" data-i18n="vision_p2">MoralTogether connects people, communities, businesses, organizations, and academia, to create collaborations that bring good ideas into action and assured impact.</p>
-                    <p class="vision-body" data-i18n="vision_p3">We create a place where you can get to know one another, share knowledge and experience, find the right people, and connect whoever has an idea, a need, or a resource — with whoever can help turn it into something bigger.</p>
-                    <p class="vision-body" data-i18n="vision_p4">Our goal is simple: to unite forces, to open opportunities, and to turn goodwill into action that advances us all together.</p>
-                </div>
-
-                <div class="vision-canvas-wrap">
-                    <canvas id="vision-network-canvas"></canvas>
-                </div>
-
             </div>
         </div>
     </section>
@@ -464,7 +442,40 @@
             </div>
         </div>
     </section>
+        <!-- Vision Section -->
+    <!-- Laid out differently from "Our Story" above it, which is text beside a scheme: here the
+         quote leads, centred, the sectors' circle sits under it and the three paragraphs follow
+         in three columns. Chosen 1.10.26 out of three tried; the others were a dark band and the
+         scheme as a backdrop behind a card. -->
+    <section id="vision" class="vision-section">
+        <div class="container">
+            <div class="vision-stage reveal">
+
+                <div class="vision-text">
+                    <!-- The heading, then the quote in its original place under it, as a light subtitle
+                         (1.10.26: a large bold quote read as a second heading). -->
+                    <div class="vision-head">
+                        <h2 class="section-title" data-i18n="vision_heading">Our Vision</h2>
+                        <p class="vision-quote" data-i18n="vision_p1">We believe that when good people connect — good things happen.</p>
+                    </div>
+                    <div class="vision-points">
+                        <p class="vision-body" data-i18n="vision_p2">MoralTogether connects people, communities, businesses, organizations, and academia, to create collaborations that bring good ideas into action and assured impact.</p>
+                        <p class="vision-body" data-i18n="vision_p3">We create a place where you can get to know one another, share knowledge and experience, find the right people, and connect whoever has an idea, a need, or a resource — with whoever can help turn it into something bigger.</p>
+                        <p class="vision-body" data-i18n="vision_p4">Our goal is simple: to unite forces, to open opportunities, and to turn goodwill into action that advances us all together.</p>
+                    </div>
+                </div>
+
+                <div class="vision-canvas-wrap">
+                    <canvas id="vision-network-canvas"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </section>
         <!-- Partnerships -->
+    <!-- One strip of larger cards (1.10.26). There were two strips running against each other,
+         and the same Morals showed twice at once; a still grid and two tilted ribbons were
+         tried as well. -->
     <section id="partners" class="section partners-section">
         <div class="container reveal">
             <h2 class="section-title text-center" style="margin-bottom: 10px;" data-i18n="partners_heading">Partnerships</h2>
@@ -473,59 +484,31 @@
 
     <div class="partners-marquee-wrap">
         <div class="partners-track partners-track--left">
-            <figure class="partners-item"><a class="partners-link" href="morals/mothers-family/index.html"><div class="partners-logo-card" style="--card-accent:#e63946"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/neighborhoods/index.html"><div class="partners-logo-card" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/young-ambassadors/index.html"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/elderly/index.html"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/animals/index.html"><div class="partners-logo-card" style="--card-accent:#38b56a"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/stage-arts/index.html"><div class="partners-logo-card" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/constructive-criticism/index.html"><div class="partners-logo-card" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/care-encouragement/index.html"><div class="partners-logo-card" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/law/index.html"><div class="partners-logo-card" style="--card-accent:#1565c0"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/mothers-family/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#e63946"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/neighborhoods/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#f4a31e"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/young-ambassadors/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/elderly/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/animals/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#38b56a"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/stage-arts/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#9c27b0"><video loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/constructive-criticism/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#00897b"><video loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/care-encouragement/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#4caf50"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/law/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#1565c0"><video class="is-pillarboxed" loop muted playsinline preload="none"><source data-src="images/p9-logo.mp4" data-poster="images/p9-logo-poster.webp" type="video/mp4"></video></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
-        </div>
-    </div>
-
-    <div class="partners-marquee-wrap">
-        <div class="partners-track partners-track--right">
-            <figure class="partners-item"><a class="partners-link" href="morals/mothers-family/index.html"><div class="partners-logo-card" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt="" style=""></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/neighborhoods/index.html"><div class="partners-logo-card" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/young-ambassadors/index.html"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/elderly/index.html"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/animals/index.html"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/animals/index.html"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/stage-arts/index.html"><div class="partners-logo-card" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/care-encouragement/index.html"><div class="partners-logo-card" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/law/index.html"><div class="partners-logo-card" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/sports/index.html"><div class="partners-logo-card" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div><figcaption class="partners-name" data-i18n="p10_name">Sports Moral</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/moral-radio/index.html"><div class="partners-logo-card" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p14_name">Moral Radio</figcaption></a></figure>
-            <figure class="partners-item"><a class="partners-link" href="morals/colleges/index.html"><div class="partners-logo-card" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p16_name">Moral Colleges</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/mothers-family/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#e63946"><img src="images/p1-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/neighborhoods/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#f4a31e"><img src="images/p2-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/young-ambassadors/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#1e8ec8"><img src="images/p3-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/elderly/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#f9b80c"><img src="images/p4-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/animals/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#38b56a"><img src="images/p5-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/stage-arts/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#9c27b0"><img src="images/p6-logo2.webp" alt=""></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/care-encouragement/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#4caf50"><img src="images/p8-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/law/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#1565c0"><img src="images/p9-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/sports/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#ff5722"><img src="images/p10-logo.webp" alt="" style="transform:scale(0.85);"></div><figcaption class="partners-name" data-i18n="p10_name">Sports Moral</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/moral-radio/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#5c6bc0"><img src="images/p14-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p14_name">Moral Radio</figcaption></a></figure>
-            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/colleges/index.html" tabindex="-1"><div class="partners-logo-card" style="--card-accent:#6a1b9a"><img src="images/p16-logo.webp" alt=""></div><figcaption class="partners-name" data-i18n="p16_name">Moral Colleges</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/mothers-family/index.html?from=home" style="--card-accent:#e63946"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.05;" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/neighborhoods/index.html?from=home" style="--card-accent:#f4a31e"><div class="partners-logo-card"><span class="partners-logo-clip"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/young-ambassadors/index.html?from=home" style="--card-accent:#1e8ec8"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.1;" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/elderly/index.html?from=home" style="--card-accent:#f9b80c"><div class="partners-logo-card"><span class="partners-logo-clip"><img src="images/p4-logo.webp" alt=""></span></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/animals/index.html?from=home" style="--card-accent:#38b56a"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.08;" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/stage-arts/index.html?from=home" style="--card-accent:#9c27b0"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-cover" loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/constructive-criticism/index.html?from=home" style="--card-accent:#00897b"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-cover" loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/care-encouragement/index.html?from=home" style="--card-accent:#4caf50"><div class="partners-logo-card"><span class="partners-logo-clip"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
+            <figure class="partners-item"><a class="partners-link" href="morals/law/index.html?from=home" style="--card-accent:#1565c0"><div class="partners-logo-card"><span class="partners-logo-clip"><img src="images/p9-logo.webp" alt="" loading="lazy" decoding="async"></span></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/mothers-family/index.html?from=home" tabindex="-1" style="--card-accent:#e63946"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.05;" loop muted playsinline preload="none"><source data-src="images/p1-logo.mp4" data-poster="images/p1-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p1_name">Mothers &amp; Family Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/neighborhoods/index.html?from=home" tabindex="-1" style="--card-accent:#f4a31e"><div class="partners-logo-card"><span class="partners-logo-clip"><video loop muted playsinline preload="none"><source data-src="images/p2-logo.mp4" data-poster="images/p2-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p2_name">Neighborhoods Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/young-ambassadors/index.html?from=home" tabindex="-1" style="--card-accent:#1e8ec8"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.1;" loop muted playsinline preload="none"><source data-src="images/p3-logo.mp4" data-poster="images/p3-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p3_name">Young Ambassadors Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/elderly/index.html?from=home" tabindex="-1" style="--card-accent:#f9b80c"><div class="partners-logo-card"><span class="partners-logo-clip"><img src="images/p4-logo.webp" alt=""></span></div><figcaption class="partners-name" data-i18n="p4_name">Elderly Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/animals/index.html?from=home" tabindex="-1" style="--card-accent:#38b56a"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-pillarboxed" style="--zoom: 1.08;" loop muted playsinline preload="none"><source data-src="images/p5-logo.mp4" data-poster="images/p5-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p5_name">Animals Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/stage-arts/index.html?from=home" tabindex="-1" style="--card-accent:#9c27b0"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-cover" loop muted playsinline preload="none"><source data-src="images/p6-logo.mp4" data-poster="images/p6-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p6_name">Stage Arts Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/constructive-criticism/index.html?from=home" tabindex="-1" style="--card-accent:#00897b"><div class="partners-logo-card"><span class="partners-logo-clip"><video class="is-cover" loop muted playsinline preload="none"><source data-src="images/p7-logo.mp4" data-poster="images/p7-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p7_name">Constructive Criticism Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/care-encouragement/index.html?from=home" tabindex="-1" style="--card-accent:#4caf50"><div class="partners-logo-card"><span class="partners-logo-clip"><video loop muted playsinline preload="none"><source data-src="images/p8-logo.mp4" data-poster="images/p8-logo-poster.webp" type="video/mp4"></video></span></div><figcaption class="partners-name" data-i18n="p8_name">Care &amp; Encouragement Moral</figcaption></a></figure>
+            <figure class="partners-item" aria-hidden="true"><a class="partners-link" href="morals/law/index.html?from=home" tabindex="-1" style="--card-accent:#1565c0"><div class="partners-logo-card"><span class="partners-logo-clip"><img src="images/p9-logo.webp" alt="" loading="lazy" decoding="async"></span></div><figcaption class="partners-name" data-i18n="p9_name">Law Moral</figcaption></a></figure>
         </div>
     </div>
 
     <div class="container">
-        <div class="cta-banner reveal" style="margin-top: 48px; text-align: center;">
-            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px;" data-i18n="partners_cta">Join the circle of influence and partnership</p>
-            <a href="partnerships.html" class="btn btn-secondary" data-i18n="hero_btn_learn">Learn More</a>
+        <div class="partners-cta reveal">
+            <p class="partners-cta-text" data-i18n="partners_cta">Join the circle of influence and partnership</p>
+            <a href="partnerships.html" class="hero-projects-btn" data-i18n="hero_btn_learn">Learn More</a>
         </div>
     </div>
 </section>
@@ -563,6 +546,10 @@
                     </div>
                 </div>
             </div>
+            <!-- phones: the strip stands still as a small album, and this leads to the full one -->
+            <div class="gallery-more">
+                <a href="gallery.html" class="btn btn-secondary" data-i18n="nav_gallery">Gallery</a>
+            </div>
         </div>
     </section>
         <!-- Contact Section -->
@@ -577,7 +564,7 @@
                             <i class="fas fa-envelope contact-icon" aria-hidden="true"></i>
                             <div>
                                 <span data-i18n="contact_email_label">Email</span>
-                                <strong>support@moraltogether.com</strong>
+                                <strong>support@<wbr>moraltogether.com</strong>
                             </div>
                         </a>
                         <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="contact-method-card contact-whatsapp-card">
@@ -617,8 +604,8 @@
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About</a></li>
-                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>

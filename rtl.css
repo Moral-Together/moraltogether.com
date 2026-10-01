@@ -63,15 +63,10 @@
     }
 }
 
-/* --- About text column: the divider between the text and the value cards ---
-   The column carries the orange rule on its own right edge. Left to right that puts it
-   between the two columns; mirrored, the column moves to the right of the grid and the rule
-   goes with it, ending up against the outer edge of the page instead of between anything. */
-[dir="rtl"] .about-text-column {
-    border-right: none;
-    border-left: 4px solid var(--secondary-color);
-    padding-right: 0;
-    padding-left: 30px;
+/* --- Connections caption: Hebrew letters are not spaced out like Latin capitals --- */
+[dir="rtl"] .connections-heading {
+    letter-spacing: 0.02em;
+    font-size: 1.05rem;
 }
 
 /* --- Feature checklist: checkmark moves to right --- */
@@ -159,11 +154,6 @@
     background: linear-gradient(to right, var(--bg-body), transparent);
 }
 
-/* --- Vision section: text panel switches sides --- */
-[dir="rtl"] .vision-split {
-    direction: rtl;
-}
-
 /* --- Scroll progress bar: keep LTR (universal convention) --- */
 [dir="rtl"] .scroll-progress-container {
     direction: ltr;
@@ -182,4 +172,14 @@
    so the strip itself is pinned to LTR; each name under a logo still reads in its script. */
 [dir="rtl"] .partners-marquee-wrap {
     direction: ltr;
+}
+
+/* --- Footer links: the hover nudge goes the way the text reads --- */
+[dir="rtl"] .footer-links a:hover {
+    transform: translateX(-5px);
+}
+
+/* --- Contact buttons on a phone: the address reads LTR but sits on the right edge --- */
+@media (max-width: 768px) {
+    [dir="rtl"] .contact-method-card strong { text-align: right; }
 }

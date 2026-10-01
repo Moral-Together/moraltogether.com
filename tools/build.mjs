@@ -33,6 +33,7 @@
 // In any source file:
 //   {{> sections/team h=h1}}   the file src/sections/team.html here, with h set to "h1" inside it
 //                              (a value with spaces goes in quotes: attrs='aria-hidden="true"')
+//   {{> partials/x when=flag}} the include only where the page has set flag to something
 //   {{name}}                   a value; {{name|h2}} falls back to "h2"
 // Paths are written as from the site root; pages built into a subfolder get them rewritten.
 //
@@ -75,6 +76,7 @@ function render(source, vars, where, depth = 0) {
             }
             const file = join(SRC, path.endsWith('.html') ? path : `${path}.html`);
             if (!existsSync(file)) throw new Error(`${where}: no such include "${path}"`);
+            if (scoped.when !== undefined && !vars[scoped.when]) return EMPTY;
             return render(readFileSync(file, 'utf8').replace(/\n$/, ''), scoped, path, depth + 1);
         })
         .replace(/\{\{(\w+)(?:\|([^}]*))?\}\}/g, (m, k, fallback) => {

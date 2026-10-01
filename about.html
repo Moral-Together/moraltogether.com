@@ -71,18 +71,23 @@
             <!-- Every item is a page of its own (built from src/sections). The builder marks the
                  current page's link active. Same order as the sections on the home page. -->
             <ul class="nav-menu" id="navMenu">
+                <!-- Drawer only: the logo at the top, so an open menu says whose site it is. -->
+                <li class="nav-brand" aria-hidden="true">
+                    <img src="MoralTogetherLogoWhite.webp" alt="" class="nav-brand-img light-logo">
+                    <img src="MoralTogetherLogoBlack.webp" alt="" class="nav-brand-img dark-logo">
+                </li>
                 <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
                 <li><a href="activities.html" class="nav-link" data-i18n="nav_activities">Activities</a></li>
                 <li><a href="about.html" class="nav-link active" aria-current="page" data-i18n="nav_about">About</a></li>
-                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="team.html" class="nav-link" data-i18n="nav_team">Team</a></li>
+                <li><a href="vision.html" class="nav-link" data-i18n="nav_vision">Vision</a></li>
                 <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery">Gallery</a></li>
                 <li><a href="partnerships.html" class="nav-link" data-i18n="nav_partnerships">Partnerships</a></li>
                 <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 <!-- Drawer only: the two ways to reach us, so an open menu is also a way to write. -->
                 <li class="nav-contact">
-                    <a href="mailto:support@moraltogether.com" class="nav-contact-link" data-i18n="contact_email_label" data-i18n-attr="aria-label" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link" data-i18n="contact_whatsapp_label" data-i18n-attr="aria-label" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/972557711433" target="_blank" rel="noopener" class="nav-contact-link nav-contact-link--whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span data-i18n="contact_whatsapp_label">WhatsApp</span></a>
+                    <a href="mailto:support@moraltogether.com" class="nav-contact-link nav-contact-link--mail"><i class="fas fa-envelope" aria-hidden="true"></i><span data-i18n="contact_email_label">Email</span></a>
                 </li>
             </ul>
             <div class="nav-controls">
@@ -120,17 +125,18 @@
     <section id="about" class="bento-section">
         <div class="container">
             <div class="reveal">
-                <h2 hidden class="section-title" style="margin-bottom: 30px;" data-i18n="about_heading">Our Story</h2>
-
+                <!-- The title sits in the grid, over the text column, so the connections web beside
+                     it starts level with the title instead of under it. -->
                 <div class="about-content-layout">
+                    <h2 hidden class="section-title about-title" data-i18n="about_heading">Our Story</h2>
                     <div class="about-text-column">
                         <p class="lead-text" data-i18n="about_lead">The organization was founded on a simple belief:</p>
                         <p data-i18n="about_p1">When good forces unite — a powerful system is created, capable of changing reality for the better. Our role is to serve as a bridge connecting organizations, nonprofits, initiatives, and groups — to create a space for collaboration and to amplify cumulative impact through the power of community and social connection.</p>
                         <p data-i18n="about_p2">We work to connect people and organizations acting for society, to make information accessible, to encourage collaborative dialogue, and to build an infrastructure of mutual recognition, trust, and joint action.</p>
 
-                        <!-- The three topics of "Our Story". On the home page an accordion (<details>), the
-                             first one open; on about.html plain text, each title heading its paragraphs:
-                             tag=div head=div kind=about-topic first_open="". -->
+                        <!-- The three topics of "Our Story", plain text, each title heading its paragraphs.
+                             Only on about.html (topics=yes): the home page keeps the opening paragraphs alone,
+                             the accordion it had is gone. -->
                         <div class="about-topic">
                             <div>
                                 <h3 class="about-subheading" data-i18n="about_goal_heading">Our Overarching Goal</h3>
@@ -162,7 +168,30 @@
                     </div>
 
                     <div class="connections-block">
-                        <img src="images/connections.webp" alt="" class="connections-img" width="502" height="502" loading="lazy" decoding="async">
+                        <!-- The collage, taken apart: each photo is its own circle drifting on its own path,
+                             and the threads to the heart in the middle follow them (script.js). Lines sit
+                             under the circles, so each one starts and ends at a ring. All seven rings are one size,
+                             set evenly round the heart; coordinates are in the 600-unit square of the SVG.
+                             The old flat picture is images/connections.webp. -->
+                        <div class="connections-web" aria-hidden="true">
+                            <svg class="connections-lines" viewBox="0 0 600 600">
+                                <g class="connections-thread" data-bend="0.1"><path d="M300 250Q308.7 206.5 300 163L300 158"/><circle class="bead-hub" r="2.5" cx="300" cy="250"/><circle class="bead" r="4.5" cx="300" cy="163"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M339.1 268.8Q367.7 234.9 407.1 214.6L411 211.5"/><circle class="bead-hub" r="2.5" cx="339.1" cy="268.8"/><circle class="bead" r="4.5" cx="407.1" cy="214.6"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M348.7 311.1Q389.2 329.3 433.6 330.5L438.4 331.6"/><circle class="bead-hub" r="2.5" cx="348.7" cy="311.1"/><circle class="bead" r="4.5" cx="433.6" cy="330.5"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M321.7 345Q348.4 380.5 359.4 423.4L361.6 427.9"/><circle class="bead-hub" r="2.5" cx="321.7" cy="345"/><circle class="bead" r="4.5" cx="359.4" cy="423.4"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M278.3 345Q251.6 380.5 240.6 423.4L238.4 427.9"/><circle class="bead-hub" r="2.5" cx="278.3" cy="345"/><circle class="bead" r="4.5" cx="240.6" cy="423.4"/></g>
+                                <g class="connections-thread" data-bend="-0.1"><path d="M251.3 311.1Q210.8 329.3 166.4 330.5L161.6 331.6"/><circle class="bead-hub" r="2.5" cx="251.3" cy="311.1"/><circle class="bead" r="4.5" cx="166.4" cy="330.5"/></g>
+                                <g class="connections-thread" data-bend="0.1"><path d="M260.9 268.8Q232.3 234.9 192.9 214.6L189 211.5"/><circle class="bead-hub" r="2.5" cx="260.9" cy="268.8"/><circle class="bead" r="4.5" cx="192.9" cy="214.6"/></g>
+                            </svg>
+                            <div class="connections-node" style="--x: 300; --y: 88; --r: 70;"><img src="images/connections/connections-2.webp" alt="" width="150" height="150" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 465.7; --y: 167.8; --r: 70;"><img src="images/connections/connections-3.webp" alt="" width="138" height="138" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 506.7; --y: 347.2; --r: 70;"><img src="images/connections/connections-5.webp" alt="" width="142" height="142" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 392; --y: 491; --r: 70;"><img src="images/connections/connections-7.webp" alt="" width="144" height="144" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 208; --y: 491; --r: 70;"><img src="images/connections/connections-6.webp" alt="" width="150" height="150" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 93.3; --y: 347.2; --r: 70;"><img src="images/connections/connections-4.webp" alt="" width="144" height="144" loading="lazy" decoding="async"></div>
+                            <div class="connections-node" style="--x: 134.3; --y: 167.8; --r: 70;"><img src="images/connections/connections-1.webp" alt="" width="134" height="134" loading="lazy" decoding="async"></div>
+                            <div class="connections-node connections-hub" style="--x: 300; --y: 300; --r: 50;"><img src="images/connections/connections-center.webp" alt="" width="90" height="90" loading="lazy" decoding="async"></div>
+                        </div>
                         <h3 class="connections-heading" data-i18n="connections_heading">Connections</h3>
                     </div>
                 </div>
@@ -185,8 +214,8 @@
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="activities.html" data-i18n="nav_activities">Activities</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About</a></li>
-                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="team.html" data-i18n="nav_team">Team</a></li>
+                        <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
                         <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
                         <li><a href="partnerships.html" data-i18n="nav_partnerships">Partnerships</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
