@@ -182,6 +182,10 @@ function moralValues(entry) {
         return `${PAD}    <a href="${attr(l.url)}" target="_blank" rel="noopener" class="moral-link moral-link--${l.type}">`
             + `<i class="${ICONS[l.type]}" aria-hidden="true"></i><span>${LABELS[l.type]}</span></a>`;
     });
+    // The Moral's films, under the card: nothing loads until the visitor presses play.
+    const films = (entry.videos || []).map((v) =>
+        `                    <video class="moral-video" controls playsinline preload="none" poster="${v.poster}">`
+        + `<source src="${v.src}" type="video/mp4"></video>`);
     return {
         key: entry.key,
         accent: entry.accent,
@@ -194,6 +198,7 @@ function moralValues(entry) {
         logo,
         desc: desc ? `${PAD}<p class="moral-desc" data-i18n="${entry.key}_desc">${desc}</p>` : '',
         links: buttons.length ? `${PAD}<div class="moral-links">\n${buttons.join('\n')}\n${PAD}</div>` : '',
+        videos: films.length ? `                <section class="moral-videos" aria-label="${attr(name)}">\n${films.join('\n')}\n                </section>` : '',
     };
 }
 

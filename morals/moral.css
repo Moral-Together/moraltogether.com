@@ -165,6 +165,98 @@ body.dark-mode .moral-media { background: #0a0a0a; }
 .moral-link--facebook:hover { box-shadow: 0 8px 20px rgba(23, 113, 230, 0.35); }
 .moral-link--youtube:hover  { box-shadow: 0 8px 20px rgba(236, 0, 0, 0.3); }
 
+/* ── under the card: the project manager beside the Moral's films ──
+   Only the card above glows; these two stay quiet so the page has one lead. The manager is
+   an upright profile, a different shape from the wide card, so the two never read as a pair. */
+.moral-more {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+    margin-top: 40px;
+}
+/* no films: the profile alone, laid on its side across the full width */
+.moral-more:not(:has(.moral-videos)) { grid-template-columns: minmax(0, 1fr); }
+.moral-more:not(:has(.moral-videos)) .moral-manager {
+    position: static;
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+}
+.moral-more:not(:has(.moral-videos)) .moral-manager__role { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+.moral-more:not(:has(.moral-videos)) .moral-manager__name { font-size: 1.35rem; }
+.moral-more:not(:has(.moral-videos)) .moral-manager__desc { font-size: 1.1rem; }
+.moral-more:not(:has(.moral-videos)) .moral-manager__body {
+    justify-content: center;
+    gap: 10px;
+    padding: 40px 48px;
+    border-top: 0;
+    border-inline-start: 3px solid var(--card-accent);
+}
+
+.moral-manager {
+    position: sticky;
+    top: 100px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+}
+body.dark-mode .moral-manager { background: #14161c; border-color: rgba(255, 255, 255, 0.08); }
+
+.moral-manager__photo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    aspect-ratio: 1;
+    background:
+        linear-gradient(to top, color-mix(in srgb, var(--card-accent) 22%, transparent), transparent 70%),
+        color-mix(in srgb, var(--card-accent) 10%, #eef0f4);
+    color: color-mix(in srgb, var(--card-accent) 35%, #a3aab8);
+}
+body.dark-mode .moral-manager__photo {
+    background:
+        linear-gradient(to top, color-mix(in srgb, var(--card-accent) 28%, transparent), transparent 70%),
+        #1d2029;
+    color: color-mix(in srgb, var(--card-accent) 40%, #4b5160);
+}
+.moral-manager__photo svg { display: block; width: 72%; height: 72%; }
+
+.moral-manager__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px 24px 26px;
+    border-top: 3px solid var(--card-accent);
+}
+.moral-manager__role {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-main);
+}
+.moral-manager__name {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--card-accent);
+}
+.moral-manager__desc { margin: 0; font-size: 0.95rem; color: var(--text-muted); }
+
+/* the films: plain frames, no accent, so the footage carries the colour */
+.moral-videos { display: grid; gap: 24px; }
+.moral-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    background: #000;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+}
+.moral-video:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 3px; }
+
 /* ── smaller screens ── */
 @media (max-width: 900px) {
     .moral-card { grid-template-columns: 1fr; }
@@ -173,11 +265,31 @@ body.dark-mode .moral-media { background: #0a0a0a; }
     .moral-media { min-height: 0; height: 280px; padding: 28px; }
     .moral-logo { max-height: 100%; }
     .moral-body { padding: 30px 26px 32px; }
+    /* the profile first, as a short row, then the films */
+    .moral-more,
+    .moral-more:not(:has(.moral-videos)) { grid-template-columns: 1fr; gap: 24px; margin-top: 28px; }
+    .moral-manager { position: static; display: grid; grid-template-columns: 150px minmax(0, 1fr); }
+    .moral-more:not(:has(.moral-videos)) .moral-manager { grid-template-columns: 240px minmax(0, 1fr); }
+    .moral-manager__body { justify-content: center; border-top: 0; border-inline-start: 3px solid var(--card-accent); }
+    /* style.css sets every h2 to 2rem !important on narrow screens; this one is a caption */
+    .moral-manager__role { font-size: 1.25rem !important; }
 }
 
 @media (max-width: 480px) {
     .moral-page { padding: 104px 0 70px; }
     .moral-card { border-radius: 22px; }
+    .moral-videos { gap: 18px; }
+    .moral-video { border-radius: 16px; }
+    .moral-manager { grid-template-columns: 116px minmax(0, 1fr); border-radius: 20px; }
+    /* no films: the photo on top at full width, the text under it */
+    .moral-more:not(:has(.moral-videos)) .moral-manager { grid-template-columns: 1fr; }
+    .moral-more:not(:has(.moral-videos)) .moral-manager__photo { aspect-ratio: 4 / 3; }
+    .moral-more:not(:has(.moral-videos)) .moral-manager__body { border-inline-start: 0; border-top: 3px solid var(--card-accent); }
+    .moral-more:not(:has(.moral-videos)) .moral-manager__role { font-size: 1.4rem !important; }
+    .moral-more:not(:has(.moral-videos)) .moral-manager__name { font-size: 1.15rem; }
+    .moral-manager__body,
+    .moral-more:not(:has(.moral-videos)) .moral-manager__body { padding: 16px 18px; }
+    .moral-manager__role { font-size: 1.1rem !important; }
     .moral-media { height: 230px; padding: 22px; }
     .moral-desc { font-size: 1rem; }
     .moral-link { flex: 1 1 auto; justify-content: center; }

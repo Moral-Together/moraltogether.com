@@ -12,6 +12,12 @@
         "type": "youtube",
         "url": "https://www.youtube.com/@%D7%9E%D7%95%D7%A8%D7%9C%D7%94%D7%90%D7%99%D7%9E%D7%94%D7%95%D7%AA%D7%95%D7%94%D7%9E%D7%A9%D7%A4%D7%97%D7%94/videos"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/mothers-family-1.mp4",
+        "poster": "videos/mothers-family-1-poster.webp"
+      }
     ]
   },
   {
@@ -45,6 +51,12 @@
         "type": "facebook",
         "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%94%D7%95%D7%95%D7%AA%D7%99%D7%A7%D7%99%D7%9D/61579768552236/"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/elderly-1.mp4",
+        "poster": "videos/elderly-1-poster.webp"
+      }
     ]
   },
   {
@@ -59,6 +71,12 @@
       {
         "type": "facebook",
         "url": "https://www.facebook.com/people/%D7%9E%D7%95%D7%A8%D7%9C-%D7%A9%D7%92%D7%A8%D7%99%D7%A8%D7%99%D7%9D-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D/61579824440833/"
+      }
+    ],
+    "videos": [
+      {
+        "src": "videos/young-ambassadors-1.mp4",
+        "poster": "videos/young-ambassadors-1-poster.webp"
       }
     ]
   },
@@ -79,6 +97,12 @@
         "type": "youtube",
         "url": "https://www.youtube.com/watch?v=3DqdSxLhpTM"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/animals-1.mp4",
+        "poster": "videos/animals-1-poster.webp"
+      }
     ]
   },
   {
@@ -98,6 +122,12 @@
         "type": "youtube",
         "url": "https://www.youtube.com/watch?v=1U0tkFLvgY0&list=PLpDbflfCGjfx1NiJ0VjX8I0gNC0aUfNeD&index=3"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/stage-arts-1.mp4",
+        "poster": "videos/stage-arts-1-poster.webp"
+      }
     ]
   },
   {
@@ -107,7 +137,13 @@
     "logo": {
       "video": "images/p7-logo.mp4",
       "poster": "images/p7-logo-poster.webp"
-    }
+    },
+    "videos": [
+      {
+        "src": "videos/constructive-criticism-1.mp4",
+        "poster": "videos/constructive-criticism-1-poster.webp"
+      }
+    ]
   },
   {
     "slug": "care-encouragement",
@@ -116,7 +152,13 @@
     "logo": {
       "video": "images/p8-logo.mp4",
       "poster": "images/p8-logo-poster.webp"
-    }
+    },
+    "videos": [
+      {
+        "src": "videos/care-encouragement-1.mp4",
+        "poster": "videos/care-encouragement-1-poster.webp"
+      }
+    ]
   },
   {
     "slug": "law",
@@ -134,6 +176,12 @@
       {
         "type": "youtube",
         "url": "https://www.youtube.com/watch?v=o9s-LO-BFsY&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV"
+      }
+    ],
+    "videos": [
+      {
+        "src": "videos/law-1.mp4",
+        "poster": "videos/law-1-poster.webp"
       }
     ]
   },
@@ -154,6 +202,12 @@
         "type": "youtube",
         "url": "https://www.youtube.com/watch?v=Spn1slAXC7s&ab_channel=%D7%9E%D7%95%D7%A8%D7%9CTV"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/sports-1.mp4",
+        "poster": "videos/sports-1-poster.webp"
+      }
     ]
   },
   {
@@ -173,6 +227,20 @@
         "type": "youtube",
         "url": "https://www.youtube.com/@MORALTV176/playlists"
       }
+    ],
+    "videos": [
+      {
+        "src": "videos/moral-tv-1.mp4",
+        "poster": "videos/moral-tv-1-poster.webp"
+      },
+      {
+        "src": "videos/moral-tv-2.mp4",
+        "poster": "videos/moral-tv-2-poster.webp"
+      },
+      {
+        "src": "videos/moral-tv-3.mp4",
+        "poster": "videos/moral-tv-3-poster.webp"
+      }
     ]
   },
   {
@@ -182,7 +250,17 @@
     "logo": {
       "video": "images/p13-logo.mp4",
       "poster": "images/p13-logo-poster.webp"
-    }
+    },
+    "videos": [
+      {
+        "src": "videos/m1-radio-1.mp4",
+        "poster": "videos/m1-radio-1-poster.webp"
+      },
+      {
+        "src": "videos/m1-radio-2.mp4",
+        "poster": "videos/m1-radio-2-poster.webp"
+      }
+    ]
   },
   {
     "slug": "moral-radio",
@@ -200,7 +278,13 @@
     "logo": {
       "video": "images/p15-logo.mp4",
       "poster": "images/p15-logo-poster.webp"
-    }
+    },
+    "videos": [
+      {
+        "src": "videos/gods-will-ambassador-1.mp4",
+        "poster": "videos/gods-will-ambassador-1-poster.webp"
+      }
+    ]
   },
   {
     "slug": "colleges",
@@ -224,6 +308,16 @@
     "logo": {
       "video": "images/p17-logo.mp4",
       "poster": "images/p17-logo-poster.webp"
-    }
+    },
+    "videos": [
+      {
+        "src": "videos/trust-mom-1.mp4",
+        "poster": "videos/trust-mom-1-poster.webp"
+      },
+      {
+        "src": "videos/trust-mom-2.mp4",
+        "poster": "videos/trust-mom-2-poster.webp"
+      }
+    ]
   }
 ]
