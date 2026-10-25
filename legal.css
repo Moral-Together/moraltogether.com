@@ -96,6 +96,18 @@ body.dark-mode .legal-doc h2 {
     margin: 0 0 40px;
 }
 
+/* A version published ahead of the date it takes effect says so above everything else: the
+   policy promises 14 days' notice of a material change, and this is that notice. */
+.legal-notice {
+    line-height: 1.7;
+    background: var(--bg-glass);
+    border: 1px solid var(--card-border);
+    border-inline-start: 4px solid var(--secondary-color);
+    border-radius: 14px;
+    padding: 18px 26px;
+    margin: 0 0 24px;
+}
+
 /* --- body text --------------------------------------------------------------------- */
 
 .legal-doc p {
