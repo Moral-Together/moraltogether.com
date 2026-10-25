@@ -11,18 +11,40 @@
 //
 // A decision is announced as a 'consentChanged' event on document, the way the site announces
 // 'langChanged' and 'themeChanged'; whatever loads analytics listens for it.
+//
+// Before that, a notice. Section 17 of the privacy policy promises 14 days' warning before a
+// measurement tool is added, so until GA_FROM the banner only says that analytics is coming
+// and when, with a single "Got it". It asks nothing and loads nothing, and the footer link
+// stays hidden, since there is no choice to change yet. The switch happens on the visitor's
+// clock at GA_FROM, so nobody has to publish anything on the day.
 (function () {
     'use strict';
 
-    // Empty while GA4 is not wired up. With no ID there is nothing to consent to, so neither
-    // the banner nor the footer link appears: a banner about cookies the site does not set
-    // would be untrue, and the privacy policy says there are none.
+    // Empty while GA4 is not wired up. With no ID there is nothing to consent to, so after
+    // GA_FROM neither the banner nor the footer link appears: a banner about cookies the site
+    // does not set would be untrue. The notice before GA_FROM does not depend on it.
     const GA_ID = '';
+
+    // 9.11.26 00:00 in Israel (UTC+2 in winter), the date privacy policy 1.2 takes effect.
+    const GA_FROM = Date.UTC(2026, 10, 8, 22, 0);
+    const NOTICE_KEY = 'consent.notice';
 
     const KEY = 'consent.v1';
     const MAX_AGE = 365 * 24 * 60 * 60 * 1000;
 
     let choice = null;
+
+    // Until GA_FROM: the notice, once per browser. 'Got it' is remembered as consent.notice.
+    function notice(banner) {
+        let seen = null;
+        try { seen = localStorage.getItem(NOTICE_KEY); } catch (e) { /* private mode */ }
+        if (seen) return;
+        banner.querySelector('[data-notice-ok]').addEventListener('click', () => {
+            try { localStorage.setItem(NOTICE_KEY, '1'); } catch (e) { /* private mode */ }
+            banner.hidden = true;
+        });
+        banner.hidden = false;
+    }
 
     function remembered() {
         try {
@@ -38,7 +60,18 @@
 
     function init() {
         const banner = document.getElementById('cookie-consent');
-        if (!GA_ID || !banner) return;
+        if (!banner) return;
+
+        const early = Date.now() < GA_FROM;
+        banner.querySelectorAll('[data-mode]').forEach((el) => {
+            el.hidden = el.getAttribute('data-mode') !== (early ? 'notice' : 'consent');
+        });
+        if (early) { notice(banner); return; }
+
+        // The notice has had its day; the policy says its key is not kept after it.
+        try { localStorage.removeItem(NOTICE_KEY); } catch (e) { /* private mode */ }
+
+        if (!GA_ID) return;
         const settings = document.querySelector('.footer-cookie-settings');
         let opener = null;
 

@@ -1,8 +1,10 @@
 /* Cookie consent banner and the "Cookie settings" link in the footer (25.10.26).
    See cookie-consent.js for when each of them appears. */
 
-/* Both carry a display of their own below, which would beat the hidden attribute. */
+/* Both carry a display of their own below, which would beat the hidden attribute — and so do
+   the .btn buttons inside, which is how the banner switches between its two modes. */
 .cookie-consent[hidden],
+.cookie-consent [hidden],
 .footer-cookie-settings[hidden] { display: none !important; }
 
 /* A card floating over the bottom of the page. The accessibility button lives in the bottom
