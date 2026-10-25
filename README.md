@@ -14,6 +14,7 @@
 - [🛠 Tech Stack](#-tech-stack)
 - [📂 Project Structure](#-project-structure)
 - [🕯️ Shabbat Mode](#️-shabbat-mode)
+- [🍪 Cookies & Analytics](#-cookies--analytics)
 - [🚀 Innovation & "Under the Hood"](#-innovation--under-the-hood)
 - [💻 Getting Started](#-getting-started)
 - [📄 License](#-license)
@@ -143,6 +144,29 @@ weekly schedule would do.
   still instead of the loop.
 
 Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mode.md`](docs/shabbat-mode.md).
+
+---
+
+## 🍪 Cookies & Analytics
+Until 25.10.2026 the site set no cookies at all. Google Analytics 4 is added behind prior
+consent, and the only cookies the site sets are its two: `_ga` and `_ga_XJECF7N478`.
+
+- **Two modes, switched by date**: until 9 November 2026, 00:00 in Israel, the banner is only
+  the 14 days' notice that privacy policy 1.2 (section 17) promises before a measurement tool
+  is added — text and "Got it". From then on it asks: Decline and Accept at one size, in all
+  three languages, with "Cookie settings" in the footer to change the answer. The switch needs
+  no deploy; it is `GA_FROM` in [`cookie-consent.js`](cookie-consent.js).
+- **Nothing before Accept**: `gtag.js` is not on the page until the visitor accepts. Consent Mode
+  keeps the `ad_*` signals denied always; Google signals and ad personalisation are off in the
+  code and in the property.
+- **Decline after Accept**: Google's `ga-disable` switch stops every hit (Consent Mode alone would
+  still send cookieless pings) and both cookies are deleted.
+- **Cookies**: 13 months (`cookie_expires`), host-only on moraltogether.com, never on
+  `welcome.moraltogether.com`.
+- **Stored answer**: `consent.v1` in localStorage, asked again after 12 months.
+- **The property**: account MoralTogether, Measurement ID `G-XJECF7N478`, contract with Google
+  Ireland Limited, data kept 14 months, Google signals, granular location and ads personalisation
+  off. Any change there has to be mirrored in the privacy policy, which describes these settings.
 
 ---
 

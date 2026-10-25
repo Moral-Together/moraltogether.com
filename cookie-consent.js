@@ -9,8 +9,9 @@
 // asked again after a year. A browser that refuses storage is asked on every page, which is
 // the honest outcome: we cannot remember a choice we are not allowed to keep.
 //
-// A decision is announced as a 'consentChanged' event on document, the way the site announces
-// 'langChanged' and 'themeChanged'; whatever loads analytics listens for it.
+// Accept loads Google Analytics 4 (below); Decline after an Accept switches it off and deletes
+// its cookies. Either way the decision is also announced as a 'consentChanged' event on
+// document, the way the site announces 'langChanged' and 'themeChanged'.
 //
 // Before that, a notice. Section 17 of the privacy policy promises 14 days' warning before a
 // measurement tool is added, so until GA_FROM the banner only says that analytics is coming
@@ -20,10 +21,17 @@
 (function () {
     'use strict';
 
-    // Empty while GA4 is not wired up. With no ID there is nothing to consent to, so after
-    // GA_FROM neither the banner nor the footer link appears: a banner about cookies the site
-    // does not set would be untrue. The notice before GA_FROM does not depend on it.
-    const GA_ID = '';
+    // The GA4 web stream of moraltogether.com (property created 25.10.26: Google signals,
+    // granular location and ads personalisation off, data kept 14 months). Emptied, it takes
+    // the banner and the footer link away after GA_FROM: with no ID there is nothing to consent
+    // to. The notice before GA_FROM does not depend on it.
+    const GA_ID = 'G-XJECF7N478';
+
+    // What the privacy policy promises about the cookies, section 5: 13 months, and on
+    // moraltogether.com alone, not on its subdomains ('none' writes them without a domain
+    // attribute, so the browser keeps them to the exact host).
+    const COOKIE_EXPIRES = 395 * 24 * 60 * 60;
+    const COOKIE_DOMAIN = 'none';
 
     // 9.11.26 00:00 in Israel (UTC+2 in winter), the date privacy policy 1.2 takes effect.
     const GA_FROM = Date.UTC(2026, 10, 8, 22, 0);
@@ -56,6 +64,59 @@
 
     function remember(a) {
         try { localStorage.setItem(KEY, JSON.stringify({ a: a, t: Date.now() })); } catch (e) { /* private mode */ }
+    }
+
+    // ── Google Analytics ─────────────────────────────────────────────────────────────────
+    // Only ever called after an Accept, so the script itself is the consent gate: before it
+    // nothing from Google is on the page. Consent Mode is still set, denied first and then
+    // analytics alone granted, so that the advertising signals stay denied whatever Google's
+    // defaults are. The same goes for signals and ad personalisation in the config, which the
+    // property already has switched off.
+    function gtag() { window.dataLayer.push(arguments); }
+
+    function startAnalytics() {
+        // The Shabbat gate closes the site; nothing is measured while it is closed.
+        if (document.documentElement.classList.contains('shabbat-closed')) return;
+        window['ga-disable-' + GA_ID] = false;
+        if (window.dataLayer && document.querySelector('script[data-ga]')) {
+            gtag('consent', 'update', { analytics_storage: 'granted' });   // Accept again after a Decline
+            return;
+        }
+        window.dataLayer = window.dataLayer || [];
+        gtag('consent', 'default', {
+            ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+            analytics_storage: 'denied'
+        });
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        gtag('set', 'ads_data_redaction', true);
+        gtag('js', new Date());
+        gtag('config', GA_ID, {
+            cookie_expires: COOKIE_EXPIRES,
+            cookie_domain: COOKIE_DOMAIN,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
+        });
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.setAttribute('data-ga', '');
+        document.head.appendChild(s);
+    }
+
+    // Decline after an Accept, on the same page. Consent Mode alone is not enough here: with
+    // analytics_storage denied, gtag still sends cookieless pings to Google, which is data
+    // leaving without consent. The ga-disable flag is Google's own off switch and stops every
+    // hit; the cookies are then deleted, under every domain they could have been written to.
+    function stopAnalytics() {
+        window['ga-disable-' + GA_ID] = true;
+        if (window.dataLayer) gtag('consent', 'update', { analytics_storage: 'denied' });
+        const names = ['_ga', '_ga_' + GA_ID.replace(/^G-/, '')];
+        const host = location.hostname;
+        names.forEach((n) => {
+            [null, host, '.' + host].forEach((d) => {
+                document.cookie = n + '=; Max-Age=0; path=/' + (d ? '; domain=' + d : '');
+            });
+        });
     }
 
     function init() {
@@ -94,6 +155,8 @@
             choice = a;
             remember(a);
             close();
+            if (a === 'granted') startAnalytics();
+            else stopAnalytics();
             document.dispatchEvent(new CustomEvent('consentChanged', { detail: { analytics: a } }));
         }
 
@@ -115,6 +178,7 @@
 
         choice = remembered();
         if (!choice) open(null);
+        else if (choice === 'granted') startAnalytics();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
