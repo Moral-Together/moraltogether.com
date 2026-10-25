@@ -1,0 +1,111 @@
+/* Cookie consent banner and the "Cookie settings" link in the footer (25.10.26).
+   See cookie-consent.js for when each of them appears. */
+
+/* Both carry a display of their own below, which would beat the hidden attribute. */
+.cookie-consent[hidden],
+.footer-cookie-settings[hidden] { display: none !important; }
+
+/* A card floating over the bottom of the page. The accessibility button lives in the bottom
+   left corner in every language (56 px at 20 px from the edges), and its layer is above
+   everything, so the card keeps clear of it: 96 px from the left edge on a wide screen, and
+   above the button on a phone. Physical left on purpose: the button does not move in Hebrew. */
+.cookie-consent {
+    position: fixed;
+    left: 96px;
+    right: 16px;
+    bottom: 20px;
+    z-index: 9500;               /* over the menu (1001), under the preloader (9999) */
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px 24px;
+    padding: 18px 22px;
+    border-radius: 18px;
+    background: var(--bg-body);
+    color: var(--text-main);
+    border: 1px solid rgba(0, 43, 100, 0.14);
+    box-shadow: 0 16px 40px rgba(0, 43, 100, 0.18);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: cookie-consent-in 0.3s ease-out;
+}
+
+body.dark-mode .cookie-consent {
+    background: #0d0d1c;
+    border-color: rgba(0, 200, 255, 0.28);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 200, 255, 0.12);
+}
+
+.cookie-consent__text { margin: 0; flex: 1 1 auto; }
+
+.cookie-consent__text a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+.cookie-consent__actions {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+}
+
+/* Decline and Accept at one size: refusing must be as easy as agreeing. 44 px is the
+   smallest target the accessibility standard allows; the site's 52 px buttons are too tall
+   for a strip of two. */
+.cookie-consent .cookie-consent__btn {
+    min-height: 44px;
+    min-width: 7.5rem;
+    padding: 10px 22px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@keyframes cookie-consent-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cookie-consent { animation: none; }
+}
+
+/* Phone: the full width, lifted above the 44 px accessibility button, buttons under the text. */
+@media (max-width: 768px) {
+    .cookie-consent {
+        left: 12px;
+        right: 12px;
+        bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+        font-size: 0.9rem;
+    }
+    .cookie-consent__actions { gap: 10px; }
+    .cookie-consent .cookie-consent__btn { flex: 1 1 0; min-width: 0; }
+}
+
+/* In the footer it is one more legal link, so it looks like the two beside it. */
+.footer-cookie-settings {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.footer-cookie-settings:hover,
+.footer-cookie-settings:focus-visible { color: #ffffff; }
+
+@media (max-width: 768px) {
+    .footer-cookie-settings {
+        display: inline-block;
+        padding: 10px 2px;
+    }
+}

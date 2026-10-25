@@ -22,11 +22,13 @@
     <link rel="stylesheet" href="rtl.css">
 {{styles_after}}
     <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="cookie-consent.css">
 </head>
 
 <body>
 
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+{{> partials/cookie-consent}}
 
     <div id="preloader">
         <div class="loader-content">
@@ -46,6 +48,7 @@
     <script src="translations.js"></script>
     <script src="script.js"></script>
 {{scripts}}
+    <script src="cookie-consent.js" defer></script>
     <script src="a11y-widget.js" defer></script>
 
 </body>

@@ -98,6 +98,9 @@ const TRANSLATIONS = {
     shabbat_langs: "Language",
     shabbat_h: "h", shabbat_m: "min",
     skip_to_content: "Skip to content",
+    cookie_title: "Cookies", cookie_settings: "Cookie settings",
+    cookie_text: "We use Google Analytics cookies to understand how the site is used. Only with your consent.",
+    cookie_decline: "Decline", cookie_accept: "Accept",
     partners_grid_heading: "Partner organisations",
     gallery_modal_label: "Gallery image",
     motion_stop: "Stop the motion", motion_start: "Start the motion"
@@ -202,6 +205,9 @@ const TRANSLATIONS = {
     shabbat_langs: "בחירת שפה",
     shabbat_h: "ש׳", shabbat_m: "ד׳",
     skip_to_content: "דלג לתוכן",
+    cookie_title: "עוגיות", cookie_settings: "הגדרות עוגיות",
+    cookie_text: "אנו משתמשים בעוגיות של Google Analytics כדי להבין איך משתמשים באתר, ורק בהסכמתך.",
+    cookie_decline: "דחייה", cookie_accept: "אישור",
     partners_grid_heading: "ארגונים שותפים",
     gallery_modal_label: "תמונה מהגלריה",
     motion_stop: "עצור תנועה", motion_start: "הפעל תנועה"
@@ -306,6 +312,9 @@ const TRANSLATIONS = {
     shabbat_langs: "Γλώσσα",
     shabbat_h: "ώ", shabbat_m: "λ",
     skip_to_content: "Μετάβαση στο περιεχόμενο",
+    cookie_title: "Cookies", cookie_settings: "Ρυθμίσεις cookies",
+    cookie_text: "Χρησιμοποιούμε cookies του Google Analytics για να καταλάβουμε πώς χρησιμοποιείται ο ιστότοπος. Μόνο με τη συγκατάθεσή σας.",
+    cookie_decline: "Απόρριψη", cookie_accept: "Αποδοχή",
     partners_grid_heading: "Συνεργαζόμενοι οργανισμοί",
     gallery_modal_label: "Εικόνα γκαλερί",
     motion_stop: "Διακοπή κίνησης", motion_start: "Έναρξη κίνησης"

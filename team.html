@@ -45,11 +45,26 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="rtl.css">
     <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="cookie-consent.css">
 </head>
 
 <body>
 
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
+    <!-- Cookie consent. Hidden in the markup: cookie-consent.js shows it only once a GA4 ID is
+         set, because until then the site has no cookies to ask about. It sits right after the
+         skip link so that a keyboard or a screen reader meets it first, before the menu. -->
+    <section id="cookie-consent" class="cookie-consent" aria-labelledby="cookie-consent-title" hidden>
+        <h2 id="cookie-consent-title" class="visually-hidden" data-i18n="cookie_title">Cookies</h2>
+        <p class="cookie-consent__text">
+            <span data-i18n="cookie_text">We use Google Analytics cookies to understand how the site is used. Only with your consent.</span>
+            <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+        </p>
+        <div class="cookie-consent__actions">
+            <button type="button" class="btn btn-secondary cookie-consent__btn" data-consent="denied" data-i18n="cookie_decline">Decline</button>
+            <button type="button" class="btn btn-primary cookie-consent__btn" data-consent="granted" data-i18n="cookie_accept">Accept</button>
+        </div>
+    </section>
 
     <div id="preloader">
         <div class="loader-content">
@@ -286,6 +301,7 @@
             <div class="footer-legal">
                 <a href="accessibility.html" data-i18n="footer_accessibility">Accessibility Statement</a>
                 <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+                <button type="button" class="footer-cookie-settings" data-i18n="cookie_settings" hidden>Cookie settings</button>
             </div>
             <div class="footer-bottom" style="margin-bottom: 20px;" data-i18n="footer_copyright">
                 &copy; 2026 MoralTogether. All rights reserved.
@@ -300,6 +316,7 @@
     </footer>
     <script src="translations.js"></script>
     <script src="script.js"></script>
+    <script src="cookie-consent.js" defer></script>
     <script src="a11y-widget.js" defer></script>
 
 </body>
