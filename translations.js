@@ -101,8 +101,6 @@ const TRANSLATIONS = {
     cookie_title: "Cookies", cookie_settings: "Cookie settings",
     cookie_text: "We use Google Analytics cookies to understand how the site is used. Only with your consent.",
     cookie_decline: "Decline", cookie_accept: "Accept",
-    cookie_notice_text: "From 9 November 2026 this site will use Google Analytics cookies to understand how it is used, and only with your consent. You will be asked then.",
-    cookie_notice_ok: "Got it",
     partners_grid_heading: "Partner organisations",
     gallery_modal_label: "Gallery image",
     motion_stop: "Stop the motion", motion_start: "Start the motion"
@@ -210,8 +208,6 @@ const TRANSLATIONS = {
     cookie_title: "עוגיות", cookie_settings: "הגדרות עוגיות",
     cookie_text: "אנו משתמשים בעוגיות של Google Analytics כדי להבין איך משתמשים באתר, ורק בהסכמתך.",
     cookie_decline: "דחייה", cookie_accept: "אישור",
-    cookie_notice_text: "החל מ-9 בנובמבר 2026 האתר ישתמש בעוגיות של Google Analytics כדי להבין איך משתמשים בו, ורק בהסכמתך. נשאל אותך אז.",
-    cookie_notice_ok: "הבנתי",
     partners_grid_heading: "ארגונים שותפים",
     gallery_modal_label: "תמונה מהגלריה",
     motion_stop: "עצור תנועה", motion_start: "הפעל תנועה"
@@ -319,8 +315,6 @@ const TRANSLATIONS = {
     cookie_title: "Cookies", cookie_settings: "Ρυθμίσεις cookies",
     cookie_text: "Χρησιμοποιούμε cookies του Google Analytics για να καταλάβουμε πώς χρησιμοποιείται ο ιστότοπος. Μόνο με τη συγκατάθεσή σας.",
     cookie_decline: "Απόρριψη", cookie_accept: "Αποδοχή",
-    cookie_notice_text: "Από τις 9 Νοεμβρίου 2026 ο ιστότοπος θα χρησιμοποιεί cookies του Google Analytics για να καταλάβει πώς χρησιμοποιείται, και μόνο με τη συγκατάθεσή σας. Θα σας ρωτήσουμε τότε.",
-    cookie_notice_ok: "Κατάλαβα",
     partners_grid_heading: "Συνεργαζόμενοι οργανισμοί",
     gallery_modal_label: "Εικόνα γκαλερί",
     motion_stop: "Διακοπή κίνησης", motion_start: "Έναρξη κίνησης"

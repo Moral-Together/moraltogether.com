@@ -51,22 +51,18 @@
 <body>
 
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to content</a>
-    <!-- Cookie consent. Hidden in the markup; cookie-consent.js shows it in one of two modes.
-         Until 9 November 2026 it is the advance notice the privacy policy promises before a
-         measurement tool is added: text and "Got it", nothing to accept. From then on, once a
-         GA4 ID is set, it asks for consent. It sits right after the skip link so that a keyboard
-         or a screen reader meets it first, before the menu. -->
+    <!-- Cookie consent. Hidden in the markup: cookie-consent.js shows it once a GA4 ID is set,
+         because without one the site has no cookies to ask about. It sits right after the skip
+         link so that a keyboard or a screen reader meets it first, before the menu. -->
     <section id="cookie-consent" class="cookie-consent" aria-labelledby="cookie-consent-title" hidden>
         <h2 id="cookie-consent-title" class="visually-hidden" data-i18n="cookie_title">Cookies</h2>
         <p class="cookie-consent__text">
-            <span data-mode="consent" data-i18n="cookie_text">We use Google Analytics cookies to understand how the site is used. Only with your consent.</span>
-            <span data-mode="notice" data-i18n="cookie_notice_text">From 9 November 2026 this site will use Google Analytics cookies to understand how it is used, and only with your consent. You will be asked then.</span>
+            <span data-i18n="cookie_text">We use Google Analytics cookies to understand how the site is used. Only with your consent.</span>
             <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
         </p>
         <div class="cookie-consent__actions">
-            <button type="button" class="btn btn-secondary cookie-consent__btn" data-mode="consent" data-consent="denied" data-i18n="cookie_decline">Decline</button>
-            <button type="button" class="btn btn-primary cookie-consent__btn" data-mode="consent" data-consent="granted" data-i18n="cookie_accept">Accept</button>
-            <button type="button" class="btn btn-primary cookie-consent__btn" data-mode="notice" data-notice-ok data-i18n="cookie_notice_ok">Got it</button>
+            <button type="button" class="btn btn-secondary cookie-consent__btn" data-consent="denied" data-i18n="cookie_decline">Decline</button>
+            <button type="button" class="btn btn-primary cookie-consent__btn" data-consent="granted" data-i18n="cookie_accept">Accept</button>
         </div>
     </section>
 

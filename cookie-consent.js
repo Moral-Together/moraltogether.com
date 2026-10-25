@@ -12,19 +12,12 @@
 // Accept loads Google Analytics 4 (below); Decline after an Accept switches it off and deletes
 // its cookies. Either way the decision is also announced as a 'consentChanged' event on
 // document, the way the site announces 'langChanged' and 'themeChanged'.
-//
-// Before that, a notice. Section 17 of the privacy policy promises 14 days' warning before a
-// measurement tool is added, so until GA_FROM the banner only says that analytics is coming
-// and when, with a single "Got it". It asks nothing and loads nothing, and the footer link
-// stays hidden, since there is no choice to change yet. The switch happens on the visitor's
-// clock at GA_FROM, so nobody has to publish anything on the day.
 (function () {
     'use strict';
 
     // The GA4 web stream of moraltogether.com (property created 25.10.26: Google signals,
     // granular location and ads personalisation off, data kept 14 months). Emptied, it takes
-    // the banner and the footer link away after GA_FROM: with no ID there is nothing to consent
-    // to. The notice before GA_FROM does not depend on it.
+    // the banner and the footer link away: with no ID there is nothing to consent to.
     const GA_ID = 'G-XJECF7N478';
 
     // What the privacy policy promises about the cookies, section 5: 13 months, and on
@@ -33,26 +26,10 @@
     const COOKIE_EXPIRES = 395 * 24 * 60 * 60;
     const COOKIE_DOMAIN = 'none';
 
-    // 9.11.26 00:00 in Israel (UTC+2 in winter), the date privacy policy 1.2 takes effect.
-    const GA_FROM = Date.UTC(2026, 10, 8, 22, 0);
-    const NOTICE_KEY = 'consent.notice';
-
     const KEY = 'consent.v1';
     const MAX_AGE = 365 * 24 * 60 * 60 * 1000;
 
     let choice = null;
-
-    // Until GA_FROM: the notice, once per browser. 'Got it' is remembered as consent.notice.
-    function notice(banner) {
-        let seen = null;
-        try { seen = localStorage.getItem(NOTICE_KEY); } catch (e) { /* private mode */ }
-        if (seen) return;
-        banner.querySelector('[data-notice-ok]').addEventListener('click', () => {
-            try { localStorage.setItem(NOTICE_KEY, '1'); } catch (e) { /* private mode */ }
-            banner.hidden = true;
-        });
-        banner.hidden = false;
-    }
 
     function remembered() {
         try {
@@ -123,14 +100,9 @@
         const banner = document.getElementById('cookie-consent');
         if (!banner) return;
 
-        const early = Date.now() < GA_FROM;
-        banner.querySelectorAll('[data-mode]').forEach((el) => {
-            el.hidden = el.getAttribute('data-mode') !== (early ? 'notice' : 'consent');
-        });
-        if (early) { notice(banner); return; }
-
-        // The notice has had its day; the policy says its key is not kept after it.
-        try { localStorage.removeItem(NOTICE_KEY); } catch (e) { /* private mode */ }
+        // On 25.10.26 the banner was, for a few hours, only a notice that analytics was coming,
+        // and a "Got it" was kept under this key. The notice is gone and so is the key.
+        try { localStorage.removeItem('consent.notice'); } catch (e) { /* private mode */ }
 
         if (!GA_ID) return;
         const settings = document.querySelector('.footer-cookie-settings');

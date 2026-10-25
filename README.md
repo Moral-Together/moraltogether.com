@@ -151,11 +151,13 @@ Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mod
 Until 25.10.2026 the site set no cookies at all. Google Analytics 4 is added behind prior
 consent, and the only cookies the site sets are its two: `_ga` and `_ga_XJECF7N478`.
 
-- **Two modes, switched by date**: until 9 November 2026, 00:00 in Israel, the banner is only
-  the 14 days' notice that privacy policy 1.2 (section 17) promises before a measurement tool
-  is added — text and "Got it". From then on it asks: Decline and Accept at one size, in all
-  three languages, with "Cookie settings" in the footer to change the answer. The switch needs
-  no deploy; it is `GA_FROM` in [`cookie-consent.js`](cookie-consent.js).
+- **The banner**: Decline and Accept at one size, in all three languages, with "Cookie settings"
+  in the footer to change the answer; [`cookie-consent.js`](cookie-consent.js).
+- **In force from 25.10.2026**: privacy policy 1.2, which describes all of this, took effect the
+  day it was published. Section 17 of version 1.1 promised 14 days' notice before a measurement
+  tool is added; for a few hours on 25.10 (commit `06cb6c4`) the banner was that notice, with
+  the switch set for 9.11, and then, by decision of the same day, consent was asked at once and
+  the notice dropped.
 - **Nothing before Accept**: `gtag.js` is not on the page until the visitor accepts. Consent Mode
   keeps the `ad_*` signals denied always; Google signals and ad personalisation are off in the
   code and in the property.
