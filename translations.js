@@ -92,9 +92,11 @@ const TRANSLATIONS = {
     // Shabbat closing screen
     shabbat_title: "Shabbat Shalom",
     shabbat_body: "MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.",
+    // Festival lines, 26.10.2026: machine copy waiting for Maxim or the owner.
+    shabbat_holiday_title: "Happy holiday!",
+    shabbat_holiday_body: "MoralTogether rests on the festival — from candle lighting until it ends. We return as the stars come out.",
     shabbat_opens: "The site opens at",
     shabbat_left: "Time remaining",
-    shabbat_tz: "Jerusalem time",
     shabbat_langs: "Language",
     shabbat_h: "h", shabbat_m: "min",
     skip_to_content: "Skip to content",
@@ -199,9 +201,11 @@ const TRANSLATIONS = {
     // Shabbat closing screen
     shabbat_title: "שבת שלום",
     shabbat_body: "MoralTogether שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.",
+    // Festival lines, 26.10.2026: machine copy waiting for Maxim or the owner.
+    shabbat_holiday_title: "חג שמח!",
+    shabbat_holiday_body: "MoralTogether שובת בחג — מהדלקת נרות ועד צאת החג. נחזור עם צאת הכוכבים.",
     shabbat_opens: "האתר נפתח בשעה",
     shabbat_left: "זמן שנותר",
-    shabbat_tz: "שעון ירושלים",
     shabbat_langs: "בחירת שפה",
     shabbat_h: "ש׳", shabbat_m: "ד׳",
     skip_to_content: "דלג לתוכן",
@@ -306,9 +310,11 @@ const TRANSLATIONS = {
     // Shabbat closing screen
     shabbat_title: "Σαμπάτ Σαλόμ",
     shabbat_body: "Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.",
+    // Festival lines, 26.10.2026: machine copy waiting for Maxim or the owner.
+    shabbat_holiday_title: "Καλή γιορτή!",
+    shabbat_holiday_body: "Το MoralTogether αναπαύεται στη γιορτή — από το άναμμα των κεριών έως το τέλος της. Επιστρέφουμε με τα πρώτα αστέρια.",
     shabbat_opens: "Η ιστοσελίδα ανοίγει στις",
     shabbat_left: "Απομένει",
-    shabbat_tz: "Ώρα Ιερουσαλήμ",
     shabbat_langs: "Γλώσσα",
     shabbat_h: "ώ", shabbat_m: "λ",
     skip_to_content: "Μετάβαση στο περιεχόμενο",

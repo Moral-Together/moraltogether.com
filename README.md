@@ -127,21 +127,23 @@ The syntax (includes, values, page blocks) is described at the top of `tools/bui
 ---
 
 ## 🕯️ Shabbat Mode
-The site closes for Shabbat at candle lighting and reopens at havdalah, using the exact times
-of each individual week — both boundaries move by more than three hours across the year, so no
-weekly schedule would do.
+The site closes for Shabbat and Yom Tov where the visitor is — the place is the browser's time
+zone, Israel when there is none — from 30 minutes before sunset until 30 minutes after nightfall,
+and reopens by itself (Maxim, 26.10.2026).
 
-- **Source of truth**: Hebcal for Jerusalem (`geonameid=281184`), candle lighting 40 minutes
-  before sunset (`b=40`), havdalah by nightfall (`M=on`), one request per year.
-- **Storage**: [`tools/build-shabbat.mjs`](tools/build-shabbat.mjs) turns the feed into
-  `api/shabbat.json` — Friday candle-lighting → havdalah pairs no longer than 30 hours —
-  served from that same path. No backend: the site runs on GitHub Pages.
+- **Rules**: [`shabbat-core.js`](shabbat-core.js), generated from Stage of Stars so both sites
+  close by the same code (never edit it here): the place of each time zone, sunset and nightfall,
+  the Hebrew calendar and its Yom Tov days (one in Israel, two elsewhere).
+- **Sources**: for Israel our `api/shabbat.json`, elsewhere Hebcal for the visitor's place; then
+  the browser's cached copy; then the computation, which also checks every stored closure.
+- **Storage**: [`tools/build-shabbat.mjs`](tools/build-shabbat.mjs) writes Israel's closures to
+  `api/shabbat.json`, checked against the computation, served from that same path. No backend:
+  the site runs on GitHub Pages.
 - **Refresh**: [`.github/workflows/shabbat-windows.yml`](.github/workflows/shabbat-windows.yml)
   runs weekly and is lazy — while the next 60 days are covered it makes no request at all.
-- **Scope**: Shabbat only. Jewish holidays do not close the site.
 - **The screen**: a photograph of a Shabbat table that settles into a ten-second loop, a greeting
-  in the visitor's own language, the opening time and a live countdown. Phones get a portrait
-  still instead of the loop.
+  in the visitor's own language (a holiday greeting on a festival), the opening time on the visitor's
+  clock and a live countdown. Phones get a portrait still instead of the loop.
 
 Full specification, data format, fallback chain and QA notes: [`docs/shabbat-mode.md`](docs/shabbat-mode.md).
 

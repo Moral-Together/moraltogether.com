@@ -1,41 +1,38 @@
-// Shabbat gate — closes the site at candle lighting, opens it at havdalah, by the exact
-// times of each week. See docs/shabbat-mode.md for the full specification.
+// Shabbat gate — closes the site for Shabbat and Yom Tov where the visitor is, from 30 minutes
+// before sunset until 30 minutes after nightfall (Maxim, 26.10.2026). See docs/shabbat-mode.md.
 //
-// Sources of truth, in order: api/shabbat.json (ours) -> Hebcal directly -> a deliberately
-// crude fixed window, replaced by an astronomical computation in subtask 8. Everything is
-// compared as absolute instants, so the visitor's own time zone never matters.
+// The place is the browser's time zone; Israel when there is none or it is unknown. Yom Tov is
+// one day in Israel and two elsewhere. The rules live in shabbat-core.js (the same code as Stage
+// of Stars), loaded before this file.
+//
+// Sources, in order: for Israel our own api/shabbat.json, for anywhere else Hebcal for that
+// place; then the copy cached in this browser; then the computation of the sun and the Hebrew
+// calendar in shabbat-core.js, which also checks every stored closure (a few minutes apart is
+// rounding, more and the safe side is taken; a closure it has and the data lacks is added).
+// Everything is compared as absolute instants.
 
 (function () {
     'use strict';
 
-    var CACHE_KEY = 'shabbat.v1';
+    var Core = window.ShabbatCore || null;
+    var CACHE_KEY = 'shabbat.v2';
     // Resolved against this script's own address, not the page's: the Moral pages sit two
     // folders down (morals/<slug>/), where a page-relative 'api/…' does not exist.
     var BASE = (document.currentScript && document.currentScript.src) || location.href;
     var DATA_URL = new URL('api/shabbat.json', BASE).href;
-    var HEBCAL_URL = 'https://www.hebcal.com/hebcal?v=1&cfg=json&month=x&geo=geoname'
-        + '&geonameid=281184&c=on&b=40&M=on&i=on&year=';
-    var TZ = 'Asia/Jerusalem';
-    var MAX_WINDOW_MS = 30 * 3600 * 1000;
-    var CACHE_MAX_AGE_MS = 400 * 24 * 3600 * 1000;   // a year plus slack
+    var DAY_MS = 86400000;
+    var MAX_WINDOW_MS = 4 * DAY_MS;                  // a three-day Yom Tov and Shabbat
+    var CACHE_FRESH_MS = 7 * DAY_MS;                 // Hebcal is asked again after a week
+    var CACHE_MAX_AGE_MS = 400 * DAY_MS;             // a year plus slack
     var SAFETY_TICK_MS = 30 * 1000;                  // survives suspended timers
     var SKEW_ALERT_MS = 2 * 60 * 1000;
     var DATA_TIMEOUT_MS = 6000;      // a hung request must not leave the screen half-drawn
 
-    // Third source, used when the file, Hebcal and the cache are all unavailable: the sun's own
-    // position, computed here. Jerusalem's coordinates; the 786 m elevation is deliberately NOT
-    // applied, because Hebcal does not apply it either and the two must not disagree.
-    var LAT = 31.76904;
-    var LON = 35.21633;
-    var ZENITH_SUNSET = 90.833;      // refraction and the sun's own radius
-    var ZENITH_NIGHTFALL = 98.5;     // 8.5 degrees below the horizon — what M=on means
-    var CANDLES_BEFORE_MIN = 40;     // b=40
-    var DISAGREEMENT_MS = 3 * 60000; // beyond this the file is not trusted
-
-    // Last resort if the computation itself cannot produce a number. Unreachable in practice,
-    // but an exception must not leave the site open during Shabbat.
-    var CRUDE_OPEN = { hour: 15, minute: 30 };
-    var CRUDE_SHUT = { hour: 21, minute: 0 };
+    // Last resort if shabbat-core.js did not load and nothing is cached: Friday 15:00 to
+    // Saturday 21:00 on the visitor's own clock. Wide on purpose — the failure that matters
+    // is the site being open during Shabbat.
+    var CRUDE_OPEN_HOUR = 15;
+    var CRUDE_SHUT_HOUR = 21;
 
     // Crawlers announce themselves; headless Chrome is deliberately absent because that is
     // also what our own browser tests run as.
@@ -43,32 +40,36 @@
 
     // The screen normally speaks through translations.js, like the rest of the site. This copy
     // is the fallback for the case where that file did not load — the gate must never end up
-    // showing an empty screen.
+    // showing an empty screen. The festival lines (holidayTitle, holidayBody) of 26.10.2026
+    // are machine copy waiting for Maxim or the owner.
     var COPY = {
         en: {
             title: 'Shabbat Shalom',
             body: 'MoralTogether rests with Shabbat — from candle lighting until havdalah. We return as the stars come out.',
+            holidayTitle: 'Happy holiday!',
+            holidayBody: 'MoralTogether rests on the festival — from candle lighting until it ends. We return as the stars come out.',
             opens: 'The site opens at',
             left: 'Time remaining',
-            tz: 'Jerusalem time',
             langs: 'Language',
             h: 'h', m: 'min'
         },
         he: {
             title: 'שבת שלום',
             body: 'MoralTogether שובת בשבת — מהדלקת נרות ועד ההבדלה. נחזור עם צאת הכוכבים.',
+            holidayTitle: 'חג שמח!',
+            holidayBody: 'MoralTogether שובת בחג — מהדלקת נרות ועד צאת החג. נחזור עם צאת הכוכבים.',
             opens: 'האתר נפתח בשעה',
             left: 'זמן שנותר',
-            tz: 'שעון ירושלים',
             langs: 'בחירת שפה',
             h: 'ש׳', m: 'ד׳'
         },
         gr: {
             title: 'Σαμπάτ Σαλόμ',
             body: 'Το MoralTogether αναπαύεται το Σάββατο — από το άναμμα των κεριών έως το χαβντάλα. Επιστρέφουμε με τα πρώτα αστέρια.',
+            holidayTitle: 'Καλή γιορτή!',
+            holidayBody: 'Το MoralTogether αναπαύεται στη γιορτή — από το άναμμα των κεριών έως το τέλος της. Επιστρέφουμε με τα πρώτα αστέρια.',
             opens: 'Η ιστοσελίδα ανοίγει στις',
             left: 'Απομένει',
-            tz: 'Ώρα Ιερουσαλήμ',
             langs: 'Γλώσσα',
             h: 'ώ', m: 'λ'
         }
@@ -82,13 +83,15 @@
     var LANG_NAMES = { en: 'English', he: 'עברית', gr: 'Ελληνικά' };
 
     var state = {
-        windows: [],       // [[startMs, endMs], ...] ascending
+        region: null,      // { zone, lat, lon, israel } — where the visitor is
+        windows: [],       // [[startMs, endMs], ...] ascending, from the data
         skewMs: 0,         // server clock minus device clock
         offsetMs: 0,       // clock shift for previewing a boundary; time still flows
         forced: null,      // 'closed' | 'open' when a preview pins the state
         previewLang: null, // language pinned by the preview, for checking all three
         closedUntil: null, // end of the window currently being served
         dataSettled: false,// true once the data attempt finished, one way or another
+        kind: 'shabbat',   // 'shabbat' | 'holiday', for the words on the screen
         timer: null,
         countdown: null,
         video: null
@@ -100,47 +103,14 @@
         return Date.now() + state.skewMs + state.offsetMs;
     }
 
-    // Offset of Asia/Jerusalem at a given instant, in milliseconds.
-    function tzOffsetMs(instant) {
-        var parts = new Intl.DateTimeFormat('en-US', {
-            timeZone: TZ, hour12: false,
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-        }).formatToParts(new Date(instant));
-        var v = {};
-        parts.forEach(function (p) { v[p.type] = p.value; });
-        var asUtc = Date.UTC(+v.year, +v.month - 1, +v.day, +v.hour % 24, +v.minute, +v.second);
-        return asUtc - instant;
+    function browserZone() {
+        try { return Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch (e) { return null; }
     }
 
-    // Instant for a wall-clock moment in Jerusalem. Two refinements settle the DST edge.
-    function jerusalemInstant(y, m, d, hour, minute) {
-        var guess = Date.UTC(y, m - 1, d, hour, minute) - 2 * 3600 * 1000;
-        for (var i = 0; i < 2; i++) {
-            guess = Date.UTC(y, m - 1, d, hour, minute) - tzOffsetMs(guess);
-        }
-        return guess;
-    }
-
-    function jerusalemParts(instant) {
-        var f = new Intl.DateTimeFormat('en-US', {
-            timeZone: TZ, hour12: false, weekday: 'short',
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit'
-        }).formatToParts(new Date(instant));
-        var v = {};
-        f.forEach(function (p) { v[p.type] = p.value; });
-        var days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-        return {
-            year: +v.year, month: +v.month, day: +v.day,
-            hour: +v.hour % 24, minute: +v.minute, weekday: days[v.weekday]
-        };
-    }
-
+    // The site opens at a moment that is the visitor's own: their closure follows their place,
+    // so their own clock is the one that means something to them.
     function localTimeLabel(instant) {
-        return new Intl.DateTimeFormat('en-GB', {
-            timeZone: TZ, hour: '2-digit', minute: '2-digit'
-        }).format(new Date(instant));
+        return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(new Date(instant));
     }
 
     // ---------------------------------------------------------------- window sources
@@ -151,157 +121,69 @@
             && pair[1] > pair[0] && pair[1] - pair[0] <= MAX_WINDOW_MS;
     }
 
+    function sortWindows(list) {
+        return list.sort(function (a, b) { return a[0] - b[0]; });
+    }
+
+    // api/shabbat.json: Israel's closures, ends already 30 minutes after havdalah.
     function parsePayload(payload) {
-        if (!payload || !Array.isArray(payload.windows)) return [];
+        if (!payload || payload.version !== 2 || !Array.isArray(payload.windows)) return [];
         var out = [];
         payload.windows.forEach(function (w) {
             var pair = [Date.parse(w.start), Date.parse(w.end)];
             if (validWindow(pair)) out.push(pair);
         });
-        return out.sort(function (a, b) { return a[0] - b[0]; });
+        return sortWindows(out);
     }
 
-    // Hebcal's own feed, kept parseable by the same rules the builder uses.
     function parseHebcal(payload) {
-        if (!payload || !Array.isArray(payload.items)) return [];
-        var out = [];
-        var pending = null;
-        payload.items.forEach(function (item) {
-            if (item.category === 'candles') { pending = item; return; }
-            if (item.category !== 'havdalah' || !pending) return;
-            var pair = [Date.parse(pending.date), Date.parse(item.date)];
-            pending = null;
-            if (validWindow(pair) && jerusalemParts(pair[0]).weekday === 5) out.push(pair);
-        });
-        return out.sort(function (a, b) { return a[0] - b[0]; });
+        return sortWindows(Core.parseHebcalWindows(payload).map(function (w) { return [w.startsAt, w.endsAt]; })
+            .filter(validWindow));
     }
 
-    // ---------------------------------------------------------------- the sun itself
-
-    // Julian day at 0h UT for a calendar date.
-    function julianDay(y, m, d) {
-        var a = Math.floor((14 - m) / 12);
-        var y2 = y + 4800 - a;
-        var m2 = m + 12 * a - 3;
-        return d + Math.floor((153 * m2 + 2) / 5) + 365 * y2
-            + Math.floor(y2 / 4) - Math.floor(y2 / 100) + Math.floor(y2 / 400) - 32045 - 0.5;
-    }
-
-    var rad = Math.PI / 180;
-
-    // NOAA's general solar position equations. Returns the instant in Jerusalem on that date
-    // when the sun's centre reaches the given zenith angle on its way down, or null on a day
-    // where it never does.
-    function solarEvent(year, month, day, zenith) {
-        var tzHours = tzOffsetMs(Date.UTC(year, month - 1, day, 10, 0, 0)) / 3600000;
-        var jd = julianDay(year, month, day) + (12 - tzHours) / 24;
-        var t = (jd - 2451545) / 36525;
-
-        var l0 = (280.46646 + t * (36000.76983 + 0.0003032 * t)) % 360;
-        var m = 357.52911 + t * (35999.05029 - 0.0001537 * t);
-        var ecc = 0.016708634 - t * (0.000042037 + 0.0000001267 * t);
-        var centre = Math.sin(m * rad) * (1.914602 - t * (0.004817 + 0.000014 * t))
-            + Math.sin(2 * m * rad) * (0.019993 - 0.000101 * t)
-            + Math.sin(3 * m * rad) * 0.000289;
-        var appLong = l0 + centre - 0.00569 - 0.00478 * Math.sin((125.04 - 1934.136 * t) * rad);
-        var meanObliq = 23 + (26 + (21.448 - t * (46.815 + t * (0.00059 - t * 0.001813))) / 60) / 60;
-        var obliq = meanObliq + 0.00256 * Math.cos((125.04 - 1934.136 * t) * rad);
-        var decl = Math.asin(Math.sin(obliq * rad) * Math.sin(appLong * rad)) / rad;
-
-        var varY = Math.pow(Math.tan(obliq / 2 * rad), 2);
-        var eqTime = 4 / rad * (varY * Math.sin(2 * l0 * rad)
-            - 2 * ecc * Math.sin(m * rad)
-            + 4 * ecc * varY * Math.sin(m * rad) * Math.cos(2 * l0 * rad)
-            - 0.5 * varY * varY * Math.sin(4 * l0 * rad)
-            - 1.25 * ecc * ecc * Math.sin(2 * m * rad));
-
-        var cosHa = Math.cos(zenith * rad) / (Math.cos(LAT * rad) * Math.cos(decl * rad))
-            - Math.tan(LAT * rad) * Math.tan(decl * rad);
-        if (!(Math.abs(cosHa) <= 1)) return null;
-
-        var minutes = 720 - 4 * LON - eqTime + tzHours * 60 + 4 * (Math.acos(cosHa) / rad);
-        var seconds = Math.round(minutes * 60);
-        var hh = Math.floor(seconds / 3600);
-        var mm = Math.floor((seconds % 3600) / 60);
-        // Built through jerusalemInstant so a day that changes its offset still lands right.
-        return jerusalemInstant(year, month, day, hh, mm) + (seconds % 60) * 1000;
-    }
-
-    // The Friday whose Shabbat covers this instant, as Jerusalem calendar parts.
-    function shabbatFriday(instant) {
-        var p = jerusalemParts(instant);
-        var midnight = jerusalemInstant(p.year, p.month, p.day, 0, 0);
-        // Sunday through Friday this lands on the Friday of the same week; on a Saturday the
-        // offset is negative, which is exactly right — Saturday belongs to the window that
-        // opened the evening before. Subtracting another day here, as an earlier version did,
-        // pointed at Thursday and left the site open all Saturday whenever the data was
-        // unavailable.
-        var friday = midnight + (5 - p.weekday) * 86400000;
-        return jerusalemParts(friday);
-    }
-
-    function crudeWindow(fp) {
-        var start = jerusalemInstant(fp.year, fp.month, fp.day, CRUDE_OPEN.hour, CRUDE_OPEN.minute);
-        var sp = jerusalemParts(start + 86400000);
-        var end = jerusalemInstant(sp.year, sp.month, sp.day, CRUDE_SHUT.hour, CRUDE_SHUT.minute);
-        return validWindow([start, end]) ? [start, end] : null;
-    }
-
-    // Candle lighting is forty minutes before Friday's sunset; havdalah is Saturday nightfall.
-    function computedWindow(instant) {
-        var fp = shabbatFriday(instant);
-        try {
-            var sunset = solarEvent(fp.year, fp.month, fp.day, ZENITH_SUNSET);
-            var sp = jerusalemParts(jerusalemInstant(fp.year, fp.month, fp.day, 12, 0) + 86400000);
-            var nightfall = solarEvent(sp.year, sp.month, sp.day, ZENITH_NIGHTFALL);
-            if (sunset === null || nightfall === null) return crudeWindow(fp);
-            var pair = [sunset - CANDLES_BEFORE_MIN * 60000, nightfall];
-            return validWindow(pair) ? pair : crudeWindow(fp);
-        } catch (e) {
-            return crudeWindow(fp);
+    // The closures around an instant, from the data checked against the sun. Without the core
+    // the data stands alone, and without either only the crude window is left.
+    function windowsAround(instant) {
+        var from = instant - 4 * DAY_MS;
+        var to = instant + 14 * DAY_MS;
+        var data = state.windows.filter(function (w) { return w[1] > from && w[0] < to; });
+        if (!Core) {
+            if (data.length) return data;
+            var crude = crudeWindow(instant);
+            return crude ? [crude] : [];
         }
-    }
-
-    function fallbackWindow(instant) {
-        return computedWindow(instant);
-    }
-
-    // Second opinion on the file's own numbers. A few minutes apart is the formula's own error
-    // and the file wins; further apart means the file cannot be trusted, and then the safe side
-    // is taken — closing earlier, opening later.
-    function reconcile(window) {
-        var mine = computedWindow(window[0]);
-        if (!mine) return window;
-        var startGap = window[0] - mine[0];
-        var endGap = mine[1] - window[1];
-        if (Math.abs(startGap) <= DISAGREEMENT_MS && Math.abs(endGap) <= DISAGREEMENT_MS) return window;
-        if (window.__warned !== true && window && console && console.warn) {
-            console.warn('shabbat-gate: the file disagrees with the sun by '
-                + Math.round(startGap / 60000) + '/' + Math.round(endGap / 60000)
-                + ' min, taking the safe side');
-            window.__warned = true;
+        var computed = Core.computedWindows(state.region, from, to);
+        if (!computed) {
+            // No sunset or no dark enough night (the far north in summer): Israel's.
+            state.region = Core.regionForZone(Core.DEFAULT_ZONE);
+            computed = Core.computedWindows(state.region, from, to) || [];
         }
-        return [Math.min(window[0], mine[0]), Math.max(window[1], mine[1])];
+        var merged = Core.reconcileWindows(
+            data.map(function (w) { return { startsAt: w[0], endsAt: w[1] }; }),
+            computed
+        );
+        return merged.map(function (w) { return [w.startsAt, w.endsAt]; });
+    }
+
+    function crudeWindow(instant) {
+        var d = new Date(instant);
+        var day = d.getDay();
+        var friday = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((day + 2) % 7), CRUDE_OPEN_HOUR);
+        var saturday = new Date(friday.getFullYear(), friday.getMonth(), friday.getDate() + 1, CRUDE_SHUT_HOUR);
+        return [friday.getTime(), saturday.getTime()];
     }
 
     function activeWindow(instant) {
-        for (var i = 0; i < state.windows.length; i++) {
-            var w = state.windows[i];
-            var checked = reconcile(w);
-            if (instant >= checked[0] && instant < checked[1]) return checked;
-            if (checked[0] > instant) break;
+        var list = windowsAround(instant);
+        for (var i = 0; i < list.length; i++) {
+            if (instant >= list[i][0] && instant < list[i][1]) return list[i];
         }
         return null;
     }
 
-    function activeFallback(instant) {
-        var f = fallbackWindow(instant);
-        return f && instant >= f[0] && instant < f[1] ? f : null;
-    }
-
     function nextBoundary(instant) {
         var soonest = null;
-        state.windows.forEach(function (w) {
+        windowsAround(instant).forEach(function (w) {
             [w[0], w[1]].forEach(function (edge) {
                 if (edge > instant && (soonest === null || edge < soonest)) soonest = edge;
             });
@@ -309,22 +191,33 @@
         return soonest;
     }
 
+    function kindOf(window) {
+        if (!Core) return 'shabbat';
+        try {
+            return Core.windowKind({ startsAt: window[0], endsAt: window[1] }, state.region.zone);
+        } catch (e) {
+            return 'shabbat';
+        }
+    }
+
     // ---------------------------------------------------------------- cache
 
+    // One place per browser: the cache holds the zone it was made for, and a different zone
+    // (the visitor travelled, or the old Jerusalem-only cache) starts afresh.
     function readCache() {
         try {
             var raw = JSON.parse(localStorage.getItem(CACHE_KEY));
-            if (!raw || !Array.isArray(raw.w)) return [];
-            if (!raw.fetched || Date.now() - raw.fetched > CACHE_MAX_AGE_MS) return [];
-            return raw.w.filter(validWindow);
+            if (!raw || !Array.isArray(raw.w) || raw.zone !== state.region.zone) return null;
+            if (!raw.fetched || Date.now() - raw.fetched > CACHE_MAX_AGE_MS) return null;
+            return { windows: raw.w.filter(validWindow), fetched: raw.fetched };
         } catch (e) {
-            return [];
+            return null;
         }
     }
 
     function writeCache(windows) {
         try {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({ fetched: Date.now(), w: windows }));
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ zone: state.region.zone, fetched: Date.now(), w: windows }));
         } catch (e) { /* private mode, quota — the gate still works for this visit */ }
     }
 
@@ -375,9 +268,10 @@
         return {
             title: t.shabbat_title || fallback.title,
             body: t.shabbat_body || fallback.body,
+            holidayTitle: t.shabbat_holiday_title || fallback.holidayTitle,
+            holidayBody: t.shabbat_holiday_body || fallback.holidayBody,
             opens: t.shabbat_opens || fallback.opens,
             left: t.shabbat_left || fallback.left,
-            tz: t.shabbat_tz || fallback.tz,
             langs: t.shabbat_langs || fallback.langs,
             h: t.shabbat_h || fallback.h,
             m: t.shabbat_m || fallback.m
@@ -414,13 +308,14 @@
         // The site keeps its layout LTR in every language, but this screen is nothing but
         // text, so Hebrew reads the way it should.
         el.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-        el.setAttribute('aria-label', t.title);
-        el.querySelector('.shabbat-gate__title').textContent = t.title;
-        el.querySelector('.shabbat-gate__body').textContent = t.body;
+        var holiday = state.kind === 'holiday';
+        var title = holiday ? t.holidayTitle : t.title;
+        el.setAttribute('aria-label', title);
+        el.querySelector('.shabbat-gate__title').textContent = title;
+        el.querySelector('.shabbat-gate__body').textContent = holiday ? t.holidayBody : t.body;
         el.querySelector('.shabbat-gate__label--opens').textContent = t.opens;
         el.querySelector('.shabbat-gate__label--left').textContent = t.left;
         el.querySelector('.shabbat-gate__time').textContent = localTimeLabel(endInstant);
-        el.querySelector('.shabbat-gate__tz').textContent = t.tz;
         renderCountdown(el.querySelector('.shabbat-gate__count'), endInstant, t);
         // role="group" with nothing to call it is announced as an unnamed group.
         var group = el.querySelector('.shabbat-gate__langs');
@@ -454,7 +349,6 @@
             + '<dt class="shabbat-gate__label shabbat-gate__label--left"></dt>'
             + '<dd class="shabbat-gate__value"><span class="shabbat-gate__count"></span></dd>'
             + '</dl>'
-            + '<p class="shabbat-gate__tz"></p>'
             + '<div class="shabbat-gate__langs" role="group">'
             + Object.keys(LANG_LABELS).map(function (code) {
                 return '<button type="button" class="shabbat-gate__lang" data-lang="' + code + '">'
@@ -631,22 +525,22 @@
         if (state.forced === 'open') { open(); return; }
 
         var instant = now();
+        var active = activeWindow(instant);
         if (state.forced === 'closed') {
-            var w = activeWindow(instant);
-            close(w ? w[1] : instant + 3600000);
+            state.kind = active ? kindOf(active) : 'shabbat';
+            close(active ? active[1] : instant + 3600000);
             return;
         }
 
-        var active = activeWindow(instant);
-        var quiet = false;
-
-        if (!active && !state.windows.length) {
-            active = activeFallback(instant);
-            quiet = !!active && !state.dataSettled;
+        // Only the crude window (no core, no data yet) waits quietly for the data: it is wide
+        // enough that a visitor on a Friday afternoon would otherwise see the screen flash.
+        var quiet = !!active && !Core && !state.windows.length && !state.dataSettled;
+        if (active) {
+            state.kind = kindOf(active);
+            close(active[1], quiet);
+        } else {
+            open();
         }
-
-        if (active) close(active[1], quiet);
-        else open();
 
         clearTimeout(state.timer);
         var edge = active ? active[1] : nextBoundary(instant);
@@ -666,7 +560,7 @@
         state.windows = windows;
         writeCache(windows);
         evaluate();
-        if (window.console && console.debug) console.debug('shabbat-gate: windows from ' + source, windows.length);
+        if (window.console && console.debug) console.debug('shabbat-gate: ' + windows.length + ' closures from ' + source);
         return true;
     }
 
@@ -697,33 +591,50 @@
         return fetch(url, opts);
     }
 
+    function fetchJson(url, cacheMode, onResponse) {
+        return fetchWithTimeout(url, { cache: cacheMode }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            if (onResponse) onResponse(r);
+            return r.json();
+        });
+    }
+
+    // This calendar year and the next, for the visitor's place: a closure at the end of
+    // December, and the weeks after it, need the next year's answer.
     function loadFromHebcal() {
-        var year = jerusalemParts(now()).year;
-        return fetchWithTimeout(HEBCAL_URL + year, { cache: 'no-store' })
-            .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
-            .then(function (payload) { adopt(parseHebcal(payload), 'hebcal'); })
-            .catch(function () {
-                if (!state.windows.length && window.console && console.warn) {
-                    console.warn('shabbat-gate: no data at all, using the fixed fallback window');
-                }
-            })
-            .then(function () {
-                state.dataSettled = true;
-                evaluate();
-            });
+        if (!Core) return Promise.reject(new Error('no core'));
+        var year = new Date(now()).getUTCFullYear();
+        return Promise.all([year, year + 1].map(function (y) {
+            return fetchJson(Core.hebcalUrl(state.region, y), 'default').then(parseHebcal);
+        })).then(function (lists) {
+            if (!adopt(sortWindows(lists[0].concat(lists[1])), 'hebcal')) throw new Error('no usable closures');
+        });
+    }
+
+    function loadOwnFile() {
+        return fetchJson(DATA_URL, 'no-cache', noteSkew).then(function (payload) {
+            if (!adopt(parsePayload(payload), 'api/shabbat.json')) throw new Error('no usable closures');
+        });
+    }
+
+    function settle() {
+        state.dataSettled = true;
+        evaluate();
     }
 
     function loadData() {
-        return fetchWithTimeout(DATA_URL, { cache: 'no-cache' })
-            .then(function (r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                noteSkew(r);
-                return r.json();
-            })
-            .then(function (payload) {
-                if (!adopt(parsePayload(payload), 'api/shabbat.json')) throw new Error('no usable windows');
-            })
-            .catch(loadFromHebcal);
+        // Israel reads our own file on every visit: it is small, on our own server, and it
+        // carries the server's clock. Anywhere else asks Hebcal at most once a week.
+        if (state.region.israel) {
+            return loadOwnFile().catch(loadFromHebcal).catch(function () {
+                if (window.console && console.warn) console.warn('shabbat-gate: no fresh data, using the cache and the sun');
+            }).then(settle);
+        }
+        var cached = readCache();
+        if (cached && Date.now() - cached.fetched < CACHE_FRESH_MS) { settle(); return Promise.resolve(); }
+        return loadFromHebcal().catch(function () {
+            if (window.console && console.warn) console.warn('shabbat-gate: Hebcal unavailable, using the cache and the sun');
+        }).then(settle);
     }
 
     // ---------------------------------------------------------------- start
@@ -752,7 +663,9 @@
         }
 
         readOverride();
-        state.windows = readCache();
+        state.region = Core ? Core.regionForZone(browserZone()) : { zone: browserZone() || 'Asia/Jerusalem', israel: true };
+        var cached = readCache();
+        state.windows = cached ? cached.windows : [];
         evaluate();
         loadData();
 

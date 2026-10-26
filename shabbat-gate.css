@@ -192,19 +192,6 @@ html.shabbat-closed body > *:not(.shabbat-gate) {
     direction: rtl;
 }
 
-.shabbat-gate__tz {
-    margin: 1.3rem 0 0;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gate-faint);
-}
-
-.shabbat-gate[lang="he"] .shabbat-gate__tz {
-    letter-spacing: normal;
-    font-size: 0.78rem;
-}
-
 /* The site's own language switcher is hidden behind the gate, so the screen carries three
    quiet buttons of its own. They are the only thing here a visitor can press. */
 .shabbat-gate__langs {

@@ -1,17 +1,19 @@
 #!/usr/bin/env node
-// Builds api/shabbat.json — the table of Shabbat closing windows the site gate reads.
-// The path is also the public URL: GitHub Pages rewrites nothing, so the file has to sit
-// exactly where the browser asks for it — https://moraltogether.com/api/shabbat.json.
+// Builds api/shabbat.json — Israel's closures (Shabbat and Yom Tov) that the site gate reads
+// first for a visitor in Israel. The path is also the public URL: GitHub Pages rewrites
+// nothing, so the file has to sit exactly where the browser asks for it —
+// https://moraltogether.com/api/shabbat.json.
 //
-// Source: Hebcal, Jerusalem (geonameid 281184). One request per calendar year.
-//   b=40  candle lighting 40 minutes before sunset
-//   M=on  havdalah by nightfall, not a fixed number of minutes
-//   i=on  Israeli holiday scheme
-//   c=on  include candle lighting / havdalah times
-//
-// A window is a pair "candle lighting -> havdalah" where the candle lighting falls
-// on a Friday in Jerusalem and the pair is no longer than MAX_WINDOW_HOURS. Anything
-// else in the feed is ignored, so holidays never close the site.
+// The rules are the gate's own, from shabbat-core.js (Maxim, 26.10.2026): close 30 minutes
+// before sunset, open 30 minutes after nightfall, Yom Tov included (one day in Israel), a
+// festival next to Shabbat is one closure. Source: Hebcal, Jerusalem's coordinates, one
+// request per calendar year:
+//   b=30   candle lighting 30 minutes before sunset — our closing time
+//   M=on   havdalah by nightfall; 30 minutes are added to it here
+//   maj=on the major holidays, so festival candle lighting and havdalah come too
+//   i=on   the Israeli calendar
+// Each year is checked against the gate's own computation of the sun before it is written:
+// a different number of closures, or one more than ten minutes away, fails the run.
 //
 // Usage:
 //   node tools/build-shabbat.mjs                  # this year and the next
@@ -24,13 +26,17 @@
 // rewritten only when the windows themselves change.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const GEONAMEID = 281184;           // Jerusalem — the whole country is counted by it
-const CANDLES_MINUTES_BEFORE = 40;  // b=40
-const MAX_WINDOW_HOURS = 30;
-const MIN_WINDOWS_PER_YEAR = 45;    // a year has ~52; fewer means the feed is broken
-const FORMAT_VERSION = 1;
+// shabbat-core.js is a browser script declaring `var ShabbatCore`; run it and take the object.
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const Core = new Function(`${readFileSync(join(ROOT, 'shabbat-core.js'), 'utf8')}; return ShabbatCore;`)();
+const REGION = Core.regionForZone('Asia/Jerusalem');
+
+const MIN_WINDOWS_PER_YEAR = 50;    // a year has 54 in Israel; fewer means the feed is broken
+const AGREE_MINUTES = 10;           // the gate's own tolerance
+const FORMAT_VERSION = 2;
 
 const args = process.argv.slice(2);
 const readArg = (name, fallback) => {
@@ -61,88 +67,50 @@ function fail(message) {
     process.exit(1);
 }
 
-function hebcalUrl(year) {
-    return 'https://www.hebcal.com/hebcal'
-        + '?v=1&cfg=json'
-        + `&year=${year}`
-        + '&month=x'
-        + '&geo=geoname'
-        + `&geonameid=${GEONAMEID}`
-        + '&c=on'
-        + `&b=${CANDLES_MINUTES_BEFORE}`
-        + '&M=on'
-        + '&i=on';
-}
-
 async function fetchYear(year) {
-    const url = hebcalUrl(year);
-    const res = await fetch(url, { headers: { accept: 'application/json' } });
+    const res = await fetch(Core.hebcalUrl(REGION, year), { headers: { accept: 'application/json' } });
     if (!res.ok) throw new Error(`Hebcal returned HTTP ${res.status} for ${year}`);
     const body = await res.json();
     if (!Array.isArray(body?.items)) throw new Error(`Hebcal payload for ${year} has no items`);
     return body;
 }
 
-// Weekday in Jerusalem, regardless of where this script runs.
-const jerusalemWeekday = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Jerusalem',
-    weekday: 'short',
-});
-
-function isFridayInJerusalem(iso) {
-    return jerusalemWeekday.format(new Date(iso)) === 'Fri';
+// The Hebcal closures of one year, checked one by one against the sun.
+function checkedWindows(year, payload) {
+    const windows = Core.parseHebcalWindows(payload);
+    const from = Date.UTC(year, 0, 1);
+    const to = Date.UTC(year + 1, 0, 1);
+    const inYear = windows.filter((w) => w.startsAt >= from && w.startsAt < to);
+    /* Up to Hebcal's last closure: one that starts on the last days of December ends next
+       year, and that year's answer has its havdalah (the gate's computation covers it). */
+    const last = inYear.length ? inYear[inYear.length - 1].startsAt : from;
+    const mine = (Core.computedWindows(REGION, from, to) ?? []).filter((w) => w.startsAt >= from && w.startsAt <= last + 60 * 60000);
+    if (inYear.length !== mine.length) {
+        fail(`${year}: Hebcal has ${inYear.length} closures, the computation ${mine.length}`);
+    }
+    inYear.forEach((w, i) => {
+        const apart = Math.max(Math.abs(w.startsAt - mine[i].startsAt), Math.abs(w.endsAt - mine[i].endsAt)) / 60000;
+        if (apart > AGREE_MINUTES) {
+            fail(`${year}: closure ${new Date(w.startsAt).toISOString()} is ${apart.toFixed(1)} min from the sun`);
+        }
+    });
+    return inYear.map((w) => ({ start: isoInZone(w.startsAt), end: isoInZone(w.endsAt) }));
 }
 
-// Pairs each candle lighting with the havdalah that follows it, then keeps only the
-// pairs that really describe a Shabbat: Friday start, sane length.
-function extractWindows(items) {
-    const windows = [];
-    const skipped = [];
-    let pendingCandles = null;
-
-    for (const item of items) {
-        if (item.category === 'candles') {
-            if (pendingCandles) skipped.push({ reason: 'candles without havdalah', at: pendingCandles.date });
-            pendingCandles = item;
-            continue;
-        }
-        if (item.category !== 'havdalah') continue;
-
-        if (!pendingCandles) {
-            skipped.push({ reason: 'havdalah without candles', at: item.date });
-            continue;
-        }
-
-        const start = pendingCandles.date;
-        const end = item.date;
-        pendingCandles = null;
-
-        const startMs = Date.parse(start);
-        const endMs = Date.parse(end);
-        if (!Number.isFinite(startMs) || !Number.isFinite(endMs)) {
-            skipped.push({ reason: 'unparsable timestamp', at: `${start} -> ${end}` });
-            continue;
-        }
-
-        const hours = (endMs - startMs) / 3600000;
-        if (hours <= 0) {
-            skipped.push({ reason: 'havdalah not after candles', at: `${start} -> ${end}` });
-            continue;
-        }
-        if (hours > MAX_WINDOW_HOURS) {
-            skipped.push({ reason: `window longer than ${MAX_WINDOW_HOURS}h`, at: `${start} -> ${end}` });
-            continue;
-        }
-        if (!isFridayInJerusalem(start)) {
-            skipped.push({ reason: 'candle lighting not on a Friday', at: start });
-            continue;
-        }
-
-        windows.push({ start, end });
-    }
-
-    if (pendingCandles) skipped.push({ reason: 'candles without havdalah', at: pendingCandles.date });
-    return { windows, skipped };
+// "2026-10-30T16:21:00+02:00": Israel's wall clock with its offset, as Hebcal writes it, so the
+// file stays readable by a person.
+function isoInZone(ms) {
+    const parts = {};
+    for (const p of new Intl.DateTimeFormat('en-US', {
+        timeZone: REGION.zone, hour12: false,
+        year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit',
+    }).formatToParts(new Date(ms))) parts[p.type] = p.value;
+    const wall = Date.UTC(+parts.year, +parts.month - 1, +parts.day, +parts.hour % 24, +parts.minute, +parts.second);
+    const offset = Math.round((wall - ms) / 60000);
+    const sign = offset < 0 ? '-' : '+';
+    const hh = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0');
+    const mm = String(Math.abs(offset) % 60).padStart(2, '0');
+    return `${parts.year}-${parts.month}-${parts.day}T${String(+parts.hour % 24).padStart(2, '0')}:${parts.minute}:${parts.second}${sign}${hh}:${mm}`;
 }
 
 function mergeWindows(lists) {
@@ -182,19 +150,14 @@ if (lazyDays > 0) {
 }
 
 const perYear = [];
-let location = null;
 
 for (const year of years) {
     const payload = await fetchYear(year).catch(err => fail(err.message));
-    location ??= payload.location;
-
-    const { windows, skipped } = extractWindows(payload.items);
+    const windows = checkedWindows(year, payload);
     if (windows.length < MIN_WINDOWS_PER_YEAR) {
-        fail(`${year}: only ${windows.length} windows parsed, expected at least ${MIN_WINDOWS_PER_YEAR}`);
+        fail(`${year}: only ${windows.length} closures parsed, expected at least ${MIN_WINDOWS_PER_YEAR}`);
     }
-
-    console.log(`${year}: ${windows.length} windows (${windows[0].start} … ${windows.at(-1).end})`);
-    for (const s of skipped) console.log(`  skipped — ${s.reason}: ${s.at}`);
+    console.log(`${year}: ${windows.length} closures (${windows[0].start} … ${windows.at(-1).end})`);
     perYear.push(windows);
 }
 
@@ -210,14 +173,10 @@ const output = {
     version: FORMAT_VERSION,
     generated: new Date().toISOString(),
     source: 'hebcal',
-    params: { geonameid: GEONAMEID, b: CANDLES_MINUTES_BEFORE, M: 'on', i: 'on', c: 'on' },
-    location: {
-        city: location?.city ?? 'Jerusalem',
-        tzid: location?.tzid ?? 'Asia/Jerusalem',
-        latitude: location?.latitude,
-        longitude: location?.longitude,
-        elevation: location?.elevation,
-    },
+    rules: Core.SHABBAT_CORE_VERSION,
+    zone: REGION.zone,
+    params: { latitude: REGION.lat, longitude: REGION.lon, b: Core.MARGIN_MINUTES, M: 'on', maj: 'on', i: 'on', c: 'on' },
+    note: 'start = candle lighting (sunset - 30 min); end = havdalah (nightfall) + 30 min; Shabbat and Yom Tov',
     coverage: { from: windows[0].start, until: windows.at(-1).end },
     windows,
 };
