@@ -105,11 +105,18 @@ Sources, in order:
 Every closure from 1 or 2 is checked against the computation: up to ten minutes apart is
 rounding and the data stands; further apart the safe side is taken (earlier start, later end),
 and a closure the computation has and the data lacks is added — a missing Yom Tov must not leave
-the site open. Where the sun does not set or the night does not get dark (the far north in
-summer), Israel's closures are used.
+the site open. Each closure is worked out on its own. Where a summer night never gets 8.5° dark
+(Stockholm, Oslo, Helsinki in June), the closure ends at the darkest moment, solar midnight,
++ 30 minutes; where the sun does not set at all (polar day or night), it starts at local noon on
+the eve. The visitor's own place and calendar are kept (audit 26.10.2026: handing such a region
+to Israel opened Oslo hours before its own sunset).
 
-If `shabbat-core.js` itself did not load and nothing is cached, a crude window remains: Friday
-15:00 to Saturday 21:00 on the visitor's clock. While only that window answers and the data is
+If `shabbat-core.js` itself did not load, a crude window remains outside Israel (and in Israel
+when nothing is stored): Friday 15:00 to Saturday 21:00 on the visitor's clock.
+
+The device's clock is corrected against our own server for every visitor: Israel's by the
+`Date` of `api/shabbat.json`, everybody else's by a `HEAD` request to the same file (Hebcal's
+`Date` header cannot be read from another origin). While only that window answers and the data is
 still in flight, the gate hides the content without drawing the screen, so a Friday afternoon
 visitor does not see the screen flash and vanish.
 

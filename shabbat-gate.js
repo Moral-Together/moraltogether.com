@@ -148,16 +148,13 @@
         var to = instant + 14 * DAY_MS;
         var data = state.windows.filter(function (w) { return w[1] > from && w[0] < to; });
         if (!Core) {
-            if (data.length) return data;
+            // Israel's own file is right for Israel only; anywhere else the crude window on
+            // the visitor's own clock is the safe answer.
+            if (data.length && state.region.israel) return data;
             var crude = crudeWindow(instant);
             return crude ? [crude] : [];
         }
         var computed = Core.computedWindows(state.region, from, to);
-        if (!computed) {
-            // No sunset or no dark enough night (the far north in summer): Israel's.
-            state.region = Core.regionForZone(Core.DEFAULT_ZONE);
-            computed = Core.computedWindows(state.region, from, to) || [];
-        }
         var merged = Core.reconcileWindows(
             data.map(function (w) { return { startsAt: w[0], endsAt: w[1] }; }),
             computed
@@ -605,9 +602,12 @@
         if (!Core) return Promise.reject(new Error('no core'));
         var year = new Date(now()).getUTCFullYear();
         return Promise.all([year, year + 1].map(function (y) {
-            return fetchJson(Core.hebcalUrl(state.region, y), 'default').then(parseHebcal);
-        })).then(function (lists) {
-            if (!adopt(sortWindows(lists[0].concat(lists[1])), 'hebcal')) throw new Error('no usable closures');
+            return fetchJson(Core.hebcalUrl(state.region, y), 'default');
+        })).then(function (answers) {
+            // Read as one answer: a closure that starts on the last days of December has its
+            // havdalah in the next year's.
+            var items = [].concat(answers[0].items || [], answers[1].items || []);
+            if (!adopt(parseHebcal({ items: items }), 'hebcal')) throw new Error('no usable closures');
         });
     }
 
@@ -630,8 +630,15 @@
                 if (window.console && console.warn) console.warn('shabbat-gate: no fresh data, using the cache and the sun');
             }).then(settle);
         }
+        // The device's clock is checked against our own server for everybody: Hebcal's Date
+        // header is out of reach from another origin, and a phone an hour fast would open the
+        // site an hour early.
+        fetchWithTimeout(DATA_URL, { method: 'HEAD', cache: 'no-store' }).then(function (r) {
+            noteSkew(r);
+            evaluate();
+        }).catch(function () { /* the device's clock stands */ });
         var cached = readCache();
-        if (cached && Date.now() - cached.fetched < CACHE_FRESH_MS) { settle(); return Promise.resolve(); }
+        if (!Core || (cached && Date.now() - cached.fetched < CACHE_FRESH_MS)) { settle(); return Promise.resolve(); }
         return loadFromHebcal().catch(function () {
             if (window.console && console.warn) console.warn('shabbat-gate: Hebcal unavailable, using the cache and the sun');
         }).then(settle);
@@ -663,7 +670,13 @@
         }
 
         readOverride();
-        state.region = Core ? Core.regionForZone(browserZone()) : { zone: browserZone() || 'Asia/Jerusalem', israel: true };
+        var zone = browserZone();
+        state.region = Core ? Core.regionForZone(zone) : {
+            zone: zone || 'Asia/Jerusalem',
+            // Without the rules only Israel's own names are known; an unknown zone stays Israel,
+            // as with the rules.
+            israel: !zone || /^(Asia\/Jerusalem|Asia\/Tel_Aviv|Israel)$/.test(zone) || !/\//.test(zone)
+        };
         var cached = readCache();
         state.windows = cached ? cached.windows : [];
         evaluate();

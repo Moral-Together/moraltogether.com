@@ -1,4 +1,4 @@
-// Shabbat and festival rules 2026-10-26.1, generated from Stage of Stars' shared/shabbatCore.ts
+// Shabbat and festival rules 2026-10-26.3, generated from Stage of Stars' shared/shabbatCore.ts
 // by scripts/export-shabbat-core.mjs. Do not edit here: change the source and export again.
 // Own code, no third-party calendar library. See docs/shabbat-mode.md.
 var ShabbatCore = (() => {
@@ -605,9 +605,9 @@ var ShabbatCore = (() => {
   };
 
   // shared/shabbatCore.ts
-  var SHABBAT_CORE_VERSION = "2026-10-26.1", MARGIN_MINUTES = 30, MARGIN_MS = MARGIN_MINUTES * 6e4, DAY_MS = 864e5, DEFAULT_ZONE = "Asia/Jerusalem";
+  var SHABBAT_CORE_VERSION = "2026-10-26.3", MARGIN_MINUTES = 30, MARGIN_MS = MARGIN_MINUTES * 6e4, DAY_MS = 864e5, DEFAULT_ZONE = "Asia/Jerusalem", own = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
   function regionForZone(zone) {
-    let name = typeof zone == "string" ? zone.trim() : "", resolved = ZONE_COORDS[name] ? name : ZONE_LINKS[name] && ZONE_COORDS[ZONE_LINKS[name]] ? ZONE_LINKS[name] : DEFAULT_ZONE, [lat, lon] = ZONE_COORDS[resolved];
+    let name = typeof zone == "string" ? zone.trim() : "", linked = own(ZONE_LINKS, name) ? ZONE_LINKS[name] : "", resolved = own(ZONE_COORDS, name) ? name : linked && own(ZONE_COORDS, linked) ? linked : DEFAULT_ZONE, [lat, lon] = ZONE_COORDS[resolved];
     return { zone: resolved, lat, lon, israel: resolved === DEFAULT_ZONE };
   }
   var RAD = Math.PI / 180, ZENITH_SUNSET = 90.833, ZENITH_NIGHTFALL = 98.5;
@@ -618,11 +618,19 @@ var ShabbatCore = (() => {
     let d = new Date(dayNo * DAY_MS);
     return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() };
   }
+  function sunOn(dayNo, lon) {
+    let t = (dayNo + 24405875e-1 + (12 - lon / 15) / 24 - 2451545) / 36525, l0 = (280.46646 + t * (36000.76983 + 3032e-7 * t)) % 360, m = 357.52911 + t * (35999.05029 - 1537e-7 * t), ecc = 0.016708634 - t * (42037e-9 + 1267e-10 * t), centre = Math.sin(m * RAD) * (1.914602 - t * (4817e-6 + 14e-6 * t)) + Math.sin(2 * m * RAD) * (0.019993 - 101e-6 * t) + Math.sin(3 * m * RAD) * 289e-6, omega = 125.04 - 1934.136 * t, appLong = l0 + centre - 569e-5 - 478e-5 * Math.sin(omega * RAD), obliq = 23 + (26 + (21.448 - t * (46.815 + t * (59e-5 - t * 1813e-6))) / 60) / 60 + 256e-5 * Math.cos(omega * RAD), decl = Math.asin(Math.sin(obliq * RAD) * Math.sin(appLong * RAD)) / RAD, y = Math.tan(obliq / 2 * RAD) ** 2, eqTime = 4 / RAD * (y * Math.sin(2 * l0 * RAD) - 2 * ecc * Math.sin(m * RAD) + 4 * ecc * y * Math.sin(m * RAD) * Math.cos(2 * l0 * RAD) - 0.5 * y * y * Math.sin(4 * l0 * RAD) - 1.25 * ecc * ecc * Math.sin(2 * m * RAD));
+    return { decl, eqTime };
+  }
   function eveningSun(dayNo, lat, lon, zenith) {
-    let t = (dayNo + 24405875e-1 + (12 - lon / 15) / 24 - 2451545) / 36525, l0 = (280.46646 + t * (36000.76983 + 3032e-7 * t)) % 360, m = 357.52911 + t * (35999.05029 - 1537e-7 * t), ecc = 0.016708634 - t * (42037e-9 + 1267e-10 * t), centre = Math.sin(m * RAD) * (1.914602 - t * (4817e-6 + 14e-6 * t)) + Math.sin(2 * m * RAD) * (0.019993 - 101e-6 * t) + Math.sin(3 * m * RAD) * 289e-6, omega = 125.04 - 1934.136 * t, appLong = l0 + centre - 569e-5 - 478e-5 * Math.sin(omega * RAD), obliq = 23 + (26 + (21.448 - t * (46.815 + t * (59e-5 - t * 1813e-6))) / 60) / 60 + 256e-5 * Math.cos(omega * RAD), decl = Math.asin(Math.sin(obliq * RAD) * Math.sin(appLong * RAD)) / RAD, y = Math.tan(obliq / 2 * RAD) ** 2, eqTime = 4 / RAD * (y * Math.sin(2 * l0 * RAD) - 2 * ecc * Math.sin(m * RAD) + 4 * ecc * y * Math.sin(m * RAD) * Math.cos(2 * l0 * RAD) - 0.5 * y * y * Math.sin(4 * l0 * RAD) - 1.25 * ecc * ecc * Math.sin(2 * m * RAD)), cosHa = Math.cos(zenith * RAD) / (Math.cos(lat * RAD) * Math.cos(decl * RAD)) - Math.tan(lat * RAD) * Math.tan(decl * RAD);
+    let { decl, eqTime } = sunOn(dayNo, lon), cosHa = Math.cos(zenith * RAD) / (Math.cos(lat * RAD) * Math.cos(decl * RAD)) - Math.tan(lat * RAD) * Math.tan(decl * RAD);
     if (!(Math.abs(cosHa) <= 1)) return null;
     let minutesUt = 720 - 4 * lon - eqTime + 4 * (Math.acos(cosHa) / RAD);
     return dayNo * DAY_MS + Math.round(minutesUt * 60) * 1e3;
+  }
+  function solarMidnight(dayNo, lon) {
+    let { eqTime } = sunOn(dayNo, lon);
+    return dayNo * DAY_MS + Math.round((1440 - 4 * lon - eqTime) * 60) * 1e3;
   }
   function hebrewLeap(year) {
     return (7 * year + 1) % 19 < 7;
@@ -658,6 +666,31 @@ var ShabbatCore = (() => {
     for (let p of parts) v[p.type] = p.value;
     return dayNumber(Number(v.year), Number(v.month), Number(v.day));
   }
+  function zoneOffset(instant, zone) {
+    let v = {};
+    for (let p of new Intl.DateTimeFormat("en-US", {
+      timeZone: zone,
+      hour12: !1,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }).formatToParts(new Date(instant))) v[p.type] = p.value;
+    return Date.UTC(Number(v.year), Number(v.month) - 1, Number(v.day), Number(v.hour) % 24, Number(v.minute), Number(v.second)) - instant;
+  }
+  function zonedInstant(dayNo, hour, zone) {
+    let wall = dayNo * DAY_MS + hour * 36e5, instant = wall - zoneOffset(wall, zone);
+    return instant = wall - zoneOffset(instant, zone), instant;
+  }
+  function localEvening(dayNo, zone, at) {
+    for (let shift of [0, 1, -1]) {
+      let instant = at(dayNo - shift);
+      if (instant !== null && localDay(instant - 12 * 36e5, zone) === dayNo) return instant;
+    }
+    return null;
+  }
   function restBlocks(fromDay, toDay, israel) {
     let rest = /* @__PURE__ */ new Set();
     for (let d = fromDay; d <= toDay; d += 1) (d + 4) % 7 === 6 && rest.add(d);
@@ -672,11 +705,13 @@ var ShabbatCore = (() => {
     return blocks;
   }
   function computedWindows(region, fromMs, toMs) {
-    let fromDay = localDay(fromMs, region.zone) - 3, toDay = localDay(toMs, region.zone) + 3, windows = [];
+    var _a;
+    let { zone, lat, lon } = region, fromDay = localDay(fromMs, zone) - 3, toDay = localDay(toMs, zone) + 3, windows = [];
     for (let block of restBlocks(fromDay, toDay, region.israel)) {
-      let sunset = eveningSun(block.first - 1, region.lat, region.lon, ZENITH_SUNSET), nightfall = eveningSun(block.last, region.lat, region.lon, ZENITH_NIGHTFALL);
-      if (sunset === null || nightfall === null) return null;
-      let window = { startsAt: sunset - MARGIN_MS, endsAt: nightfall + MARGIN_MS };
+      let sunset = localEvening(block.first - 1, zone, (d) => eveningSun(d, lat, lon, ZENITH_SUNSET)), nightfall = (_a = localEvening(block.last, zone, (d) => eveningSun(d, lat, lon, ZENITH_NIGHTFALL))) != null ? _a : localEvening(block.last, zone, (d) => solarMidnight(d, lon)), window = {
+        startsAt: sunset !== null ? sunset - MARGIN_MS : zonedInstant(block.first - 1, 12, zone),
+        endsAt: nightfall !== null ? nightfall + MARGIN_MS : zonedInstant(block.last + 1, 1, zone)
+      };
       window.endsAt > fromMs && window.startsAt < toMs && windows.push(window);
     }
     return windows;
@@ -709,7 +744,7 @@ var ShabbatCore = (() => {
     if (!Array.isArray(items)) return [];
     let sorted = items.map((item) => item).filter((item) => (item.category === "candles" || item.category === "havdalah") && typeof item.date == "string").map((item) => ({ category: item.category, at: Date.parse(item.date) })).filter((item) => Number.isFinite(item.at)).sort((a, b) => a.at - b.at), windows = [], open = null;
     for (let item of sorted)
-      if (item.category === "candles" && open === null && (open = item.at), item.category === "havdalah" && open !== null) {
+      if (item.category === "candles" && (open === null || item.at - open > 4 * DAY_MS) && (open = item.at), item.category === "havdalah" && open !== null) {
         let endsAt = item.at + MARGIN_MS;
         endsAt > open && endsAt - open <= 4 * DAY_MS && windows.push({ startsAt: open, endsAt }), open = null;
       }
@@ -724,7 +759,7 @@ var ShabbatCore = (() => {
     return { closed: !1, window: null };
   }
   function windowKind(window, zone) {
-    let first = localDay(window.startsAt, zone) + 1, last = localDay(window.endsAt - MARGIN_MS - 6e4, zone);
+    let first = localDay(window.startsAt + MARGIN_MS - 432e5, zone) + 1, last = localDay(window.endsAt - MARGIN_MS - 12 * 36e5, zone);
     for (let d = first; d <= last; d += 1) if ((d + 4) % 7 !== 6) return "holiday";
     return "shabbat";
   }
